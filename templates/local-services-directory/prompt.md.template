@@ -1,0 +1,29 @@
+# {{app.name}}
+
+Create a responsive online directory for local services using {{tech.backend}} for the backend and {{tech.frontend}} for the frontend.
+Implement user authentication and authorization using {{tech.auth}} for secure access.
+Design a clean, user-friendly UI using {{tech.ui_framework}} to facilitate easy navigation and search.
+Use {{tech.state}} for state management to handle complex application states effectively.
+Create a searchable database of local service providers, including categories such as {{tech.categories}}.
+Implement a review and rating system that allows users to leave feedback on service providers based on their experiences.
+Design an interactive map feature using {{tech.map}} to help users find local services based on their location.
+Create a booking system that allows users to schedule appointments directly with service providers through the platform.
+Implement a secure payment processing system using {{tech.payments}} for transactions related to bookings or deposits.
+Design an analytics dashboard for service providers to track their performance metrics, including bookings, reviews, and customer engagement.
+Create a community forum where users can ask questions, share recommendations, and discuss local services.
+Implement a referral program that rewards users for referring new customers to service providers listed on the platform.
+Design an FAQ section addressing common questions about using the directory and booking services.
+Create partnerships with local businesses to offer exclusive deals or promotions through the directory.
+Implement multi-language support to cater to diverse customer bases in different regions.
+Design an onboarding process with tutorials guiding new users through the platform's features and how to find services effectively.
+Create personalized notifications for new listings, special offers, and reminders for upcoming appointments based on user preferences.
+Implement advanced search functionality with filters by category, rating, distance, and availability of service providers.
+Design user profiles where customers can manage their bookings, preferences, and payment methods effectively.
+Create integration with social media platforms allowing users to share their experiences or recommend services easily.
+Implement push notifications for new service provider listings or special promotions within the app.
+Design an interactive timeline feature showcasing the history of service providers' ratings and reviews over time.
+Create a loyalty program that rewards frequent users with discounts or exclusive offers from local service providers.
+Implement data analytics to personalize recommendations based on user behavior and preferences.
+Design a custom API for third-party developers to integrate with the platform (e.g., {{tech.api_example}}).
+Create an event calendar highlighting community events or workshops hosted by local service providers.
+Implement a secure dispute resolution system for handling conflicts between users and service providers.

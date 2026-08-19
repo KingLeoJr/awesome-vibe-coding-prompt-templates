@@ -1,0 +1,124 @@
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Beaker, ChevronDown, FlaskConical, ShieldCheck } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface Experiment {
+  id: string;
+  title: string;
+  subject: string;
+  difficulty: "easy" | "medium" | "hard";
+  duration: number;
+  steps: number;
+  safety: string;
+  materials: string[];
+}
+
+interface VirtualLabProps {
+  experiments: Experiment[];
+}
+
+const difficultyTone: Record<Experiment["difficulty"], string> = {
+  easy: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  medium: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  hard: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function VirtualLab({ experiments }: VirtualLabProps) {
+  const [openId, setOpenId] = useState<string | null>(null);
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="labs-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+            <FlaskConical size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="labs-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Virtual lab</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Hands-on science experiments with realistic physics — no mess, no spills.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-5">
+          {experiments.map((exp, i) => {
+            const isOpen = openId === exp.id;
+            return (
+              <motion.article
+                key={exp.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+              >
+                <button
+                  onClick={() => setOpenId(isOpen ? null : exp.id)}
+                  aria-expanded={isOpen}
+                  className="w-full flex items-center justify-between gap-4 p-6 text-left"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-accent)]/15 text-[var(--color-accent)]">
+                      <Beaker size={20} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white">{exp.title}</h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {exp.subject} · {exp.duration} min · {exp.steps} steps
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={`hidden sm:inline rounded-full px-2.5 py-1 text-[11px] font-medium capitalize ${difficultyTone[exp.difficulty]}`}>
+                      {exp.difficulty}
+                    </span>
+                    <ChevronDown
+                      size={18}
+                      className={cn("text-gray-400 transition-transform", isOpen && "rotate-180")}
+                      aria-hidden="true"
+                    />
+                  </div>
+                </button>
+
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-5">
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          <strong className="text-gray-900 dark:text-white">Materials:</strong>{" "}
+                          {exp.materials.join(", ")}
+                        </p>
+                        <p className="mt-3 flex items-start gap-2 rounded-xl bg-amber-500/5 p-3 text-xs text-amber-700 dark:text-amber-300">
+                          <ShieldCheck size={14} className="mt-0.5 shrink-0" aria-hidden="true" />
+                          {exp.safety}
+                        </p>
+                        <button className="mt-4 inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-5 py-2 text-sm font-medium text-gray-950 hover:opacity-90 transition">
+                          <FlaskConical size={15} aria-hidden="true" />
+                          Run simulation
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.article>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

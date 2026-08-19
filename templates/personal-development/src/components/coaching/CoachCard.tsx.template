@@ -1,0 +1,120 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { BadgeCheck, CalendarClock, Languages, Star, Video } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface Coach {
+  id: string;
+  name: string;
+  title: string;
+  expertise: string[];
+  rating: number;
+  sessions: number;
+  avatar: string;
+  languages: string[];
+  hourlyRate: number;
+  certified: boolean;
+  nextAvailable: string;
+}
+
+interface CoachCardProps {
+  coaches: Coach[];
+  currency?: string;
+}
+
+export default function CoachCard({ coaches, currency = "{{currency.symbol}}" }: CoachCardProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="coaches-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <CalendarClock size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="coaches-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Meet your coaches</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Certified coaches matched to your goals, interests, and preferred style.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {coaches.map((coach, index) => (
+            <motion.div
+              key={coach.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
+            >
+              <Card className="h-full p-6">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={coach.avatar}
+                    alt={`Portrait of ${coach.name}`}
+                    className="h-14 w-14 rounded-full object-cover"
+                  />
+                  <div className="min-w-0">
+                    <h3 className="flex items-center gap-1.5 font-semibold text-gray-900 dark:text-white">
+                      {coach.name}
+                      {coach.certified && (
+                        <BadgeCheck size={16} className="text-[var(--color-secondary)]" aria-label="Certified coach" />
+                      )}
+                    </h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{coach.title}</p>
+                    <p className="mt-0.5 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Star size={12} className="fill-[var(--color-accent)] text-[var(--color-accent)]" aria-hidden="true" />
+                      {coach.rating} · {coach.sessions} sessions
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {coach.expertise.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[11px] font-medium text-gray-600 dark:bg-gray-900 dark:text-gray-300"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                  <span className="flex items-center gap-1">
+                    <Languages size={13} aria-hidden="true" />
+                    {coach.languages.join(", ")}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Video size={13} aria-hidden="true" />
+                    Video + in-person
+                  </span>
+                </div>
+
+                <div className="mt-5 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4">
+                  <div>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">
+                      {currency}{coach.hourlyRate}
+                      <span className="text-xs font-normal text-gray-400">/session</span>
+                    </p>
+                    <p className="text-xs text-gray-400">Next: {coach.nextAvailable}</p>
+                  </div>
+                  <button className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-xs font-semibold text-white hover:opacity-90 transition">
+                    Book session
+                  </button>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

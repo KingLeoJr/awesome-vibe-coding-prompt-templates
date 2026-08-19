@@ -1,0 +1,110 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { CalendarCheck, Languages, Star, Video } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface Therapist {
+  id: string;
+  name: string;
+  specialty: string;
+  credentials: string;
+  rating: number;
+  sessions: number;
+  avatar: string;
+  modality: string[];
+  languages: string[];
+  nextAvailable: string;
+  videoOnly?: boolean;
+}
+
+interface TherapistCardProps {
+  therapists: Therapist[];
+}
+
+export default function TherapistCard({ therapists }: TherapistCardProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="therapists-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <CalendarCheck size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="therapists-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Find support</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Licensed therapists and counselors, matched to your focus areas and style.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {therapists.map((therapist, index) => (
+            <motion.div
+              key={therapist.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
+            >
+              <Card className="h-full p-6">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={therapist.avatar}
+                    alt={`Portrait of ${therapist.name}`}
+                    className="h-14 w-14 rounded-full object-cover"
+                  />
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">{therapist.name}</h3>
+                    <p className="text-sm text-[var(--color-primary)]">
+                      {therapist.specialty} · {therapist.credentials}
+                    </p>
+                    <p className="mt-0.5 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Star size={12} className="fill-[var(--color-accent)] text-[var(--color-accent)]" aria-hidden="true" />
+                      {therapist.rating} · {therapist.sessions} sessions
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {therapist.modality.map((modality) => (
+                    <span
+                      key={modality}
+                      className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[11px] font-medium text-gray-600 dark:bg-gray-900 dark:text-gray-300"
+                    >
+                      {modality}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                  <span className="flex items-center gap-1">
+                    <Languages size={13} aria-hidden="true" />
+                    {therapist.languages.join(", ")}
+                  </span>
+                  <span className={cn("flex items-center gap-1", therapist.videoOnly ? "text-[var(--color-secondary)]" : "")}>
+                    <Video size={13} aria-hidden="true" />
+                    {therapist.videoOnly ? "Video only" : "Video + in-person"}
+                  </span>
+                </div>
+
+                <div className="mt-5 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4">
+                  <span className="text-xs text-gray-400">Next: {therapist.nextAvailable}</span>
+                  <button className="rounded-full bg-[var(--color-secondary)] px-4 py-2 text-xs font-semibold text-white hover:opacity-90 transition">
+                    Book session
+                  </button>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

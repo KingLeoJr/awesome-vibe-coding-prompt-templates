@@ -1,0 +1,71 @@
+export type ArticleFormat = "article" | "video";
+
+export interface Article {
+  id: string;
+  title: string;
+  excerpt: string;
+  topic: string;
+  readTime: number;
+  format: ArticleFormat;
+  imageUrl: string;
+  author: string;
+  published: string;
+}
+
+export type ResourceType = "guide" | "toolkit" | "video" | "checklist";
+export type ResourceFormat = "text" | "video" | "pdf";
+
+export interface ResourceItem {
+  id: string;
+  title: string;
+  description: string;
+  type: ResourceType;
+  topic: string;
+  format: ResourceFormat;
+  downloads: number;
+  size: string;
+}
+
+export type MapPointType = "initiative" | "recycling" | "garden";
+
+export interface MapPoint {
+  id: string;
+  name: string;
+  type: MapPointType;
+  location: string;
+  distanceKm: number;
+  description: string;
+  x: number;
+  y: number;
+}
+
+export interface ImpactActivity {
+  label: string;
+  value: number;
+}
+
+export interface ImpactBadge {
+  name: string;
+  earned: boolean;
+}
+
+export interface ImpactMetrics {
+  co2SavedKg: number;
+  wasteDivertedKg: number;
+  treesPlanted: number;
+  volunteerHours: number;
+  goalCo2Kg: number;
+  weeklyActivity: ImpactActivity[];
+  badges: ImpactBadge[];
+}
+
+export type EventType = "cleanup" | "workshop" | "webinar" | "volunteer";
+
+export interface EventItem {
+  id: string;
+  title: string;
+  date: string;
+  location: string;
+  type: EventType;
+  seats: number;
+}

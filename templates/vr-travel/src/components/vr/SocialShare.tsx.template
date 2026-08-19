@@ -1,0 +1,61 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Share, Twitter, LinkedIn, GitHub } from "lucide-react";
+
+interface SocialShareProps {
+  shareText: string;
+  onShare: (platform: "twitter" | "linkedin" | "github") => void;
+}
+
+export default function SocialShare({ shareText, onShare }: SocialShareProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-4"
+    >
+      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Share Your Experience</h2>
+      <p className="text-gray-500 dark:text-gray-400">Tell the world about your virtual tour</p>
+
+      <div className="grid grid-cols-2 gap-3">
+        <button
+          onClick={() => onShare("twitter")}
+          className="flex items-center gap-2 rounded-full border border-gray-300 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+          aria-label="Share on Twitter"
+        >
+          <Twitter size={18} />
+          <span>Twitter</span>
+        </button>
+
+        <button
+          onClick={() => onShare("linkedin")}
+          className="flex items-center gap-2 rounded-full border border-gray-300 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+          aria-label="Share on LinkedIn"
+        >
+          <LinkedIn size={18} />
+          <span>LinkedIn</span>
+        </button>
+
+        <button
+          onClick={() => onShare("github")}
+          className="flex items-center gap-2 rounded-full border border-gray-300 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+          aria-label="Share on GitHub"
+        >
+          <GitHub size={18} />
+          <span>GitHub</span>
+        </button>
+      </div>
+
+      <textarea
+        placeholder="Share your experience..."
+        value={shareText}
+        className="mt-4 w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:text-gray-100"
+        aria-label="Share text"
+      />
+    </motion.div>
+  );
+}

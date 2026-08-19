@@ -1,0 +1,124 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Github, LinkedIn, Twitter, Mail, Phone, Heart, Sun, Moon } from "lucide-react";
+
+interface FooterProps {
+  name: string;
+  description: string;
+}
+
+export default function Footer({ name, description }: FooterProps) {
+  const animateVariants = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 }
+  };
+
+  return (
+    <footer
+      className="py-16 bg-gray-950 dark:bg-gray-900"
+    >
+      <motion.div
+        initial={animateVariants.initial}
+        whileInView={animateVariants.whileInView}
+        viewport={animateVariants.viewport}
+        transition={animateVariants.transition}
+        className="container mx-auto px-6"
+      >
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <h4 className="text-xl font-bold text-[var(--color-primary)] dark:text-white mb-4">
+              {name}
+            </h4>
+            <p className="text-gray-500 dark:text-gray-400">
+              {description}
+            </p>
+          </div>
+          <div>
+            <h5 className="text-semibold text-[var(--color-primary)] dark:text-white mb-4">Links</h5>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a href="#hero" className="hover:text-[var(--color-accent)] transition-colors">Home</a>
+              </li>
+              <li>
+                <a href="#projects" className="hover:text-[var(--color-accent)] transition-colors">Projects</a>
+              </li>
+              <li>
+                <a href="#about" className="hover:text-[var(--color-accent)] transition-colors">About</a>
+              </li>
+              <li>
+                <a href="#contact" className="hover:text-[var(--color-accent)] transition-colors">Contact</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h5 className="text-semibold text-[var(--color-primary)] dark:text-white mb-4">Social</h5>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-300 transition-colors"
+                >
+                  <Github className="h-4 w-4 mr-2" />
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-300 transition-colors"
+                >
+                  <LinkedIn className="h-4 w-4 mr-2" />
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://x.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-300 transition-colors"
+                >
+                  <Twitter className="h-4 w-4 mr-2" />
+                  Twitter
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="pt-8 border-t border-gray-800 dark:border-gray-200">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Copyright © {new Date().getFullYear()} {name}. All rights reserved.
+            </p>
+            <div className="flex gap-3">
+              <a
+                href="https://x.com/intent/tweet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1 text-xs border rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+              >
+                Tweet this
+              </a>
+              <a
+                href="mailto:hello@example.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1 text-xs border rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+              >
+                Email
+              </a>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </footer>
+  );
+}

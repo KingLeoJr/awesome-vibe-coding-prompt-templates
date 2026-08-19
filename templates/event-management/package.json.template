@@ -1,0 +1,30 @@
+{
+  "name": "{{app.slug}}",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "15.x",
+    "react": "19.x",
+    "react-dom": "19.x",
+    "framer-motion": "11.x",
+    "lucide-react": "0.x",
+    "clsx": "2.x",
+    "tailwind-merge": "2.x"
+  },
+  "devDependencies": {
+    "typescript": "5.x",
+    "@types/node": "20.x",
+    "@types/react": "19.x",
+    "@types/react-dom": "19.x",
+    "tailwindcss": "3.4.x",
+    "postcss": "8.x",
+    "autoprefixer": "10.x"
+  }
+}

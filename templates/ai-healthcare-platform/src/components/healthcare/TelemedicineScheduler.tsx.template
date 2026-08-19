@@ -1,0 +1,199 @@
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Calendar, CheckCircle2, Clock, Star, Video } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface Provider {
+  id: string;
+  name: string;
+  specialty: string;
+  rating: number;
+  nextAvailable: string;
+}
+
+export interface TimeSlot {
+  id: string;
+  providerId: string;
+  date: string;
+  time: string;
+}
+
+interface TelemedicineSchedulerProps {
+  providers: Provider[];
+  slots: TimeSlot[];
+}
+
+export default function TelemedicineScheduler({ providers, slots }: TelemedicineSchedulerProps) {
+  const [selectedProvider, setSelectedProvider] = useState<Provider | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
+  const [confirmed, setConfirmed] = useState(false);
+
+  const availableSlots = selectedProvider ? slots.filter((s) => s.providerId === selectedProvider.id) : [];
+
+  const confirm = () => {
+    if (!selectedSlot) return;
+    setConfirmed(true);
+  };
+
+  const reset = () => {
+    setConfirmed(false);
+    setSelectedSlot(null);
+    setSelectedProvider(null);
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="telemedicine-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <Video size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="telemedicine-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Secure video consultations</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Pick a provider, choose a time, and join from any device.</p>
+          </div>
+        </div>
+
+        {confirmed && selectedSlot && selectedProvider ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="mx-auto max-w-xl rounded-2xl border border-emerald-500/40 bg-emerald-500/5 p-8 text-center"
+          >
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-500">
+              <CheckCircle2 size={28} aria-hidden="true" />
+            </span>
+            <h3 className="mt-4 text-xl font-bold text-gray-900 dark:text-white">Consultation booked</h3>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+              {selectedProvider.name} · {selectedProvider.specialty} — {selectedSlot.date} at {selectedSlot.time}.
+              A secure video link and calendar invite are on their way to your inbox.
+            </p>
+            <button
+              onClick={reset}
+              className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 transition"
+            >
+              Book another
+            </button>
+          </motion.div>
+        ) : (
+          <div className="grid lg:grid-cols-[1fr_1fr] gap-6">
+            <div>
+              <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">1 · Choose a provider</h3>
+              <ul className="flex flex-col gap-3">
+                {providers.map((p, i) => (
+                  <motion.li
+                    key={p.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.06 }}
+                  >
+                    <button
+                      onClick={() => {
+                        setSelectedProvider(p);
+                        setSelectedSlot(null);
+                      }}
+                      aria-pressed={selectedProvider?.id === p.id}
+                      className={cn(
+                        "w-full flex items-center justify-between rounded-2xl border p-4 text-left transition",
+                        selectedProvider?.id === p.id
+                          ? "border-[var(--color-secondary)] bg-[var(--color-secondary)]/5"
+                          : "border-gray-200 dark:border-gray-800 hover:border-[var(--color-secondary)]"
+                      )}
+                    >
+                      <div>
+                        <p className="font-semibold text-gray-900 dark:text-white">{p.name}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{p.specialty}</p>
+                      </div>
+                      <div className="text-right text-sm">
+                        <p className="flex items-center justify-end gap-1 font-medium text-amber-500">
+                          <Star size={14} aria-hidden="true" />
+                          {p.rating.toFixed(1)}
+                        </p>
+                        <p className="text-xs text-gray-400 dark:text-gray-500">Next: {p.nextAvailable}</p>
+                      </div>
+                    </button>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+                2 · Pick a time
+                {selectedProvider && <span className="ml-2 text-sm font-normal text-gray-400">for {selectedProvider.name}</span>}
+              </h3>
+              <AnimatePresence mode="wait">
+                {!selectedProvider ? (
+                  <motion.div
+                    key="empty"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex h-full min-h-[220px] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 text-gray-400 dark:text-gray-600"
+                  >
+                    <Calendar size={36} aria-hidden="true" />
+                    <p className="max-w-xs text-center text-sm">Select a provider to see available video consultation slots.</p>
+                  </motion.div>
+                ) : (
+                  <motion.ul
+                    key={selectedProvider.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex flex-col gap-2.5"
+                  >
+                    {availableSlots.map((slot) => (
+                      <li key={slot.id}>
+                        <button
+                          onClick={() => setSelectedSlot(slot)}
+                          aria-pressed={selectedSlot?.id === slot.id}
+                          className={cn(
+                            "w-full flex items-center justify-between rounded-2xl border px-4 py-3 text-sm transition",
+                            selectedSlot?.id === slot.id
+                              ? "border-[var(--color-primary)] bg-[var(--color-primary)]/5"
+                              : "border-gray-200 dark:border-gray-800 hover:border-[var(--color-primary)]"
+                          )}
+                        >
+                          <span className="flex items-center gap-2 font-medium text-gray-900 dark:text-white">
+                            <Calendar size={15} aria-hidden="true" />
+                            {slot.date}
+                          </span>
+                          <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                            <Clock size={15} aria-hidden="true" />
+                            {slot.time}
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                    {availableSlots.length === 0 && (
+                      <li className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                        No slots this week — check back soon.
+                      </li>
+                    )}
+                  </motion.ul>
+                )}
+              </AnimatePresence>
+
+              <button
+                onClick={confirm}
+                disabled={!selectedSlot}
+                className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                <Video size={16} aria-hidden="true" />
+                Confirm video consult
+              </button>
+            </div>
+          </div>
+        )}
+      </motion.div>
+    </section>
+  );
+}

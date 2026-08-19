@@ -1,0 +1,72 @@
+{
+  "app": {
+    "name": "VrTravel",
+    "tagline": "Explore the world in 360-degree virtual experiences"
+  },
+  "userLevel": "intermediate",
+  "categories": ["africa", "asia", "europe", "north-america", "south-america", "oceania", "antarctica"],
+  "destinations": [
+    {
+      "id": "dest-001",
+      "title": "Paris Landmarks",
+      "region": "europe",
+      "landmarks": ["Eiffel Tower", "Louvre Museum", "Notre-Dame"],
+      "description": "Explore the city of light in 360-degree views",
+      "duration": 45,
+      "price": 15,
+      "imageUrl": "/vr-destinations/paris.jpg",
+      "isFeatured": true
+    },
+    {
+      "id": "dest-002",
+      "title": "Tropical Rainforest",
+      "region": "south-america",
+      "landmarks": ["Canopy Walk", "River Trail", "Wildlife Observatory"],
+      "description": "Journey through the world's most biodiverse ecosystem",
+      "duration": 60,
+      "price": 20,
+      "imageUrl": "/vr-destinations/rainforest.jpg",
+      "isFeatured": false
+    },
+    {
+      "id": "dest-003",
+      "title": "Tokyo Cityscape",
+      "region": "asia",
+      "landmarks": ["Shibuya Crossing", "Tokyo Tower", "Senso-ji Temple"],
+      "description": "Experience the neon energy of Tokyo's urban landscape",
+      "duration": 35,
+      "price": 18,
+      "imageUrl": "/vr-destinations/tokyo.jpg",
+      "isFeatured": false
+    }
+  ],
+  "filter": "all",
+  "bookings": [
+    {
+      "id": "book-001",
+      "destinationId": "dest-001",
+      "startDate": "2024-01-15",
+      "endDate": "2024-01-16",
+      "status": "booked",
+      "totalPrice": 15,
+      "activities": []
+    }
+  ],
+  "steps": [
+    {
+      "id": "step-001",
+      "title": "Choose a Destination",
+      "description": "Browse virtual destinations and select one to explore"
+    },
+    {
+      "id": "step-002",
+      "title": "Book Your Tour",
+      "description": "Select dates and book your VR experience"
+    },
+    {
+      "id": "step-003",
+      "title": "Start Your Journey",
+      "description": "Put on your VR headset and begin the experience"
+    }
+  ]
+}

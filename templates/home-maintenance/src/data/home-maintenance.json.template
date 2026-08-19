@@ -1,0 +1,89 @@
+{
+  "overview": {
+    "service": {
+      "id": "srv-001",
+      "title": "Plumbing Repair",
+      "description": "Fix leaks, unclog drains, and repair pipes for residential properties.",
+      "serviceType": "plumbing",
+      "estimatedCost": "$150 - $400",
+      "duration": "2-4 hours"
+    }
+  },
+  "requestService": {
+    "provider": {
+      "name": "Precision Plumbing Co.",
+      "availability": "Available this week, evenings upon request"
+    }
+  },
+  "requestService2": {
+    "provider": {
+      "name": "Electrician Pro Services",
+      "availability": "Available weekends and weekdays 9-5"
+    }
+  },
+  "overview2": {
+    "service": {
+      "id": "srv-002",
+      "title": "Electrical Inspection",
+      "description": "Full home electrical system inspection and safety assessment.",
+      "serviceType": "electrical",
+      "estimatedCost": "$200 - $500",
+      "duration": "3-5 hours"
+    }
+  },
+  "requestService3": {
+    "provider": {
+      "name": "HVAC Masters",
+      "availability": "Available weekdays, emergency service 24/7"
+    }
+  },
+  "overview3": {
+    "service": {
+      "id": "srv-003",
+      "title": "HVAC Maintenance",
+      "description": "Seasonal HVAC tune-up, filter replacement, and system optimization.",
+      "serviceType": "hvac",
+      "estimatedCost": "$120 - $250",
+      "duration": "1-2 hours"
+    }
+  },
+  "requestService4": {
+    "provider": {
+      "name": "Cleaning Solutions",
+      "availability": "Available daily, flexible scheduling"
+    }
+  },
+  "overview4": {
+    "service": {
+      "id": "srv-004",
+      "title": "Deep Cleaning",
+      "description": "Comprehensive deep cleaning for whole home, including windows and appliances.",
+      "serviceType": "cleaning",
+      "estimatedCost": "$300 - $600",
+      "duration": "4-6 hours"
+    }
+  },
+  "reminders": [
+    {
+      "id": "r-001",
+      "task": "Replace air filter",
+      "frequency": "monthly",
+      "nextDue": "2024-02-01T00:00:00Z",
+      "status": "active"
+    },
+    {
+      "id": "r-002",
+      "task": "Gutter cleaning",
+      "frequency": "quarterly",
+      "nextDue": "2024-03-15T00:00:00Z",
+      "status": "active"
+    },
+    {
+      "id": "r-003",
+      "task": "Smoke detector battery check",
+      "frequency": "yearly",
+      "nextDue": "2024-12-01T00:00:00Z",
+      "status": "active"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import { Heart, Quote } from "lucide-react";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+Swiper.use([Navigation, Pagination]);
+
+interface TestimonialsProps {
+  testimonials: { id: string; name: string; company: string; text: string; rating: number }[];
+}
+
+export default function Testimonials({ testimonials }: TestimonialsProps) {
+  const animateVariants = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 }
+  };
+
+  return (
+    <section
+      className="py-16 bg-gray-50 dark:bg-gray-950"
+      id="testimonials"
+    >
+      <motion.div
+        initial={animateVariants.initial}
+        whileInView={animateVariants.whileInView}
+        viewport={animateVariants.viewport}
+        transition={animateVariants.transition}
+        className="container mx-auto px-6"
+      >
+        <h2 className="text-3xl font-bold text-[var(--color-primary)] dark:text-white mb-8">
+          Testimonials
+        </h2>
+
+        <Swiper
+          spaceBetween={50}
+          slidesPerView={1}
+          loop={true}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          className="swiper-container"
+        >
+          <SwiperSlide
+            key={testimonials.id}
+            className="swiper-slide text-center py-8"
+          >
+            <div className="max-w-4xl mx-auto">
+              <Quote className="text-3xl mb-4 text-[var(--color-secondary)]" />
+              <p className="text-gray-700 dark:text-gray-300 mb-6 line-clamp-4">
+                {testimonials.text}
+              </p>
+              <div className="flex items-center justify-center gap-4">
+                <span className="text-[var(--color-primary)] font-medium">{testimonials.name}</span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">{testimonials.company}</span>
+              </div>
+              <div className="mt-4">
+                <span className="text-sm">
+                  {Array.from({ length: testialem.rating }, () => (
+                    <Heart className="h-3 w-3 text-yellow-500" />
+                  )).length}/
+                  {testialem.rating}
+                </span>
+              </div>
+            </div>
+          </SwiperSlide>
+        </Swiper>
+      </motion.div>
+    </section>
+  );
+}

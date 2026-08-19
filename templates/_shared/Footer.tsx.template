@@ -1,0 +1,57 @@
+import Link from "next/link";
+
+interface FooterProps {
+  name?: string;
+  description?: string;
+  navItems?: { label: string; href: string }[];
+  socialLinks?: {
+    github?: string;
+    linkedin?: string;
+    twitter?: string;
+    email?: string;
+  };
+}
+
+export default function Footer({
+  name = "{{app.name}}",
+  description = "{{app.tagline}}",
+  navItems = [
+    {{#each sections}}
+    { label: "{{name}}", href: "#{{name | lowercase}}" },
+    {{/each}}
+  ],
+  socialLinks = {},
+}: FooterProps) {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="border-t border-gray-200 dark:border-gray-800 py-12">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="text-sm text-gray-500">
+            © {currentYear} {name}. All rights reserved.
+          </div>
+
+          <nav className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+            {navItems.map((item) => (
+              <Link key={item.href} href={item.href} className="hover:text-gray-900 dark:hover:text-white transition">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        {description && (
+          <p className="mt-6 text-center text-xs text-gray-400 max-w-xl mx-auto">{description}</p>
+        )}
+
+        <div className="mt-6 flex items-center justify-center gap-5">
+          {{#if social.github}}<a href="{{social.github}}" target="_blank" rel="noreferrer" aria-label="GitHub" className="hover:text-blue-500 transition"><span>GitHub</span></a>{{/if}}
+          {{#if social.linkedin}}<a href="{{social.linkedin}}" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="hover:text-blue-500 transition"><span>LinkedIn</span></a>{{/if}}
+          {{#if social.twitter}}<a href="{{social.twitter}}" target="_blank" rel="noreferrer" aria-label="Twitter" className="hover:text-blue-500 transition"><span>Twitter</span></a>{{/if}}
+          {{#if social.email}}<a href="mailto:{{social.email}}" aria-label="Email" className="hover:text-blue-500 transition"><span>Email</span></a>{{/if}}
+        </div>
+      </div>
+    </footer>
+  );
+}

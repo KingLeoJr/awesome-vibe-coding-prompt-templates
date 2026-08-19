@@ -1,0 +1,87 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { BookOpen, FileText, PlayCircle, Wrench } from "lucide-react";
+
+export interface LearningResource {
+  id: string;
+  title: string;
+  type: "article" | "video" | "tool";
+  duration: string;
+  level: "beginner" | "intermediate" | "advanced";
+  topic: string;
+  url: string;
+}
+
+interface EducationLibraryProps {
+  resources: LearningResource[];
+}
+
+const typeMeta = {
+  article: { label: "Article", icon: FileText, tone: "text-[var(--color-primary)] bg-[var(--color-primary)]/10" },
+  video: { label: "Video", icon: PlayCircle, tone: "text-[var(--color-secondary)] bg-[var(--color-secondary)]/10" },
+  tool: { label: "Tool", icon: Wrench, tone: "text-[var(--color-accent)] bg-[var(--color-accent)]/10" },
+} as const;
+
+const levelTone: Record<LearningResource["level"], string> = {
+  beginner: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  intermediate: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  advanced: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function EducationLibrary({ resources }: EducationLibraryProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="learn-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <BookOpen size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="learn-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Learn the money stuff</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Articles, videos and tools to level up your financial literacy.</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {resources.map((r, i) => {
+            const meta = typeMeta[r.type];
+            return (
+              <motion.a
+                key={r.id}
+                href={r.url}
+                target="_blank"
+                rel="noreferrer"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 transition hover:shadow-lg hover:-translate-y-0.5"
+              >
+                <div className="flex items-center justify-between">
+                  <span className={`flex h-10 w-10 items-center justify-center rounded-xl ${meta.tone}`}>
+                    <meta.icon size={18} aria-hidden="true" />
+                  </span>
+                  <span className={`rounded-full px-2.5 py-1 text-[11px] font-medium capitalize ${levelTone[r.level]}`}>
+                    {r.level}
+                  </span>
+                </div>
+                <h3 className="mt-4 font-semibold text-gray-900 dark:text-white group-hover:text-[var(--color-primary)] transition-colors">
+                  {r.title}
+                </h3>
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  {meta.label} · {r.duration} · {r.topic}
+                </p>
+              </motion.a>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

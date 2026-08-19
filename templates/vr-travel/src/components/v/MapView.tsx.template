@@ -1,0 +1,48 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { MapPin, Globe } from "lucide-react";
+
+interface VirtualDestination {
+  id: string;
+  title: string;
+  region: string;
+  imageUrl?: string;
+}
+
+interface MapViewProps {
+  destination: VirtualDestination;
+  onZoomChange: (zoom: number) => void;
+}
+
+export default function MapView({ destination, onZoomChange }: MapViewProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="relative rounded-2xl overflow-hidden dark:border-gray-800"
+    >
+      <img
+        src={destination.imageUrl || "/placeholder-vr-map.jpg"}
+        alt={destination.title} className="w-full h-64 object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+      <div className="absolute bottom-6 left-6 right-6 p-4">
+        <div className="flex items-center gap-3">
+          <MapPin className="h-6 w-6 text-[var(--color-primary)]" />
+          <span className="text-white font-medium">{destination.title}</span>
+        </div>
+        <div className="mt-2 flex items-center gap-2">
+          <Compass className="h-5 w-5 text-[var(--color-secondary)]" />
+          <span className="text-white text-sm">Virtual Location</span>
+        </div>
+      </div>
+      <div className="absolute top-6 right-6">
+        <Globe className="h-6 w-6 text-[var(--color-accent)] hover:text-[var(--color-primary)] transition cursor-pointer" onClick={() => onZoomChange(12)} aria-label="Zoom in"/>
+      </div>
+    </motion.div>
+  );
+}

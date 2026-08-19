@@ -1,0 +1,91 @@
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* :root CSS variables from theme tokens */
+:root {
+  --color-primary: {{theme.color.primary}};
+  --color-secondary: {{theme.color.secondary}};
+  --color-accent: {{theme.color.accent}};
+  --color-primary-dark: {{theme.color.primary_dark}};
+  --color-secondary-dark: {{theme.color.secondary_dark}};
+  --color-accent-dark: {{theme.color.accent_dark}};
+  --font-sans: {{theme.font.sans}};
+  --font-mono: {{theme.font.mono}};
+  --radius-card: {{theme.radius.card}};
+}
+
+/* .dark CSS variables */
+.dark {
+  --color-primary: {{theme.color.primary_dark}};
+  --color-secondary: {{theme.color.secondary_dark}};
+  --color-accent: {{theme.color.accent_dark}};
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  margin: 0;
+  padding: 0;
+}
+
+/* Focus visible */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary);
+  border-radius: 4px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Reduced motion utility */
+@media (prefers-reduced-motion: reduce) {
+  [data-rush-motion] {
+    animation: none !important;
+    transition: none !important;
+  }
+}

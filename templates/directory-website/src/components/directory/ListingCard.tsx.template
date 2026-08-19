@@ -1,0 +1,104 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
+import { BadgeCheck, Eye, MapPin, Star } from "lucide-react";
+import Card from "@/components/shared/Card";
+import type { IndustryListing } from "@/lib/types";
+
+interface ListingCardProps {
+  listing: IndustryListing;
+}
+
+export default function ListingCard({ listing }: ListingCardProps) {
+  const [quickView, setQuickView] = useState(false);
+
+  return (
+    <Card className="group overflow-hidden">
+      <div className="relative h-44 w-full overflow-hidden">
+        <img
+          src={listing.imageUrl}
+          alt={listing.name}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" aria-hidden="true" />
+        <span className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-gray-800 dark:bg-gray-950/90 dark:text-gray-100">
+          <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" aria-hidden="true" />
+          {listing.rating.toFixed(1)}
+          <span className="font-normal text-gray-500 dark:text-gray-400">({listing.reviewCount})</span>
+        </span>
+        {listing.verified && (
+          <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-[var(--color-primary)] px-2.5 py-1 text-xs font-semibold text-white">
+            <BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" />
+            Verified
+          </span>
+        )}
+        <button
+          onClick={() => setQuickView((v) => !v)}
+          aria-expanded={quickView}
+          aria-label={`Quick view ${listing.name}`}
+          className="absolute bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white/90 px-4 py-1.5 text-xs font-semibold text-gray-900 opacity-0 shadow-lg backdrop-blur transition group-hover:opacity-100 dark:bg-gray-950/90 dark:text-white"
+        >
+          <Eye className="h-3.5 w-3.5" aria-hidden="true" />
+          Quick view
+        </button>
+      </div>
+
+      <div className="flex flex-1 flex-col gap-3 p-5">
+        <div>
+          <h3 className="font-semibold text-gray-900 dark:text-white">{listing.name}</h3>
+          <p className="mt-1 flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+            <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+            {listing.location} &middot; {listing.category}
+          </p>
+        </div>
+
+        <AnimatePresence initial={false}>
+          {quickView && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden"
+            >
+              <dl className="grid grid-cols-2 gap-2 rounded-xl bg-gray-50 p-3 text-xs dark:bg-gray-900">
+                {listing.attributes.slice(0, 4).map((attribute) => (
+                  <div key={attribute.label}>
+                    <dt className="text-gray-500 dark:text-gray-400">{attribute.label}</dt>
+                    <dd className="mt-0.5 font-medium text-gray-900 dark:text-white">{attribute.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="flex flex-wrap gap-1.5">
+          {listing.tags.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            <span className="font-semibold text-gray-900 dark:text-white">${listing.priceMin}</span>
+            {listing.priceMax > listing.priceMin && <span> - ${listing.priceMax}</span>}
+          </p>
+          <Link
+            href={`/listings/${listing.id}`}
+            className="inline-flex items-center rounded-full border border-gray-300 px-4 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+          >
+            View details
+          </Link>
+        </div>
+      </div>
+    </Card>
+  );
+}

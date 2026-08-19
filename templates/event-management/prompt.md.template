@@ -1,0 +1,76 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  backend.technology: "{{backend.technology}}"
+  frontend.framework: "{{frontend.framework}}"
+  auth.solution: "{{auth.solution}}"
+  ui.library: "{{ui.library}}"
+  state.management: "{{state.management}}"
+  payments.provider: "{{payments.provider}}"
+  email.provider: "{{email.provider}}"
+  sms.provider: "{{sms.provider}}"
+  maps.provider: "{{maps.provider}}"
+  chatbot.provider: "{{chatbot.provider}}"
+  streaming.provider: "{{streaming.provider}}"
+  calendar.provider: "{{calendar.provider}}"
+  mobile.framework: "{{mobile.framework}}"
+  i18n.library: "{{i18n.library}}"
+  analytics.provider: "{{analytics.provider}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{backend.technology}} for backend and {{frontend.framework}} for frontend
+Implement user authentication and authorization using {{auth.solution}} for secure access
+Design a modern, user-friendly UI using {{ui.library}} for responsive design
+Use {{state.management}} for state management to handle complex application states
+Create an event creation system with customizable templates for different event types
+Implement a ticketing system with various pricing tiers and discount codes
+Design a real-time event calendar with filtering options by date, category, and location
+Create a user dashboard for managing events, registrations, and ticket sales
+Implement a social media integration feature for event sharing and promotion
+Design an RSVP system with automated reminders via email and SMS
+Create an interactive venue map with seating arrangements using {{maps.provider}} API
+Implement a feedback and review system for attendees to rate events
+Design a sponsorship management module for tracking sponsors and partnerships
+Create a mobile app version using {{mobile.framework}} for on-the-go access to events
+Implement a payment processing system with {{payments.provider}} integration for secure transactions
+Design an analytics dashboard for tracking ticket sales, attendance, and revenue using {{analytics.provider}}
+Create a customizable email marketing system for event promotions using {{email.provider}} API
+Implement a guest list management feature with check-in capabilities via QR codes
+Design an event blog section for sharing news, updates, and insights related to events
+Create a community forum for attendees to discuss events and network with each other
+Implement a multi-language support feature using {{i18n.library}} for global accessibility
+Design an event merchandise store with inventory management capabilities
+Create a referral program for attendees to earn rewards by promoting events
+Implement an automated post-event survey system to gather attendee feedback
+Design a virtual event platform integration for hosting webinars and online conferences
+Create a custom API for third-party integrations (e.g., CRM systems)
+Implement GDPR compliance features such as cookie consent and data protection policies
+Design an accessibility feature to ensure compliance with WCAG standards
+Create a loyalty program for frequent attendees with tiered rewards and benefits
+Implement an interactive agenda builder for multi-session events with speaker profiles
+Design a sponsorship package management system with tiered offerings and benefits
+Create a custom badge generator for attendees based on participation levels or achievements
+Implement live streaming capabilities for hybrid events using {{streaming.provider}} integration
+Design an event countdown timer on the homepage to create urgency around upcoming events
+Create an FAQ section to address common attendee questions regarding events and policies
+Implement a chatbot feature using {{chatbot.provider}} for instant support
+Design an image gallery feature to showcase past events through photos and videos
+Create an affiliate marketing program allowing users to earn commissions on ticket sales
+Implement custom URL shorteners for easy sharing of event links
+Design a volunteer management system to coordinate staff and volunteers at events
+Create a sponsorship proposal generator to streamline the process of securing sponsors
+Implement push notifications in the mobile app for real-time updates about events
+Design an interactive poll feature during live events to engage attendees
+Create a resource center with downloadable materials related to upcoming events
+Implement advanced search functionality with filters by date, location, category, etc.
+Design a custom reporting tool that allows organizers to generate detailed reports on various metrics
+Create integrations with popular calendar applications ({{calendar.provider}})
+Implement session recording features for virtual events, allowing attendees to catch up later
+Design user profiles where attendees can manage their registrations, preferences, and payment methods

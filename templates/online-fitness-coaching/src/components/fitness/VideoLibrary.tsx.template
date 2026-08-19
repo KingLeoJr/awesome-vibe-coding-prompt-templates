@@ -1,0 +1,83 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Play, Television, Filter } from "lucide-react";
+import { cn } from "@/lib-utils";
+
+interface VideoDemo {
+  id: string;
+  title: string;
+  level: string;
+  duration: string;
+  url: string;
+  category: string;
+}
+
+interface VideoLibraryProps {
+  videos: VideoDemo[];
+  categories: string[];
+}
+
+export default function VideoLibrary({ videos, categories }: VideoLibraryProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Filter className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          <select
+            className="rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:text-white"
+            disabled
+          >
+            <option>All Levels</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+          {videos.map((video, index) => (
+            <motion.div
+              key={video.id}
+              className="group rounded-xl border overflow-hidden bg-gray-50 dark:bg-gray-800 hover:border-[var(--color-primary)] transition-colors"
+              animate={{ opacity: [0.8, 1], transition: { duration: 0.3, delay: index * 0.08 } }}
+            >
+              <div className="aspect-[16/9] w-full rounded-t-lg overflow-hidden">
+                <iframe
+                  src={video.url}
+                  title={video.title}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Play className="h-4 w-4 text-[var(--color-primary)]" />
+                  <h4 className="font-medium text-gray-900 dark:text-white">{video.title}</h4>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {video.duration} · {video.category}
+                </p>
+                <p className="text-xs text-gray-400 dark:text-gray-500">
+                  Level: {video.level}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+          {videos.length === 0 && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-12">
+              No videos available yet. Add exercise demonstrations to the library.
+            </p>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}

@@ -1,0 +1,148 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CalendarX, LayoutGrid, Search, SlidersHorizontal } from "lucide-react";
+import { cn } from "@/lib/utils";
+import CouponCard, { type Coupon } from "./CouponCard";
+import { coupons as sampleCoupons } from "@/data/{{app.slug}}.json";
+
+type SortKey = "popular" | "newest" | "expiring";
+
+interface CouponBrowserProps {
+  coupons?: Coupon[];
+  categories?: string[];
+  locale?: string;
+}
+
+export default function CouponBrowser({
+  coupons = sampleCoupons,
+  categories = ["All", ...new Set(sampleCoupons.map((c) => c.category))],
+  locale = "{{i18n.default_locale}}",
+}: CouponBrowserProps) {
+  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [sort, setSort] = useState<SortKey>("popular");
+  const [onlyVerified, setOnlyVerified] = useState(false);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return coupons
+      .filter((c) => activeCategory === "All" || c.category === activeCategory)
+      .filter((c) => !onlyVerified || c.verified)
+      .filter((c) => {
+        if (!q) return true;
+        return (
+          c.title.toLowerCase().includes(q) ||
+          c.store.toLowerCase().includes(q) ||
+          c.category.toLowerCase().includes(q)
+        );
+      })
+      .sort((a, b) => {
+        if (sort === "popular") return b.redemptions - a.redemptions;
+        if (sort === "newest") return new Date(b.expires).getTime() - new Date(a.expires).getTime();
+        return new Date(a.expires).getTime() - new Date(b.expires).getTime();
+      });
+  }, [coupons, query, activeCategory, onlyVerified, sort]);
+
+  return (
+    <div>
+      <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="relative w-full max-w-md">
+          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search by store, product, or category…"
+            aria-label="Search coupons"
+            className="w-full rounded-full border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
+          />
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <label className="flex items-center gap-2 rounded-full border border-gray-200 px-3 py-2 text-xs font-medium text-gray-600 dark:border-gray-700 dark:text-gray-300">
+            <input
+              type="checkbox"
+              checked={onlyVerified}
+              onChange={(e) => setOnlyVerified(e.target.checked)}
+              className="h-3.5 w-3.5 accent-[var(--color-primary)]"
+            />
+            Verified only
+          </label>
+          <div className="relative">
+            <SlidersHorizontal size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as SortKey)}
+              aria-label="Sort coupons"
+              className="appearance-none rounded-full border border-gray-200 bg-white py-2 pl-8 pr-8 text-xs font-medium text-gray-700 outline-none transition focus:border-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-950 dark:text-gray-200"
+            >
+              <option value="popular">Most popular</option>
+              <option value="newest">Newest</option>
+              <option value="expiring">Expiring soonest</option>
+            </select>
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">▾</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Categories">
+        {categories.map((category) => (
+          <button
+            key={category}
+            role="tab"
+            aria-selected={activeCategory === category}
+            onClick={() => setActiveCategory(category)}
+            className={cn(
+              "rounded-full px-4 py-2 text-sm font-medium transition",
+              activeCategory === category
+                ? "bg-[var(--color-primary)] text-white shadow-sm"
+                : "border border-gray-200 bg-white text-gray-600 hover:border-[var(--color-primary)]/40 hover:text-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-950 dark:text-gray-300"
+            )}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <AnimatePresence mode="wait">
+        {filtered.length > 0 ? (
+          <motion.div
+            key={`${activeCategory}-${query}-${sort}-${onlyVerified}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
+          >
+            {filtered.map((coupon, index) => (
+              <CouponCard key={coupon.id} coupon={coupon} index={index} locale={locale} />
+            ))}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-gray-300 py-16 text-center dark:border-gray-700"
+          >
+            <CalendarX size={32} className="text-gray-300 dark:text-gray-600" />
+            <p className="text-sm font-medium text-gray-600 dark:text-gray-300">No coupons match your filters.</p>
+            <button
+              onClick={() => {
+                setQuery("");
+                setActiveCategory("All");
+                setOnlyVerified(false);
+              }}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary)] hover:underline"
+            >
+              <LayoutGrid size={14} />
+              Clear filters
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

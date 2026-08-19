@@ -1,0 +1,236 @@
+{
+  "blueprint_id": "7c1e9f30-8a4d-4b5e-b6c7-1d2e3f4a5b6c",
+  "slug": "directory-website",
+  "name": "DirectoryWebsite",
+  "category": "Template",
+  "archetype": "DirectoryListing",
+  "tagline": "Discover, compare, and review trusted local businesses in your area.",
+  "builder_prompt_source": "prompt.md.template",
+
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React 19 / Next.js 15", "version_hint": "app router", "purpose": "Server-rendered directory, listing, and marketing pages" },
+    { "layer": "backend", "technology": "Next.js API routes", "version_hint": "route handlers", "purpose": "Listing CRUD, search, reviews, auth" },
+    { "layer": "database", "technology": "PostgreSQL + Prisma", "version_hint": "16 / 6.x", "purpose": "Listings, categories, reviews, users" },
+    { "layer": "auth", "technology": "NextAuth / Auth.js", "version_hint": "5.x", "purpose": "User accounts, listing management, verified badges" },
+    { "layer": "state", "technology": "React hooks + context", "version_hint": "", "purpose": "Search filters, favorites, comparison state" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4", "purpose": "Grid layouts, hover states, dark mode" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11", "purpose": "Card reveals, lightbox transitions, accordions" },
+    { "layer": "realtime", "technology": "WebSockets (Socket.io)", "version_hint": "", "purpose": "Real-time trending searches and listing updates" }
+  ],
+
+  "features": [
+    { "description": "Create a responsive {industry} directory website with a clean, modern design", "priority": "core", "order_index": 0 },
+    { "description": "Implement a hero section with search bar, popular categories, and featured listings", "priority": "core", "order_index": 1 },
+    { "description": "Design a sticky header with logo, navigation, and 'Add Listing' CTA button", "priority": "core", "order_index": 2 },
+    { "description": "Use a sans-serif font for headings (22-28px) and body text (16px) in a legible color scheme", "priority": "core", "order_index": 3 },
+    { "description": "Create a grid-based layout for directory listings with hover effects and quick view options", "priority": "core", "order_index": 4 },
+    { "description": "Implement advanced search functionality with filters for {industry-specific criteria}", "priority": "core", "order_index": 5 },
+    { "description": "Design category pages with subcategories, featured listings, and alphabetical browsing", "priority": "enhanced", "order_index": 6 },
+    { "description": "Create detailed listing pages with photo galleries, maps, contact info, and user reviews", "priority": "enhanced", "order_index": 7 },
+    { "description": "Implement user accounts with dashboard for managing listings and saved favorites", "priority": "enhanced", "order_index": 8 },
+    { "description": "Design a multi-step submission form for new listings with progress indicator", "priority": "enhanced", "order_index": 9 },
+    { "description": "Create a pricing page with comparison table for different listing tiers", "priority": "enhanced", "order_index": 10 },
+    { "description": "Implement a review and rating system with verified user badges", "priority": "core", "order_index": 11 },
+    { "description": "Design an FAQ page with expandable sections and search functionality", "priority": "enhanced", "order_index": 12 },
+    { "description": "Create a responsive footer with sitemap, social links, and newsletter signup", "priority": "core", "order_index": 13 },
+    { "description": "Implement schema markup for local businesses and organization", "priority": "enhanced", "order_index": 14 },
+    { "description": "Design a contact page with form, map, and direct contact options", "priority": "enhanced", "order_index": 15 },
+    { "description": "Create a blog section with category filtering and featured posts", "priority": "advanced", "order_index": 16 },
+    { "description": "Implement a notification system for listing updates and messages", "priority": "advanced", "order_index": 17 },
+    { "description": "Design a privacy policy page with clear sections and updated cookie consent", "priority": "advanced", "order_index": 18 },
+    { "description": "Create terms of service page with collapsible sections for easy navigation", "priority": "advanced", "order_index": 19 },
+    { "description": "Implement social sharing buttons for listings and blog posts", "priority": "enhanced", "order_index": 20 },
+    { "description": "Design a 404 page with search functionality and popular category links", "priority": "advanced", "order_index": 21 },
+    { "description": "Create an about page showcasing company history and team members", "priority": "advanced", "order_index": 22 },
+    { "description": "Implement a responsive image gallery with lazy loading and lightbox effect", "priority": "enhanced", "order_index": 23 },
+    { "description": "Design a testimonials page with filter options and trust indicators", "priority": "enhanced", "order_index": 24 },
+    { "description": "Create a sitemap page for easy navigation and SEO benefits", "priority": "advanced", "order_index": 25 },
+    { "description": "Implement breadcrumb navigation throughout the site", "priority": "enhanced", "order_index": 26 },
+    { "description": "Design a mobile app promotion page with download links and features", "priority": "advanced", "order_index": 27 },
+    { "description": "Create a partners page with logos and integration information", "priority": "advanced", "order_index": 28 },
+    { "description": "Implement a help center with searchable knowledge base and ticket system", "priority": "advanced", "order_index": 29 },
+    { "description": "Design an advertising page with ad placement options and pricing", "priority": "advanced", "order_index": 30 },
+    { "description": "Create a stats page showcasing directory growth and user engagement", "priority": "advanced", "order_index": 31 },
+    { "description": "Implement a newsletter archive page with categorized past issues", "priority": "advanced", "order_index": 32 },
+    { "description": "Design a community guidelines page with clear rules and reporting process", "priority": "advanced", "order_index": 33 },
+    { "description": "Create a careers page with current openings and application process", "priority": "advanced", "order_index": 34 },
+    { "description": "Implement a user-generated content section for {industry} tips and advice", "priority": "advanced", "order_index": 35 },
+    { "description": "Design an events calendar page with filtering and registration options", "priority": "advanced", "order_index": 36 },
+    { "description": "Create a resources page with downloadable guides and whitepapers", "priority": "advanced", "order_index": 37 },
+    { "description": "Implement a dark mode toggle for improved user experience", "priority": "core", "order_index": 38 },
+    { "description": "Design a comparison tool for side-by-side listing evaluation", "priority": "enhanced", "order_index": 39 },
+    { "description": "Create a trending searches page updated in real-time", "priority": "advanced", "order_index": 40 }
+  ],
+
+  "sections": [
+    { "name": "Hero", "component_path": "src/app/page.tsx", "layout_type": "hero", "is_visible": true, "order_index": 1 },
+    { "name": "Browse", "component_path": "src/components/directory/ListingCard.tsx", "layout_type": "grid", "is_visible": true, "order_index": 2 },
+    { "name": "Search", "component_path": "src/components/directory/SearchFilters.tsx", "layout_type": "filters", "is_visible": true, "order_index": 3 },
+    { "name": "Gallery", "component_path": "src/components/directory/ListingGallery.tsx", "layout_type": "gallery", "is_visible": true, "order_index": 4 },
+    { "name": "Reviews", "component_path": "src/components/directory/ReviewSystem.tsx", "layout_type": "list", "is_visible": true, "order_index": 5 },
+    { "name": "Compare", "component_path": "src/app/page.tsx", "layout_type": "table", "is_visible": true, "order_index": 6 }
+  ],
+
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "logoText": "string", "navItems": "Array<{label, href}>", "ctaText": "string", "ctaHref": "string" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "ListingCard", "path": "src/components/directory/ListingCard.tsx", "props": { "listing": "IndustryListing" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "SearchFilters", "path": "src/components/directory/SearchFilters.tsx", "props": { "categories": "DirectoryCategory[]", "listings": "IndustryListing[]", "industry": "string", "criteriaLabel": "string" }, "mixins": [] },
+    { "name": "ListingGallery", "path": "src/components/directory/ListingGallery.tsx", "props": { "items": "GalleryItem[]" }, "mixins": [] },
+    { "name": "ReviewSystem", "path": "src/components/directory/ReviewSystem.tsx", "props": { "reviews": "Review[]" }, "mixins": [] },
+    { "name": "HomePage", "path": "src/app/page.tsx", "props": {}, "mixins": ["_shared/Footer.tsx.template", "_shared/Button.tsx.template"] }
+  ],
+
+  "data_models": [
+    {
+      "name": "IndustryListing",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "category", "type": "string", "required": true },
+        { "name": "location", "type": "string", "required": true },
+        { "name": "rating", "type": "number", "required": true },
+        { "name": "reviewCount", "type": "number", "required": true },
+        { "name": "verified", "type": "boolean", "required": true },
+        { "name": "priceMin", "type": "number", "required": true },
+        { "name": "priceMax", "type": "number", "required": true },
+        { "name": "attributes", "type": "Array<{label, value}>", "required": true },
+        { "name": "featured", "type": "boolean", "required": true },
+        { "name": "imageUrl", "type": "string", "required": true },
+        { "name": "tags", "type": "string[]", "required": true }
+      ]
+    },
+    {
+      "name": "Review",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "listingId", "type": "string", "required": true },
+        { "name": "author", "type": "string", "required": true },
+        { "name": "rating", "type": "number", "required": true },
+        { "name": "date", "type": "string", "required": true },
+        { "name": "comment", "type": "string", "required": true },
+        { "name": "verifiedUser", "type": "boolean", "required": true }
+      ]
+    },
+    {
+      "name": "DirectoryCategory",
+      "fields": [
+        { "name": "name", "type": "string", "required": true },
+        { "name": "slug", "type": "string", "required": true },
+        { "name": "count", "type": "number", "required": true }
+      ]
+    },
+    {
+      "name": "GalleryItem",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "src", "type": "string", "required": true },
+        { "name": "alt", "type": "string", "required": true },
+        { "name": "caption", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "Testimonial",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "quote", "type": "string", "required": true },
+        { "name": "author", "type": "string", "required": true },
+        { "name": "role", "type": "string", "required": true },
+        { "name": "rating", "type": "number", "required": true }
+      ]
+    },
+    {
+      "name": "FAQ",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "question", "type": "string", "required": true },
+        { "name": "answer", "type": "string", "required": true }
+      ]
+    }
+  ],
+
+  "integrations": [
+    { "service": "Google Maps API", "purpose": "Maps and location data on listing detail pages", "config_params": { "env": "NEXT_PUBLIC_GOOGLE_MAPS_KEY" } },
+    { "service": "Stripe", "purpose": "Premium listing tiers and payment processing", "config_params": { "env": "STRIPE_SECRET_KEY" } },
+    { "service": "SendGrid", "purpose": "Notification system for listing updates and messages", "config_params": { "env": "SENDGRID_API_KEY" } },
+    { "service": "Auth.js", "purpose": "User accounts with dashboard and favorites", "config_params": { "env": "AUTH_SECRET" } },
+    { "service": "Schema.org", "purpose": "LocalBusiness and Organization structured data", "config_params": {} }
+  ],
+
+  "nfrs": [
+    { "type": "SEO", "requirement": "Per-listing schema markup (LocalBusiness), sitemap, and canonical URLs" },
+    { "type": "Performance", "requirement": "Lazy-load gallery images; LCP under 1.5s" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA - focus states, aria labels, keyboard-navigable lightbox" },
+    { "type": "Responsive", "requirement": "Fluid grid, sticky header, and touch-friendly hover/quick-view interactions" },
+    { "type": "Security", "requirement": "Rate-limited search API, sanitized user-generated content, secure auth sessions" },
+    { "type": "PWA", "requirement": "Installable with offline shell and cached listing pages" },
+    { "type": "Testing", "requirement": "Unit tests for filter/sort logic; e2e for listing submission flow" }
+  ],
+
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#4f46e5" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#0891b2" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f43f5e" },
+    { "token_type": "font", "token_name": "font.family", "token_value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+    { "token_type": "spacing", "token_name": "spacing.base", "token_value": "1rem" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+
+  "deployment": [
+    { "platform": "Vercel", "config": { "framework": "nextjs", "buildCommand": "next build", "images": { "remotePatterns": ["images.unsplash.com"] } } }
+  ],
+
+  "template_files": [
+    { "path": "README.md", "source": "templates/directory-website/README.md", "syntax": "mustache", "mixins": [] },
+    { "path": "blueprint.json", "source": "templates/directory-website/blueprint.json.template", "syntax": "mustache", "mixins": [] },
+    { "path": "prompt.md", "source": "templates/directory-website/prompt.md.template", "syntax": "mustache", "mixins": [] },
+    { "path": "package.json", "source": "templates/directory-website/package.json.template", "syntax": "mustache", "mixins": [] },
+    { "path": "config/site.config.ts", "source": "templates/directory-website/config/site.config.ts.template", "syntax": "mustache", "mixins": [] },
+    { "path": "styles/globals.css", "source": "templates/directory-website/styles/globals.css.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/app/page.tsx", "source": "templates/directory-website/src/app/page.tsx.template", "syntax": "mustache", "mixins": ["_shared/Footer.tsx.template", "_shared/Button.tsx.template"] },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/directory-website/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/directory/ListingCard.tsx", "source": "templates/directory-website/src/components/directory/ListingCard.tsx.template", "syntax": "mustache", "mixins": ["_shared/Card.tsx.template"] },
+    { "path": "src/components/directory/SearchFilters.tsx", "source": "templates/directory-website/src/components/directory/SearchFilters.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/components/directory/ListingGallery.tsx", "source": "templates/directory-website/src/components/directory/ListingGallery.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/components/directory/ReviewSystem.tsx", "source": "templates/directory-website/src/components/directory/ReviewSystem.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/data/directory-website.json", "source": "templates/directory-website/src/data/directory-website.json.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/lib/types.ts", "source": "templates/directory-website/src/lib/types.ts.template", "syntax": "mustache", "mixins": [] }
+  ],
+
+  "extra_config": {
+    "industry": {
+      "name": "home services",
+      "listing": "business",
+      "criteria": ["Service type", "Price range", "Minimum rating", "Availability", "Distance"]
+    },
+    "theme": {
+      "color": { "primary": "#4f46e5", "secondary": "#0891b2", "accent": "#f43f5e" },
+      "font": { "family": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" }
+    },
+    "header": { "cta_text": "Add Listing", "cta_href": "/listings/new", "is_fixed": true },
+    "hero": {
+      "headline": "Find your next local favorite",
+      "subtext": "Search, compare, and review trusted local businesses with verified ratings and insider tips.",
+      "placeholder": "Search businesses, services, or keywords..."
+    },
+    "seo": {
+      "title": "DirectoryWebsite - Discover, compare & review trusted local businesses",
+      "og_image": "https://directory-demo.example.com/og.jpg",
+      "schema_type": "LocalBusiness"
+    },
+    "deployment": { "url": "https://directory-demo.example.com", "domain": "directory-demo.example.com", "analytics_id": "G-XXXXXXXXXX" },
+    "contact": { "email": "hello@directory.example.com", "phone": "+1 (555) 010-4040" },
+    "social": {
+      "github": "https://github.com/example/directory-website",
+      "linkedin": "https://www.linkedin.com/company/directory-website",
+      "twitter": "https://twitter.com/directorywebsite"
+    },
+    "nav": [
+      { "label": "Browse", "href": "#browse" },
+      { "label": "Search", "href": "#search" },
+      { "label": "Gallery", "href": "#gallery" },
+      { "label": "Reviews", "href": "#reviews" },
+      { "label": "Compare", "href": "#compare" }
+    ]
+  }
+}

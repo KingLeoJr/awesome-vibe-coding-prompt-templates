@@ -1,0 +1,39 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  auth.protocol: "{{auth.protocol}}"
+  backend.technology: "{{backend.technology}}"
+  database: "{{database.technology}}"
+  state.management: "{{state.management}}"
+  ui.library: "{{ui.library}}"
+  animation: "{{animation.technology}}"
+  payments.provider: "{{payments.provider}}"
+  realtime: "{{realtime.technology}}"
+  devops: "{{devops.technology}}"
+  currency: "{{currency.symbol}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{frontend.framework}} for the frontend and {{backend.technology}} for the backend. Implement user authentication and authorization using {{auth.protocol}} for secure access. Design an engaging UI using {{ui.library}} for a modern and user-friendly experience. Use {{state.management}} for state management to handle complex application states. Create customizable user profiles that include pet details (type of pet, breed, age, medical history) and owner preferences. Allow users to input specific needs or concerns regarding their pets (e.g., dietary restrictions, behavioral issues). Implement an interactive service request tool that allows users to submit requests for various pet services (e.g., grooming, training, boarding) with photo upload. Design a booking system that allows users to schedule appointments with local pet service providers based on availability, including emergency services with expedited scheduling. Create a searchable directory of vetted pet service providers categorized by type (e.g., groomers, trainers, veterinarians). Implement a review and rating system that allows users to provide feedback on service providers based on their experiences. Implement a system that sends automated reminders to users for regular pet care tasks (e.g., vaccinations, grooming appointments) with customizable reminder settings. Create a community forum where users can share experiences, ask questions about pet care, and provide tips to one another, with categories for different types of pets (e.g., dogs, cats, exotic pets). Create a resource library with articles, videos, and guides on common pet care topics such as nutrition, training techniques, and health tips, with search functionality allowing users to filter by topic or type of pet. Create personalized notifications for upcoming service appointments, new articles in the resource library, and reminders for pet care tasks based on user preferences. Design an FAQ section addressing common questions about pet care services, scheduling processes, and using the platform effectively. Create a blog featuring expert advice on pet care trends, training tips, health guidelines, and success stories from users who have utilized the service. Implement a referral program that rewards users for inviting friends to join the platform or use its services. Develop an interactive cost estimator tool that helps users estimate potential costs for various pet services based on common pricing data. Allow users to log their pets' health records (vaccinations, vet visits) and track important health metrics over time. Implement data analytics to personalize recommendations based on user behavior and preferences in pet care services. Design a custom API for third-party developers to integrate with the platform (e.g., local pet supply stores). Create an event calendar highlighting local pet-related events such as adoption days, training classes, or community gatherings. Incorporate gamification elements such as badges for completing pet care challenges or participating in community discussions.
+
+## Non-functional requirements
+
+- **Security:** JWT with short-lived access tokens + refresh rotation; passwords hashed; TLS 1.3 in transit; SSL encryption for all data.
+- **Performance:** service directory and booking forms render under 2s on mid-range mobile; appointment scheduling under 3s.
+- **Responsive:** 320px → 4K, grids and forms reflow gracefully on mobile.
+- **Accessibility:** WCAG 2.1 AA, reduced-motion support, semantic landmarks, aria-labels.
+- **SEO:** server-rendered marketing shell, Open Graph + JSON-LD schema.
+
+## Acceptance criteria
+
+- A user can sign up, create a pet profile, request a service, and book an appointment.
+- A user can view vaccination records, log health metrics, and receive reminder notifications.
+- The resource library renders articles and guides filtered by pet type on mobile and desktop.
+- The app passes `npm run lint` and `npm run typecheck` with no errors.

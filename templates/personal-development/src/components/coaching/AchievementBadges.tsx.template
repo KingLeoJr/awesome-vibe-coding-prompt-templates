@@ -1,0 +1,103 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Award, BookOpenCheck, Medal, Target, Users, type LucideIcon } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface Badge {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  points: number;
+  earned: boolean;
+}
+
+interface AchievementBadgesProps {
+  badges: Badge[];
+}
+
+const BADGE_ICONS: Record<string, LucideIcon> = {
+  award: Award,
+  book: BookOpenCheck,
+  medal: Medal,
+  target: Target,
+  users: Users,
+};
+
+export default function AchievementBadges({ badges }: AchievementBadgesProps) {
+  const earned = badges.filter((badge) => badge.earned).length;
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="badges-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+              <Award size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="badges-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Badges</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Earned for completing courses and hitting milestones · {earned} of {badges.length} unlocked.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          {badges.map((badge, index) => {
+            const Icon = BADGE_ICONS[badge.icon] ?? Award;
+            return (
+              <motion.div
+                key={badge.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+              >
+                <Card
+                  className={cn(
+                    "flex h-full flex-col items-center gap-3 p-6 text-center",
+                    !badge.earned && "opacity-50"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "flex h-14 w-14 items-center justify-center rounded-2xl",
+                      badge.earned
+                        ? "bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] text-white"
+                        : "bg-gray-100 text-gray-400 dark:bg-gray-900"
+                    )}
+                  >
+                    <Icon size={26} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">{badge.name}</h3>
+                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{badge.description}</p>
+                  </div>
+                  <span
+                    className={cn(
+                      "rounded-full px-3 py-1 text-xs font-semibold",
+                      badge.earned
+                        ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
+                        : "bg-gray-100 text-gray-400 dark:bg-gray-900"
+                    )}
+                  >
+                    {badge.earned ? `${badge.points} pts earned` : `${badge.points} pts`}
+                  </span>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

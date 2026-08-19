@@ -1,0 +1,157 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { AlertTriangle, BarChart3, Package, Star, TrendingUp } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface SalesPoint {
+  label: string;
+  orders: number;
+  revenue: number;
+}
+
+export interface TopProduct {
+  name: string;
+  sold: number;
+  stock: number;
+}
+
+export interface LowStockItem {
+  name: string;
+  stock: number;
+  reorderAt: number;
+}
+
+export interface VendorSummary {
+  totalRevenue: number;
+  orders: number;
+  avgRating: number;
+  customers: number;
+}
+
+export interface VendorStats {
+  summary: VendorSummary;
+  salesTrend: SalesPoint[];
+  topProducts: TopProduct[];
+  lowInventory: LowStockItem[];
+}
+
+interface VendorDashboardProps {
+  stats: VendorStats;
+  currency?: string;
+}
+
+export default function VendorDashboard({ stats, currency = "{{currency.symbol}}" }: VendorDashboardProps) {
+  const maxRevenue = Math.max(1, ...stats.salesTrend.map((point) => point.revenue));
+
+  const summaryCards = [
+    { label: "Total revenue", value: `${currency}${stats.summary.totalRevenue.toLocaleString()}`, icon: TrendingUp, tone: "text-[var(--color-primary)]" },
+    { label: "Orders", value: stats.summary.orders.toLocaleString(), icon: BarChart3, tone: "text-[var(--color-secondary)]" },
+    { label: "Avg rating", value: stats.summary.avgRating.toFixed(1), icon: Star, tone: "text-[var(--color-accent)]" },
+    { label: "Customers", value: stats.summary.customers.toLocaleString(), icon: Package, tone: "text-emerald-500" },
+  ];
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="analytics-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <BarChart3 size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="analytics-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Vendor insights</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Sales trends, product performance, and inventory at a glance.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {summaryCards.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
+            >
+              <Card className="p-5">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+                  <stat.icon size={18} className={stat.tone} aria-hidden="true" />
+                </div>
+                <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white tabular-nums">{stat.value}</p>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card className="p-6">
+            <h3 className="mb-6 text-lg font-bold text-gray-900 dark:text-white">Sales trend (revenue)</h3>
+            <div className="flex items-end justify-between gap-3 h-40" role="img" aria-label="Sales revenue bar chart by period">
+              {stats.salesTrend.map((point, index) => (
+                <div key={point.label} className="flex flex-1 flex-col items-center gap-2">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    whileInView={{ height: `${Math.max(8, (point.revenue / maxRevenue) * 100)}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.05 }}
+                    className="w-full rounded-lg bg-gradient-to-t from-[var(--color-primary)] to-[var(--color-secondary)]"
+                    style={{ minHeight: 8 }}
+                  />
+                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{point.label}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <div className="flex flex-col gap-6">
+            <Card className="p-6">
+              <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Top products</h3>
+              <ul className="flex flex-col gap-3" aria-label="Top selling products">
+                {stats.topProducts.map((product) => (
+                  <li key={product.name} className="flex items-center justify-between rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-900">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">{product.name}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {product.sold} sold · {product.stock} in stock
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            <Card className="p-6">
+              <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+                <AlertTriangle size={18} className="text-[var(--color-accent)]" aria-hidden="true" />
+                Low inventory
+              </h3>
+              <ul className="flex flex-col gap-2" aria-label="Low stock alerts">
+                {stats.lowInventory.map((item) => (
+                  <li
+                    key={item.name}
+                    className={cn(
+                      "flex items-center justify-between rounded-xl px-4 py-3",
+                      item.stock <= 0
+                        ? "bg-rose-500/10 text-rose-600 dark:text-rose-400"
+                        : "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
+                    )}
+                  >
+                    <span className="text-sm font-medium">{item.name}</span>
+                    <span className="text-xs">
+                      {item.stock} left · reorder at {item.reorderAt}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

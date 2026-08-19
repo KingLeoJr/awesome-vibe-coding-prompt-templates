@@ -1,0 +1,289 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "brands": [
+    {
+      "id": "brand-001",
+      "name": "Evergreen Goods",
+      "category": "Home & Body",
+      "certifications": ["B Corp", "Fair Trade Certified", "Leaping Bunny"],
+      "ethicsScore": 94,
+      "practices": ["Carbon-neutral shipping", "Plastic-free packaging", "Living-wage factory partners"],
+      "offerings": ["Cleaning refills", "Personal care", "Kitchen staples"],
+      "impactNote": "1% for the planet on every order"
+    },
+    {
+      "id": "brand-002",
+      "name": "Terracotta Threads",
+      "category": "Apparel",
+      "certifications": ["Fair Trade Certified", "GOTS Organic", "OEKO-TEX"],
+      "ethicsScore": 91,
+      "practices": ["Organic cotton only", "Dye vats treated and reused", "Factory transparency reports"],
+      "offerings": ["Basics", "Outerwear", "Accessories"],
+      "impactNote": "25 liters of water saved per garment"
+    },
+    {
+      "id": "brand-003",
+      "name": "Harbor & Hearth",
+      "category": "Home Furnishings",
+      "certifications": ["FSC Certified", "B Corp"],
+      "ethicsScore": 87,
+      "practices": ["Responsibly harvested wood", "Upcycled offcuts", "Community carpentry partners"],
+      "offerings": ["Furniture", "Decor", "Tableware"],
+      "impactNote": "0 virgin plastic in product line"
+    },
+    {
+      "id": "brand-004",
+      "name": "Goodlight Coffee",
+      "category": "Food & Beverage",
+      "certifications": ["Fair Trade Certified", "Rainforest Alliance", "USDA Organic"],
+      "ethicsScore": 89,
+      "practices": ["Direct-trade farms", "Compostable capsules", "Roasted on renewable energy"],
+      "offerings": ["Whole bean", "Ground", "Capsules"],
+      "impactNote": "10% of proceeds fund farm cooperatives"
+    },
+    {
+      "id": "brand-005",
+      "name": "Velvet Vineyard",
+      "category": "Beauty",
+      "certifications": ["Leaping Bunny", "Vegan Certified", "EWG Verified"],
+      "ethicsScore": 84,
+      "practices": ["Small-batch botanicals", "Refill program", "Biodegradable formulas"],
+      "offerings": ["Skincare", "Haircare", "Bath"],
+      "impactNote": "Refill program saves 40% packaging"
+    },
+    {
+      "id": "brand-006",
+      "name": "Northgate Outfitters",
+      "category": "Outdoor Gear",
+      "certifications": ["B Corp", "Bluesign"],
+      "ethicsScore": 82,
+      "practices": ["Recycled fabrics", "Repair-for-life service", "Climate action plan"],
+      "offerings": ["Backpacks", "Camping", "Apparel"],
+      "impactNote": "Every pack offsets its full footprint"
+    }
+  ],
+  "alternatives": [
+    {
+      "id": "alt-001",
+      "product": "Everyday coffee",
+      "category": "Food & Beverage",
+      "conventionalBrand": "Beans & Co.",
+      "ethicalBrand": "Goodlight Coffee",
+      "ethicsScore": 89,
+      "priceDelta": "+$2.10",
+      "co2SavedKg": 6.4,
+      "why": "Direct-trade beans mean farmers keep more of the price you pay."
+    },
+    {
+      "id": "alt-002",
+      "product": "Cotton t-shirt",
+      "category": "Apparel",
+      "conventionalBrand": "FastThread",
+      "ethicalBrand": "Terracotta Threads",
+      "ethicsScore": 91,
+      "priceDelta": "+$8.00",
+      "co2SavedKg": 12.8,
+      "why": "Organic cotton saves hundreds of liters of water per shirt."
+    },
+    {
+      "id": "alt-003",
+      "product": "Kitchen cleaner",
+      "category": "Home & Body",
+      "conventionalBrand": "Sparkle Chem",
+      "ethicalBrand": "Evergreen Goods",
+      "ethicsScore": 94,
+      "priceDelta": "-$0.75",
+      "co2SavedKg": 2.1,
+      "why": "Concentrated refills cut plastic and shipping weight dramatically."
+    },
+    {
+      "id": "alt-004",
+      "product": "Facial moisturizer",
+      "category": "Beauty",
+      "conventionalBrand": "Glow Labs",
+      "ethicalBrand": "Velvet Vineyard",
+      "ethicsScore": 84,
+      "priceDelta": "+$3.40",
+      "co2SavedKg": 1.6,
+      "why": "Leaping Bunny certified — never tested on animals."
+    },
+    {
+      "id": "alt-005",
+      "product": "Coffee table",
+      "category": "Home Furnishings",
+      "conventionalBrand": "FlatPack Plus",
+      "ethicalBrand": "Harbor & Hearth",
+      "ethicsScore": 87,
+      "priceDelta": "+$45.00",
+      "co2SavedKg": 31.5,
+      "why": "FSC-certified wood from forests managed for the long term."
+    },
+    {
+      "id": "alt-006",
+      "product": "Weekend backpack",
+      "category": "Outdoor Gear",
+      "conventionalBrand": "TrailMax",
+      "ethicalBrand": "Northgate Outfitters",
+      "ethicsScore": 82,
+      "priceDelta": "+$18.00",
+      "co2SavedKg": 22.0,
+      "why": "Made from recycled polyester with a lifetime repair guarantee."
+    }
+  ],
+  "impact": {
+    "metrics": {
+      "co2SavedKg": 184,
+      "fairTradePurchases": 12,
+      "crueltyFreePurchases": 9,
+      "localSpend": 640,
+      "goalKg": 250
+    },
+    "purchases": [
+      { "id": "imp-001", "product": "Goodlight Coffee (3 bags)", "date": "2026-08-14", "impactNote": "supports 3 farm cooperatives", "co2SavedKg": 19.2, "fairTradeSupport": true },
+      { "id": "imp-002", "product": "Terracotta Threads tee", "date": "2026-08-09", "impactNote": "organic cotton, 25L water saved", "co2SavedKg": 12.8, "fairTradeSupport": true },
+      { "id": "imp-003", "product": "Evergreen refill bundle", "date": "2026-07-28", "impactNote": "plastic-free concentrate refills", "co2SavedKg": 6.3, "fairTradeSupport": false },
+      { "id": "imp-004", "product": "Northgate Outfitters pack", "date": "2026-07-15", "impactNote": "recycled polyester, lifetime repair", "co2SavedKg": 22.0, "fairTradeSupport": false },
+      { "id": "imp-005", "product": "Velvet Vineyard skincare", "date": "2026-07-02", "impactNote": "leaping bunny certified, vegan", "co2SavedKg": 3.2, "fairTradeSupport": false }
+    ],
+    "badges": [
+      { "name": "First Swap", "description": "Made your first ethical purchase", "earned": true },
+      { "name": "Conscious Crew", "description": "Bought from 5+ ethical brands", "earned": true },
+      { "name": "Fair Trade Fan", "description": "10 fair trade purchases", "earned": true },
+      { "name": "Impact Pioneer", "description": "Avoided 100 kg CO₂", "earned": true },
+      { "name": "Local Legend", "description": "Spent $500 at local ethical shops", "earned": true },
+      { "name": "Zero Waste Hero", "description": "30 days, zero single-use plastic", "earned": false }
+    ]
+  },
+  "quizQuestions": [
+    {
+      "id": "q-001",
+      "prompt": "What matters most when you choose a product?",
+      "options": [
+        { "label": "Planet first", "value": "sustainability", "values": ["Sustainability"] },
+        { "label": "People first", "value": "fair-trade", "values": ["Fair trade"] },
+        { "label": "Animals first", "value": "cruelty-free", "values": ["Cruelty-free"] },
+        { "label": "Clean ingredients", "value": "organic", "values": ["Organic"] }
+      ]
+    },
+    {
+      "id": "q-002",
+      "prompt": "How do you feel about shopping locally?",
+      "options": [
+        { "label": "I prefer it whenever I can", "value": "local", "values": ["Local"] },
+        { "label": "I buy local sometimes", "value": "local-some", "values": ["Local"] },
+        { "label": "Price usually wins", "value": "price", "values": [] }
+      ]
+    },
+    {
+      "id": "q-003",
+      "prompt": "Which trade-off would you make for ethics?",
+      "options": [
+        { "label": "Pay up to 20% more", "value": "pay-20", "values": ["Fair trade", "Sustainability"] },
+        { "label": "Buy less, buy better", "value": "buy-less", "values": ["Sustainability"] },
+        { "label": "Shop around for the best deal", "value": "best-deal", "values": [] }
+      ]
+    },
+    {
+      "id": "q-004",
+      "prompt": "What would you like to learn about?",
+      "options": [
+        { "label": "Brand transparency", "value": "transparency", "values": ["Sustainability"] },
+        { "label": "Animal welfare labels", "value": "animals", "values": ["Cruelty-free"] },
+        { "label": "Fair trade supply chains", "value": "fair-chain", "values": ["Fair trade"] }
+      ]
+    }
+  ],
+  "localBusinesses": [
+    {
+      "id": "local-001",
+      "name": "Fenwick Farm Market",
+      "category": "Grocer & Deli",
+      "distance": "1.2 km",
+      "address": "214 Elm Street",
+      "tags": ["Organic", "Local produce", "Zero-waste refills"],
+      "rating": 4.9
+    },
+    {
+      "id": "local-002",
+      "name": "The Mended Sock",
+      "category": "Repair & Tailoring",
+      "distance": "2.8 km",
+      "address": "88 Harbor Lane",
+      "tags": ["Clothing repair", "Fair labor", "Fabric scraps"],
+      "rating": 4.8
+    },
+    {
+      "id": "local-003",
+      "name": "Cedar & Clay Studio",
+      "category": "Gifts & Home",
+      "distance": "3.5 km",
+      "address": "19 Clay Court",
+      "tags": ["Handmade", "FSC wood", "Local artisans"],
+      "rating": 4.7
+    },
+    {
+      "id": "local-004",
+      "name": "Solstice Soapworks",
+      "category": "Bath & Body",
+      "distance": "0.9 km",
+      "address": "5 Market Row",
+      "tags": ["Cruelty-free", "Biodegradable", "Refill program"],
+      "rating": 4.6
+    }
+  ],
+  "resources": [
+    {
+      "id": "res-001",
+      "title": "How to read a B Corp certification",
+      "type": "article",
+      "topic": "Transparency",
+      "duration": "6 min",
+      "url": "https://example.com/learn/b-corp"
+    },
+    {
+      "id": "res-002",
+      "title": "Fair trade, explained: from farm to shelf",
+      "type": "video",
+      "topic": "Fair trade",
+      "duration": "11 min",
+      "url": "https://example.com/learn/fair-trade"
+    },
+    {
+      "id": "res-003",
+      "title": "Cruelty-free vs vegan: knowing the difference",
+      "type": "article",
+      "topic": "Animals",
+      "duration": "4 min",
+      "url": "https://example.com/learn/cruelty-free"
+    },
+    {
+      "id": "res-004",
+      "title": "Carbon footprint calculator for your shopping",
+      "type": "tool",
+      "topic": "Sustainability",
+      "duration": "interactive",
+      "url": "https://example.com/tools/carbon-shopping"
+    },
+    {
+      "id": "res-005",
+      "title": "Plastic-free swaps for every room of the house",
+      "type": "video",
+      "topic": "Sustainability",
+      "duration": "14 min",
+      "url": "https://example.com/learn/plastic-free"
+    },
+    {
+      "id": "res-006",
+      "title": "Spotting greenwashing: red flags to watch",
+      "type": "article",
+      "topic": "Transparency",
+      "duration": "8 min",
+      "url": "https://example.com/learn/greenwashing"
+    }
+  ]
+}

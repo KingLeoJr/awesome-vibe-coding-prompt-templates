@@ -1,0 +1,265 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "topics": ["Productivity", "Mindfulness", "Leadership", "Emotional Intelligence"],
+  "courses": [
+    {
+      "id": "c-001",
+      "title": "Deep Work Foundations",
+      "coach": "Jordan Miles",
+      "topic": "Productivity",
+      "level": "beginner",
+      "duration": "4h 30m",
+      "lessons": 18,
+      "rating": 4.8,
+      "students": 1240,
+      "price": 79,
+      "image": "https://images.unsplash.com/photo-1499750310107-5fef28a66643",
+      "badge": "Popular"
+    },
+    {
+      "id": "c-002",
+      "title": "Mindfulness for Busy People",
+      "coach": "Nadia Park",
+      "topic": "Mindfulness",
+      "level": "beginner",
+      "duration": "3h 15m",
+      "lessons": 14,
+      "rating": 4.9,
+      "students": 980,
+      "price": 59,
+      "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
+      "badge": "New"
+    },
+    {
+      "id": "c-003",
+      "title": "Leading Through Change",
+      "coach": "Marcus Bell",
+      "topic": "Leadership",
+      "level": "advanced",
+      "duration": "6h",
+      "lessons": 22,
+      "rating": 4.7,
+      "students": 640,
+      "price": 119,
+      "image": "https://images.unsplash.com/photo-1552664730-d307ca884978",
+      "badge": "Bestseller"
+    },
+    {
+      "id": "c-004",
+      "title": "Emotional Intelligence at Work",
+      "coach": "Sofia Ramírez",
+      "topic": "Emotional Intelligence",
+      "level": "intermediate",
+      "duration": "5h",
+      "lessons": 20,
+      "rating": 4.8,
+      "students": 1120,
+      "price": 89,
+      "image": "https://images.unsplash.com/photo-1543269865-cbf427effbad",
+      "badge": ""
+    },
+    {
+      "id": "c-005",
+      "title": "The 90-Day Habit System",
+      "coach": "Jordan Miles",
+      "topic": "Productivity",
+      "level": "intermediate",
+      "duration": "2h 45m",
+      "lessons": 12,
+      "rating": 4.6,
+      "students": 1540,
+      "price": 49,
+      "image": "https://images.unsplash.com/photo-1506784983877-45594efa4cbe",
+      "badge": "Popular"
+    },
+    {
+      "id": "c-006",
+      "title": "Present-Day Leadership",
+      "coach": "Marcus Bell",
+      "topic": "Leadership",
+      "level": "intermediate",
+      "duration": "4h",
+      "lessons": 16,
+      "rating": 4.9,
+      "students": 530,
+      "price": 69,
+      "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+      "badge": ""
+    }
+  ],
+  "goals": [
+    {
+      "id": "g-001",
+      "name": "Publish 12 newsletter issues",
+      "category": "Career",
+      "targetDate": "2026-12-31",
+      "progress": 50,
+      "milestones": [
+        { "name": "Issue 1–3 published", "done": true },
+        { "name": "Issue 4–6 published", "done": true },
+        { "name": "Issue 7–9 published", "done": false },
+        { "name": "Issue 10–12 published", "done": false }
+      ],
+      "habit": "Write for 30 minutes every morning"
+    },
+    {
+      "id": "g-002",
+      "name": "Run a 5K without walking",
+      "category": "Health",
+      "targetDate": "2026-10-01",
+      "progress": 65,
+      "milestones": [
+        { "name": "Run 10 minutes non-stop", "done": true },
+        { "name": "Run 20 minutes non-stop", "done": true },
+        { "name": "Run 30 minutes non-stop", "done": false },
+        { "name": "Complete the 5K", "done": false }
+      ],
+      "habit": "3 short runs per week"
+    },
+    {
+      "id": "g-003",
+      "name": "Lead the quarterly team retro",
+      "category": "Career",
+      "targetDate": "2026-09-15",
+      "progress": 33,
+      "milestones": [
+        { "name": "Draft the agenda", "done": true },
+        { "name": "Rehearse with a mentor", "done": false },
+        { "name": "Facilitate the session", "done": false }
+      ],
+      "habit": "1 rehearsal per week"
+    }
+  ],
+  "coaches": [
+    {
+      "id": "co-001",
+      "name": "Jordan Miles",
+      "title": "Productivity coach · 8 yrs",
+      "expertise": ["Productivity", "Habits"],
+      "rating": 4.9,
+      "sessions": 620,
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+      "languages": ["English"],
+      "hourlyRate": 95,
+      "certified": true,
+      "nextAvailable": "Tomorrow"
+    },
+    {
+      "id": "co-002",
+      "name": "Nadia Park",
+      "title": "Mindfulness & resilience coach",
+      "expertise": ["Mindfulness", "Stress Management"],
+      "rating": 4.8,
+      "sessions": 410,
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+      "languages": ["English", "Korean"],
+      "hourlyRate": 85,
+      "certified": true,
+      "nextAvailable": "Today"
+    },
+    {
+      "id": "co-003",
+      "name": "Sofia Ramírez",
+      "title": "Leadership development coach",
+      "expertise": ["Leadership", "Emotional Intelligence"],
+      "rating": 4.9,
+      "sessions": 730,
+      "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956",
+      "languages": ["English", "Spanish"],
+      "hourlyRate": 110,
+      "certified": true,
+      "nextAvailable": "Thu, Aug 21"
+    }
+  ],
+  "library": [
+    {
+      "id": "lib-001",
+      "title": "The 2-minute rule and why it works",
+      "type": "article",
+      "topic": "Productivity",
+      "duration": "6 min",
+      "level": "beginner",
+      "url": "https://example.com/library/two-minute-rule"
+    },
+    {
+      "id": "lib-002",
+      "title": "A 10-minute seated meditation for focus",
+      "type": "video",
+      "topic": "Mindfulness",
+      "duration": "10 min",
+      "level": "beginner",
+      "url": "https://example.com/library/seated-meditation"
+    },
+    {
+      "id": "lib-003",
+      "title": "Feedback that lands: a coach's framework",
+      "type": "podcast",
+      "topic": "Leadership",
+      "duration": "28 min",
+      "level": "intermediate",
+      "url": "https://example.com/library/feedback-framework"
+    },
+    {
+      "id": "lib-004",
+      "title": "Emotion check-in worksheet",
+      "type": "worksheet",
+      "topic": "Emotional Intelligence",
+      "duration": "15 min",
+      "level": "beginner",
+      "url": "https://example.com/library/emotion-checkin"
+    },
+    {
+      "id": "lib-005",
+      "title": "Deep work scheduling template",
+      "type": "worksheet",
+      "topic": "Productivity",
+      "duration": "20 min",
+      "level": "intermediate",
+      "url": "https://example.com/library/deep-work-template"
+    },
+    {
+      "id": "lib-006",
+      "title": "Holding difficult conversations",
+      "type": "video",
+      "topic": "Leadership",
+      "duration": "18 min",
+      "level": "advanced",
+      "url": "https://example.com/library/difficult-conversations"
+    }
+  ],
+  "progress": {
+    "summary": [
+      { "label": "Courses completed", "value": "4" },
+      { "label": "Hours learned", "value": "36" },
+      { "label": "Goals achieved", "value": "7" },
+      { "label": "Day streak", "value": "21" }
+    ],
+    "weeklyActivity": [
+      { "label": "Mon", "minutes": 45 },
+      { "label": "Tue", "minutes": 60 },
+      { "label": "Wed", "minutes": 30 },
+      { "label": "Thu", "minutes": 75 },
+      { "label": "Fri", "minutes": 50 },
+      { "label": "Sat", "minutes": 90 },
+      { "label": "Sun", "minutes": 20 }
+    ],
+    "recentAchievements": [
+      { "name": "Completed Deep Work Foundations", "points": 100, "date": "Aug 15" },
+      { "name": "30-day learning streak", "points": 150, "date": "Aug 12" },
+      { "name": "First 5K milestone reached", "points": 80, "date": "Aug 8" }
+    ]
+  },
+  "badges": [
+    { "id": "b-001", "name": "First Step", "description": "Completed your first lesson", "icon": "book", "points": 50, "earned": true },
+    { "id": "b-002", "name": "Course Finisher", "description": "Finished a full course", "icon": "award", "points": 100, "earned": true },
+    { "id": "b-003", "name": "Streak Builder", "description": "7-day learning streak", "icon": "target", "points": 75, "earned": true },
+    { "id": "b-004", "name": "Goal Crusher", "description": "Hit a milestone on a goal", "icon": "medal", "points": 80, "earned": true },
+    { "id": "b-005", "name": "Community Spark", "description": "Helped in the forum", "icon": "users", "points": 60, "earned": false },
+    { "id": "b-006", "name": "Coach's Choice", "description": "Earned a coach nomination", "icon": "award", "points": 200, "earned": false }
+  ]
+}

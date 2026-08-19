@@ -1,0 +1,28 @@
+export const SITE_TITLE = "{{app.name}}";
+export const SITE_DESCRIPTION = "{{app.tagline}}";
+export const SITE_URL = "{{deployment.url}}";
+
+export const NAV_ITEMS = [
+  {{#each sections}}
+  { label: "{{name}}", href: "#{{name | lowercase}}" },
+  {{/each}}
+];
+
+export const I18N = {
+  defaultLocale: "{{i18n.default_locale}}",
+  supportedLocales: [{{#each i18n.supported_locales}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}}],
+  currency: "{{i18n.currency}}",
+};
+
+export const CONTACT = {
+  email: "{{contact.email}}",
+  phone: "{{contact.phone}}",
+};
+
+export const SOCIAL = {
+  github: "{{social.github}}",
+  linkedin: "{{social.linkedin}}",
+  twitter: "{{social.twitter}}",
+};
+
+export const ANALYTICS_ID = "{{deployment.analytics_id}}";

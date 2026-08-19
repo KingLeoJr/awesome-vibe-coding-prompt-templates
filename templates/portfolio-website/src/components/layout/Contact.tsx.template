@@ -1,0 +1,133 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { reCAPTCHA, Mail, Phone, Shield, MapPin } from "lucide-react";
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+interface ContactProps {
+  formData: ContactFormData;
+  recaptchaSiteKey: string;
+}
+
+export default function Contact({ formData, recaptchaSiteKey }: ContactProps) {
+  const animateVariants = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 }
+  };
+
+  return (
+    <section
+      className="py-16 bg-white dark:bg-gray-900"
+      id="contact"
+    >
+      <motion.div
+        initial={animateVariants.initial}
+        whileInView={animateVariants.whileInView}
+        viewport={animateVariants.viewport}
+        transition={animateVariants.transition}
+        className="container mx-auto px-6"
+      >
+        <h2 className="text-3xl font-bold text-[var(--color-primary)] dark:text-white mb-8">
+          Contact
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Contact Form */}
+          <div>
+            <form className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={(e) => /* setFormData */ }
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-colors"
+                  placeholder="John Doe"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={(e) => /* setFormData */ }
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-colors"
+                  placeholder="john@example.com"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={(e) => /* setFormData */ }
+                  rows={4}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-colors"
+                  placeholder="Your message here..."
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  reCAPTCHA
+                </label>
+                <div id="recaptcha">{/* reCAPTCHA container */}</div>
+              </div>
+              <button
+                type="submit"
+                className="w-full px-6 py-3 bg-[var(--color-accent)] text-white font-medium rounded hover:bg-[var(--color-accent-dark)] transition-colors"
+              >
+                Send message
+              </button>
+            </form>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className="text-lg font-medium text-[var(--color-primary)] dark:text-white mb-4">Contact Info</h3>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <MapPin className="h-5 w-5 text-[var(--color-primary)]" />
+                <span>
+                  {/* Address */}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Mail className="h-5 w-5 text-[var(--color-primary)]" />
+                <span>
+                  {/* Email */}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone className="h-5 w-5 text-[var(--color-primary)]" />
+                <span>
+                  {/* Phone */}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <MapPin className="h-5 w-5 text-[var(--color-primary)]" />
+                <span>
+                  {/* Location map */}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

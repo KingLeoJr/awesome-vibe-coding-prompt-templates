@@ -1,0 +1,96 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  frontend.language: "{{frontend.language}}"
+  backend.framework: "{{backend.framework}}"
+  backend.language: "{{backend.language}}"
+  database.technology: "{{database.technology}}"
+  auth.solution: "{{auth.solution}}"
+  ui.library: "{{ui.library}}"
+  state.manager: "{{state.manager}}"
+  payments.provider: "{{payments.provider}}"
+  email.provider: "{{email.provider}}"
+  shipping.provider: "{{shipping.provider}}"
+  realtime.provider: "{{realtime.provider}}"
+  analytics.provider: "{{analytics.provider}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{backend.framework}} for the backend and {{frontend.framework}} for the frontend
+Implement user authentication and authorization using {{auth.solution}} for secure access
+Design a visually appealing UI using {{ui.library}} for a modern and clean aesthetic
+Use {{state.manager}} for state management to handle complex application states effectively
+Create a vendor registration system that allows artisans to create profiles and list their products
+Implement a product listing feature with customizable categories, tags, and search functionality
+Design a shopping cart system that supports multiple items, quantity adjustments, and saved carts
+Create a secure payment processing system using {{payments.provider}} integration for transactions
+Implement a review and rating system for buyers to provide feedback on products and sellers
+Design an order management dashboard for vendors to track sales, inventory, and shipping
+Create a wishlist feature that allows users to save products for future purchases
+Implement a messaging system for buyers and sellers to communicate directly about products
+Design an interactive homepage showcasing featured products, new arrivals, and seasonal collections
+Create an event calendar highlighting local craft fairs, markets, or workshops related to handmade goods
+Implement a blog section featuring articles on crafting techniques, vendor stories, and product highlights
+Design an email marketing system for newsletters, promotions, and updates using {{email.provider}} API
+Create a referral program that rewards users for inviting friends to join the marketplace
+Implement advanced search functionality with filters by price range, category, location, and seller ratings
+Design a mobile-friendly version of the marketplace using responsive design principles
+Create an analytics dashboard for vendors to view sales trends, customer demographics, and product performance
+Implement social media sharing options for products to enhance visibility and reach
+Design an FAQ section addressing common questions about buying, selling, and shipping
+Create a community forum where users can share crafting tips, experiences, and connect with other artisans
+Implement a loyalty program that rewards customers with points for purchases that can be redeemed for discounts
+Design an inventory management system for vendors to track stock levels and receive alerts for low inventory
+Create integration with shipping providers ({{shipping.provider}}) for real-time shipping rates and label printing
+Implement a custom order tracking feature allowing buyers to monitor their shipments
+Design an accessibility feature ensuring compliance with WCAG standards
+Create partnerships with local artisans or organizations to promote community events or workshops
+Implement a product customization tool allowing buyers to request personalized items from sellers
+Design a gift registry feature where users can create lists of desired products for special occasions
+Create a secure dispute resolution system for handling buyer-seller conflicts
+Implement multi-language support to cater to international customers
+Design an interactive photo gallery showcasing artisan workspaces or behind-the-scenes processes
+Create a custom API for third-party developers to integrate with the marketplace (e.g., crafting blogs)
+Implement push notifications for special deals or new product launches relevant to user interests
+Design user profiles where buyers can manage their orders, preferences, and payment methods
+Create educational resources such as video tutorials or guides on crafting techniques available in the marketplace.
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Frontend | {{frontend.framework}} ({{frontend.language}}) |
+| Backend | {{backend.framework}} ({{backend.language}}) |
+| Database | {{database.technology}} |
+| UI | {{ui.library}} |
+| State management | {{state.manager}} |
+| Authentication | {{auth.solution}} |
+| Payments | {{payments.provider}} |
+| Email marketing | {{email.provider}} API |
+| Shipping | {{shipping.provider}} |
+| Realtime messaging | {{realtime.provider}} |
+| Analytics | {{analytics.provider}} |
+
+## Non-functional requirements
+
+- **Security:** PCI-DSS-aligned payments, TLS 1.3 in transit, encrypted credentials, dispute audit logs.
+- **Performance:** product grid and search under 2s on mid-range mobile.
+- **Responsive:** 320px → 4K, grids and dashboards reflow gracefully.
+- **Accessibility:** WCAG 2.1 AA, reduced-motion support.
+- **SEO:** server-rendered marketing shell, Open Graph + JSON-LD (Store schema).
+
+## Acceptance criteria
+
+- A buyer can browse, filter, and search products; add items to the cart and
+  adjust quantities.
+- A vendor can see sales trends, top products, and low-inventory alerts on the
+  dashboard.
+- A buyer can leave a rated review on a purchased product.
+- The app passes `npm run lint` and `npm run typecheck` with no errors.

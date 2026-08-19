@@ -1,0 +1,94 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { ChartBar, TrendingUp, Heart } from "lucide-react";
+
+interface WorkoutSession {
+  id: string;
+  classId: string;
+  startedAt: Date;
+  completedAt?: Date;
+  caloriesBurned: number;
+  averageHeartRate?: number;
+  completed: boolean;
+}
+
+interface StrengthImprovement {
+  exercise: string;
+  previous1RM?: number;
+  current1RM?: number;
+  progressPercent: number;
+}
+
+interface PerformanceMetricsProps {
+  workouts: WorkoutSession[];
+  caloriesBurned: number;
+  improvements: StrengthImprovement[];
+}
+
+export default function PerformanceMetrics({ workouts, caloriesBurned, improvements }: PerformanceMetricsProps) {
+  const completedCount = workouts.filter((w) => w.completed).length;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-6"
+    >
+      <div className="grid grid-cols-2 gap-4">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+        >
+          <ChartBar className="h-6 w-6 text-[var(--color-primary)] mx-auto mb-3" />
+          <h3 className="font-medium text-gray-900 dark:text-white">Total Workouts</h3>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">{completedCount}</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+        >
+          <Heart className="h-6 w-6 text-red-500 mx-auto mb-3" />
+          <h3 className="font-medium text-gray-900 dark:text-white">Calories Burned</h3>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">{caloriesBurned}</p>
+        </motion.div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {improvements.map((imp, i) => (
+          <motion.div
+            key={imp.exercise}
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: i * 0.05 }}
+            className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:shadow-lg transition-shadow"
+          >
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "var(--color-primary)" }}>
+                {imp.exercise.slice(0, 1)}
+              </span>
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">{imp.exercise}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Progress: {imp.progressPercent}%</p>
+              </div>
+            </div>
+            <div className="mt-2 h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] transition-width"
+                style={{ width: `${imp.progressPercent}%` }}
+              />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}

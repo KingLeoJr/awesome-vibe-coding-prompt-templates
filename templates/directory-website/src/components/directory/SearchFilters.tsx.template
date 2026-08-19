@@ -1,0 +1,224 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowUpDown, Search, SlidersHorizontal, Star, X } from "lucide-react";
+import type { DirectoryCategory, IndustryListing } from "@/lib/types";
+
+interface SearchFiltersProps {
+  categories: DirectoryCategory[];
+  listings: IndustryListing[];
+  industry: string;
+  criteriaLabel: string;
+}
+
+type SortKey = "rating" | "price-asc" | "price-desc";
+
+export default function SearchFilters({
+  categories,
+  listings,
+  industry,
+  criteriaLabel,
+}: SearchFiltersProps) {
+  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [minRating, setMinRating] = useState(0);
+  const [maxPrice, setMaxPrice] = useState<number | null>(null);
+  const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [sort, setSort] = useState<SortKey>("rating");
+
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const filtered = listings.filter((listing) => {
+      const matchesQuery =
+        !q ||
+        listing.name.toLowerCase().includes(q) ||
+        listing.tags.some((tag) => tag.toLowerCase().includes(q)) ||
+        listing.category.toLowerCase().includes(q);
+      const matchesCategory = !activeCategory || listing.category === activeCategory;
+      const matchesRating = listing.rating >= minRating;
+      const matchesPrice = maxPrice == null || listing.priceMin <= maxPrice;
+      const matchesVerified = !verifiedOnly || listing.verified;
+      return matchesQuery && matchesCategory && matchesRating && matchesPrice && matchesVerified;
+    });
+
+    return filtered.sort((a, b) => {
+      if (sort === "price-asc") return a.priceMin - b.priceMin;
+      if (sort === "price-desc") return b.priceMin - a.priceMin;
+      return b.rating - a.rating;
+    });
+  }, [query, activeCategory, minRating, maxPrice, verifiedOnly, sort, listings]);
+
+  const clearAll = () => {
+    setQuery("");
+    setActiveCategory(null);
+    setMinRating(0);
+    setMaxPrice(null);
+    setVerifiedOnly(false);
+  };
+
+  const hasActiveFilters =
+    query !== "" || activeCategory !== null || minRating > 0 || maxPrice !== null || verifiedOnly;
+
+  return (
+    <section id="search" className="bg-gray-50 py-20 dark:bg-gray-900/50">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+              Advanced search
+            </p>
+            <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+              Find the perfect {industry} match
+            </h2>
+          </div>
+          {hasActiveFilters && (
+            <button
+              onClick={clearAll}
+              className="inline-flex items-center gap-1 rounded-full border border-gray-300 px-4 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-900"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+              Clear all
+            </button>
+          )}
+        </div>
+
+        <div className="mt-8 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center">
+            <label className="relative flex-1">
+              <Search className="absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder={`Search ${industry} listings...`}
+                aria-label="Search listings"
+                className="w-full rounded-xl border border-gray-300 bg-white py-2.5 pr-4 pl-11 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+              />
+            </label>
+
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-500 dark:text-gray-400">Sort by</span>
+              <select
+                value={sort}
+                onChange={(event) => setSort(event.target.value as SortKey)}
+                aria-label="Sort results"
+                className="rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+              >
+                <option value="rating">Highest rated</option>
+                <option value="price-asc">Price: low to high</option>
+                <option value="price-desc">Price: high to low</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <span className="mr-1 inline-flex items-center gap-1 text-sm font-medium text-gray-700 dark:text-gray-200">
+              <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+              {criteriaLabel}:
+            </span>
+            {categories.map((category) => {
+              const active = activeCategory === category.name;
+              return (
+                <button
+                  key={category.slug}
+                  onClick={() => setActiveCategory(active ? null : category.name)}
+                  aria-pressed={active}
+                  className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
+                    active
+                      ? "bg-[var(--color-primary)] text-white"
+                      : "border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-900"
+                  }`}
+                >
+                  {category.name}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-5 grid gap-4 sm:grid-cols-3">
+            <label className="block text-sm">
+              <span className="mb-2 flex items-center gap-1 font-medium text-gray-700 dark:text-gray-200">
+                <Star className="h-4 w-4 text-amber-400" aria-hidden="true" />
+                Minimum rating
+              </span>
+              <select
+                value={minRating}
+                onChange={(event) => setMinRating(Number(event.target.value))}
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+              >
+                <option value={0}>Any rating</option>
+                <option value={3}>3+ stars</option>
+                <option value={4}>4+ stars</option>
+                <option value={4.5}>4.5+ stars</option>
+              </select>
+            </label>
+
+            <label className="block text-sm">
+              <span className="mb-2 flex items-center gap-1 font-medium text-gray-700 dark:text-gray-200">
+                <ArrowUpDown className="h-4 w-4 text-[var(--color-secondary)]" aria-hidden="true" />
+                Max price
+              </span>
+              <select
+                value={maxPrice ?? ""}
+                onChange={(event) => setMaxPrice(event.target.value ? Number(event.target.value) : null)}
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+              >
+                <option value="">No limit</option>
+                <option value={50}>Under $50</option>
+                <option value={100}>Under $100</option>
+                <option value={200}>Under $200</option>
+              </select>
+            </label>
+
+            <label className="flex items-end gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 dark:border-gray-700 dark:text-gray-200">
+              <input
+                type="checkbox"
+                checked={verifiedOnly}
+                onChange={(event) => setVerifiedOnly(event.target.checked)}
+                className="h-4 w-4 accent-[var(--color-primary)]"
+              />
+              Verified listings only
+            </label>
+          </div>
+        </div>
+
+        <p className="mt-6 text-sm text-gray-600 dark:text-gray-300">
+          <strong className="text-gray-900 dark:text-white">{results.length}</strong>{" "}
+          {results.length === 1 ? "listing" : "listings"} found
+        </p>
+
+        <div className="mt-4 space-y-3">
+          {results.map((listing, index) => (
+            <motion.article
+              key={listing.id}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.04 }}
+              className="flex flex-wrap items-center gap-4 rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-950"
+            >
+              <img
+                src={listing.imageUrl}
+                alt={listing.name}
+                loading="lazy"
+                className="h-16 w-16 shrink-0 rounded-xl object-cover"
+              />
+              <div className="min-w-0 flex-1">
+                <h3 className="truncate font-semibold text-gray-900 dark:text-white">{listing.name}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{listing.location}</p>
+              </div>
+              <span className="inline-flex items-center gap-1 text-sm font-semibold text-gray-900 dark:text-white">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" aria-hidden="true" />
+                {listing.rating.toFixed(1)}
+              </span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                ${listing.priceMin}
+                {listing.priceMax > listing.priceMin && ` - $${listing.priceMax}`}
+              </span>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

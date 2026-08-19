@@ -1,0 +1,144 @@
+{
+  "blueprint_id": "7e9d3f2a-1c4b-4e6d-9a8b-5f2c3d4e5a61",
+  "slug": "cooking-class-platform",
+  "name": "Personalized Cooking Class Platform",
+  "category": "Vertical",
+  "archetype": "PersonalizedVertical",
+  "tagline": "Cook your way — live classes, on-demand lessons, and recipes tuned to your taste and skill.",
+  "builder_prompt_source": "prompts/cooking-class-platform.md",
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React + Next.js 15", "version_hint": "15.x", "purpose": "Responsive marketing + class scheduling shell" },
+    { "layer": "backend", "technology": "Node.js (Express)", "version_hint": "20.x", "purpose": "REST API, bookings, recipes, community" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16.x", "purpose": "Users, classes, bookings, recipes, forums" },
+    { "layer": "auth", "technology": "JWT", "version_hint": "", "purpose": "Secure user authentication and account management" },
+    { "layer": "state", "technology": "Redux Toolkit", "version_hint": "2.x", "purpose": "User data, class schedules, and recipe state" },
+    { "layer": "ui", "technology": "Tailwind CSS (Bootstrap-inspired)", "version_hint": "3.4.x", "purpose": "Modern, user-friendly responsive UI" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and section reveals" },
+    { "layer": "ai_ml", "technology": "OpenAI", "version_hint": "", "purpose": "Personalized meal plans, recipe suggestions, skill coaching" },
+    { "layer": "payments", "technology": "Stripe", "version_hint": "", "purpose": "Class bookings and chef consultation payments" },
+    { "layer": "video", "technology": "Zoom + Cloudinary", "version_hint": "", "purpose": "Live classes and on-demand video hosting" },
+    { "layer": "realtime", "technology": "WebSocket / Socket.IO", "version_hint": "", "purpose": "Live class sessions, notifications, community" },
+    { "layer": "devops", "technology": "Vercel + Railway", "version_hint": "", "purpose": "CI/CD hosting and deployment" }
+  ],
+  "features": [
+    { "description": "Create a responsive online personalized cooking class platform using React for the frontend and Node.js for the backend", "priority": "core", "order_index": 1 },
+    { "description": "Implement user authentication with JWT for secure access and account management", "priority": "core", "order_index": 2 },
+    { "description": "Design an engaging UI using Bootstrap 5 for a modern and user-friendly experience", "priority": "core", "order_index": 3 },
+    { "description": "Use Redux for state management to efficiently handle user data, class schedules, and recipe information", "priority": "core", "order_index": 4 },
+    { "description": "Create customizable user profiles that include cooking preferences, dietary restrictions, and skill levels", "priority": "core", "order_index": 5 },
+    { "description": "Implement an interactive class scheduling tool that allows users to book live cooking classes based on their availability", "priority": "core", "order_index": 6 },
+    { "description": "Develop a library of on-demand cooking video tutorials categorized by cuisine type, difficulty level, and dietary focus", "priority": "core", "order_index": 7 },
+    { "description": "Create a recipe database with detailed instructions, ingredient lists, and nutritional information for various dishes", "priority": "core", "order_index": 8 },
+    { "description": "Implement a community forum where users can share experiences, ask questions about cooking techniques, and provide support to one another", "priority": "enhanced", "order_index": 9 },
+    { "description": "Design a resource library with articles, tips, and guides on cooking techniques, meal prep strategies, and kitchen tools", "priority": "enhanced", "order_index": 10 },
+    { "description": "Create personalized notifications for upcoming classes, reminders for meal prep tasks, and alerts for new recipes added to the platform", "priority": "enhanced", "order_index": 11 },
+    { "description": "Implement a referral program that rewards users for inviting friends or family members to join the platform or participate in classes together", "priority": "enhanced", "order_index": 12 },
+    { "description": "Develop an interactive meal planner that helps users create weekly menus based on their preferences and dietary needs", "priority": "enhanced", "order_index": 13 },
+    { "description": "Create a feature that connects users with professional chefs for one-on-one virtual consultations or personalized coaching sessions", "priority": "enhanced", "order_index": 14 },
+    { "description": "Implement gamification elements such as badges for completing cooking challenges or mastering specific techniques", "priority": "advanced", "order_index": 15 }
+  ],
+  "sections": [
+    { "name": "Classes", "component_path": "src/components/classes/ClassBooking.tsx", "layout_type": "grid", "is_visible": true, "order_index": 1 },
+    { "name": "Tutorials", "component_path": "src/components/classes/VideoLibrary.tsx", "layout_type": "grid", "is_visible": true, "order_index": 2 },
+    { "name": "Recipes", "component_path": "src/components/classes/RecipeLibrary.tsx", "layout_type": "grid", "is_visible": true, "order_index": 3 },
+    { "name": "MealPlanner", "component_path": "src/components/classes/MealPlanner.tsx", "layout_type": "grid", "is_visible": true, "order_index": 4 },
+    { "name": "Chefs", "component_path": "src/components/classes/ChefProfiles.tsx", "layout_type": "grid", "is_visible": true, "order_index": 5 },
+    { "name": "Community", "component_path": "src/components/classes/CommunityForum.tsx", "layout_type": "list", "is_visible": true, "order_index": 6 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "brandName": "string", "navItems": "NavItem[]", "ctaText": "string", "ctaHref": "string", "isFixed": "boolean" }, "mixins": ["ThemeToggle"] },
+    { "name": "ClassBooking", "path": "src/components/classes/ClassBooking.tsx", "props": { "classes": "CookingClass[]", "cuisines": "string[]", "currency": "string" } },
+    { "name": "VideoLibrary", "path": "src/components/classes/VideoLibrary.tsx", "props": { "tutorials": "VideoTutorial[]", "cuisines": "string[]", "difficultyLevels": "string[]" } },
+    { "name": "RecipeLibrary", "path": "src/components/classes/RecipeLibrary.tsx", "props": { "recipes": "Recipe[]", "dietaryFocuses": "string[]" } },
+    { "name": "MealPlanner", "path": "src/components/classes/MealPlanner.tsx", "props": { "plan": "MealPlan" } },
+    { "name": "ChefProfiles", "path": "src/components/classes/ChefProfiles.tsx", "props": { "chefs": "Chef[]", "currency": "string" } },
+    { "name": "CommunityForum", "path": "src/components/classes/CommunityForum.tsx", "props": { "posts": "ForumPost[]" } },
+    { "name": "Footer", "path": "src/components/shared/Footer.tsx", "props": { "name": "string", "description": "string" }, "mixins": ["_shared/Footer.tsx.template"] }
+  ],
+  "data_models": [
+    { "name": "User", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "email", "type": "string", "required": true }, { "name": "cookingPreferences", "type": "string[]", "required": false }, { "name": "dietaryRestrictions", "type": "string[]", "required": false }, { "name": "skillLevel", "type": "enum(beginner|intermediate|advanced)", "required": false } ] },
+    { "name": "CookingClass", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "cuisine", "type": "string", "required": true }, { "name": "difficulty", "type": "string", "required": true }, { "name": "dietary", "type": "string", "required": true }, { "name": "instructor", "type": "string", "required": true }, { "name": "date", "type": "date", "required": true }, { "name": "time", "type": "string", "required": true }, { "name": "duration", "type": "string", "required": true }, { "name": "seats", "type": "integer", "required": true }, { "name": "booked", "type": "boolean", "required": false, "default": false }, { "name": "price", "type": "decimal", "required": true } ] },
+    { "name": "VideoTutorial", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "cuisine", "type": "string", "required": true }, { "name": "difficulty", "type": "string", "required": true }, { "name": "dietary", "type": "string", "required": true }, { "name": "duration", "type": "string", "required": true }, { "name": "views", "type": "integer", "required": false }, { "name": "url", "type": "string", "required": true } ] },
+    { "name": "Recipe", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "cuisine", "type": "string", "required": true }, { "name": "difficulty", "type": "string", "required": true }, { "name": "dietary", "type": "string", "required": true }, { "name": "prepTime", "type": "integer", "required": true }, { "name": "cookTime", "type": "integer", "required": true }, { "name": "servings", "type": "integer", "required": true }, { "name": "calories", "type": "integer", "required": false }, { "name": "rating", "type": "decimal", "required": false }, { "name": "ingredientCount", "type": "integer", "required": false } ] },
+    { "name": "MealPlan", "fields": [ { "name": "weekLabel", "type": "string", "required": true }, { "name": "days", "type": "object[]", "required": true } ] },
+    { "name": "Chef", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "name", "type": "string", "required": true }, { "name": "specialty", "type": "string", "required": true }, { "name": "rating", "type": "decimal", "required": true }, { "name": "reviews", "type": "integer", "required": true }, { "name": "sessionPrice", "type": "decimal", "required": true }, { "name": "bio", "type": "string", "required": false } ] },
+    { "name": "ForumPost", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "author", "type": "string", "required": true }, { "name": "category", "type": "string", "required": true }, { "name": "replies", "type": "integer", "required": false }, { "name": "likes", "type": "integer", "required": false }, { "name": "time", "type": "string", "required": true }, { "name": "excerpt", "type": "string", "required": true } ] }
+  ],
+  "integrations": [
+    { "service": "JWT auth", "purpose": "Secure sign-in and account management", "config_params": { "token_ttl": "24h", "refresh": true } },
+    { "service": "Stripe", "purpose": "Class bookings and chef consultation payments", "config_params": { "mode": "payment_intents" } },
+    { "service": "Zoom API", "purpose": "Host live cooking classes and schedule sessions", "config_params": { "scopes": ["meeting:write"] } },
+    { "service": "Cloudinary", "purpose": "Host and stream on-demand cooking video tutorials", "config_params": { "resource_type": "video" } },
+    { "service": "SendGrid", "purpose": "Class reminders, meal-prep notifications, and email digests", "config_params": { "templates": ["class_reminder", "new_recipe"] } },
+    { "service": "OpenAI", "purpose": "Personalized meal plans and recipe suggestions", "config_params": { "model": "gpt-4o" } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "JWT with short-lived access tokens + refresh rotation; passwords hashed (bcrypt); TLS 1.3 in transit" },
+    { "type": "Performance", "requirement": "Class schedule and recipe grids render in under 2s on mid-range mobile" },
+    { "type": "Responsive", "requirement": "Full responsive layout from 320px to 4K; grids and booking UI reflow on mobile" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA; semantic landmarks, aria-labels, focus-visible states, reduced-motion support" },
+    { "type": "i18n", "requirement": "Multi-language-ready content model with locale-aware dates and RTL-capable layout" },
+    { "type": "SEO", "requirement": "Server-rendered marketing shell with Open Graph tags and JSON-LD schema" },
+    { "type": "Testing", "requirement": "Unit tests for state + utils, component tests for booking and meal planner, API contract tests" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#ea580c" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#16a34a" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#d97706" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#fb923c" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#4ade80" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fbbf24" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+    { "token_type": "font", "token_name": "font.mono", "token_value": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "framework": "nextjs", "url": "{{deployment.url}}", "analytics_id": "{{deployment.analytics_id}}" } },
+    { "platform": "Railway", "config": { "service": "node-api", "env": "production" } }
+  ],
+  "template_files": [
+    { "path": "README.md", "source": "templates/cooking-class-platform/README.md", "syntax": "mustache" },
+    { "path": "blueprint.json", "source": "templates/cooking-class-platform/blueprint.json.template", "syntax": "mustache" },
+    { "path": "prompt.md", "source": "templates/cooking-class-platform/prompt.md.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/cooking-class-platform/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/cooking-class-platform/package.json.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/cooking-class-platform/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "src/app/page.tsx", "source": "templates/cooking-class-platform/src/app/page.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/cooking-class-platform/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/classes/ClassBooking.tsx", "source": "templates/cooking-class-platform/src/components/classes/ClassBooking.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/classes/VideoLibrary.tsx", "source": "templates/cooking-class-platform/src/components/classes/VideoLibrary.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/classes/RecipeLibrary.tsx", "source": "templates/cooking-class-platform/src/components/classes/RecipeLibrary.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/classes/MealPlanner.tsx", "source": "templates/cooking-class-platform/src/components/classes/MealPlanner.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/classes/ChefProfiles.tsx", "source": "templates/cooking-class-platform/src/components/classes/ChefProfiles.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/classes/CommunityForum.tsx", "source": "templates/cooking-class-platform/src/components/classes/CommunityForum.tsx.template", "syntax": "mustache" },
+    { "path": "src/data/cooking-class-platform.json", "source": "templates/cooking-class-platform/src/data/cooking-class-platform.json.template", "syntax": "mustache" }
+  ],
+  "extra_config": {
+    "app": {
+      "name": "Simmer",
+      "slug": "cooking-class-platform",
+      "tagline": "Cook your way — live classes, on-demand lessons, and recipes tuned to your taste and skill."
+    },
+    "theme": {
+      "color": { "primary": "#ea580c", "secondary": "#16a34a", "accent": "#d97706", "primary_dark": "#fb923c", "secondary_dark": "#4ade80", "accent_dark": "#fbbf24" },
+      "font": { "sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif", "mono": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+      "radius": { "card": "1rem" }
+    },
+    "header": { "cta_text": "Book a class", "cta_href": "#classes", "is_fixed": true },
+    "seo": { "og_image": "https://images.unsplash.com/photo-1556910103-1c02745aae4d", "schema_type": "CookingSchool" },
+    "deployment": { "url": "https://simmer.example.com", "analytics_id": "G-SIMMER01" },
+    "contact": { "email": "hello@simmer.example.com", "phone": "+1 (555) 010-3030" },
+    "social": { "github": "https://github.com/example/simmer", "linkedin": "https://linkedin.com/company/simmer-cooking", "twitter": "https://x.com/simmercooking" },
+    "currency": { "symbol": "$" },
+    "frontend": { "framework": "React (Next.js 15)", "language": "TypeScript" },
+    "backend": { "framework": "Node.js (Express)", "language": "JavaScript" },
+    "ui": { "library": "Tailwind CSS (Bootstrap-inspired)" },
+    "state": { "manager": "Redux Toolkit" },
+    "auth": { "protocol": "JWT (JSON Web Tokens)" },
+    "payments": { "provider": "Stripe" },
+    "notifications": { "provider": "SendGrid + Web Push" },
+    "video": { "provider": "Zoom + Cloudinary" },
+    "ai": { "provider": "OpenAI GPT-4o", "capabilities": "personalized meal plans, recipe suggestions, skill coaching" }
+  }
+}

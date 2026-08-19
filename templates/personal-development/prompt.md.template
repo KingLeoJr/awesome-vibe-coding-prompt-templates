@@ -1,0 +1,83 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  frontend.language: "{{frontend.language}}"
+  backend.framework: "{{backend.framework}}"
+  backend.language: "{{backend.language}}"
+  database.technology: "{{database.technology}}"
+  auth.solution: "{{auth.solution}}"
+  ui.library: "{{ui.library}}"
+  state.manager: "{{state.manager}}"
+  realtime.provider: "{{realtime.provider}}"
+  video.provider: "{{video.provider}}"
+  calendar.provider: "{{calendar.provider}}"
+  ai.provider: "{{ai.provider}}"
+  ai.capabilities: "{{ai.capabilities}}"
+  analytics.provider: "{{analytics.provider}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{backend.framework}} for the backend and {{frontend.framework}} for the frontend.
+Implement user authentication and authorization using {{auth.solution}} for secure access.
+Design an engaging UI using {{ui.library}} for a modern and user-friendly experience.
+Use {{state.manager}} for state management to handle complex application states effectively.
+Create a customizable user profile system that includes personal goals, areas of interest, and preferred coaching styles.
+Implement a course creation feature that allows coaches to develop and publish self-help courses covering topics like productivity, mindfulness, leadership, and emotional intelligence.
+Design an interactive goal-setting tool that helps users define, track, and achieve their personal development objectives.
+Create a booking system that allows users to schedule one-on-one coaching sessions with certified coaches via {{video.provider}} or in-person meetings.
+Implement a resource library with articles, videos, podcasts, and worksheets to support users in their personal growth journey.
+Design an analytics dashboard that provides insights into user progress, engagement with content, and achievement of goals over time using {{analytics.provider}}.
+Create partnerships with certified coaches and personal development experts to offer exclusive content or workshops through the platform.
+Implement multi-language support to cater to diverse customer bases globally.
+Design an onboarding process with tutorials guiding new users through platform features and how to set up their personal development plans effectively.
+Create personalized notifications for new content releases, upcoming coaching sessions, and reminders for goal check-ins based on user preferences.
+Implement advanced search functionality allowing users to filter courses and resources by topic, coach expertise, or format (video, text).
+Design user profiles where members can manage their progress, favorite resources, and scheduled sessions effectively.
+Create integration with social media platforms allowing users to share their achievements or insights easily.
+Implement push notifications for new course launches or special events within the app.
+Design an FAQ section addressing common questions about personal development topics and coaching processes.
+Create a community forum where users can discuss personal growth strategies, share experiences, and support each other in achieving their goals.
+Implement gamification elements like badges or rewards for completing courses or achieving milestones in personal development.
+Design a custom API for third-party developers to integrate with the platform (e.g., wellness apps).
+Create an event calendar highlighting webinars, workshops, or special guest speakers in the field of personal development.
+Implement data analytics to personalize recommendations based on user behavior and preferences using {{ai.provider}} ({{ai.capabilities}}).
+Create an impact reporting feature that highlights success stories from users who have benefited from the platform's resources.
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Frontend | {{frontend.framework}} ({{frontend.language}}) |
+| Backend | {{backend.framework}} ({{backend.language}}) |
+| Database | {{database.technology}} |
+| UI | {{ui.library}} |
+| State management | {{state.manager}} |
+| Authentication | {{auth.solution}} |
+| Realtime | {{realtime.provider}} |
+| Video sessions | {{video.provider}} |
+| Scheduling | {{calendar.provider}} |
+| Personalization | {{ai.provider}} — {{ai.capabilities}} |
+| Analytics | {{analytics.provider}} |
+
+## Non-functional requirements
+
+- **Security:** role-based access for coaches and learners, TLS 1.3 in transit, OAuth2 tokens with short expiry.
+- **Performance:** course catalog and dashboards under 2s on mid-range mobile.
+- **Responsive:** 320px → 4K, grids and dashboards reflow gracefully.
+- **Accessibility:** WCAG 2.1 AA, reduced-motion support.
+- **SEO:** server-rendered shell, Open Graph + JSON-LD (EducationalOrganization schema).
+
+## Acceptance criteria
+
+- A learner can browse courses and filter by topic, level, and coach.
+- A learner can create and track goals with milestone checklists.
+- A learner can view coach profiles and request a video or in-person session.
+- A learner can see progress metrics and earned badges.
+- The app passes `npm run lint` and `npm run typecheck` with no errors.

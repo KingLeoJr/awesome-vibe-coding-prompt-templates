@@ -1,0 +1,41 @@
+import Header from "@/components/layout/Header";
+import ARBookScanner, { type ARBook } from "@/components/education/ARBookScanner";
+import ARExplorer, { type Destination } from "@/components/education/ARExplorer";
+import LessonCatalog, { type Lesson } from "@/components/education/LessonCatalog";
+import ProgressTracker, { type LearnerProgress } from "@/components/education/ProgressTracker";
+import VirtualLab, { type Experiment } from "@/components/education/VirtualLab";
+import Footer from "@/components/shared/Footer";
+import orbit from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="scan" className="scroll-mt-24">
+          <ARBookScanner books={orbit.books as ARBook[]} />
+        </section>
+
+        <section id="library" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <LessonCatalog
+            lessons={orbit.lessons as Lesson[]}
+            subjects={orbit.subjects as string[]}
+          />
+        </section>
+
+        <section id="labs" className="scroll-mt-24">
+          <VirtualLab experiments={orbit.experiments as Experiment[]} />
+        </section>
+
+        <section id="quests" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <ProgressTracker progress={orbit.progress as LearnerProgress} />
+        </section>
+
+        <section id="explore" className="scroll-mt-24">
+          <ARExplorer destinations={orbit.destinations as Destination[]} />
+        </section>
+      </main>
+      <Footer name={orbit.app.name as string} description={orbit.app.tagline as string} />
+    </>
+  );
+}

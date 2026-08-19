@@ -1,0 +1,208 @@
+{
+  "blueprint_id": "c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+  "slug": "mental-wellness",
+  "name": "Personalized Mental Wellness and Self-Care Platform",
+  "category": "Vertical",
+  "archetype": "PersonalizedVertical",
+  "tagline": "Your mental wellness journey — personalized plans, mood tracking, and supportive community.",
+  "builder_prompt_source": "prompts/mental-wellness.md",
+  "extra_config": {
+    "app": {
+      "slug": "mental-wellness",
+      "name": "Personalized Mental Wellness and Self-Care Platform",
+      "tagline": "Your mental wellness journey — personalized plans, mood tracking, and supportive community.",
+      "category": "Vertical",
+      "archetype": "PersonalizedVertical"
+    },
+    "header": {
+      "cta_text": "Start Wellness",
+      "cta_href": "/plans/new",
+      "is_fixed": true
+    },
+    "seo": {
+      "og_image": "https://mental-wellness.example.com/og.png",
+      "schema_type": "Organization"
+    },
+    "contact": {
+      "email": "hello@mental-wellness.example.com",
+      "phone": "+1 (555) 010-2003"
+    },
+    "social": {
+      "github": "https://github.com/example/mental-wellness",
+      "linkedin": "https://linkedin.com/company/mental-wellness",
+      "twitter": "https://x.com/mental_wellness"
+    },
+    "deployment": {
+      "url": "https://mental-wellness.example.com",
+      "analytics_id": "G-MENTAL001"
+    },
+    "theme": {
+      "color": {
+        "primary": "#ec4899",
+        "secondary": "#14b8a6",
+        "accent": "#f59e0b",
+        "primary_dark": "#f472b6",
+        "secondary_dark": "#2dd4bf",
+        "accent_dark": "#fbbf24"
+      },
+      "font": {
+        "sans": "Inter"
+      },
+      "radius": {
+        "card": "1rem"
+      }
+    }
+  },
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React 19", "version_hint": "19.x", "purpose": "Component-driven UI shell" },
+    { "layer": "frontend", "technology": "Next.js 15 (App Router)", "version_hint": "15.x", "purpose": "SSR/SSG hosting for the web app" },
+    { "layer": "frontend", "technology": "TypeScript", "version_hint": "5.x", "purpose": "Type-safe component development" },
+    { "layer": "frontend", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Responsive, modern UI styling" },
+    { "layer": "frontend", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and page transitions" },
+    { "layer": "frontend", "technology": "lucide-react", "version_hint": "0.x", "purpose": "Icon library" },
+    { "layer": "frontend", "technology": "React 19", "version_hint": "19.x", "purpose": "Source-prompt frontend runtime" },
+    { "layer": "backend", "technology": "Flask", "version_hint": "3.x", "purpose": "Domain logic, mood tracking, wellness plans" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16.x", "purpose": "Relational storage for mood entries, wellness plans, resources" },
+    { "layer": "auth", "technology": "Flask-Security", "version_hint": "", "purpose": "User authentication and authorization" },
+    { "layer": "state", "technology": "Redux Toolkit", "version_hint": "2.x", "purpose": "Complex application state management" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Responsive, modern UI" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and page transitions" },
+    { "layer": "ai_ml", "technology": "OpenAI", "version_hint": "", "purpose": "Mood prediction and personalized recommendations" },
+    { "layer": "email", "technology": "SendGrid", "version_hint": "", "purpose": "Wellness reminders and motivational messages" }
+  ],
+  "features": [
+    { "description": "User authentication and authorization with Flask-Security for secure access", "priority": "core", "order_index": 1 },
+    { "description": "User profile system with mental health goals, current stress levels, and preferred self-care activities", "priority": "core", "order_index": 2 },
+    { "description": "Personalized wellness plans generated based on user profiles, preferences, and mental health assessments", "priority": "core", "order_index": 3 },
+    { "description": "Resource library with articles, videos, guided meditations, and self-help exercises", "priority": "core", "order_index": 4 },
+    { "description": "Mood tracking dashboard with daily entries, triggers, coping strategies, and visual graphs", "priority": "core", "order_index": 5 },
+    { "description": "Support community forum where users can share experiences and provide support to one another", "priority": "enhanced", "order_index": 6 },
+    { "description": "Success stories gallery showcasing user testimonials and mental wellness journeys", "priority": "enhanced", "order_index": 7 },
+    { "description": "Personalized notifications for upcoming self-care activities, mood tracking reminders, and motivational messages", "priority": "enhanced", "order_index": 8 },
+    { "description": "Self-care activity planner to help users schedule self-care activities throughout the week", "priority": "enhanced", "order_index": 9 },
+    { "description": "Guided meditation tool with tailored sessions for relaxation and focus enhancement", "priority": "enhanced", "order_index": 10 },
+    { "description": "FAQ section addressing common questions about mental wellness practices and therapy options", "priority": "enhanced", "order_index": 11 },
+    { "description": "Blog featuring expert advice on mental health trends, self-care tips, and coping strategies", "priority": "enhanced", "order_index": 12 },
+    { "description": "Referral program rewarding users for inviting friends or family to join the platform", "priority": "enhanced", "order_index": 13 },
+    { "description": "Data analytics to personalize recommendations based on user behavior and preferences", "priority": "advanced", "order_index": 14 },
+    { "description": "Custom API for third-party developers to integrate with the platform (e.g., teletherapy services)", "priority": "advanced", "order_index": 15 },
+    { "description": "Event calendar highlighting local workshops or seminars related to mental wellness", "priority": "advanced", "order_index": 16 },
+    { "description": "Gamification elements such as badges for completing self-care challenges or participating in community discussions", "priority": "advanced", "order_index": 17 },
+    { "description": "Integration with teletherapy services for virtual counseling sessions", "priority": "advanced", "order_index": 18 }
+  ],
+  "sections": [
+    { "name": "Mood Tracker", "component_path": "src/components/wellness/MoodTracker.tsx", "layout_type": "dashboard", "order_index": 1 },
+    { "name": "Wellness Plans", "component_path": "src/components/wellness/WellnessPlan.tsx", "layout_type": "control", "order_index": 2 },
+    { "name": "Resources", "component_path": "src/components/wellness/ResourceLibrary.tsx", "layout_type": "grid", "order_index": 3 },
+    { "name": "Community", "component_path": "src/components/wellness/SupportForum.tsx", "layout_type": "forum", "order_index": 4 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx.template", "props": { "logoText": "{{app.name}}", "navItems": "sections", "ctaText": "{{header.cta_text}}", "ctaHref": "{{header.cta_href}}", "isFixed": "{{header.is_fixed}}" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "Footer", "path": "src/components/layout/Footer.tsx", "props": { "name": "{{app.name}}", "navItems": "sections" }, "mixins": ["_shared/Footer.tsx.template"] },
+    { "name": "MoodTracker", "path": "src/components/wellness/MoodTracker.tsx.template", "props": { "moodEntry": "MoodEntry", "onUpdate": "fn" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "WellnessPlan", "path": "src/components/wellness/WellnessPlan.tsx.template", "props": { "plan": "WellnessPlan", "onSelect": "fn" } },
+    { "name": "ResourceLibrary", "path": "src/components/wellness/ResourceLibrary.tsx.template", "props": { "resources": "ResourceItem[]", "onLoad": "fn" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "SupportForum", "path": "src/components/wellness/SupportForum.tsx.template", "props": { "posts": "ForumPost[]" } }
+  ],
+  "data_models": [
+    {
+      "name": "User",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "email", "type": "string", "required": true },
+        { "name": "mentalHealthGoals", "type": "string[]", "required": true },
+        { "name": "currentStressLevel", "type": "integer", "required": true, "default": 0 },
+        { "name": "preferredActivities", "type": "string[]", "required": false }
+      ]
+    },
+    {
+      "name": "MoodEntry",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "userId", "type": "uuid", "required": true },
+        { "name": "moodScore", "type": "integer", "required": true, "min": 1, "max": 10 },
+        { "name": "trigger", "type": "string", "required": false },
+        { "name": "copingStrategy", "type": "string", "required": false },
+        { "name": "note", "type": "text", "required": false },
+        { "name": "recordedAt", "type": "datetime", "required": true }
+      ]
+    },
+    {
+      "name": "WellnessPlan",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "userId", "type": "uuid", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "activities", "type": "string[]", "required": true },
+        { "name": "targetMood", "type": "string", "required": true },
+        { "name": "createdAt", "type": "datetime", "required": true }
+      ]
+    },
+    {
+      "name": "ResourceItem",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "title", "type": "string", "required": true },
+        { "name": "type", "type": "enum(article|video|meditation|exercise)", "required": true },
+        { "name": "topic", "type": "string", "required": true },
+        { "name": "duration", "type": "string", "required": false },
+        { "name": "url", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "ForumPost",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "userId", "type": "uuid", "required": true },
+        { "name": "content", "type": "text", "required": true },
+        { "name": "createdAt", "type": "datetime", "required": true },
+        { "name": "likes", "type": "integer", "required": true, "default": 0 }
+      ]
+    }
+  ],
+  "integrations": [
+    { "service": "OpenAI", "purpose": "Mood prediction and personalized recommendations", "config_params": { "model": "gpt-4o" } },
+    { "service": "SendGrid", "purpose": "Wellness reminders and motivational messages", "config_params": { "templates": ["mood_reminder", "motivational"] } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "GDPR compliance with cookie consent, data minimization, and export/deletion APIs" },
+    { "type": "Security", "requirement": "HIPAA-aligned data handling for mental health data; encrypted storage and transmission" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA across all public and organizer surfaces; sensitive content warnings" },
+    { "type": "Performance", "requirement": "Lighthouse performance and accessibility scores of 90+ on key pages" },
+    { "type": "Responsive", "requirement": "Fully responsive from 320px to 4K; tested mobile-first" },
+    { "type": "i18n", "requirement": "Multi-language support with at least 5 locales for global wellness accessibility" },
+    { "type": "SEO", "requirement": "Per-resource SEO metadata, Open Graph, and structured data (Organization schema)" },
+    { "type": "Testing", "requirement": "Jest coverage for mood tracking, wellness plan flows, and community safety" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#ec4899" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#f472b6" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#14b8a6" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#2dd4bf" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f59e0b" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fbbf24" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "Inter" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "url": "https://mental-wellness.example.com", "framework": "Next.js", "region": "iad1" } },
+    { "platform": "Railway", "config": { "service": "Flask API + PostgreSQL", "region": "us-east" } }
+  ],
+  "template_files": [
+    { "path": "README.md", "source": "templates/mental-wellness/README.md", "syntax": "mustache" },
+    { "path": "blueprint.json", "source": "templates/mental-wellness/blueprint.json.template", "syntax": "mustache" },
+    { "path": "prompt.md", "source": "templates/mental-wellness/prompt.md.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/mental-wellness/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/mental-wellness/package.json.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/mental-wellness/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "src/app/page.tsx", "source": "templates/mental-wellness/src/app/page.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/mental-wellness/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/wellness/MoodTracker.tsx", "source": "templates/mental-wellness/src/components/wellness/MoodTracker.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/wellness/WellnessPlan.tsx", "source": "templates/mental-wellness/src/components/wellness/WellnessPlan.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/wellness/ResourceLibrary.tsx", "source": "templates/mental-wellness/src/components/wellness/ResourceLibrary.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/wellness/SupportForum.tsx", "source": "templates/mental-wellness/src/components/wellness/SupportForum.tsx.template", "syntax": "mustache" },
+    { "path": "src/data/mental-wellness.json", "source": "templates/mental-wellness/src/data/mental-wellness.json.template", "syntax": "mustache" }
+  ]
+}

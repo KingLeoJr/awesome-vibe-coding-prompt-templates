@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: {{theme.color.primary}};
+  --color-secondary: {{theme.color.secondary}};
+  --color-accent: {{theme.color.accent}};
+  --font-sans: {{theme.font.sans}};
+  --font-mono: {{theme.font.mono}};
+  --radius-card: {{theme.radius.card}};
+}
+
+.dark {
+  --color-primary: {{theme.color.primary_dark}};
+  --color-secondary: {{theme.color.secondary_dark}};
+  --color-accent: {{theme.color.accent_dark}};
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  @apply bg-white text-gray-900 antialiased dark:bg-gray-950 dark:text-white;
+}
+
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

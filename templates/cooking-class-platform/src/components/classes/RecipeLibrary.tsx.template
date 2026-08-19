@@ -1,0 +1,141 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { ChefHat, Clock, Flame, Star, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface Recipe {
+  id: string;
+  title: string;
+  cuisine: string;
+  difficulty: string;
+  dietary: string;
+  prepTime: number;
+  cookTime: number;
+  servings: number;
+  calories: number;
+  rating: number;
+  ingredientCount: number;
+}
+
+interface RecipeLibraryProps {
+  recipes: Recipe[];
+  dietaryFocuses?: string[];
+}
+
+const difficultyTone: Record<string, string> = {
+  Beginner: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  Intermediate: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  Advanced: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function RecipeLibrary({
+  recipes,
+  dietaryFocuses = ["Vegetarian", "Vegan", "Gluten-Free", "Dairy-Free", "High-Protein"],
+}: RecipeLibraryProps) {
+  const [dietary, setDietary] = useState("All");
+
+  const filtered = useMemo(() => {
+    return recipes.filter((r) => dietary === "All" || r.dietary === dietary);
+  }, [recipes, dietary]);
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="recipes-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <ChefHat size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="recipes-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Recipe database</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Detailed instructions, ingredients, and nutrition for every dish.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap items-center gap-2" role="group" aria-label="Filter recipes by dietary focus">
+          {["All", ...dietaryFocuses].map((d) => (
+            <button
+              key={d}
+              onClick={() => setDietary(d)}
+              aria-pressed={dietary === d}
+              className={cn(
+                "rounded-full px-4 py-1.5 text-sm font-medium transition",
+                dietary === d
+                  ? "bg-[var(--color-secondary)] text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+              )}
+            >
+              {d}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {filtered.map((r, i) => {
+            const totalMinutes = r.prepTime + r.cookTime;
+            return (
+              <motion.article
+                key={r.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{r.title}</h3>
+                  <span className={cn("shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium capitalize", difficultyTone[r.difficulty])}>
+                    {r.difficulty}
+                  </span>
+                </div>
+
+                <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
+                  <span className="rounded-full bg-gray-100 px-2 py-0.5 dark:bg-gray-900">{r.cuisine}</span>
+                  <span className="rounded-full bg-gray-100 px-2 py-0.5 dark:bg-gray-900">{r.dietary}</span>
+                  <span className="flex items-center gap-1 text-[var(--color-accent)]">
+                    <Star size={12} aria-hidden="true" />
+                    {r.rating.toFixed(1)}
+                  </span>
+                </p>
+
+                <dl className="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
+                  <div className="rounded-xl bg-gray-50 dark:bg-gray-900 p-3">
+                    <dt className="flex items-center justify-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Clock size={13} aria-hidden="true" /> Time
+                    </dt>
+                    <dd className="mt-1 font-medium text-gray-900 dark:text-white">{totalMinutes} min</dd>
+                  </div>
+                  <div className="rounded-xl bg-gray-50 dark:bg-gray-900 p-3">
+                    <dt className="flex items-center justify-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Users size={13} aria-hidden="true" /> Serves
+                    </dt>
+                    <dd className="mt-1 font-medium text-gray-900 dark:text-white">{r.servings}</dd>
+                  </div>
+                  <div className="rounded-xl bg-gray-50 dark:bg-gray-900 p-3">
+                    <dt className="flex items-center justify-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Flame size={13} aria-hidden="true" /> Calories
+                    </dt>
+                    <dd className="mt-1 font-medium text-gray-900 dark:text-white">{r.calories}</dd>
+                  </div>
+                </dl>
+
+                <div className="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3 text-xs text-gray-500 dark:text-gray-400">
+                  <span>{r.ingredientCount} ingredients</span>
+                  <span>{r.prepTime} min prep</span>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

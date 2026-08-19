@@ -1,0 +1,117 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { CalendarClock, Coins, Lock, Sprout, TrendingUp, Wallet } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { farms as sampleFarms } from "@/data/{{app.slug}}.json";
+
+export interface FarmPosition {
+  id: string;
+  token: string;
+  symbol: string;
+  apy: number;
+  totalStaked: number;
+  rewardToken: string;
+  lockDays: number;
+  tvlUsd: number;
+}
+
+interface YieldFarmProps {
+  farms?: FarmPosition[];
+  locale?: string;
+}
+
+export default function YieldFarm({
+  farms = sampleFarms,
+  locale = "{{i18n.default_locale}}",
+}: YieldFarmProps) {
+  const [staked, setStaked] = useState<Record<string, boolean>>({});
+
+  const toggleStake = (id: string) =>
+    setStaked((prev) => ({ ...prev, [id]: !prev[id] }));
+
+  return (
+    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {farms.map((farm, index) => {
+        const isStaked = staked[farm.id];
+        return (
+          <motion.article
+            key={farm.id}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: index * 0.07 }}
+            className="flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-6 transition hover:border-[var(--color-primary)]/40 hover:shadow-md dark:border-gray-800 dark:bg-gray-950"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+                  <Sprout size={21} />
+                </span>
+                <div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{farm.token}</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Rewards in {farm.rewardToken}</p>
+                </div>
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-accent)]/10 px-2.5 py-1 text-xs font-bold text-[var(--color-accent)]">
+                <TrendingUp size={12} />
+                {farm.apy.toFixed(1)}% APY
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 rounded-2xl bg-gray-50 p-4 text-center dark:bg-gray-900">
+              <div>
+                <p className="text-[11px] uppercase tracking-wide text-gray-400">Total staked</p>
+                <p className="mt-0.5 text-sm font-bold text-gray-900 dark:text-white">
+                  {farm.totalStaked.toLocaleString(locale)} {farm.symbol}
+                </p>
+              </div>
+              <div>
+                <p className="text-[11px] uppercase tracking-wide text-gray-400">Lock period</p>
+                <p className="mt-0.5 inline-flex items-center gap-1 text-sm font-bold text-gray-900 dark:text-white">
+                  <Lock size={12} className="text-[var(--color-secondary)]" />
+                  {farm.lockDays}d
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <CalendarClock size={13} className="text-[var(--color-secondary)]" />
+              Compounding: {farm.apy > 50 ? "auto (daily)" : "manual"}
+            </div>
+
+            <div className="mt-auto flex gap-2">
+              <button
+                onClick={() => toggleStake(farm.id)}
+                aria-pressed={isStaked}
+                className={cn(
+                  "inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-medium transition",
+                  isStaked
+                    ? "border border-[var(--color-accent)]/40 bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
+                    : "bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white hover:opacity-90"
+                )}
+              >
+                <Wallet size={14} />
+                {isStaked ? "Staked ✓" : "Stake"}
+              </button>
+              <button
+                aria-label={`Harvest ${farm.rewardToken} rewards`}
+                className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-600 transition hover:border-[var(--color-primary)]/40 hover:text-[var(--color-primary)] dark:border-gray-700 dark:text-gray-300"
+              >
+                <Coins size={14} />
+                Harvest
+              </button>
+            </div>
+
+            <p className="text-center text-[11px] text-gray-400">
+              {isStaked
+                ? "Your position is farming — rewards accrue automatically."
+                : `Stake ${farm.symbol} to start earning.`}
+            </p>
+          </motion.article>
+        );
+      })}
+    </div>
+  );
+}

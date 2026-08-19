@@ -1,0 +1,69 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { LayoutGrid, CheckCircle, CreditCard } from "lucide-react";
+
+interface SubscriptionTier {
+  id: string;
+  name: string;
+  price: string;
+  features: string[];
+  isPopular?: boolean;
+}
+
+interface SubscriptionPlanProps {
+  plan: SubscriptionTier;
+  isSelected?: boolean;
+}
+
+export default function SubscriptionPlan({ plan, isSelected = false }: SubscriptionPlanProps) {
+  const { id, name, price, features, isPopular = false } = plan;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 hover:shadow-lg transition-shadow",
+        isPopular && "border-[[theme.color.primary]] shadow-popular"
+      )}
+      aria-label="Subscription plan: {name}"
+    >
+      {isPopular && (
+        <div className="absolute top-0 right-0 px-2 py-1 text-xs font-medium text-[[theme.color.primary]]">Popular</div>
+      )}
+
+      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">{name}</h3>
+
+      <div className="flex items-center gap-2 mb-4">
+        <CreditCard className="h-4 w-4 text-[[theme.color.primary]]" />
+        <span className="text-2xl font-bold text-gray-900 dark:text-white">{price}</span>
+        <span className="text-text-gray-500 dark:text-gray-400 per-month">/ month</span>
+      </div>
+
+      <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+        {features.map((feature, index) => (
+          <li key={index} className="flex items-start gap-2">
+            <CheckCircle
+              className="h-3.5 w-3.5 text-[[theme.color.primary]] flex-shrink-0 mt-0.5"
+              aria-hidden={true}
+            />
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+
+      {isSelected && (
+        <button
+          className="mt-4 w-full rounded-full bg-[[theme.color.primary]] text-white py-2 text-sm font-medium hover:opacity-90 transition"
+          aria-label "Select {name} plan"
+        >
+          Select plan
+        </button>
+      )}
+    </motion.div>
+  );
+}

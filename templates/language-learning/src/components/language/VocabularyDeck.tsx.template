@@ -1,0 +1,75 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+import { lucideReact } from "lucide-react";
+import { Loader2, Check, X } from "lucide-react";
+
+interface VocabularyItem {
+  id: string;
+  word: string;
+  translation: string;
+  exampleSentence: string;
+  timesSeen: number;
+  timesCorrect: number;
+  nextReview: string;
+}
+
+interface VocabularyDeckProps {
+  words: VocabularyItem[];
+  onReview: () => void;
+  delay?: number;
+}
+
+export default function VocabularyDeck({ words, onReview, delay = 0 }: VocabularyDeckProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay }}
+      className={cn(
+        "rounded-xl border bg-gray-50 dark:bg-gray-900 p-6 hover:shadow-lg transition-shadow",
+        "pb-4"
+      )}
+    >
+      <div className="space-y-4">
+        {words.map((word) => (
+          <motion.div
+            key={word.id}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-start justify-between p-4 bg-white dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-800"
+          >
+            <div>
+              <h4 className="font-medium text-gray-900 dark:text-white">{word.word}</h4>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{word.translation}</p>
+              {word.exampleSentence && (
+                <p className="mt-1 text-xs italic text-gray-400 dark:text-gray-600">
+                  "{word.exampleSentence}"
+                </p>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <Check
+                size={14}
+                className={word.timesCorrect > 0 ? "text-green-500" : "text-gray-300"}
+                aria-hidden="true"
+              />
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {word.timesCorrect}/{word.timesSeen} correct
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <Button onClick={onReview} variant="primary" size="sm" className="mt-4 w-full">
+        <Loader2 size={16} className="mr-2 opacity-70" />
+        Review Session
+      </Button>
+    </motion.div>
+  );
+}

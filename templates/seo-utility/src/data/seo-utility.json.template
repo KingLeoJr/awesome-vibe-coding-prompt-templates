@@ -1,0 +1,37 @@
+{
+  "app": {
+    "name": "SEO Utility",
+    "tagline": "Comprehensive SEO audit and optimization tool"
+  },
+  "siteUrl": "https://example.com",
+  "titleTag": "Meta Title | SEO Utility",
+  "metaDescription": "Boost your website's search engine ranking with our comprehensive SEO audit tool",
+  "primaryKeyword": "SEO audit",
+  "hreflang": "en-US",
+  "score": 76,
+  "category": "good",
+  "keywords": [
+    {
+      "id": "kw-001",
+      "term": "SEO audit tools",
+      "searchVolume": 12000,
+      "difficulty": 72,
+      "priority": "high"
+    },
+    {
+      "id": "kw-002",
+      "term": "on-page SEO checklist",
+      "searchVolume": 8500,
+      "difficulty": 45,
+      "priority": "medium"
+    },
+    {
+      "id": "kw-003",
+      "term": "technical SEO guide",
+      "searchVolume": 4200,
+      "difficulty": 68,
+      "priority": "high"
+    }
+  ],
+  "checkedAt": "2024-01-15"
+}

@@ -1,0 +1,39 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  frontend.language: "{{frontend.language}}"
+  backend.framework: "{{backend.framework}}"
+  backend.language: "{{backend.language}}"
+  auth.protocol: "{{auth.protocol}}"
+  ui.library: "{{ui.library}}"
+  state.manager: "{{state.manager}}"
+  alerts.provider: "{{alerts.provider}}"
+  notifications.provider: "{{notifications.provider}}"
+  maps.provider: "{{maps.provider}}"
+  ai.provider: "{{ai.provider}}"
+  ai.capabilities: "{{ai.capabilities}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive online personalized disaster preparedness and emergency response platform using {{frontend.framework}} for the frontend and {{backend.framework}} for the backend
+Implement user authentication with {{auth.protocol}} for secure access and account management
+Design an intuitive UI using {{ui.library}} for a modern and user-friendly experience
+Use {{state.manager}} for state management to efficiently handle user data, emergency plans, and resource information
+Create customizable user profiles that include location, household details, and specific emergency preparedness needs
+Implement an interactive emergency plan builder that allows users to create personalized disaster response strategies based on their circumstances
+Develop a resource library with articles, videos, and guides on disaster preparedness, survival skills, and emergency response best practices
+Create a community forum where users can share experiences, ask questions about emergency preparedness, and provide support to one another
+Implement a notification system that alerts users about local emergencies, weather warnings, and updates on disaster preparedness resources using {{alerts.provider}}
+Design a feature that connects users with local emergency services and resources (e.g., shelters, food banks) based on their location using {{maps.provider}}
+Create personalized checklists for various types of disasters (e.g., hurricanes, earthquakes) to help users ensure they have necessary supplies and plans in place
+Implement a referral program that rewards users for inviting friends or family members to join the platform or participate in preparedness activities together
+Develop an interactive training module that offers courses on first aid, CPR, and other essential emergency response skills
+Create a feature that allows users to document their emergency plans and share them with family members for coordination during crises
+Implement gamification elements such as badges for completing training modules or participating in community discussions about preparedness

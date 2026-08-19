@@ -1,0 +1,240 @@
+{
+  "blueprint_id": "d3f0b2a4-1e7c-4f6b-9a2e-8c4d6f0a1b2c",
+  "slug": "local-services-directory",
+  "name": "Directory for Local Services Template",
+  "category": "Template",
+  "archetype": "DirectoryListing",
+  "tagline": "Find, book, and review trusted local service providers - plumbers, electricians, cleaners and more.",
+  "builder_prompt_source": "prompt.md.template",
+
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React 19 / Next.js 15", "version_hint": "app router", "purpose": "Server-rendered listing UI; source prompt specifies Vue.js" },
+    { "layer": "backend", "technology": "Laravel (source prompt) / Next.js API routes", "version_hint": "11.x", "purpose": "Directory data, bookings, auth; source prompt specifies Laravel" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16", "purpose": "Providers, reviews, bookings, users" },
+    { "layer": "auth", "technology": "Laravel Passport (source prompt)", "version_hint": "OAuth2", "purpose": "Secure access tokens for users and providers" },
+    { "layer": "state", "technology": "React hooks / Vuex (source prompt)", "version_hint": "", "purpose": "Complex application state (filters, bookings, dashboards)" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4", "purpose": "Utility-first styling; source prompt specifies Bootstrap 5" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11", "purpose": "Section and card micro-interactions" },
+    { "layer": "payments", "technology": "Stripe / PayPal", "version_hint": "", "purpose": "Booking deposits and secure transactions" },
+    { "layer": "realtime", "technology": "Pusher", "version_hint": "", "purpose": "Push notifications for listings and appointment reminders" }
+  ],
+
+  "features": [
+    { "description": "Create a responsive online directory for local services using Laravel for the backend and Vue.js for the frontend.", "priority": "core", "order_index": 0 },
+    { "description": "Implement user authentication and authorization using Laravel Passport for secure access.", "priority": "core", "order_index": 1 },
+    { "description": "Design a clean, user-friendly UI using Bootstrap 5 to facilitate easy navigation and search.", "priority": "core", "order_index": 2 },
+    { "description": "Use Vuex for state management to handle complex application states effectively.", "priority": "core", "order_index": 3 },
+    { "description": "Create a searchable database of local service providers, including categories such as plumbing, electrical work, cleaning, and landscaping.", "priority": "core", "order_index": 4 },
+    { "description": "Implement a review and rating system that allows users to leave feedback on service providers based on their experiences.", "priority": "core", "order_index": 5 },
+    { "description": "Design an interactive map feature using Google Maps API to help users find local services based on their location.", "priority": "enhanced", "order_index": 6 },
+    { "description": "Create a booking system that allows users to schedule appointments directly with service providers through the platform.", "priority": "core", "order_index": 7 },
+    { "description": "Implement a secure payment processing system using Stripe or PayPal integration for transactions related to bookings or deposits.", "priority": "enhanced", "order_index": 8 },
+    { "description": "Design an analytics dashboard for service providers to track their performance metrics, including bookings, reviews, and customer engagement.", "priority": "enhanced", "order_index": 9 },
+    { "description": "Create a community forum where users can ask questions, share recommendations, and discuss local services.", "priority": "enhanced", "order_index": 10 },
+    { "description": "Implement a referral program that rewards users for referring new customers to service providers listed on the platform.", "priority": "advanced", "order_index": 11 },
+    { "description": "Design an FAQ section addressing common questions about using the directory and booking services.", "priority": "enhanced", "order_index": 12 },
+    { "description": "Create partnerships with local businesses to offer exclusive deals or promotions through the directory.", "priority": "advanced", "order_index": 13 },
+    { "description": "Implement multi-language support to cater to diverse customer bases in different regions.", "priority": "enhanced", "order_index": 14 },
+    { "description": "Design an onboarding process with tutorials guiding new users through the platform's features and how to find services effectively.", "priority": "enhanced", "order_index": 15 },
+    { "description": "Create personalized notifications for new listings, special offers, and reminders for upcoming appointments based on user preferences.", "priority": "enhanced", "order_index": 16 },
+    { "description": "Implement advanced search functionality with filters by category, rating, distance, and availability of service providers.", "priority": "core", "order_index": 17 },
+    { "description": "Design user profiles where customers can manage their bookings, preferences, and payment methods effectively.", "priority": "core", "order_index": 18 },
+    { "description": "Create integration with social media platforms allowing users to share their experiences or recommend services easily.", "priority": "enhanced", "order_index": 19 },
+    { "description": "Implement push notifications for new service provider listings or special promotions within the app.", "priority": "enhanced", "order_index": 20 },
+    { "description": "Design an interactive timeline feature showcasing the history of service providers' ratings and reviews over time.", "priority": "advanced", "order_index": 21 },
+    { "description": "Create a loyalty program that rewards frequent users with discounts or exclusive offers from local service providers.", "priority": "advanced", "order_index": 22 },
+    { "description": "Implement data analytics to personalize recommendations based on user behavior and preferences.", "priority": "advanced", "order_index": 23 },
+    { "description": "Design a custom API for third-party developers to integrate with the platform (e.g., local news apps).", "priority": "advanced", "order_index": 24 },
+    { "description": "Create an event calendar highlighting community events or workshops hosted by local service providers.", "priority": "advanced", "order_index": 25 },
+    { "description": "Implement a secure dispute resolution system for handling conflicts between users and service providers.", "priority": "advanced", "order_index": 26 }
+  ],
+
+  "sections": [
+    { "name": "Search", "component_path": "src/components/directory/SearchExplorer.tsx", "layout_type": "hero", "is_visible": true, "order_index": 1 },
+    { "name": "Browse", "component_path": "src/components/directory/ListingCard.tsx", "layout_type": "grid", "is_visible": true, "order_index": 2 },
+    { "name": "Bookings", "component_path": "src/components/directory/BookingWidget.tsx", "layout_type": "split", "is_visible": true, "order_index": 3 },
+    { "name": "Reviews", "component_path": "src/components/directory/ReviewTimeline.tsx", "layout_type": "timeline", "is_visible": true, "order_index": 4 },
+    { "name": "Providers", "component_path": "src/components/directory/ProviderDashboard.tsx", "layout_type": "dashboard", "is_visible": true, "order_index": 5 }
+  ],
+
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "logoText": "string", "navItems": "Array<{label, href}>", "ctaText": "string", "ctaHref": "string" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "SearchExplorer", "path": "src/components/directory/SearchExplorer.tsx", "props": { "categories": "Category[]", "providers": "Provider[]" }, "mixins": [] },
+    { "name": "ListingCard", "path": "src/components/directory/ListingCard.tsx", "props": { "provider": "Provider" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "BookingWidget", "path": "src/components/directory/BookingWidget.tsx", "props": { "providers": "Provider[]", "slots": "BookingSlot[]" }, "mixins": [] },
+    { "name": "ReviewTimeline", "path": "src/components/directory/ReviewTimeline.tsx", "props": { "reviews": "Review[]" }, "mixins": [] },
+    { "name": "ProviderDashboard", "path": "src/components/directory/ProviderDashboard.tsx", "props": { "metrics": "DashboardMetrics" }, "mixins": [] },
+    { "name": "HomePage", "path": "src/app/page.tsx", "props": {}, "mixins": ["_shared/Footer.tsx.template"] }
+  ],
+
+  "data_models": [
+    {
+      "name": "Category",
+      "fields": [
+        { "name": "name", "type": "string", "required": true },
+        { "name": "slug", "type": "string", "required": true },
+        { "name": "icon", "type": "string", "required": true },
+        { "name": "count", "type": "number", "required": true, "default": 0 }
+      ]
+    },
+    {
+      "name": "Provider",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "category", "type": "string", "required": true },
+        { "name": "area", "type": "string", "required": true },
+        { "name": "rating", "type": "number", "required": true },
+        { "name": "reviewCount", "type": "number", "required": true },
+        { "name": "verified", "type": "boolean", "required": true },
+        { "name": "priceFrom", "type": "number", "required": true },
+        { "name": "services", "type": "string[]", "required": true },
+        { "name": "availability", "type": "boolean", "required": true },
+        { "name": "distanceKm", "type": "number", "required": true },
+        { "name": "imageUrl", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "Review",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "providerId", "type": "string", "required": true },
+        { "name": "author", "type": "string", "required": true },
+        { "name": "rating", "type": "number", "required": true },
+        { "name": "date", "type": "string", "required": true },
+        { "name": "service", "type": "string", "required": true },
+        { "name": "comment", "type": "string", "required": true },
+        { "name": "verified", "type": "boolean", "required": true }
+      ]
+    },
+    {
+      "name": "Booking",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "providerId", "type": "string", "required": true },
+        { "name": "userId", "type": "string", "required": true },
+        { "name": "slotId", "type": "string", "required": true },
+        { "name": "status", "type": "enum", "required": true, "default": "pending" },
+        { "name": "amount", "type": "number", "required": true },
+        { "name": "paymentMethod", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "BookingSlot",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "providerId", "type": "string", "required": true },
+        { "name": "date", "type": "string", "required": true },
+        { "name": "startTime", "type": "string", "required": true },
+        { "name": "endTime", "type": "string", "required": true },
+        { "name": "available", "type": "boolean", "required": true }
+      ]
+    },
+    {
+      "name": "DashboardMetrics",
+      "fields": [
+        { "name": "bookings", "type": "number", "required": true },
+        { "name": "monthlyTrend", "type": "number", "required": true },
+        { "name": "avgRating", "type": "number", "required": true },
+        { "name": "views", "type": "number", "required": true },
+        { "name": "responseRate", "type": "number", "required": true },
+        { "name": "weeklyBookings", "type": "number[]", "required": true },
+        { "name": "topServices", "type": "Array<{name, share}>", "required": true }
+      ]
+    }
+  ],
+
+  "integrations": [
+    { "service": "Google Maps API", "purpose": "Interactive map of local service providers based on user location", "config_params": { "env": "NEXT_PUBLIC_GOOGLE_MAPS_KEY" } },
+    { "service": "Stripe", "purpose": "Secure payment processing for bookings and deposits", "config_params": { "env": "STRIPE_SECRET_KEY", "webhook": "/api/webhooks/stripe" } },
+    { "service": "PayPal", "purpose": "Alternative payment method for transactions", "config_params": { "env": "PAYPAL_CLIENT_ID" } },
+    { "service": "Pusher", "purpose": "Push notifications for new listings and appointment reminders", "config_params": { "env": "PUSHER_APP_KEY" } },
+    { "service": "SendGrid", "purpose": "Personalized transactional email notifications", "config_params": { "env": "SENDGRID_API_KEY" } },
+    { "service": "Facebook / Twitter OAuth", "purpose": "Social sharing of experiences and recommendations", "config_params": { "env": "OAUTH_CREDENTIALS" } }
+  ],
+
+  "nfrs": [
+    { "type": "Performance", "requirement": "LCP under 1.5s; lazy-load listing images and code-split the dashboard" },
+    { "type": "Security", "requirement": "OAuth2 access tokens (Laravel Passport), PCI-DSS compliant payments, rate-limited APIs" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA - keyboard navigable search, filters, and booking flow with aria labels" },
+    { "type": "Responsive", "requirement": "Mobile-first layout across all sections (hero, grid, timeline, dashboard)" },
+    { "type": "i18n", "requirement": "Multi-language support (EN/ES/FR) driven by a locale dictionary" },
+    { "type": "PWA", "requirement": "Installable app shell with offline browsing of cached listings" },
+    { "type": "Testing", "requirement": "Unit tests for search/filter logic; e2e coverage of booking and payment flows" }
+  ],
+
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#2563eb" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#059669" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f59e0b" },
+    { "token_type": "font", "token_name": "font.family", "token_value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+    { "token_type": "spacing", "token_name": "spacing.base", "token_value": "1rem" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+
+  "deployment": [
+    { "platform": "Vercel", "config": { "framework": "nextjs", "region": "iad1", "buildCommand": "next build" } }
+  ],
+
+  "template_files": [
+    { "path": "README.md", "source": "templates/local-services-directory/README.md", "syntax": "mustache", "mixins": [] },
+    { "path": "blueprint.json", "source": "templates/local-services-directory/blueprint.json.template", "syntax": "mustache", "mixins": [] },
+    { "path": "prompt.md", "source": "templates/local-services-directory/prompt.md.template", "syntax": "mustache", "mixins": [] },
+    { "path": "package.json", "source": "templates/local-services-directory/package.json.template", "syntax": "mustache", "mixins": [] },
+    { "path": "config/site.config.ts", "source": "templates/local-services-directory/config/site.config.ts.template", "syntax": "mustache", "mixins": [] },
+    { "path": "styles/globals.css", "source": "templates/local-services-directory/styles/globals.css.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/app/page.tsx", "source": "templates/local-services-directory/src/app/page.tsx.template", "syntax": "mustache", "mixins": ["_shared/Footer.tsx.template"] },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/local-services-directory/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/directory/ListingCard.tsx", "source": "templates/local-services-directory/src/components/directory/ListingCard.tsx.template", "syntax": "mustache", "mixins": ["_shared/Card.tsx.template"] },
+    { "path": "src/components/directory/SearchExplorer.tsx", "source": "templates/local-services-directory/src/components/directory/SearchExplorer.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/components/directory/BookingWidget.tsx", "source": "templates/local-services-directory/src/components/directory/BookingWidget.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/components/directory/ReviewTimeline.tsx", "source": "templates/local-services-directory/src/components/directory/ReviewTimeline.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/components/directory/ProviderDashboard.tsx", "source": "templates/local-services-directory/src/components/directory/ProviderDashboard.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/data/local-services-directory.json", "source": "templates/local-services-directory/src/data/local-services-directory.json.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/lib/types.ts", "source": "templates/local-services-directory/src/lib/types.ts.template", "syntax": "mustache", "mixins": [] }
+  ],
+
+  "extra_config": {
+    "theme": {
+      "color": { "primary": "#2563eb", "secondary": "#059669", "accent": "#f59e0b" },
+      "font": { "family": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" }
+    },
+    "header": { "cta_text": "List your service", "cta_href": "/providers/new", "is_fixed": true },
+    "hero": {
+      "headline": "Find trusted local service pros",
+      "subtext": "Search, compare, and book verified plumbers, electricians, cleaners, landscapers and more - all in one place.",
+      "placeholder": "Try \"plumber near me\" or a service category"
+    },
+    "seo": {
+      "title": "Local Services Directory - Find & book trusted local pros",
+      "og_image": "https://local-services-demo.example.com/og.jpg",
+      "schema_type": "LocalBusiness"
+    },
+    "payments": { "provider": "Stripe" },
+    "deployment": { "url": "https://local-services-demo.example.com", "domain": "local-services-demo.example.com", "analytics_id": "G-XXXXXXXXXX" },
+    "contact": { "email": "hello@local-services.example.com", "phone": "+1 (555) 010-2030" },
+    "social": {
+      "github": "https://github.com/example/local-services-directory",
+      "linkedin": "https://www.linkedin.com/company/local-services",
+      "twitter": "https://twitter.com/localservices"
+    },
+    "nav": [
+      { "label": "Browse", "href": "#browse" },
+      { "label": "Bookings", "href": "#bookings" },
+      { "label": "Reviews", "href": "#reviews" },
+      { "label": "For Providers", "href": "#providers" }
+    ],
+    "tech": {
+      "backend": "Laravel",
+      "frontend": "Vue.js",
+      "auth": "Laravel Passport",
+      "ui_framework": "Bootstrap 5",
+      "state": "Vuex",
+      "categories": "plumbing, electrical work, cleaning, and landscaping",
+      "map": "Google Maps API",
+      "payments": "Stripe or PayPal",
+      "api_example": "local news apps"
+    }
+  }
+}

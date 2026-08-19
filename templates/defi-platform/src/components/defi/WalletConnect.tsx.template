@@ -1,0 +1,164 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Copy, Link2, LogOut, Plug, Wallet } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { wallet as defaultWallet } from "@/data/{{app.slug}}.json";
+
+export interface WalletProvider {
+  id: string;
+  label: string;
+  description: string;
+}
+
+export interface Account {
+  address: string;
+  chainId: number;
+  balanceUsd: number;
+}
+
+interface WalletConnectProps {
+  providers?: WalletProvider[];
+  defaultAccount?: Account;
+  network?: string;
+  locale?: string;
+  currency?: string;
+}
+
+export default function WalletConnect({
+  providers = [
+    { id: "metamask", label: "MetaMask", description: "Browser extension" },
+    { id: "walletconnect", label: "WalletConnect", description: "Scan with your mobile wallet" },
+    { id: "ledger", label: "Ledger", description: "Hardware wallet" },
+  ],
+  defaultAccount = defaultWallet.account,
+  network = "{{chain.network}}",
+  locale = "{{i18n.default_locale}}",
+  currency = "USD",
+}: WalletConnectProps) {
+  const [connected, setConnected] = useState(false);
+  const [account, setAccount] = useState<Account | null>(null);
+  const [provider, setProvider] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const connect = (id: string) => {
+    setProvider(id);
+    setAccount(defaultAccount);
+    setConnected(true);
+  };
+
+  const disconnect = () => {
+    setConnected(false);
+    setAccount(null);
+    setProvider(null);
+  };
+
+  const copyAddress = async () => {
+    if (!account) return;
+    try {
+      await navigator.clipboard.writeText(account.address);
+    } catch {
+      const input = document.createElement("input");
+      input.value = account.address;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  };
+
+  const short = (addr: string) => `${addr.slice(0, 6)}…${addr.slice(-4)}`;
+
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+      {!connected ? (
+        <div>
+          <div className="mb-5 flex items-center gap-2 text-[var(--color-primary)]">
+            <Wallet size={19} />
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Connect your wallet</h3>
+          </div>
+          <div className="space-y-2.5">
+            {providers.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => connect(p.id)}
+                className="group flex w-full items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-left transition hover:border-[var(--color-primary)]/50 hover:bg-[var(--color-primary)]/5 dark:border-gray-700"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-[var(--color-primary)]/10 group-hover:text-[var(--color-primary)] dark:bg-gray-800 dark:text-gray-400">
+                  <Plug size={16} />
+                </span>
+                <span>
+                  <span className="block text-sm font-medium text-gray-900 dark:text-white">{p.label}</span>
+                  <span className="block text-xs text-gray-400">{p.description}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+          <p className="mt-4 text-center text-[11px] leading-relaxed text-gray-400">
+            Connecting never stores your private key — all signing happens in your wallet on {network}.
+          </p>
+        </div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+                <Wallet size={19} />
+              </span>
+              <div>
+                <p className="flex items-center gap-1.5 text-sm font-semibold text-gray-900 dark:text-white">
+                  Connected
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-accent)]/10 px-2 py-0.5 text-[11px] font-medium text-[var(--color-accent)]">
+                    <Link2 size={11} />
+                    {provider}
+                  </span>
+                </p>
+                <p className="font-mono text-xs text-gray-400">{short(account.address)}</p>
+              </div>
+            </div>
+            <button
+              onClick={disconnect}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 transition hover:border-rose-300 hover:text-rose-600 dark:border-gray-700 dark:text-gray-400"
+            >
+              <LogOut size={13} />
+              Disconnect
+            </button>
+          </div>
+
+          <div className="mt-5 grid grid-cols-2 gap-3">
+            <div className="rounded-xl bg-gray-50 p-3 dark:bg-gray-900">
+              <p className="text-xs text-gray-400">Balance</p>
+              <p className="mt-0.5 text-lg font-bold text-gray-900 dark:text-white">
+                {new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 0 }).format(account.balanceUsd)}
+              </p>
+            </div>
+            <div className="rounded-xl bg-gray-50 p-3 dark:bg-gray-900">
+              <p className="text-xs text-gray-400">Network</p>
+              <p className="mt-0.5 text-sm font-semibold text-gray-900 dark:text-white">{network}</p>
+            </div>
+          </div>
+
+          <button
+            onClick={copyAddress}
+            className={cn(
+              "mt-4 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition",
+              copied
+                ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
+                : "bg-gray-100 text-gray-600 hover:text-[var(--color-primary)] dark:bg-gray-900 dark:text-gray-300"
+            )}
+          >
+            <Copy size={13} />
+            {copied ? "Address copied" : "Copy full address"}
+          </button>
+        </motion.div>
+      )}
+    </div>
+  );
+}

@@ -1,0 +1,200 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "categories": [
+    { "name": "Groceries", "slug": "groceries", "count": 214 },
+    { "name": "Electronics", "slug": "electronics", "count": 168 },
+    { "name": "Clothing", "slug": "clothing", "count": 143 },
+    { "name": "Travel", "slug": "travel", "count": 97 },
+    { "name": "Restaurants", "slug": "restaurants", "count": 121 },
+    { "name": "Home & Garden", "slug": "home-garden", "count": 88 },
+    { "name": "Beauty", "slug": "beauty", "count": 64 },
+    { "name": "Toys & Games", "slug": "toys-games", "count": 41 }
+  ],
+  "coupons": [
+    {
+      "id": "CPN-001",
+      "title": "25% off your entire grocery order",
+      "store": "GreenBasket Market",
+      "category": "Groceries",
+      "discount": "25%",
+      "code": "SAVE25GB",
+      "expires": "2026-08-22",
+      "verified": true,
+      "redemptions": 4821
+    },
+    {
+      "id": "CPN-002",
+      "title": "$40 off wireless noise-cancelling headphones",
+      "store": "SoundDeals",
+      "category": "Electronics",
+      "discount": "$40",
+      "code": "QUIET40",
+      "expires": "2026-08-28",
+      "verified": true,
+      "redemptions": 3110
+    },
+    {
+      "id": "CPN-003",
+      "title": "Free shipping on all orders over $35",
+      "store": "UrbanThread",
+      "category": "Clothing",
+      "discount": "Free",
+      "code": "SHIPFREE",
+      "expires": "2026-09-01",
+      "verified": true,
+      "redemptions": 2087
+    },
+    {
+      "id": "CPN-004",
+      "title": "Buy one get one free on breakfast items",
+      "store": "FreshStart Foods",
+      "category": "Groceries",
+      "discount": "BOGO",
+      "code": "BOGO2026",
+      "expires": "2026-08-19",
+      "verified": true,
+      "redemptions": 1193
+    },
+    {
+      "id": "CPN-005",
+      "title": "20% off 4K smart TVs",
+      "store": "VoltSource",
+      "category": "Electronics",
+      "discount": "20%",
+      "code": "VOLT20",
+      "expires": "2026-08-25",
+      "verified": true,
+      "redemptions": 954
+    },
+    {
+      "id": "CPN-006",
+      "title": "15% off your first hotel booking",
+      "store": "WanderStay",
+      "category": "Travel",
+      "discount": "15%",
+      "code": "WANDER15",
+      "expires": "2026-09-10",
+      "verified": true,
+      "redemptions": 876
+    },
+    {
+      "id": "CPN-007",
+      "title": "Free appetizer with any entree",
+      "store": "The Braised Onion",
+      "category": "Restaurants",
+      "discount": "Free",
+      "code": "ONIONAPP",
+      "expires": "2026-08-20",
+      "verified": true,
+      "redemptions": 742
+    },
+    {
+      "id": "CPN-008",
+      "title": "10% off outdoor furniture sets",
+      "store": "Hearth & Hedge",
+      "category": "Home & Garden",
+      "discount": "10%",
+      "code": "PECK10",
+      "expires": "2026-09-05",
+      "verified": false,
+      "redemptions": 311
+    },
+    {
+      "id": "CPN-009",
+      "title": "$15 off skincare bundles over $60",
+      "store": "LumiSkin",
+      "category": "Beauty",
+      "discount": "$15",
+      "code": "GLOW15",
+      "expires": "2026-08-24",
+      "verified": true,
+      "redemptions": 640
+    },
+    {
+      "id": "CPN-010",
+      "title": "3-for-2 on board games",
+      "store": "Playtopia",
+      "category": "Toys & Games",
+      "discount": "3-for-2",
+      "code": "PLAYTWO",
+      "expires": "2026-08-30",
+      "verified": false,
+      "redemptions": 289
+    }
+  ],
+  "expiring": [
+    { "id": "EXP-01", "title": "BOGO on breakfast items", "store": "FreshStart Foods", "discount": "BOGO", "expiresInDays": 0, "code": "BOGO2026" },
+    { "id": "EXP-02", "title": "Free appetizer with any entree", "store": "The Braised Onion", "discount": "Free", "expiresInDays": 1, "code": "ONIONAPP" },
+    { "id": "EXP-03", "title": "25% off your entire grocery order", "store": "GreenBasket Market", "discount": "25%", "expiresInDays": 3, "code": "SAVE25GB" },
+    { "id": "EXP-04", "title": "$15 off skincare bundles over $60", "store": "LumiSkin", "discount": "$15", "expiresInDays": 5, "code": "GLOW15" },
+    { "id": "EXP-05", "title": "20% off 4K smart TVs", "store": "VoltSource", "discount": "20%", "expiresInDays": 6, "code": "VOLT20" },
+    { "id": "EXP-06", "title": "$40 off wireless noise-cancelling headphones", "store": "SoundDeals", "discount": "$40", "expiresInDays": 9, "code": "QUIET40" }
+  ],
+  "trends": [
+    { "id": "TRD-01", "label": "New Year", "month": "January", "avgDiscount": 18, "peak": false },
+    { "id": "TRD-02", "label": "Valentine's", "month": "February", "avgDiscount": 15, "peak": false },
+    { "id": "TRD-03", "label": "Spring Sale", "month": "April", "avgDiscount": 22, "peak": false },
+    { "id": "TRD-04", "label": "Prime Day", "month": "July", "avgDiscount": 41, "peak": true },
+    { "id": "TRD-05", "label": "Back to School", "month": "August", "avgDiscount": 24, "peak": false },
+    { "id": "TRD-06", "label": "Black Friday", "month": "November", "avgDiscount": 48, "peak": true },
+    { "id": "TRD-07", "label": "Cyber Monday", "month": "November", "avgDiscount": 45, "peak": true }
+  ],
+  "impact": [
+    { "id": "IMP-01", "label": "Saved by members this year", "value": "$2.4M", "delta": "+18%" },
+    { "id": "IMP-02", "label": "Coupons verified", "value": "48,120", "delta": "+9%" },
+    { "id": "IMP-03", "label": "Active members", "value": "312k", "delta": "+24%" },
+    { "id": "IMP-04", "label": "Rewards paid out", "value": "$86k", "delta": "+31%" }
+  ],
+  "faqs": [
+    {
+      "question": "How do I redeem a coupon?",
+      "answer": "Copy the code from a deal card and paste it at checkout on the retailer's site, or show it in-store. Verified coupons display a green badge."
+    },
+    {
+      "question": "What happens when a coupon expires?",
+      "answer": "Expired deals are removed from search but stay visible in your saved list, and we surface expiring-soon alerts so you never miss a deadline."
+    },
+    {
+      "question": "How are submissions verified?",
+      "answer": "Every community submission passes an automated syntax/expiry check followed by a manual spot-check before the deal goes live."
+    },
+    {
+      "question": "Do you work with retailers directly?",
+      "answer": "Yes. Partner retailers offer exclusive codes and analytics dashboards to track coupon usage and engagement."
+    },
+    {
+      "question": "Can I earn rewards?",
+      "answer": "You earn loyalty points for verified submissions and successful referrals, which unlock exclusive offers and early access to seasonal sales."
+    }
+  ],
+  "blogPosts": [
+    {
+      "slug": "stacking-coupons-101",
+      "tag": "How-To",
+      "title": "Stacking coupons 101: double your savings the right way",
+      "excerpt": "Manufacturer plus store coupons can work together — here's the order that maximizes your total discount without breaking store policy.",
+      "date": "Aug 12, 2026",
+      "readMinutes": 4
+    },
+    {
+      "slug": "back-to-school-budget",
+      "tag": "Budgeting",
+      "title": "Back-to-school on a budget: 12 deals to grab this month",
+      "excerpt": "From laptops to lunchboxes, the seasonal discount calendar peaks right before the first bell. Plan your haul around these dates.",
+      "date": "Aug 08, 2026",
+      "readMinutes": 6
+    },
+    {
+      "slug": "expiry-alerts-guide",
+      "tag": "Features",
+      "title": "Turn on expiry alerts so you never lose a code again",
+      "excerpt": "Push and in-app notifications flag deals 48 hours before they expire — tune your saved-search preferences in two minutes.",
+      "date": "Jul 30, 2026",
+      "readMinutes": 3
+    }
+  ]
+}

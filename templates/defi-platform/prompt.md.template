@@ -1,0 +1,58 @@
+# {{app.name}}
+
+> {{app.tagline}}
+
+Build a production-grade **{{app.category}}** (archetype: `{{app.archetype}}`) that
+realizes every requirement below. All `{{placeholders}}` have been resolved from
+`blueprint.json`; treat this prompt as the single source of truth for scope.
+
+## Non-negotiable platform choices
+
+| Layer | Technology | Purpose |
+|---|---|---|
+{{#each tech_stack}}| {{layer}} | {{technology}} | {{purpose}} |
+{{/each}}
+
+## Requirement backlog (ordered, priority-tagged)
+
+{{#each features}}
+1. **[{{priority}}]** {{description}}
+{{/each}}
+
+## Page sections (render order)
+
+{{#each sections}}
+- `{{name}}` → `{{component_path}}` (layout: `{{layout_type}}`)
+{{/each}}
+
+## Domain data models
+
+{{#each data_models}}
+- **{{name}}**: {{#each fields}}`{{name}}: {{type}}`{{#if required}} (required){{/if}}{{#unless @last}}, {{/unless}}{{/each}}
+{{/each}}
+
+## Integrations
+
+{{#each integrations}}
+- **{{service}}** — {{purpose}}
+{{/each}}
+
+## Non-functional requirements
+
+{{#each nfrs}}
+- **{{type}}**: {{requirement}}
+{{/each}}
+
+## Design tokens
+
+{{#each design_tokens}}
+- `{{token_name}}` ({{token_type}}) = `{{token_value}}`
+{{/each}}
+
+## Definition of done
+
+- TypeScript, dark mode, responsive, accessible, animated (Framer Motion), Tailwind-first design.
+- Zero hard-coded business values — everything flows through `src/data/{{app.slug}}.json` or props.
+- Chain specifics (RPC URL, explorer, chain ID) come from env vars referenced in `config/site.config.ts`.
+- Wallet signing stays in-wallet; the UI never touches private keys.
+- `npm run build`, `npm run typecheck`, and `npm run lint` pass clean.

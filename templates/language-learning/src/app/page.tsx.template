@@ -1,0 +1,71 @@
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import LessonCard from "@/components/language/LessonCard";
+import VocabularyDeck from "@/components/language/VocabularyDeck";
+import SpeakingPractice from "@/components/language/SpeakingPractice";
+import ProgressDashboard from "@/components/language/ProgressDashboard";
+import data from "@/data/language-learning.json";
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Header />
+
+      <main>
+        <section id="lessons" className="container mx-auto px-6 py-20">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Lessons
+            </h2>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              Start learning with personalized lessons tailored to your level.
+            </p>
+          </div>
+          <LessonCard lesson={data.lessons[0]} onStart={() => {}} delay={0} />
+          <LessonCard lesson={data.lessons[1]} onStart={() => {}} delay={0.1} />
+          <LessonCard lesson={data.lessons[2]} onStart={() => {}} delay={0.2} />
+        </section>
+
+        <section id="vocabulary" className="scroll-mt-24 px-6 py-20">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Vocabulary
+            </h2>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              Build your vocabulary with flashcards and spaced repetition.
+            </p>
+          </div>
+          <VocabularyDeck words={data.vocabulary} onReview={() => {}} />
+        </section>
+
+        <section id="practice" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <div className="container mx-auto px-6 py-20">
+            <div className="mb-10 max-w-2xl">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                Speaking Practice
+              </h2>
+              <p className="mt-2 text-gray-500 dark:text-gray-400">
+                Practice speaking with interactive prompts and recording.
+              </p>
+            </div>
+            <SpeakingPractice prompt={data.prompts[0]} onRecord={() => {}} />
+          </div>
+        </section>
+
+        <section id="progress" className="scroll-mt-24 px-6 py-20">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Progress
+            </h2>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              Track your learning progress over time.
+            </p>
+          </div>
+          <ProgressDashboard progress={data.progress} />
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

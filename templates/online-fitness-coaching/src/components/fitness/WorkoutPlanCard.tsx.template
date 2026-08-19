@@ -1,0 +1,52 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Play, Dumbbell, TrendingUp } from "lucide-react";
+
+interface WorkoutCardProps {
+  workouts: { id: string; title: string; duration: number; difficulty: string }[];
+  currency: string;
+}
+
+export interface WorkoutCard {
+  id: string;
+  title: string;
+  duration: number;
+  difficulty: string;
+}
+
+export default function WorkoutPlanCard({ workouts, currency }: WorkoutCardProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950",
+        "hover:shadow-lg transition-shadow"
+      )}
+    >
+      <div className="p-6">
+        <div className="flex items-start gap-4">
+          <div className="flex-shrink-0">
+            <motion.span
+              className="h-10 w-10 rounded-lg bg-[var(--color-primary)] flex items-center justify-center text-sm font-medium text-white"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <Play className="h-5 w-5" />
+            </motion.span>
+          </div>
+          <div className="flex-1">
+            <h3 className="font-bold text-gray-900 dark:text-white">{workouts[0]?.title || "Workout Plan"}</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {workouts[0]?.duration || 30} min · {workouts[0]?.difficulty || "Intermediate"}
+            </p>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

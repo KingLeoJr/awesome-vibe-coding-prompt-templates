@@ -1,0 +1,134 @@
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import type { GalleryItem } from "@/lib/types";
+
+interface ListingGalleryProps {
+  items: GalleryItem[];
+}
+
+export default function ListingGallery({ items }: ListingGalleryProps) {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const close = useCallback(() => setActiveIndex(null), []);
+  const step = useCallback(
+    (direction: 1 | -1) => {
+      setActiveIndex((current) => {
+        if (current === null) return current;
+        return (current + direction + items.length) % items.length;
+      });
+    },
+    [items.length]
+  );
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+      if (event.key === "ArrowRight") step(1);
+      if (event.key === "ArrowLeft") step(-1);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [activeIndex, close, step]);
+
+  return (
+    <section id="gallery" className="mx-auto max-w-7xl px-6 py-20">
+      <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+        In the spotlight
+      </p>
+      <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">Featured photo gallery</h2>
+
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item, index) => (
+          <motion.button
+            key={item.id}
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.05 }}
+            onClick={() => setActiveIndex(index)}
+            aria-label={`Open image: ${item.alt}`}
+            className="group relative aspect-[4/3] overflow-hidden rounded-2xl focus:ring-2 focus:ring-[var(--color-primary)] focus:outline-none"
+          >
+            <img
+              src={item.src}
+              alt={item.alt}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition group-hover:opacity-100" aria-hidden="true" />
+            <span className="absolute right-3 bottom-3 left-3 flex items-center justify-between text-left">
+              <span className="text-sm font-medium text-white">{item.caption}</span>
+              <Expand className="h-4 w-4 text-white" aria-hidden="true" />
+            </span>
+          </motion.button>
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {activeIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Image lightbox"
+            onClick={close}
+          >
+            <button
+              onClick={close}
+              aria-label="Close lightbox"
+              className="absolute top-5 right-5 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            <button
+              onClick={(event) => {
+                event.stopPropagation();
+                step(-1);
+              }}
+              aria-label="Previous image"
+              className="absolute left-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+
+            <motion.figure
+              key={activeIndex}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="max-h-[85vh] max-w-4xl"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <img
+                src={items[activeIndex].src}
+                alt={items[activeIndex].alt}
+                className="max-h-[75vh] w-auto rounded-xl object-contain"
+              />
+              <figcaption className="mt-3 text-center text-sm text-white/80">
+                {items[activeIndex].caption} ({activeIndex + 1}/{items.length})
+              </figcaption>
+            </motion.figure>
+
+            <button
+              onClick={(event) => {
+                event.stopPropagation();
+                step(1);
+              }}
+              aria-label="Next image"
+              className="absolute right-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}

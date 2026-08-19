@@ -1,0 +1,158 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Activity, Smile, TrendingUp } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface MoodEntry {
+  day: string;
+  mood: number;
+  energy: number;
+  note?: string;
+}
+
+export interface MoodSummary {
+  average: number;
+  trend: string;
+  bestDay: string;
+}
+
+interface MoodTrackerProps {
+  log: MoodEntry[];
+  summary: MoodSummary;
+}
+
+const MOOD_LABELS = ["Low", "Okay", "Good", "Great"];
+
+export default function MoodTracker({ log, summary }: MoodTrackerProps) {
+  const [mood, setMood] = useState(0);
+  const [energy, setEnergy] = useState(0);
+  const [logged, setLogged] = useState(false);
+
+  const maxScale = 5;
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLogged(true);
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="mood-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <Activity size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="mood-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Mood tracker</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Log how you feel daily and spot patterns over time.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card className="p-6">
+            <form onSubmit={submit} aria-label="Log today's mood">
+              <h3 className="font-semibold text-gray-900 dark:text-white">How are you feeling today?</h3>
+
+              <fieldset className="mt-5">
+                <legend className="text-sm text-gray-500 dark:text-gray-400">Mood</legend>
+                <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Mood scale">
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setMood(value)}
+                      aria-pressed={mood === value}
+                      aria-label={`Mood ${value} of 5`}
+                      className={cn(
+                        "flex h-11 w-11 items-center justify-center rounded-xl border text-base transition",
+                        mood === value
+                          ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                          : "border-gray-200 dark:border-gray-800 hover:border-[var(--color-primary)]"
+                      )}
+                    >
+                      <Smile size={20} aria-hidden="true" />
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+
+              <fieldset className="mt-5">
+                <legend className="text-sm text-gray-500 dark:text-gray-400">Energy</legend>
+                <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Energy scale">
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setEnergy(value)}
+                      aria-pressed={energy === value}
+                      aria-label={`Energy ${value} of 5`}
+                      className={cn(
+                        "h-11 w-11 rounded-xl border text-sm font-semibold transition",
+                        energy === value
+                          ? "border-[var(--color-secondary)] bg-[var(--color-secondary)] text-white"
+                          : "border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:border-[var(--color-secondary)]"
+                      )}
+                    >
+                      {value}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+
+              <button
+                type="submit"
+                className="mt-6 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition"
+              >
+                {logged ? "Logged — check back tomorrow" : "Log today"}
+              </button>
+            </form>
+          </Card>
+
+          <Card className="p-6">
+            <h3 className="font-semibold text-gray-900 dark:text-white">This week</h3>
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              Average {summary.average}/5 · {summary.trend}
+            </p>
+
+            <div className="mt-5 flex items-end justify-between gap-2 h-36" role="img" aria-label="Weekly mood pattern bar chart">
+              {log.map((entry, index) => (
+                <div key={entry.day} className="flex flex-1 flex-col items-center gap-2">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    whileInView={{ height: `${Math.max(10, (entry.mood / maxScale) * 100)}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.06 }}
+                    className={cn(
+                      "w-full rounded-lg",
+                      entry.mood >= 4
+                        ? "bg-gradient-to-t from-[var(--color-primary)] to-[var(--color-secondary)]"
+                        : entry.mood >= 3
+                        ? "bg-[var(--color-primary)]/70"
+                        : "bg-gray-300 dark:bg-gray-700"
+                    )}
+                    style={{ minHeight: 10 }}
+                  />
+                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{entry.day}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 flex items-center gap-2 rounded-xl bg-[var(--color-primary)]/10 px-4 py-3 text-sm text-[var(--color-primary)]">
+              <TrendingUp size={16} aria-hidden="true" />
+              Best day: {summary.bestDay}
+            </div>
+          </Card>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

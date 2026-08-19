@@ -1,0 +1,133 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { CalendarDays, Check, Clock, Lock, ShieldCheck } from "lucide-react";
+import type { BookingSlot, Provider } from "@/lib/types";
+
+interface BookingWidgetProps {
+  providers: Provider[];
+  slots: BookingSlot[];
+}
+
+export default function BookingWidget({ providers, slots }: BookingWidgetProps) {
+  const [providerId, setProviderId] = useState(providers[0]?.id ?? "");
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const [confirmed, setConfirmed] = useState(false);
+
+  const provider = providers.find((item) => item.id === providerId);
+  const availableSlots = useMemo(() => slots.filter((slot) => slot.available), [slots]);
+
+  const handleConfirm = () => {
+    if (providerId && selectedSlot) setConfirmed(true);
+  };
+
+  const trustPoints = [
+    { icon: ShieldCheck, text: "Verified providers and insured work" },
+    { icon: Lock, text: `Payments secured by {{payments.provider}}` },
+    { icon: Clock, text: "Instant confirmation and automatic reminders" },
+  ];
+
+  return (
+    <section id="bookings" className="bg-gray-50 py-20 dark:bg-gray-900/50">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:items-center">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+            Book in seconds
+          </p>
+          <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+            Schedule an appointment directly with your pro
+          </h2>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">
+            Pick a provider, choose an available time slot, and pay a secure deposit.
+            {{app.name}} handles reminders and rescheduling for you.
+          </p>
+          <ul className="mt-6 space-y-3">
+            {trustPoints.map((point) => (
+              <li key={point.text} className="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-200">
+                <point.icon className="h-5 w-5 shrink-0 text-[var(--color-secondary)]" aria-hidden="true" />
+                {point.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="rounded-3xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-800 dark:bg-gray-950"
+        >
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+            Choose a provider
+          </label>
+          <select
+            value={providerId}
+            onChange={(event) => {
+              setProviderId(event.target.value);
+              setConfirmed(false);
+            }}
+            className="mt-2 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+          >
+            {providers.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name} - {item.category}
+              </option>
+            ))}
+          </select>
+
+          {provider && (
+            <div className="mt-4 flex items-center justify-between rounded-xl bg-gray-50 px-4 py-3 text-sm dark:bg-gray-900">
+              <span className="text-gray-600 dark:text-gray-300">Hourly rate</span>
+              <span className="font-semibold text-gray-900 dark:text-white">from ${provider.priceFrom}</span>
+            </div>
+          )}
+
+          <p className="mt-5 text-sm font-medium text-gray-700 dark:text-gray-200">Pick a time slot</p>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {availableSlots.slice(0, 6).map((slot) => {
+              const selected = selectedSlot === slot.id;
+              return (
+                <button
+                  key={slot.id}
+                  onClick={() => {
+                    setSelectedSlot(slot.id);
+                    setConfirmed(false);
+                  }}
+                  aria-pressed={selected}
+                  className={`flex items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-sm font-medium transition ${
+                    selected
+                      ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                      : "border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-900"
+                  }`}
+                >
+                  <CalendarDays className="h-4 w-4" aria-hidden="true" />
+                  {slot.date.slice(5)} &middot; {slot.startTime}
+                </button>
+              );
+            })}
+          </div>
+
+          {confirmed ? (
+            <div
+              role="status"
+              className="mt-6 flex items-center gap-3 rounded-2xl bg-emerald-50 p-4 text-sm font-medium text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300"
+            >
+              <Check className="h-5 w-5" aria-hidden="true" />
+              Booking confirmed! A reminder has been scheduled.
+            </div>
+          ) : (
+            <button
+              onClick={handleConfirm}
+              disabled={!providerId || !selectedSlot}
+              className="mt-6 w-full rounded-full bg-[var(--color-primary)] px-6 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Confirm booking
+            </button>
+          )}
+        </motion.div>
+      </div>
+    </section>
+  );
+}

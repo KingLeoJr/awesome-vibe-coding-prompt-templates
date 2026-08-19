@@ -1,0 +1,88 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { Check, X, AlertCircle, BarChart2, Sparkles, Loader2, FileText, Link, LogOut, Shield, Map, Search, Palette, Book } from "lucide-react";
+
+interface SEOChecklistItem {
+  id: string;
+  description: string;
+  category: "title" | "meta" | "schema" | "sitemap" | "speed" | "internal" | "canonical" | "amp" | "social" | "images" | "structured" | "pagination" | "warnings" | "faceted" | "javascript" | "corewebvitals" | "international" | "google-news" | "duplicate" | "recipes" | "url-params" | "software" | "archived";
+  status: "passed" | "failed" | "warning";
+  detail?: string;
+}
+
+interface AuditChecklistProps {
+  siteUrl: string;
+  selectedChecklist: SEOChecklistItem[];
+  onSave: (checklist: SEOChecklistItem[]) => void;
+}
+
+export default function AuditChecklist({ siteUrl, selectedChecklist, onSave }: AuditChecklistProps) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-6"
+    >
+      <div className="bg-white dark:bg-gray-950 rounded-2xl p-6 shadow-sm">
+        <h2 className="font-bold text-2xl text-gray-900 dark:text-white mb-4">SEO Audit</h2>
+        <p className="text-gray-500 dark:text-gray-400 mb-6">Enter a website URL to run a comprehensive SEO audit.</p>
+        <form className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Website URL</label>
+            <input
+              type="url"
+              value={siteUrl}
+              className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 p-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:text-gray-100"
+              aria-label="Website URL"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded-md border border-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition"
+            aria-label="Run SEO audit"
+          >
+            Run Audit
+          </button>
+        </form>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {selectedChecklist.map((item) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: item.id.length * 0.01 }}
+            className="group rounded-md border p-4 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:bg-gray-50 dark:hover:bg-gray-950 transition-colors"
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-flex-shrink-0 flex items-center justify-center flex-shrink-0" style={{ backgroundColor: item.status === "passed" ? "var(--color-secondary)" : item.status === "failed" ? "var(--color-primary)" : "var(--color-accent)" }}>
+                {item.status === "passed" ? <Check size={16} /> : item.status === "failed" ? <X size={16} /> : <AlertCircle size={16} />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-gray-900 dark:text-white truncate">{item.description}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{item.category}</p>
+              </div>
+              {item.status !== "passed" && (
+                <button
+                  onClick={() => onSave([...selectedChecklist.filter((i) => i.id !== item.id), item])}
+                  className="ml-2 text-xs text-[var(--color-primary)] hover:underline"
+                  aria-label="Mark as passed"
+                >
+                  ✓
+                </button>
+              )}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}

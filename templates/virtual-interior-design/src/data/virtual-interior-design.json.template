@@ -1,0 +1,74 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "rooms": [
+    {
+      "id": "room-001",
+      "name": "Living Room",
+      "dimensions": { "width": 15, "depth": 20, "unit": "ft" },
+      "floorPlanImage": "https://images.unsplash.com/photo-1560471165-9d4687e162d2"
+    },
+    {
+      "id": "room-002",
+      "name": "Bedroom",
+      "dimensions": { "width": 12, "depth": 14, "unit": "ft" },
+      "floorPlanImage": "https://images.unsplash.com/photo-1545369929-a70e6bd62e05"
+    }
+  ],
+  "furniture": [
+    {
+      "id": " furn-001",
+      "name": "Modern Sofa",
+      "price": 799,
+      "width": "85", "depth": "35", "height": "34",
+      "imageUrl": "https://images.unsplash.com/photo-1606428501146-8c6c73d0e002",
+      "category": "sofa"
+    },
+    {
+      "id": "furn-002",
+      "name": "Accent Chair",
+      "price": 349,
+      "width": "32", "depth": "30", "height": "33",
+      "imageUrl": "https://images.unsplash.com/photo-1545369929-a70e6bd62e05",
+      "category": "chair"
+    },
+    {
+      "id": "furn-003",
+      "name": "Coffee Table",
+      "price": 249,
+      "width": "48", "depth": "24", "height": "18",
+      "imageUrl": "https://images.unsplash.com/photo-1606770126563-613cd9f91579",
+      "category": "table"
+    },
+    {
+      "id": "furn-004",
+      "name": "Area Rug",
+      "price": 199,
+      "width": "72", "depth": "72", "height": "0.5",
+      "imageUrl": "https://images.unsplash.com/photo-1606770126563-613cd9f91579",
+      "category": "rug"
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-001",
+      "name": "Cozy Living Room Makeover",
+      "description": "Transforming a living room into a warm and inviting space with modern furniture",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1600192354092-4as stf4d3b0b",
+      "owner": "Sarah",
+      "likes": 12
+    }
+  ],
+  "communityPosts": [
+    {
+      "id": "post-001",
+      "author": "Emma",
+      "content": "Just completed my first virtual room design! Love the new color palette.",
+      "likes": 8
+    }
+  ]
+}

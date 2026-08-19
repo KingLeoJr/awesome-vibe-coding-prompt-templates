@@ -1,0 +1,133 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { BadgeCheck, MapPin, Star, Store, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface ProviderReview {
+  id: string;
+  author: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
+export interface ServiceProvider {
+  id: string;
+  name: string;
+  category: string;
+  location: string;
+  rating: number;
+  reviewCount: number;
+  verified: boolean;
+  services: string[];
+  reviews: ProviderReview[];
+}
+
+interface ServiceProviderDirectoryProps {
+  providers: ServiceProvider[];
+}
+
+export default function ServiceProviderDirectory({ providers }: ServiceProviderDirectoryProps) {
+  const [category, setCategory] = useState("All");
+  const categories = ["All", ...Array.from(new Set(providers.map((p) => p.category)))];
+  const filtered = category === "All" ? providers : providers.filter((p) => p.category === category);
+
+  return (
+    <section aria-labelledby="services-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+              <Store size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="services-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Service provider directory</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Vetted local landscapers, designers, and garden pros.</p>
+            </div>
+          </div>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="rounded-full border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+            aria-label="Filter providers by category"
+          >
+            {categories.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-5">
+          {filtered.map((provider, i) => (
+            <motion.article
+              key={provider.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+            >
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                    <Users size={20} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3 className="flex items-center gap-2 font-semibold text-gray-900 dark:text-white">
+                      {provider.name}
+                      {provider.verified && <BadgeCheck size={16} className="text-[var(--color-secondary)]" aria-label="Verified" />}
+                    </h3>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{provider.category}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-accent)]/10 px-3 py-1 font-semibold text-[var(--color-accent)]">
+                    <Star size={13} aria-hidden="true" />
+                    {provider.rating}
+                  </span>
+                  <span className="text-gray-500 dark:text-gray-400">{provider.reviewCount} reviews</span>
+                </div>
+              </div>
+
+              <p className="mt-3 flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300">
+                <MapPin size={15} className="shrink-0 text-[var(--color-primary)]" aria-hidden="true" />
+                {provider.location}
+              </p>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                {provider.services.map((service) => (
+                  <span key={service} className="rounded-full border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-gray-800 dark:text-gray-300">
+                    {service}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {provider.reviews.map((review) => (
+                  <figure key={review.id} className="rounded-xl bg-gray-50 p-3 dark:bg-gray-900">
+                    <div className="flex items-center justify-between">
+                      <figcaption className="text-sm font-medium text-gray-900 dark:text-white">{review.author}</figcaption>
+                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--color-accent)]">
+                        <Star size={12} aria-hidden="true" />
+                        {review.rating}
+                      </span>
+                    </div>
+                    <blockquote className="mt-1 text-sm text-gray-600 dark:text-gray-300">{review.comment}</blockquote>
+                    <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">{review.date}</p>
+                  </figure>
+                ))}
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

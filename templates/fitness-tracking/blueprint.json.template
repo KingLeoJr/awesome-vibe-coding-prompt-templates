@@ -1,0 +1,228 @@
+{
+  "slug": "fitness-tracking",
+  "name": "Fitness and Wellness Tracking Platform",
+  "category": "Platform",
+  "archetype": "Dashboard",
+  "tagline": "Track workouts, meals, and habits — and watch small wins compound into real progress.",
+  "builder_prompt_source": "prompt.md.template",
+  "extra_config": {
+    "app": {
+      "slug": "fitness-tracking",
+      "name": "Fitness and Wellness Tracking Platform",
+      "tagline": "Track workouts, meals, and habits — and watch small wins compound into real progress.",
+      "category": "Platform",
+      "archetype": "Dashboard"
+    },
+    "header": {
+      "cta_text": "Start free",
+      "cta_href": "/signup",
+      "is_fixed": true
+    },
+    "seo": {
+      "og_image": "https://fitness-tracking.example.com/og.png",
+      "schema_type": "HealthAndBeautyBusiness"
+    },
+    "contact": {
+      "email": "hello@fitness-tracking.example.com",
+      "phone": "+1 (555) 010-2040"
+    },
+    "social": {
+      "github": "https://github.com/example/fitness-tracking",
+      "linkedin": "https://linkedin.com/company/fitness-tracking",
+      "twitter": "https://twitter.com/fitwellness"
+    },
+    "deployment": {
+      "url": "https://fitness-tracking.example.com",
+      "analytics_id": "G-FT001"
+    },
+    "theme": {
+      "color": {
+        "primary": "#10b981",
+        "secondary": "#3b82f6",
+        "accent": "#f97316",
+        "primary_dark": "#34d399",
+        "secondary_dark": "#60a5fa",
+        "accent_dark": "#fb923c"
+      },
+      "font": {
+        "sans": "Inter"
+      },
+      "radius": {
+        "card": "1.25rem"
+      }
+    }
+  },
+  "tech_stack": [
+    { "layer": "frontend", "technology": "Flutter", "purpose": "Cross-platform mobile app (iOS/Android)" },
+    { "layer": "frontend", "technology": "Next.js 15 (App Router)", "purpose": "Web dashboard preview shared by this template set" },
+    { "layer": "backend", "technology": "Firebase (Cloud Functions, Firestore)", "purpose": "Serverless backend, realtime data, analytics" },
+    { "layer": "database", "technology": "Cloud Firestore", "purpose": "User profiles, workouts, meals, wearable sync" },
+    { "layer": "auth", "technology": "Firebase Authentication", "purpose": "Email, Google, and Apple sign-in" },
+    { "layer": "state", "technology": "Provider", "purpose": "Flutter state management" },
+    { "layer": "ui", "technology": "Material Design 3", "purpose": "Engaging cross-platform UI" },
+    { "layer": "animation", "technology": "Framer Motion (web) / Material motion (mobile)", "purpose": "Micro-interactions and feedback" },
+    { "layer": "realtime", "technology": "Firestore listeners + FCM", "purpose": "Live sync and personalized notifications" },
+    { "layer": "ai_ml", "technology": "TensorFlow Lite + recommendation engine", "purpose": "AI personal trainer and workout suggestions" },
+    { "layer": "wearables", "technology": "HealthKit + Fitbit Web API", "purpose": "Activity and sleep data sync" },
+    { "layer": "integrations", "technology": "MyFitnessPal + Strava APIs", "purpose": "Third-party workout and nutrition import" },
+    { "layer": "location", "technology": "Google Places", "purpose": "Nearby gyms and fitness events" },
+    { "layer": "analytics", "technology": "Google Analytics for Firebase", "purpose": "Engagement and retention insights" },
+    { "layer": "devops", "technology": "Firebase Hosting + Vercel", "purpose": "Web + mobile deployment" }
+  ],
+  "features": [
+    { "description": "Responsive cross-platform fitness tracking via Flutter", "priority": "core", "order_index": 1 },
+    { "description": "Authentication and authorization with Firebase Authentication", "priority": "core", "order_index": 2 },
+    { "description": "Material Design UI for a seamless user experience", "priority": "core", "order_index": 3 },
+    { "description": "Provider state management for user data and app state", "priority": "core", "order_index": 4 },
+    { "description": "Customizable user profile with goals, dietary preferences, and health metrics", "priority": "core", "order_index": 5 },
+    { "description": "Workout tracking: log exercises, sets, reps, and weights", "priority": "core", "order_index": 6 },
+    { "description": "Nutrition tracking with barcode scanning and database lookup", "priority": "core", "order_index": 7 },
+    { "description": "Meal planning with recipe suggestions by preferences and restrictions", "priority": "core", "order_index": 8 },
+    { "description": "Hydration tracker with water reminders", "priority": "core", "order_index": 9 },
+    { "description": "Wearable integration (Fitbit, Apple Watch) for real-time data sync", "priority": "core", "order_index": 10 },
+    { "description": "Analytics dashboard for activity, progress, and goal achievement", "priority": "core", "order_index": 11 },
+    { "description": "Personalized notifications: workouts, meal prep, hydration", "priority": "core", "order_index": 12 },
+    { "description": "Social sharing of achievements and progress", "priority": "enhanced", "order_index": 13 },
+    { "description": "Gamification: badges, challenges, and leaderboards", "priority": "enhanced", "order_index": 14 },
+    { "description": "Customizable workout calendar with reminders", "priority": "enhanced", "order_index": 15 },
+    { "description": "Video library of exercises for all fitness levels", "priority": "enhanced", "order_index": 16 },
+    { "description": "AI-driven personal trainer recommendations", "priority": "enhanced", "order_index": 17 },
+    { "description": "Wellness journal for thoughts, moods, and progress", "priority": "enhanced", "order_index": 18 },
+    { "description": "Community forum for connection and support", "priority": "enhanced", "order_index": 19 },
+    { "description": "Rewards system with points for workouts and milestones", "priority": "enhanced", "order_index": 20 },
+    { "description": "Third-party app integration (MyFitnessPal, Strava)", "priority": "enhanced", "order_index": 21 },
+    { "description": "Educational resource center with articles and videos", "priority": "enhanced", "order_index": 22 },
+    { "description": "Custom workout generator based on equipment availability", "priority": "enhanced", "order_index": 23 },
+    { "description": "Virtual coaching via video calls or messaging", "priority": "enhanced", "order_index": 24 },
+    { "description": "Interactive body measurement tracker", "priority": "enhanced", "order_index": 25 },
+    { "description": "Sleep tracking with improvement tips", "priority": "enhanced", "order_index": 26 },
+    { "description": "Recipe scaling by serving size", "priority": "enhanced", "order_index": 27 },
+    { "description": "Workout intensity tracker", "priority": "enhanced", "order_index": 28 },
+    { "description": "Event calendar for classes, workshops, and community events", "priority": "enhanced", "order_index": 29 },
+    { "description": "Grocery delivery integration for meal-prep shopping", "priority": "enhanced", "order_index": 30 },
+    { "description": "FAQ section for common questions", "priority": "enhanced", "order_index": 31 },
+    { "description": "Mood tracker correlating mental health with activity", "priority": "advanced", "order_index": 32 },
+    { "description": "Biometric entry fields (weight, height, age) for personalization", "priority": "advanced", "order_index": 33 },
+    { "description": "Interactive fitness knowledge and readiness quiz", "priority": "advanced", "order_index": 34 },
+    { "description": "Feedback system to rate workouts and recipes", "priority": "advanced", "order_index": 35 },
+    { "description": "Push notifications for new features and community events", "priority": "advanced", "order_index": 36 },
+    { "description": "Onboarding flow with interactive tutorials", "priority": "advanced", "order_index": 37 },
+    { "description": "Referral program with friend rewards", "priority": "advanced", "order_index": 38 },
+    { "description": "Data export of progress reports", "priority": "advanced", "order_index": 39 },
+    { "description": "Custom color theme personalization", "priority": "advanced", "order_index": 40 },
+    { "description": "Daily motivational quotes section", "priority": "advanced", "order_index": 41 },
+    { "description": "Location-based discovery of nearby gyms and events", "priority": "advanced", "order_index": 42 }
+  ],
+  "sections": [
+    { "name": "Overview", "component_path": "src/components/fitness/ActivityRing.tsx", "layout_type": "dashboard", "order_index": 1 },
+    { "name": "Activity", "component_path": "src/components/fitness/WeeklyOverview.tsx", "layout_type": "grid", "order_index": 2 },
+    { "name": "Workouts", "component_path": "src/components/fitness/WorkoutLog.tsx", "layout_type": "list", "order_index": 3 },
+    { "name": "Nutrition", "component_path": "src/components/fitness/NutritionTracker.tsx", "layout_type": "list", "order_index": 4 },
+    { "name": "Goals", "component_path": "src/components/fitness/AchievementBadge.tsx", "layout_type": "grid", "order_index": 5 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx.template", "props": { "logoText": "{{app.name}}", "navItems": "sections", "ctaText": "{{header.cta_text}}", "ctaHref": "{{header.cta_href}}" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "Footer", "path": "src/components/layout/Footer.tsx", "props": { "name": "{{app.name}}", "navItems": "sections" }, "mixins": ["_shared/Footer.tsx.template"] },
+    { "name": "ActivityRing", "path": "src/components/fitness/ActivityRing.tsx.template", "props": { "rings": "ActivityRingData[]", "size": "number", "strokeWidth": "number" } },
+    { "name": "WorkoutLog", "path": "src/components/fitness/WorkoutLog.tsx.template", "props": { "workouts": "WorkoutSession[]" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "NutritionTracker", "path": "src/components/fitness/NutritionTracker.tsx.template", "props": { "nutrition": "Nutrition", "meals": "Meal[]" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "WeeklyOverview", "path": "src/components/fitness/WeeklyOverview.tsx.template", "props": { "weekly": "WeeklyActivity[]", "goals": "Goals" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "AchievementBadge", "path": "src/components/fitness/AchievementBadge.tsx.template", "props": { "badges": "Badge[]", "challenges": "Challenge[]" }, "mixins": ["_shared/Card.tsx.template"] }
+  ],
+  "data_models": [
+    {
+      "name": "UserProfile",
+      "fields": [
+        { "name": "uid", "type": "string", "required": true },
+        { "name": "display_name", "type": "string", "required": true },
+        { "name": "fitness_goals", "type": "string[]", "required": false },
+        { "name": "dietary_preferences", "type": "string[]", "required": false },
+        { "name": "weight_kg", "type": "float", "required": false },
+        { "name": "height_cm", "type": "float", "required": false },
+        { "name": "age", "type": "integer", "required": false }
+      ]
+    },
+    {
+      "name": "WorkoutSession",
+      "fields": [
+        { "name": "id", "type": "integer", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "date", "type": "datetime", "required": true },
+        { "name": "duration_min", "type": "integer", "required": true },
+        { "name": "intensity", "type": "enum", "required": true, "default": "moderate" },
+        { "name": "calories", "type": "integer", "required": false },
+        { "name": "exercises", "type": "json[]", "required": false }
+      ]
+    },
+    {
+      "name": "MealEntry",
+      "fields": [
+        { "name": "id", "type": "integer", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "type", "type": "enum", "required": true },
+        { "name": "calories", "type": "integer", "required": true },
+        { "name": "protein_g", "type": "float", "required": false },
+        { "name": "source", "type": "enum", "required": true, "default": "manual" }
+      ]
+    },
+    {
+      "name": "DailyActivity",
+      "fields": [
+        { "name": "date", "type": "date", "required": true },
+        { "name": "steps", "type": "integer", "required": true, "default": 0 },
+        { "name": "active_minutes", "type": "integer", "required": true, "default": 0 },
+        { "name": "hydration_glasses", "type": "integer", "required": true, "default": 0 },
+        { "name": "sleep_hours", "type": "float", "required": false },
+        { "name": "mood", "type": "integer", "required": false }
+      ]
+    },
+    {
+      "name": "Achievement",
+      "fields": [
+        { "name": "name", "type": "string", "required": true },
+        { "name": "description", "type": "string", "required": false },
+        { "name": "icon", "type": "string", "required": true },
+        { "name": "earned", "type": "boolean", "required": true, "default": false },
+        { "name": "earned_at", "type": "datetime", "required": false }
+      ]
+    }
+  ],
+  "integrations": [
+    { "service": "Firebase Authentication", "purpose": "Email, Google, and Apple sign-in", "config_params": {} },
+    { "service": "Apple HealthKit", "purpose": "Steps, workouts, sleep, and heart-rate sync", "config_params": {} },
+    { "service": "Fitbit Web API", "purpose": "Activity and sleep data import", "config_params": { "scopes": ["activity", "sleep"] } },
+    { "service": "MyFitnessPal", "purpose": "Nutrition and calorie log import", "config_params": {} },
+    { "service": "Strava", "purpose": "Runs, rides, and structured workouts import", "config_params": {} },
+    { "service": "Firebase Cloud Messaging", "purpose": "Personalized push notifications", "config_params": {} },
+    { "service": "Google Places", "purpose": "Nearby gym and fitness event discovery", "config_params": {} },
+    { "service": "Open Food Facts", "purpose": "Barcode nutrition database lookup", "config_params": {} },
+    { "service": "Google Analytics for Firebase", "purpose": "Engagement and retention analytics", "config_params": { "id": "{{deployment.analytics_id}}" } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "Health data encrypted at rest and in transit; HIPAA-aligned controls for PHI" },
+    { "type": "Privacy", "requirement": "Granular consent for wearable data sharing and analytics" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA; touch targets of 44px+ for mobile" },
+    { "type": "Performance", "requirement": "App launches under 2s on mid-range devices; offline-first caching" },
+    { "type": "Responsive", "requirement": "Adaptive layouts across phones, tablets, and web" },
+    { "type": "Offline", "requirement": "Workouts and meals loggable offline, synced on reconnect" },
+    { "type": "i18n", "requirement": "Localization for 6+ languages via Flutter intl" },
+    { "type": "Testing", "requirement": "Widget/unit tests for logging flows; golden tests for key screens" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#10b981" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#34d399" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#3b82f6" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#60a5fa" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f97316" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fb923c" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "Inter" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1.25rem" },
+    { "token_type": "spacing", "token_name": "spacing.section", "token_value": "6rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Firebase Hosting", "config": { "url": "https://fitness-tracking.example.com", "target": "web-dashboard" } },
+    { "platform": "Vercel", "config": { "url": "https://fitness-tracking.example.com", "framework": "Next.js" } },
+    { "platform": "App Store + Google Play", "config": { "target": "Flutter mobile app" } }
+  ]
+}

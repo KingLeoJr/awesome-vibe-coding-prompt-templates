@@ -1,0 +1,22 @@
+export const SITE_TITLE = "{{app.name}}";
+export const SITE_DESCRIPTION = "{{app.tagline}}";
+export const SITE_URL = "{{deployment.url}}";
+
+export const NAV_ITEMS = [
+  {{#each nav}}
+  { label: "{{label}}", href: "{{href}}" },
+  {{/each}}
+];
+
+export const CONTACT = {
+  email: "{{contact.email}}",
+  phone: "{{contact.phone}}",
+};
+
+export const SOCIAL = {
+  github: "{{social.github}}",
+  linkedin: "{{social.linkedin}}",
+  twitter: "{{social.twitter}}",
+};
+
+export const ANALYTICS_ID = "{{deployment.analytics_id}}";

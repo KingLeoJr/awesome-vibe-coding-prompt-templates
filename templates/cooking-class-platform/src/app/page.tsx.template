@@ -1,0 +1,54 @@
+import Header from "@/components/layout/Header";
+import ClassBooking, { type CookingClass } from "@/components/classes/ClassBooking";
+import VideoLibrary, { type VideoTutorial } from "@/components/classes/VideoLibrary";
+import RecipeLibrary, { type Recipe } from "@/components/classes/RecipeLibrary";
+import MealPlanner, { type MealPlan } from "@/components/classes/MealPlanner";
+import ChefProfiles, { type Chef } from "@/components/classes/ChefProfiles";
+import CommunityForum, { type ForumPost } from "@/components/classes/CommunityForum";
+import Footer from "@/components/shared/Footer";
+import cooking from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="classes" className="scroll-mt-24">
+          <ClassBooking
+            classes={cooking.classes as CookingClass[]}
+            cuisines={cooking.cuisines as string[]}
+            currency={cooking.currency as string}
+          />
+        </section>
+
+        <section id="tutorials" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <VideoLibrary
+            tutorials={cooking.tutorials as VideoTutorial[]}
+            cuisines={cooking.cuisines as string[]}
+            difficultyLevels={cooking.difficultyLevels as string[]}
+          />
+        </section>
+
+        <section id="recipes" className="scroll-mt-24">
+          <RecipeLibrary
+            recipes={cooking.recipes as Recipe[]}
+            dietaryFocuses={cooking.dietaryFocuses as string[]}
+          />
+        </section>
+
+        <section id="mealplanner" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <MealPlanner plan={cooking.mealPlan as MealPlan} />
+        </section>
+
+        <section id="chefs" className="scroll-mt-24">
+          <ChefProfiles chefs={cooking.chefs as Chef[]} currency={cooking.currency as string} />
+        </section>
+
+        <section id="community" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <CommunityForum posts={cooking.forumPosts as ForumPost[]} />
+        </section>
+      </main>
+      <Footer name={cooking.app.name as string} description={cooking.app.tagline as string} />
+    </>
+  );
+}

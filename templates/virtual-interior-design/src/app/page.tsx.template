@@ -1,0 +1,54 @@
+import Header from "@/components/layout/Header";
+import RoomVisualizer from "@/components/design/RoomVisualizer";
+import FurniturePicker from "@/components/design/FurniturePicker";
+import MoodBoard from "@/components/design/MoodBoard";
+import ColorPalette from "@/components/design/ColorPalette";
+import ProjectGallery from "@/components/design/ProjectGallery";
+import ProjectDashboard from "@/components/design/ProjectDashboard";
+import Footer from "@/components/shared/Footer";
+import design from "@/data/virtual-interior-design.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="hero" className="scroll-mt-24">
+          <RoomVisualizer
+            room={design.rooms[0] as any}
+            onFurnitureAdd={() => {}}
+            onFurnitureRemove={() => {}}
+          />
+        </section>
+
+        <section id="roomdesigner" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <RoomVisualizer
+            room={design.rooms[1] as any}
+            onFurnitureAdd={() => {}}
+            onFurnitureRemove={() => {}}
+          />
+        </section>
+
+        <section id="dashboard" className="scroll-mt-24">
+          <ProjectDashboard
+            project={design.projects[0] as any}
+            onUpdate={() => {}}
+          />
+        </section>
+
+        <section id="community" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <CommunityForum
+            posts={design.communityPosts as any}
+          />
+        </section>
+
+        <section id="inspiration" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <ProjectGallery
+            projects={design.projects as any}
+          />
+        </section>
+      </main>
+      <Footer name={design.app.name as string} description={design.app.tagline as string} />
+    </>
+  );
+}

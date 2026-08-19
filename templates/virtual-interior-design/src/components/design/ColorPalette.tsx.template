@@ -1,0 +1,68 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Brightness, EyeDropper, Search } from "lucide-react";
+
+interface ColorHex {
+  hex: string;
+  name: string;
+  usage: "primary" | "secondary" | "accent" | "background" | "text";
+}
+
+interface ColorPaletteProps {
+  paletteName: string;
+  colors: ColorHex[];
+  onSelect: (hex: string) => void;
+}
+
+export default function ColorPalette({ paletteName, colors, onSelect }: ColorPaletteProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="rounded-lg border border-gray-200 dark:border-gray-800 p-6 space-y-4"
+      aria-label={`Color palette: ${paletteName}`}
+    >
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          <Palette className="mr-2 h-4 w-4" /> {paletteName}
+        </h3>
+        <Search className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+      </div>
+
+      <div className="grid grid-cols-5 gap-2">
+        {colors.map((color) => (
+          <motion.div
+            key={color.hex}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="rounded-lg p-3 cursor-pointer select-none"
+            style={{ background: `#${color.hex}` }}
+            onClick={() => onSelect(color.hex)}
+            aria-label={`Set ${color.name} color`}
+          >
+            <div
+              className="h-12 w-12 rounded-lg"
+              style={{ background: `#${color.hex}` }}
+            />
+            <div className="text-xs capitalize text-gray-500 dark:text-gray-400">{color.name}</div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div>
+        <Input
+          placeholder="#HEX color"
+          onChange={(e) => {
+            const hex = e.target.value.replace("#", "");
+            if (hex.length === 6) onSelect(hex);
+          }}
+        />
+      </div>
+    </motion.div>
+  );
+}

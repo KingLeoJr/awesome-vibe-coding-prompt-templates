@@ -1,0 +1,94 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { MapPin, Building, Calendar } from "lucide-react";
+
+interface HotelBookingProps {
+  location: string;
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+}
+
+export default function HotelBooking({ location, checkIn, checkOut, guests }: HotelBookingProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <MapPin className="mr-2" /> Location
+        </label>
+        <input
+          type="text"
+          value={location}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+          placeholder="e.g., Paris, France"
+          aria-label="Hotel location"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <Calendar className="mr-2" /> Check-in
+          </label>
+          <input
+            type="date"
+            value={checkIn}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+            aria-label="Check-in date"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <Calendar className="mr-2" /> Check-out
+          </label>
+          <input
+            type="date"
+            value={checkOut}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+            aria-label="Check-out date"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <Users className="mr-2" /> Guests ({guests})
+        </label>
+        <input
+          type="number"
+          value={guests}
+          min={1}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+          aria-label="Number of guests"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <Building className="mr-2" /> Hotel Options
+        </label>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          We found 4+ hotels in {location} for your dates.
+        </p>
+      </div>
+
+      <div className="mt-6">
+        <button
+          className="inline-flex items-center justify-center rounded-full bg-[[theme.color.primary]] text-white px-6 py-3 text-sm font-medium hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-available"
+          aria-label "Search hotels"
+        >
+          <Building className="mr-2 h-4 w-4" />
+          Search Hotels
+        </button>
+      </div>
+    </motion.div>
+  );
+}

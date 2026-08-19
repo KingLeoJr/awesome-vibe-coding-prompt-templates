@@ -1,0 +1,175 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { BadgeCheck, Fingerprint, QrCode, ScanLine, ShieldCheck, XCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { products as sampleProducts } from "@/data/{{app.slug}}.json";
+
+interface Product {
+  id: string;
+  name: string;
+  origin: string;
+  batch: string;
+  certifications: string[];
+  currentStage: string;
+  authentic: boolean;
+}
+
+interface ProductAuthenticationProps {
+  products?: Product[];
+  placeholder?: string;
+}
+
+export default function ProductAuthentication({
+  products = sampleProducts,
+  placeholder = "Scan or enter a product SKU / batch code",
+}: ProductAuthenticationProps) {
+  const [query, setQuery] = useState("");
+  const [result, setResult] = useState<Product | null>(null);
+  const [searched, setSearched] = useState(false);
+
+  const handleVerify = () => {
+    const q = query.trim().toLowerCase();
+    if (!q) return;
+    const match = products.find(
+      (p) => p.id.toLowerCase() === q || p.name.toLowerCase().includes(q) || p.batch.toLowerCase() === q
+    );
+    setResult(match ?? null);
+    setSearched(true);
+  };
+
+  return (
+    <div className="grid gap-6 lg:grid-cols-5">
+      <div className="lg:col-span-2">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+          <div className="mb-4 flex items-center gap-2 text-[var(--color-primary)]">
+            <QrCode size={20} />
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Verify a product</h3>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <div className="relative">
+              <ScanLine size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleVerify()}
+                placeholder={placeholder}
+                aria-label="Product code"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-9 pr-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+              />
+            </div>
+            <button
+              onClick={handleVerify}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] px-4 py-2.5 text-sm font-medium text-white transition hover:opacity-90"
+            >
+              <Fingerprint size={16} />
+              Verify on-chain
+            </button>
+          </div>
+
+          <p className="mt-4 text-xs leading-relaxed text-gray-400">
+            Authenticity is resolved against the on-chain product registry. Try{" "}
+            <button
+              onClick={() => setQuery(sampleProducts[0]?.id ?? "")}
+              className="font-mono text-[var(--color-primary)] hover:underline"
+            >
+              {sampleProducts[0]?.id}
+            </button>
+            .
+          </p>
+        </div>
+      </div>
+
+      <div className="lg:col-span-3">
+        {searched ? (
+          <motion.div
+            key={result?.id ?? "not-found"}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            className={cn(
+              "flex h-full flex-col gap-4 rounded-2xl border p-6",
+              result?.authentic
+                ? "border-emerald-200 bg-emerald-50/60 dark:border-emerald-500/20 dark:bg-emerald-500/5"
+                : "border-rose-200 bg-rose-50/60 dark:border-rose-500/20 dark:bg-rose-500/5"
+            )}
+          >
+            {result ? (
+              <>
+                <div className="flex items-center gap-3">
+                  <span
+                    className={cn(
+                      "flex h-11 w-11 items-center justify-center rounded-xl",
+                      result.authentic
+                        ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400"
+                        : "bg-rose-100 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400"
+                    )}
+                  >
+                    {result.authentic ? <ShieldCheck size={22} /> : <XCircle size={22} />}
+                  </span>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">{result.name}</h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      SKU {result.id} · Batch {result.batch}
+                    </p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-xl bg-white p-3 dark:bg-gray-950">
+                    <p className="text-xs text-gray-400">Origin</p>
+                    <p className="font-medium text-gray-800 dark:text-gray-200">{result.origin}</p>
+                  </div>
+                  <div className="rounded-xl bg-white p-3 dark:bg-gray-950">
+                    <p className="text-xs text-gray-400">Current stage</p>
+                    <p className="font-medium text-gray-800 dark:text-gray-200">{result.currentStage}</p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {result.certifications.map((cert) => (
+                    <span
+                      key={cert}
+                      className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-medium text-[var(--color-primary)] dark:bg-gray-900"
+                    >
+                      <BadgeCheck size={12} />
+                      {cert}
+                    </span>
+                  ))}
+                </div>
+                <p
+                  className={cn(
+                    "mt-auto text-sm font-medium",
+                    result.authentic
+                      ? "text-emerald-700 dark:text-emerald-400"
+                      : "text-rose-700 dark:text-rose-400"
+                  )}
+                >
+                  {result.authentic
+                    ? "Authentic — provenance chain verified."
+                    : "No matching on-chain record — possible counterfeit."}
+                </p>
+              </>
+            ) : (
+              <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
+                <XCircle size={32} className="text-rose-400" />
+                <p className="text-sm font-medium text-rose-700 dark:text-rose-400">
+                  No product found for that code.
+                </p>
+                <p className="text-xs text-gray-400">Double-check the SKU or batch and try again.</p>
+              </div>
+            )}
+          </motion.div>
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-gray-300 p-6 text-center dark:border-gray-700">
+            <QrCode size={36} className="text-gray-300 dark:text-gray-600" />
+            <p className="text-sm text-gray-400">
+              Scan a product tag or enter its code to verify authenticity against the blockchain.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

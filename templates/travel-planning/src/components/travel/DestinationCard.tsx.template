@@ -1,0 +1,68 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Flag, Star } from "lucide-react";
+
+interface DestinationProps {
+  destination: {
+    id: string;
+    name: string;
+    country: string;
+    price: number;
+    rating: number;
+    imageUrl: string;
+  };
+  showRating?: boolean;
+  showPrice?: boolean;
+}
+
+export default function DestinationCard({ destination, showRating = true, showPrice = true }: DestinationProps) {
+  const { id, name, country, price, rating, imageUrl } = destination;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-lg transition-shadow",
+        "group"
+      )}
+    >
+      <img
+        src={imageUrl}
+        alt={name} className="w-full h-48 object-cover"
+      />
+      <div className="p-4">
+        <div className="flex items-center gap-2">
+          <Flag className="h-4 w-4 text-yellow-500" />
+          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{name}</span>
+        </div>
+
+        {showRating && (
+          <div className="mt-2 flex items-center gap-1">
+            <Star className="h-3 w-3 text-yellow-500" />
+            {Array.from({ length: rating }, (_, i) => i < 5 ? <span key={i} className="text-xs text-yellow-300">⭐</span> : null).join('')}
+            <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">{rating}/5</span>
+          </div>
+        )}
+
+        {showPrice && (
+          <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-800">
+            <span className="text-lg font-bold text-gray-900 dark:text-white">${price}</span>
+          </div>
+        )}
+
+        <a
+          href="#flights"
+          className="mt-3 text-sm font-medium text-[[theme.color.primary]] hover:underline transition"
+          aria-label="View flights to {name}"
+        >
+          View options
+        </a>
+      </div>
+    </motion.div>
+  );
+}

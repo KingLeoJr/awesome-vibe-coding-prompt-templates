@@ -1,0 +1,130 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { BookOpenCheck, CalendarCheck, Clock3, TrendingUp, Trophy } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface WellnessStat {
+  label: string;
+  value: string;
+}
+
+export interface WeeklyEngagement {
+  label: string;
+  minutes: number;
+}
+
+export interface TopicCoverage {
+  topic: string;
+  pct: number;
+}
+
+export interface WellnessData {
+  summary: WellnessStat[];
+  weeklyEngagement: WeeklyEngagement[];
+  topicsCovered: TopicCoverage[];
+}
+
+interface WellnessDashboardProps {
+  wellness: WellnessData;
+}
+
+export default function WellnessDashboard({ wellness }: WellnessDashboardProps) {
+  const maxMinutes = Math.max(1, ...wellness.weeklyEngagement.map((day) => day.minutes));
+
+  const statIcons = [TrendingUp, BookOpenCheck, CalendarCheck, Trophy] as const;
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="insights-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <TrendingUp size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="insights-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Your wellness</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Engagement, progress, and the topics your journey has covered.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {wellness.summary.map((stat, index) => {
+            const Icon = statIcons[index] ?? TrendingUp;
+            return (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+              >
+                <Card className="p-5">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+                    <Icon size={18} className="text-[var(--color-primary)]" aria-hidden="true" />
+                  </div>
+                  <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white tabular-nums">{stat.value}</p>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card className="p-6">
+            <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+              <Clock3 size={18} className="text-[var(--color-secondary)]" aria-hidden="true" />
+              Weekly engagement (minutes)
+            </h3>
+            <div className="mt-5 flex items-end justify-between gap-2 h-32" role="img" aria-label="Weekly engagement bar chart in minutes">
+              {wellness.weeklyEngagement.map((day, index) => (
+                <div key={day.label} className="flex flex-1 flex-col items-center gap-2">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    whileInView={{ height: `${Math.max(8, (day.minutes / maxMinutes) * 100)}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.05 }}
+                    className="w-full rounded-lg bg-gradient-to-t from-[var(--color-primary)] to-[var(--color-secondary)]"
+                    style={{ minHeight: 8 }}
+                  />
+                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{day.label}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card className="p-6">
+            <h3 className="mb-6 text-lg font-bold text-gray-900 dark:text-white">Topics covered</h3>
+            <div className="flex flex-col gap-4">
+              {wellness.topicsCovered.map((topic, index) => (
+                <div key={topic.topic}>
+                  <div className="mb-1.5 flex items-center justify-between text-sm">
+                    <span className="text-gray-600 dark:text-gray-300">{topic.topic}</span>
+                    <span className="font-semibold text-gray-900 dark:text-white tabular-nums">{topic.pct}%</span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={topic.pct} aria-valuemin={0} aria-valuemax={100} aria-label={`${topic.topic} coverage`}>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${topic.pct}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: index * 0.08, ease: "easeOut" }}
+                      className={cn("h-full rounded-full", index === 0 ? "bg-[var(--color-primary)]" : "bg-[var(--color-secondary)]")}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

@@ -1,0 +1,63 @@
+export interface DirectoryCategory {
+  name: string;
+  slug: string;
+  count: number;
+}
+
+export interface ListingAttribute {
+  label: string;
+  value: string;
+}
+
+export interface IndustryListing {
+  id: string;
+  name: string;
+  category: string;
+  location: string;
+  rating: number;
+  reviewCount: number;
+  verified: boolean;
+  priceMin: number;
+  priceMax: number;
+  attributes: ListingAttribute[];
+  featured: boolean;
+  imageUrl: string;
+  tags: string[];
+}
+
+export interface Review {
+  id: string;
+  listingId: string;
+  author: string;
+  rating: number;
+  date: string;
+  comment: string;
+  verifiedUser: boolean;
+}
+
+export interface Testimonial {
+  id: string;
+  quote: string;
+  author: string;
+  role: string;
+  rating: number;
+}
+
+export interface FAQ {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+export interface GalleryItem {
+  id: string;
+  src: string;
+  alt: string;
+  caption: string;
+}
+
+export interface CompareRow {
+  feature: string;
+  valueA: string;
+  valueB: string;
+}

@@ -1,0 +1,82 @@
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import CountdownTimer from "@/components/events/CountdownTimer";
+import EventCalendar from "@/components/events/EventCalendar";
+import TicketTierCard from "@/components/events/TicketTierCard";
+import AnalyticsOverview from "@/components/dashboard/AnalyticsOverview";
+import data from "@/data/event-management.json";
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Header />
+
+      <main>
+        <CountdownTimer
+          event={data.hero.nextEvent}
+          title={data.hero.title}
+          subtitle={data.hero.subtitle}
+        />
+
+        <section id="events" className="container mx-auto scroll-mt-24 px-6 py-20">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Explore upcoming events
+            </h2>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              Filter by category and location, then pick a day to see what is on.
+            </p>
+          </div>
+          <EventCalendar
+            events={data.events}
+            categories={data.categories}
+            locations={data.locations}
+          />
+        </section>
+
+        <section id="tickets" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <div className="container mx-auto px-6 py-20">
+            <div className="mb-10 max-w-2xl">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                Pick your pass
+              </h2>
+              <p className="mt-2 text-gray-500 dark:text-gray-400">
+                Pricing tiers for {data.hero.nextEvent.name}. Use{" "}
+                <span className="font-semibold text-[var(--color-primary)]">
+                  {data.discountCodes[0].code}
+                </span>{" "}
+                for {data.discountCodes[0].percent}% off.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {data.tickets.map((tier, index) => (
+                <TicketTierCard
+                  key={tier.tier}
+                  tier={tier}
+                  discountCode={data.discountCodes[0]}
+                  featured={index === 1}
+                  delay={index * 0.08}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="analytics" className="container mx-auto scroll-mt-24 px-6 py-20">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Organizer analytics
+            </h2>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              Track sales, attendance, and revenue across every event.
+            </p>
+          </div>
+          <AnalyticsOverview analytics={data.analytics} />
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

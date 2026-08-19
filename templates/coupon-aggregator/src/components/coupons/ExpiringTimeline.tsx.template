@@ -1,0 +1,163 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { AlarmClock, CalendarDays, Flame, Sparkles } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { expiring as sampleExpiring, trends as sampleTrends } from "@/data/{{app.slug}}.json";
+
+export interface ExpiringDeal {
+  id: string;
+  title: string;
+  store: string;
+  discount: string;
+  expiresInDays: number;
+  code: string;
+}
+
+export interface SeasonalTrend {
+  id: string;
+  label: string;
+  month: string;
+  avgDiscount: number;
+  peak: boolean;
+}
+
+interface ExpiringTimelineProps {
+  expiring?: ExpiringDeal[];
+  trends?: SeasonalTrend[];
+  locale?: string;
+}
+
+type Tab = "expiring" | "trends";
+
+export default function ExpiringTimeline({
+  expiring = sampleExpiring,
+  trends = sampleTrends,
+  locale = "{{i18n.default_locale}}",
+}: ExpiringTimelineProps) {
+  const [tab, setTab] = useState<Tab>("expiring");
+
+  return (
+    <div>
+      <div className="mb-8 inline-flex rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-950" role="tablist" aria-label="Timeline mode">
+        <button
+          role="tab"
+          aria-selected={tab === "expiring"}
+          onClick={() => setTab("expiring")}
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition",
+            tab === "expiring"
+              ? "bg-[var(--color-primary)] text-white"
+              : "text-gray-600 dark:text-gray-300"
+          )}
+        >
+          <AlarmClock size={15} />
+          Expiring soon
+        </button>
+        <button
+          role="tab"
+          aria-selected={tab === "trends"}
+          onClick={() => setTab("trends")}
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition",
+            tab === "trends"
+              ? "bg-[var(--color-primary)] text-white"
+              : "text-gray-600 dark:text-gray-300"
+          )}
+        >
+          <Flame size={15} />
+          Seasonal trends
+        </button>
+      </div>
+
+      {tab === "expiring" ? (
+        <ol className="relative space-y-4 before:absolute before:left-[19px] before:top-2 before:h-[calc(100%-16px)] before:w-px before:bg-gradient-to-b before:from-[var(--color-primary)] before:via-gray-200 before:to-transparent before:dark:via-gray-800">
+          {expiring.map((deal, index) => (
+            <motion.li
+              key={deal.id}
+              initial={{ opacity: 0, x: -14 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: index * 0.07 }}
+              className="relative flex gap-4"
+            >
+              <span
+                className={cn(
+                  "z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 bg-white dark:bg-gray-950",
+                  deal.expiresInDays <= 2
+                    ? "border-[var(--color-primary)] text-[var(--color-primary)]"
+                    : "border-gray-200 text-gray-400 dark:border-gray-700 dark:text-gray-500"
+                )}
+              >
+                <Sparkles size={16} />
+              </span>
+              <div className="flex flex-1 flex-wrap items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3.5 dark:border-gray-800 dark:bg-gray-950">
+                <div className="min-w-0">
+                  <p className="truncate font-medium text-gray-900 dark:text-white">{deal.title}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {deal.store} · code <code className="font-semibold text-[var(--color-primary)]">{deal.code}</code>
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  <span className="text-lg font-black text-[var(--color-primary)]">{deal.discount}</span>
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold",
+                      deal.expiresInDays <= 2
+                        ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                        : "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+                    )}
+                  >
+                    <AlarmClock size={12} />
+                    {deal.expiresInDays}d left
+                  </span>
+                </div>
+              </div>
+            </motion.li>
+          ))}
+        </ol>
+      ) : (
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+          <div className="mb-6 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <CalendarDays size={16} className="text-[var(--color-secondary)]" />
+            Average discount by shopping season ({new Date().getFullYear()})
+          </div>
+          <div className="flex h-52 items-end justify-between gap-3 sm:gap-5">
+            {trends.map((trend, index) => (
+              <motion.div
+                key={trend.id}
+                initial={{ opacity: 0, scaleY: 0 }}
+                whileInView={{ opacity: 1, scaleY: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.06 }}
+                style={{ transformOrigin: "bottom" }}
+                className="flex flex-1 flex-col items-center gap-2"
+              >
+                <span className="text-sm font-bold text-[var(--color-primary)]">{trend.avgDiscount}%</span>
+                <div
+                  className="w-full max-w-16 rounded-t-xl bg-gradient-to-t from-[var(--color-primary)] to-[var(--color-secondary)]"
+                  style={{ height: `${trend.avgDiscount}%` }}
+                  role="img"
+                  aria-label={`${trend.label}: ${trend.avgDiscount}% average discount`}
+                />
+                <span
+                  className={cn(
+                    "text-center text-xs font-medium",
+                    trend.peak ? "text-[var(--color-primary)]" : "text-gray-500 dark:text-gray-400"
+                  )}
+                >
+                  {trend.label}
+                  {trend.peak && <span className="block text-[10px] font-semibold uppercase tracking-wide">Peak</span>}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+          <p className="mt-6 text-center text-xs text-gray-400">
+            Data normalized across {locale.toUpperCase()} regions · updated monthly
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}

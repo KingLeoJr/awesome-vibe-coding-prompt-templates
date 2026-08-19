@@ -1,0 +1,90 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { BadgeCheck, MapPin, Package, Star } from "lucide-react";
+import Card from "@/components/shared/Card";
+
+export interface Maker {
+  id: string;
+  name: string;
+  avatar: string;
+  location: string;
+  craft: string;
+  bio: string;
+  rating: number;
+  listings: number;
+  verified: boolean;
+}
+
+interface FeaturedMakerProps {
+  makers: Maker[];
+}
+
+export default function FeaturedMaker({ makers }: FeaturedMakerProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="makers-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <Package size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="makers-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Meet the makers</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">The hands behind the work — artisan profiles with ratings and listings.</p>
+          </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {makers.map((maker, index) => (
+            <motion.div
+              key={maker.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
+            >
+              <Card className="h-full p-6">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={maker.avatar}
+                    alt={`Portrait of ${maker.name}`}
+                    className="h-14 w-14 rounded-full object-cover"
+                  />
+                  <div className="min-w-0">
+                    <h3 className="flex items-center gap-1.5 font-semibold text-gray-900 dark:text-white">
+                      {maker.name}
+                      {maker.verified && (
+                        <BadgeCheck size={16} className="text-[var(--color-secondary)]" aria-label="Verified maker" />
+                      )}
+                    </h3>
+                    <p className="text-sm font-medium text-[var(--color-primary)]">{maker.craft}</p>
+                    <p className="mt-0.5 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                      <MapPin size={12} aria-hidden="true" />
+                      {maker.location}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">{maker.bio}</p>
+
+                <div className="mt-5 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4 text-sm">
+                  <span className="flex items-center gap-1.5 text-gray-700 dark:text-gray-200">
+                    <Star size={14} className="fill-[var(--color-accent)] text-[var(--color-accent)]" aria-hidden="true" />
+                    <span className="font-semibold">{maker.rating}</span>
+                    <span className="text-xs text-gray-400">rating</span>
+                  </span>
+                  <span className="text-gray-500 dark:text-gray-400">{maker.listings} listings</span>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

@@ -1,0 +1,121 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+import { lucideReact } from "lucide-react";
+import { TrendingUp, EmojiHappy, EmojiSad, EmojiNeutral, Clock } from "lucide-react";
+
+interface MoodEntry {
+  id: string;
+  userId: string;
+  moodScore: number;
+  trigger?: string;
+  copingStrategy?: string;
+  note?: string;
+  recordedAt: string;
+}
+
+interface MoodTrackerProps {
+  moodEntry: MoodEntry;
+  onUpdate: () => void;
+}
+
+export default function MoodTracker({ moodEntry, onUpdate }: MoodTrackerProps) {
+  const [showForm, setShowForm] = useState(false);
+  const [moodScore, setMoodScore] = useState(5);
+
+  const emojiMap: Record<number, React.ComponentType> = {
+    1: EmojiSad,
+    2: EmojiSad,
+    3: EmojiSad,
+    4: EmojiSad,
+    5: EmojiNeutral,
+    6: EmojiHappy,
+    7: EmojiHappy,
+    8: EmojiHappy,
+    9: EmojiHappy,
+    10: EmojiHappy,
+  };
+
+  const handleSubmit = () => {
+    const entry = {
+      id: Date.now().toString(),
+      userId: moodEntry.userId,
+      moodScore,
+      trigger: moodEntry.trigger,
+      copingStrategy: moodEntry.copingStrategy,
+      note: moodEntry.note,
+      recordedAt: new Date().toISOString(),
+    };
+    onUpdate();
+    setShowForm(false);
+    setMoodScore(5);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-xl border bg-gray-50 dark:bg-gray-900 p-6 hover:shadow-lg transition-shadow",
+        "pb-4"
+      )}
+    >
+      <div className="space-y-4">
+        <div className="flex flex-col items-center gap-4">
+          <Clock size={48} className="text-gray-300 dark:text-gray-600" />
+          <div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">How are you feeling?</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Select your current mood level
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div className="flex items-center justify-center gap-2">
+            {Array.from({ length: 10 }, (_, i) => (
+              <Button
+                key={i}
+                onClick={() => setMoodScore(i + 1)}
+                variant={moodScore === i + 1 ? "primary" : "outline"}
+                size="lg"
+                className="w-12 h-12 rounded-full flex items-center justify-center text-sm font-medium transition-colors"
+                style={{ color: moodScore === i + 1 ? "var(--color-primary)" : "var(--color-gray-500)" }}
+              >
+                <emojiMap[i + 1] size={32} className="mr-1" />
+                {i + 1}
+              </Button>
+            ))}
+          </div>
+
+          {showForm && (
+            <div className="mt-4 p-4 bg-white dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-800">
+              <textarea
+                placeholder="Add a note about what influenced your mood..."
+                rows={2}
+                className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-transparent text-sm dark:text-gray-100 resize-none"
+                value={moodEntry.note || ""}
+                onChange={(e) => {}}
+              ></textarea>
+              <Button onClick={handleSubmit} variant="primary" size="sm" className="mt-3 w-full">
+                Log Mood
+              </Button>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Last recorded: {new Date(moodEntry.recordedAt).toLocaleDateString()}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

@@ -1,0 +1,141 @@
+"use client";
+
+import { useState } from "react";
+import { ScrollLink } from "react-scroll";
+import { Moon, Sun, Menu, X, Search, Mail, Phone, Github, LinkedIn, Twitter, MailReply, Heart, Shield, Palette, Users, Settings, LogOut, Home, MailOpen } from "lucide-react";
+
+interface NavItem {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+interface HeaderProps {
+  brandName: string;
+  navItems: NavItem[];
+  ctaText: string;
+  ctaHref: string;
+  isFixed: boolean;
+  showMobileMenu: boolean;
+  mobileNavItems: NavItem[];
+}
+
+export default function Header({ brandName, navItems, ctaText, ctaHref, isFixed, showMobileMenu, mobileNavItems }: HeaderProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navLinkStyles = "group inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 dark:text-gray-100 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors";
+
+  const ctaStyles = "inline-flex items-center px-4 py-2 bg-[var(--color-accent)] text-white font-medium rounded-md hover:bg-[var(--color-accent-dark)] transition-colors";
+
+  return (
+    <header
+      className={isFixed ? "fixed top-0 left-0 right-0 z-50 bg-[var(--color-primary)]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800" : "relative"}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        {/* Brand / Logo */}
+        <div className="flex items-center gap-3">
+          <a href="#home" className="flex items-center gap-2">
+            <svg
+              className="h-8 w-8 text-[var(--color-accent)]"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M3 4h18v2H3V4zm0 6h11l4.36 5.23a1 1 0 0 0 .8 0l5.64-6.73a1 1 0 0 1 1.27 0l5.64 6.73A1 1 0 0 0 21 13h-6v2H3v-2zm0 6h11l4.36 5.23a1 1 0 0 0 .8 0l5.64-6.73a1 1 0 0 1 1.27 0l5.64 6.73A1 1 0 0 0 21 22h-6v2H3v-2z" />
+            </svg>
+            <span className="text-xl font-extrabold text-[var(--color-accent)]">{brandName}</span>
+          </a>
+        </div>
+
+        {/* Desktop Nav */}
+        <nav className="hidden md:block">
+          <ul className="flex gap-6">
+            {navItems.map((item, index) => (
+              <li key={index}>
+                <ScrollLink
+                  to={item.href}
+                  className={navLinkStyles}
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={500}
+                >
+                  {item.label}
+                </ScrollLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* CTA Button */}
+        <div>
+          <a href={ctaHref} className={ctaStyles}>
+            {ctaText}
+          </a>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden p-2"
+          aria-controls="mobile-menu"
+          aria-expanded={isMenuOpen}
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {showMenu && (
+        <nav
+          id="mobile-menu"
+          className="fixed inset-0 top-0 right-0 z-40 bg-[var(--color-primary)]/95 flex flex-col h-screen p-6 gap-4 transition-right"
+          style={{ right: isMenuOpen ? "0" : "-100%" }}
+        >
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="absolute top-4 right-4 p-2"
+            aria-label="Close menu"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <ul className="flex flex-col gap-4">
+            {navItems.map((item, index) => (
+              <li key={index}>
+                <ScrollLink
+                  to={item.href}
+                  className="text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-[var(--color-accent)] transition-colors"
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={500}
+                >
+                  {item.label}
+                </ScrollLink>
+              </li>
+            ))}
+            {mobileNavItems.map((item, index) => (
+              <li key={index}>
+                <ScrollLink
+                  to={item.href}
+                  className="text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-[var(--color-accent)] transition-colors"
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={500}
+                >
+                  {item.label}
+                </ScrollLink>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
+            <a href={ctaHref} className="inline-block px-6 py-3 bg-[var(--color-accent)] text-white font-medium rounded hover:bg-[var(--color-accent-dark)] transition-colors">
+              {ctaText}
+            </a>
+          </div>
+        </nav>
+      )}
+    </header>
+  );
+}

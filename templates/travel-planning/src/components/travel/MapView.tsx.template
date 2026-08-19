@@ -1,0 +1,75 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { MapPin, Location } from "lucide-react";
+
+interface MapViewProps {
+  destination: {
+    id: string;
+    name: string;
+    country: string;
+    imageUrl: string;
+  };
+  routeCoordinates: any[];
+}
+
+export default function MapView({ destination, routeCoordinates }: MapViewProps) {
+  const { name, country, imageUrl } = destination;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="relative rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900"
+    >
+      <img
+        src={imageUrl}
+        alt={name}
+        className="w-full h-64 object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[[theme.color.primary]]/20 via-transparent to-transparent opacity-80"></div>
+
+      <div className="absolute bottom-0 left-0 right-0 p-6">
+        <div className="flex items-center gap-2">
+          <MapPin className="h-5 w-5 text-white" />
+          <span className="text-lg font-bold text-white">{name}</span>
+        </div>
+        <p className="text-sm text-white/80 mt-1">{country}</p>
+      </div>
+
+      <div
+        className="absolute top-6 left-6 flex flex-col gap-2"
+        aria-label="Map controls for {name}"
+      >
+        <Location className="h-5 w-5 text-white" />
+        <button className="text-sm text-white hover:opacity-70 transition">
+          Get directions
+        </button>
+        <button className="text-sm text-white hover:opacity-70 transition">
+          Save place
+        </button>
+      </div>
+
+      <div
+        className="absolute bottom-6 right-6"
+        style={{ borderRadius: "var(--radius-card)" }}
+        aria-label="Map area for {name}"
+      >
+        <div
+          dangerouslySetInnerHTML={{
+            __html: `
+          <div id="map-${destination.id}" className="h-64 w-full"></div>
+          <script>
+            // Google Maps API will render the map here
+            // The map will be initialized when the API loads
+          </script>
+        `,
+          }}
+        />
+      </div>
+    </motion.div>
+  );
+}

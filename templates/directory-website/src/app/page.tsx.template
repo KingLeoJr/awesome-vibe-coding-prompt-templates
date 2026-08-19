@@ -1,0 +1,216 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/shared/Footer";
+import Button from "@/components/shared/Button";
+import ListingCard from "@/components/directory/ListingCard";
+import SearchFilters from "@/components/directory/SearchFilters";
+import ListingGallery from "@/components/directory/ListingGallery";
+import ReviewSystem from "@/components/directory/ReviewSystem";
+import { ArrowRight, Check, Search, Star, X } from "lucide-react";
+import data from "@/data/directory-website";
+
+const {
+  industry,
+  categories,
+  listings,
+  featured,
+  reviews,
+  testimonials,
+  gallery,
+  compareMeta,
+  compare,
+} = data;
+
+export const metadata: Metadata = {
+  title: "{{seo.title}}",
+  description: "{{app.tagline}}",
+  openGraph: {
+    title: "{{seo.title}}",
+    description: "{{app.tagline}}",
+    images: ["{{seo.og_image}}"],
+  },
+};
+
+export default function HomePage() {
+  return (
+    <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+      <Header />
+      <main className="flex-1">
+        <section className="relative overflow-hidden bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-primary)] to-[var(--color-secondary)]">
+          <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 text-center">
+            <h1 className="mx-auto max-w-3xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+              {{hero.headline}}
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-white/80">{{hero.subtext}}</p>
+
+            <form
+              action="#search"
+              className="mx-auto mt-10 flex max-w-2xl items-center gap-2 rounded-2xl border border-white/20 bg-white p-2 shadow-xl"
+            >
+              <Search className="ml-3 h-5 w-5 shrink-0 text-gray-400" aria-hidden="true" />
+              <input
+                name="q"
+                placeholder="{{hero.placeholder}}"
+                aria-label="Search listings"
+                className="w-full bg-transparent px-2 py-2 text-gray-900 placeholder-gray-400 outline-none"
+              />
+              <button
+                type="submit"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[var(--color-primary)] px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
+              >
+                Search
+              </button>
+            </form>
+
+            <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-2.5">
+              <span className="mr-1 text-sm font-medium text-white/70">Popular:</span>
+              {categories.map((category) => (
+                <Link
+                  key={category.slug}
+                  href="#search"
+                  className="rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-white/25"
+                >
+                  {category.name} <span className="opacity-70">({category.count})</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="browse" className="mx-auto max-w-7xl px-6 py-20">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+                Hand-picked
+              </p>
+              <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+                Featured {industry} listings
+              </h2>
+            </div>
+            <Button href="#search" variant="outline" size="sm">
+              Browse all listings
+            </Button>
+          </div>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((listing) => (
+              <ListingCard key={listing.id} listing={listing} />
+            ))}
+          </div>
+        </section>
+
+        <SearchFilters categories={categories} listings={listings} industry={industry} criteriaLabel={industry} />
+
+        <ListingGallery items={gallery} />
+
+        <ReviewSystem reviews={reviews} />
+
+        <section id="compare" className="mx-auto max-w-7xl px-6 py-20">
+          <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+            Side by side
+          </p>
+          <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+            Compare your top picks
+          </h2>
+          <div className="mt-8 overflow-x-auto rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+            <table className="w-full min-w-[560px] text-left text-sm">
+              <caption className="sr-only">Comparison of {compareMeta.listingA} and {compareMeta.listingB}</caption>
+              <thead>
+                <tr className="border-b border-gray-200 dark:border-gray-800">
+                  <th scope="col" className="px-6 py-4 font-medium text-gray-500 dark:text-gray-400">
+                    Feature
+                  </th>
+                  <th scope="col" className="px-6 py-4">
+                    <span className="font-semibold text-gray-900 dark:text-white">{compareMeta.listingA}</span>
+                  </th>
+                  <th scope="col" className="px-6 py-4">
+                    <span className="font-semibold text-gray-900 dark:text-white">{compareMeta.listingB}</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {compare.map((row) => (
+                  <tr
+                    key={row.feature}
+                    className="border-b border-gray-100 last:border-0 dark:border-gray-800"
+                  >
+                    <th scope="row" className="px-6 py-4 font-medium text-gray-700 dark:text-gray-200">
+                      {row.feature}
+                    </th>
+                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">
+                      {row.valueA === "yes" ? (
+                        <Check className="h-5 w-5 text-emerald-500" aria-label="Yes" />
+                      ) : row.valueA === "no" ? (
+                        <X className="h-5 w-5 text-red-500" aria-label="No" />
+                      ) : (
+                        row.valueA
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">
+                      {row.valueB === "yes" ? (
+                        <Check className="h-5 w-5 text-emerald-500" aria-label="Yes" />
+                      ) : row.valueB === "no" ? (
+                        <X className="h-5 w-5 text-red-500" aria-label="No" />
+                      ) : (
+                        row.valueB
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="bg-gray-50 py-20 dark:bg-gray-900/50">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+                  Trusted by locals
+                </p>
+                <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+                  What members say
+                </h2>
+              </div>
+              <Button href="#reviews" variant="outline" size="sm">
+                Read all reviews
+                <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+              </Button>
+            </div>
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+              {testimonials.map((testimonial) => (
+                <figure
+                  key={testimonial.id}
+                  className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-950"
+                >
+                  <div className="flex items-center gap-0.5" aria-label={`${testimonial.rating} out of 5 stars`}>
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <Star
+                        key={index}
+                        className={`h-4 w-4 ${
+                          index < testimonial.rating
+                            ? "fill-amber-400 text-amber-400"
+                            : "text-gray-300 dark:text-gray-700"
+                        }`}
+                        aria-hidden="true"
+                      />
+                    ))}
+                  </div>
+                  <blockquote className="mt-4 text-sm text-gray-600 dark:text-gray-300">
+                    &ldquo;{testimonial.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-4 text-sm">
+                    <span className="font-semibold text-gray-900 dark:text-white">{testimonial.author}</span>
+                    <span className="text-gray-500 dark:text-gray-400"> - {testimonial.role}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+}

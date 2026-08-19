@@ -1,0 +1,102 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Calendar, MapPin, CalendarX } from "lucide-react";
+
+interface Booking {
+  id: string;
+  destinationId: string;
+  startDate: string;
+  endDate: string;
+  status: "booked" | "confirmed" | "completed" | "cancelled";
+  totalPrice: number;
+  activities: { id: string; name: string; duration: number }[];
+}
+
+interface ItineraryBuilderProps {
+  bookings: Booking[];
+  onAddActivity: (bookingId: string, activity: { name: string; duration: number }) => void;
+}
+
+export default function ItineraryBuilder({ bookings, onAddActivity }: ItineraryBuilderProps) {
+  const totalBookings = bookings.length;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-6"
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+        >
+          <Calendar className="h-6 w-6 text-[var(--color-primary)] mx-auto mb-3" />
+          <h3 className="font-medium text-gray-900 dark:text-white">Upcoming Trips</h3>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">{totalBookings}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Total bookings</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+        >
+          <MapPin className="h-6 w-6 text-[var(--color-secondary)] mx-auto mb-3" />
+          <h3 className="font-medium text-gray-900 dark:text-white">Destinations</h3>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">{totalBookings > 0 ? bookings.reduce((sum, b) => sum + 1, 0) : 0}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Total visited</p>
+        </motion.div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {bookings.map((booking, i) => (
+          <motion.div
+            key={booking.id}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: i * 0.05 }}
+            className="p-4 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:bg-gray-50 dark:hover:bg-gray-950 transition-colors"
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "var(--color-accent)" }}>
+                {i + 1}
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-900 dark:text-white">{booking.destinationId}</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">({booking.startDate} - {booking.endDate})</p>
+              </div>
+            </div>
+            <div className="mt-2 space-y-1">
+              {booking.activities.map((act, j) => (
+                <motion.div
+                  key={act.id}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2, delay: j * 0.02 }}
+                  className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+                >
+                  <CalendarX size={12} className="text-[var(--color-accent)]" />
+                  <span>{act.name} ({act.duration} min)</span>
+                </motion.div>
+              ))}
+            </div>
+            <button
+              onClick={() => onAddActivity(booking.id, { name: "New Activity", duration: 60 })}
+              className="mt-2 w-full text-xs text-[var(--color-primary)] hover:underline"
+            >
+              Add Activity
+            </button>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}

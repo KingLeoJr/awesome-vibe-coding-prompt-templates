@@ -1,0 +1,52 @@
+import Header from "@/components/layout/Header";
+import CourseCard, { type Course } from "@/components/coaching/CourseCard";
+import GoalTracker, { type GrowthGoal } from "@/components/coaching/GoalTracker";
+import CoachCard, { type Coach } from "@/components/coaching/CoachCard";
+import GrowthLibrary, { type LearningResource } from "@/components/coaching/GrowthLibrary";
+import ProgressDashboard, { type ProgressData } from "@/components/coaching/ProgressDashboard";
+import AchievementBadges, { type Badge } from "@/components/coaching/AchievementBadges";
+import Footer from "@/components/shared/Footer";
+import data from "@/data/{{app.slug}}.json";
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Header />
+
+      <main>
+        <section
+          id="courses"
+          className="bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10 scroll-mt-24"
+        >
+          <CourseCard
+            courses={data.courses as Course[]}
+            topics={data.topics as string[]}
+            currency={data.currency as string}
+          />
+        </section>
+
+        <section id="goals" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <GoalTracker goals={data.goals as GrowthGoal[]} />
+        </section>
+
+        <section id="coaches" className="scroll-mt-24">
+          <CoachCard coaches={data.coaches as Coach[]} currency={data.currency as string} />
+        </section>
+
+        <section id="library" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <GrowthLibrary resources={data.library as LearningResource[]} topics={data.topics as string[]} />
+        </section>
+
+        <section id="progress" className="scroll-mt-24">
+          <ProgressDashboard progress={data.progress as ProgressData} />
+        </section>
+
+        <section id="badges" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <AchievementBadges badges={data.badges as Badge[]} />
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

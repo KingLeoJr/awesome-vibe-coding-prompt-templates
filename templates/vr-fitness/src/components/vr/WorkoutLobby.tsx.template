@@ -1,0 +1,61 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { cn as cn2 } from "@/lib/utils";
+
+interface VRFitnessClass {
+  id: string;
+  title: string;
+  type: "yoga" | "HIIT" | "dance" | "strength" | "cardio";
+  duration: number;
+  difficulty: "beginner" | "intermediate" | "advanced";
+  environment: "beach" | "forest" | "gym" | "city" | "space";
+  caloriesPerMinute: number;
+  imageUrl?: string;
+  isFeatured?: boolean;
+}
+
+interface WorkoutLobbyProps {
+  classes: VRFitnessClass[];
+  onSelect: (classId: string) => void;
+  userLevel: "beginner" | "intermediate" | "advanced";
+}
+
+export default function WorkoutLobby({ classes, onSelect, userLevel }: WorkoutLobbyProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className={cn2(
+        "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
+        "dark:border-gray-800"
+      )}
+    >
+      {classes.map((cls) => (
+        <motion.div
+          key={cls.id}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: cls.isFeatured ? 0 : 0.1 }}
+          className={cn2(
+            "group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 overflow-hidden hover:shadow-lg transition-shadow",
+            "cursor-pointer"
+          )}
+        >
+          <img
+            src={cls.imageUrl || "/placeholder-vr.jpg"}
+            alt={cls.title} className="h-48 w-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+          />
+          <div className="p-4">
+            <h3 className="font-bold text-lg truncate">{cls.title}</h3>
+            <p className="text-sm text-gray-500 mt-1">{cls.duration} min • {cls.type}</p>
+            <p className="text-xs text-gray-400 mt-1">{cls.difficulty} level • {cls.environment}</p>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}

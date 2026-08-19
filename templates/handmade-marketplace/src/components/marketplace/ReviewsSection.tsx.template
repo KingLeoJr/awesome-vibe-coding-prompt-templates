@@ -1,0 +1,108 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { BadgeCheck, MessageSquareQuote, Star } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface Review {
+  id: string;
+  author: string;
+  product: string;
+  rating: number;
+  title: string;
+  body: string;
+  date: string;
+  verified: boolean;
+}
+
+interface ReviewsSectionProps {
+  reviews: Review[];
+}
+
+function StarRow({ rating }: { rating: number }) {
+  return (
+    <span className="flex items-center gap-0.5" role="img" aria-label={`${rating} out of 5 stars`}>
+      {[1, 2, 3, 4, 5].map((value) => (
+        <Star
+          key={value}
+          size={14}
+          className={cn(
+            value <= rating
+              ? "fill-[var(--color-accent)] text-[var(--color-accent)]"
+              : "text-gray-300 dark:text-gray-700"
+          )}
+          aria-hidden="true"
+        />
+      ))}
+    </span>
+  );
+}
+
+export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
+  const average = reviews.length > 0
+    ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
+    : "0.0";
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="reviews-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+              <MessageSquareQuote size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="reviews-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Buyer reviews</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Honest feedback from verified purchases · average {average}/5.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2">
+          {reviews.map((review, index) => (
+            <motion.article
+              key={review.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
+            >
+              <Card className="h-full p-6">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <StarRow rating={review.rating} />
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">{review.title}</span>
+                  </div>
+                  <span className="text-xs text-gray-400">{review.date}</span>
+                </div>
+
+                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">{review.body}</p>
+
+                <footer className="mt-4 flex flex-wrap items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3 text-xs">
+                  <span className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                    <span className="font-medium text-gray-700 dark:text-gray-200">{review.author}</span>
+                    on {review.product}
+                  </span>
+                  {review.verified && (
+                    <span className="flex items-center gap-1 font-medium text-[var(--color-secondary)]">
+                      <BadgeCheck size={13} aria-hidden="true" />
+                      Verified purchase
+                    </span>
+                  )}
+                </footer>
+              </Card>
+            </motion.article>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

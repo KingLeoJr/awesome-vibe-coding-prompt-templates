@@ -1,0 +1,108 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { CalendarCheck, MapPin } from "lucide-react";
+
+export interface CountdownEvent {
+  name: string;
+  date: string;
+  location: string;
+}
+
+interface CountdownTimerProps {
+  event: CountdownEvent;
+  title: string;
+  subtitle: string;
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+function getTimeLeft(target: string): TimeLeft {
+  const diff = Math.max(0, new Date(target).getTime() - Date.now());
+  return {
+    days: Math.floor(diff / 86_400_000),
+    hours: Math.floor((diff / 3_600_000) % 24),
+    minutes: Math.floor((diff / 60_000) % 60),
+    seconds: Math.floor((diff / 1_000) % 60),
+  };
+}
+
+export default function CountdownTimer({
+  event,
+  title,
+  subtitle,
+  ctaText = "{{header.cta_text}}",
+  ctaHref = "{{header.cta_href}}",
+}: CountdownTimerProps) {
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => getTimeLeft(event.date));
+
+  useEffect(() => {
+    const id = setInterval(() => setTimeLeft(getTimeLeft(event.date)), 1000);
+    return () => clearInterval(id);
+  }, [event.date]);
+
+  const units = [
+    { label: "Days", value: timeLeft.days },
+    { label: "Hours", value: timeLeft.hours },
+    { label: "Minutes", value: timeLeft.minutes },
+    { label: "Seconds", value: timeLeft.seconds },
+  ];
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent)]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.25),transparent_50%)]" aria-hidden />
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative container mx-auto px-6 py-24 md:py-32 text-center text-white"
+      >
+        <p className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium backdrop-blur">
+          <CalendarCheck size={16} aria-hidden /> Next up
+        </p>
+        <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+          {title}
+        </h1>
+        <p className="mx-auto mt-4 max-w-xl text-base text-white/85 sm:text-lg">{subtitle}</p>
+
+        <div className="mt-10 flex items-center justify-center gap-3 sm:gap-5" role="timer" aria-label="Countdown to event">
+          {units.map((unit) => (
+            <div
+              key={unit.label}
+              className="flex w-20 flex-col items-center rounded-2xl bg-white/15 px-2 py-4 backdrop-blur sm:w-24"
+            >
+              <span className="text-3xl font-bold tabular-nums sm:text-4xl">
+                {String(unit.value).padStart(2, "0")}
+              </span>
+              <span className="mt-1 text-xs font-medium uppercase tracking-wider text-white/75">
+                {unit.label}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-8 inline-flex items-center gap-2 text-sm text-white/90">
+          <MapPin size={16} aria-hidden /> {event.location}
+        </p>
+
+        <div className="mt-8">
+          <Link
+            href={ctaHref}
+            className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-base font-medium text-gray-900 transition hover:bg-white/90"
+          >
+            {ctaText}
+          </Link>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

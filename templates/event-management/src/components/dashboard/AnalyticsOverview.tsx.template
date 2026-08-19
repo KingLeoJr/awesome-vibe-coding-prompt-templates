@@ -1,0 +1,106 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { BarChart3, DollarSign, Star, Ticket, TrendingUp, Users } from "lucide-react";
+import Card from "@/components/shared/Card";
+
+export interface Analytics {
+  totalRevenue: number;
+  ticketsSold: number;
+  attendanceRate: number;
+  avgRating: number;
+  weeklySales: { label: string; value: number }[];
+}
+
+interface AnalyticsOverviewProps {
+  analytics: Analytics;
+  currency?: string;
+}
+
+export default function AnalyticsOverview({ analytics, currency = "$" }: AnalyticsOverviewProps) {
+  const maxWeekly = Math.max(...analytics.weeklySales.map((w) => w.value), 1);
+
+  const stats = [
+    {
+      label: "Total revenue",
+      value: `${currency}${analytics.totalRevenue.toLocaleString()}`,
+      icon: DollarSign,
+      accent: "text-emerald-500",
+    },
+    {
+      label: "Tickets sold",
+      value: analytics.ticketsSold.toLocaleString(),
+      icon: Ticket,
+      accent: "text-[var(--color-primary)]",
+    },
+    {
+      label: "Attendance rate",
+      value: `${analytics.attendanceRate}%`,
+      icon: Users,
+      accent: "text-[var(--color-secondary)]",
+    },
+    {
+      label: "Average rating",
+      value: analytics.avgRating.toFixed(1),
+      icon: Star,
+      accent: "text-[var(--color-accent)]",
+    },
+  ];
+
+  return (
+    <div className="space-y-8">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, index) => {
+          const Icon = stat.icon;
+          return (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
+            >
+              <Card className="flex items-center gap-4 p-5">
+                <span className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-900 ${stat.accent}`}>
+                  <Icon size={22} aria-hidden />
+                </span>
+                <div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+                </div>
+              </Card>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <Card className="p-6">
+        <div className="mb-6 flex items-center justify-between">
+          <h3 className="inline-flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+            <BarChart3 size={20} className="text-[var(--color-primary)]" aria-hidden />
+            Weekly ticket sales
+          </h3>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
+            <TrendingUp size={14} aria-hidden /> +18% vs last week
+          </span>
+        </div>
+
+        <div className="flex items-end justify-between gap-3" role="img" aria-label="Weekly ticket sales bar chart">
+          {analytics.weeklySales.map((day, index) => (
+            <div key={day.label} className="flex flex-1 flex-col items-center gap-2">
+              <motion.div
+                initial={{ height: 0 }}
+                whileInView={{ height: `${Math.max(8, (day.value / maxWeekly) * 100)}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="w-full rounded-lg bg-gradient-to-t from-[var(--color-primary)] to-[var(--color-secondary)]"
+                style={{ minHeight: 8 }}
+              />
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{day.label}</span>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
+  );
+}

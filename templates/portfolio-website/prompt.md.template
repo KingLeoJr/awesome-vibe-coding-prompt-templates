@@ -1,0 +1,29 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  frontend.language: "{{frontend.language}}"
+  ui.library: "{{ui.library}}"
+  ui.icons: "{{ui.icons}}"
+  state.manager: "{{state.manager}}"
+  visuals.particles: "{{visuals.particles}}"
+  animation.library: "{{animation.library}}"
+  animation.charts: "{{animation.charts}}"
+  deployment.platform: "{{deployment.platform}}"
+  contact.email: "{{contact.email}}"
+  social.github: "{{social.github}}"
+  social.linkedin: "{{social.linkedin}}"
+  social.twitter: "{{social.twitter}}"
+  currency.symbol: "{{currency.symbol}}"
+---
+
+# Portfolio Website
+
+{{app.tagline}}
+
+Create a responsive Portfolio Website using {{frontend.framework}} for frontend and {{state.manager}} for state management. Implement a fixed header with navigation and smooth scrolling using react-scroll for anchor links. Design a hero section with animated text reveal using Framer Motion and optional particles.js background for subtle visuals. Create an about section with professional headshot, bio, and scroll-based storytelling using AOS library. Build skills section with animated progress bars using Chart.js and interactive word cloud using react-wordcloud. Implement a responsive masonry grid project showcase using react-masonry-css with filterable categories and modal popups for project details. Use Three.js for WebGL-powered transitions between projects. Add testimonials carousel using Swiper.js with autoplay and pause on hover. Include experience timeline with AOS vertical scroll animations. Set up a blog section with file-based routing using Astro's src/pages structure and markdown content with frontmatter. Implement content collections for organized blog post management and dynamic [slug].astro pages for individual posts. Use Astro's SSG for optimal performance and SEO. Query and display blog post lists on index and archive pages using Astro.glob(). Add syntax highlighting for code blocks. Create a custom 404 page with suggested posts and search functionality. Implement an RSS feed using Astro's RSS package. Design a tagging system with individual tag pages. Implement reading time estimation for each blog post. Add a table of contents component for long-form articles. Create related posts section at the end of each blog post. Implement social sharing buttons for each blog post. Design a newsletter subscription form with Astro's form handling. Integrate a comments system using Disqus or Utterances. Design a featured posts carousel for the homepage. Create a custom video player component for video content. Add a "time to read" progress bar for blog posts. Add a "copy code" button for code blocks. Design a custom blockquote component with styling options. Add a "last updated" indicator for blog posts. Build a contact form with client-side validation and reCAPTCHA integration. Add drag-and-drop file upload using react-dropzone. Include a floating action button for quick access to social media profiles. Use SVG animations and GSAP for animated social media icons. Implement dark mode toggle using custom hooks and localStorage. Add a custom audio player for background music with play/pause toggle. Add a scroll-to-top button that appears after scrolling down. Use react-spring for button and link animations. Create an animated logo loading screen using SVG animations. Build an interactive timeline with expandable sections for resume. Design a 404 page with animated illustrations using Lottie. Use react-confetti for achievements or special events. Add a live chat widget using react-chat-widget. Use react-globe.gl to show work locations. Use custom cursor with react-custom-cursor and mouse trailer with react-mouse-particles.
+
+Create a responsive portfolio website using {{frontend.framework}} for frontend and {{state.manager}} for state management. Use {{ui.library}} for styling and {{ui.icons}} for icons. Implement user authentication and data encryption. Design mobile-first responsive layout from 320px to 4K. Incorporate dark mode with persistent user preference. Ensure WCAG 2.1 AA accessibility compliance.

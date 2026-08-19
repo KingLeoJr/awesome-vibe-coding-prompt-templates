@@ -1,0 +1,36 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  auth.protocol: "{{auth.protocol}}"
+  state.management: "{{state.management}}"
+  ui.library: "{{ui.library}}"
+  animation.runtime: "{{animation.runtime}}"
+  vr.platform: "{{vr.platform}}"
+  payments.provider: "{{payments.provider}}"
+  mobile.framework: "{{mobile.framework}}"
+  api.protocol: "{{api.protocol}}"
+---
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{frontend.framework}} for the web interface and {{vr.platform}} for immersive VR experiences. Implement user authentication and authorization using {{auth.protocol}} for secure access. Design an intuitive dashboard UI using {{ui.library}} for responsive layouts and dark mode. Use {{state.management}} for complex application state management involving destination tracking, bookings, and social features. Create micro-interactions and section reveals using {{animation.runtime}}. Design 3D travel environments and VR rendering using {{vr.platform}}. Implement secure payment processing and booking management using {{payments.provider}}. Design a responsive mobile app interface using {{mobile.framework}} for cross-platform deployment to access VR content on-the-go. Expose a custom {{api.protocol}} for third-party developers to integrate with the platform (e.g., travel blogs, educational institutions). Design an analytics dashboard that visualizes user activity, travel history, favorite experiences, and engagement metrics. Create a social feature that allows users to share their experiences, tips, and favorite destinations through forums or social media integration. Implement a personalized recommendation engine that suggests destinations based on user preferences and previous interactions. Design an onboarding process with tutorials guiding new users through platform features and VR setup instructions. Create a referral program that rewards users for inviting friends to join the platform. Implement push notifications for new destination launches, special events, and community updates. Design an interactive map feature that allows users to explore destinations visually and plan their virtual travels. Create a feedback system allowing users to rate experiences and provide suggestions for improvement. Implement gamification elements like badges for visiting multiple destinations or completing challenges within the VR environment. Design a live chat feature connecting users with travel experts or guides during virtual tours for real-time interaction. Create an impact reporting feature highlighting the environmental benefits of virtual travel compared to traditional tourism. Implement advanced search functionality allowing users to filter experiences by type (adventure, relaxation, cultural) or region. Design user profiles where travelers can manage their preferences, saved experiences, and payment methods effectively. Create multi-language support to cater to a diverse global audience.
+
+## Non-functional requirements
+
+- **Security:** OAuth 2.0 with PKCE; booking data encrypted at rest and in transit.
+- **Performance:** core screens under 3s on mid-range mobile; 3D environments load progressively.
+- **Responsive:** 320px → 4K, VR environments adapt to screen size.
+- **Accessibility:** WCAG 2.1 AA, reduced-motion support, semantic landmarks.
+- **SEO:** server-rendered marketing shell, Open Graph + JSON-LD.
+
+## Acceptance criteria
+
+- A user can sign in, browse destinations, book a VR tour, and view their itinerary.
+- A user can connect via React Native and access VR content on mobile devices.
+- The analytics dashboard renders travel metrics on mobile and desktop.
+- The app passes `npm run lint` and `npm run typecheck` with no errors.

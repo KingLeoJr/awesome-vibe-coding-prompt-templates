@@ -1,0 +1,133 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowLeftRight, Leaf, Search } from "lucide-react";
+
+export interface ProductAlternative {
+  id: string;
+  product: string;
+  category: string;
+  conventionalBrand: string;
+  ethicalBrand: string;
+  ethicsScore: number;
+  priceDelta: string;
+  co2SavedKg: number;
+  why: string;
+}
+
+interface AlternativeFinderProps {
+  alternatives: ProductAlternative[];
+  currency?: string;
+}
+
+export default function AlternativeFinder({ alternatives, currency = "{{currency.symbol}}" }: AlternativeFinderProps) {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All");
+
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(alternatives.map((a) => a.category)))],
+    [alternatives]
+  );
+
+  const filtered = useMemo(
+    () =>
+      alternatives.filter((a) => {
+        const matchesQuery =
+          a.product.toLowerCase().includes(query.toLowerCase()) ||
+          a.ethicalBrand.toLowerCase().includes(query.toLowerCase());
+        const matchesCategory = category === "All" || a.category === category;
+        return matchesQuery && matchesCategory;
+      }),
+    [alternatives, query, category]
+  );
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="explore-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <ArrowLeftRight size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="explore-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Find the ethical swap</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Search everyday products and see the value-aligned alternative.</p>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <div className="relative flex-1 min-w-[200px] max-w-xs">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search product or brand…"
+              className="w-full rounded-full border border-gray-300 dark:border-gray-700 bg-transparent pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              aria-label="Search alternatives"
+            />
+          </div>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="rounded-full border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+            aria-label="Filter by category"
+          >
+            {categories.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+
+        <ul className="flex flex-col gap-4" aria-label="Alternative products">
+          {filtered.map((a, i) => (
+            <motion.li
+              key={a.id}
+              initial={{ opacity: 0, x: -8 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.4) }}
+              className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-5"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="font-medium text-gray-900 dark:text-white">{a.product}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{a.category}</p>
+                </div>
+                <span className="rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-bold text-[var(--color-primary)]">
+                  {a.ethicsScore} ethics score
+                </span>
+              </div>
+
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                <span className="text-gray-400 line-through">{a.conventionalBrand}</span>
+                <span className="flex items-center gap-1 text-[var(--color-primary)]" aria-hidden="true">
+                  <ArrowLeftRight size={14} />
+                </span>
+                <span className="font-semibold text-gray-900 dark:text-white">{a.ethicalBrand}</span>
+                <span className="ml-auto text-xs text-gray-500 dark:text-gray-400">
+                  {a.priceDelta} · saves {a.co2SavedKg} kg CO₂
+                </span>
+              </div>
+
+              <p className="mt-2 flex items-start gap-1.5 text-sm text-gray-600 dark:text-gray-300">
+                <Leaf size={14} className="mt-0.5 shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
+                {a.why}
+              </p>
+            </motion.li>
+          ))}
+          {filtered.length === 0 && (
+            <li className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-8 text-center text-sm text-gray-500 dark:text-gray-400">
+              No alternatives match your search.
+            </li>
+          )}
+        </ul>
+      </motion.div>
+    </section>
+  );
+}

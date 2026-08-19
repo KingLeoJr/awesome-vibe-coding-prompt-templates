@@ -1,0 +1,43 @@
+# {{app.name}}
+
+Create a responsive {{industry.name}} directory website with a clean, modern design
+Implement a hero section with search bar, popular categories, and featured listings
+Design a sticky header with logo, navigation, and "Add Listing" CTA button
+Use a sans-serif font for headings (22-28px) and body text (16px) in a legible color scheme
+Create a grid-based layout for directory listings with hover effects and quick view options
+Implement advanced search functionality with filters for {{industry.criteria}}
+Design category pages with subcategories, featured listings, and alphabetical browsing
+Create detailed listing pages with photo galleries, maps, contact info, and user reviews
+Implement user accounts with dashboard for managing listings and saved favorites
+Design a multi-step submission form for new listings with progress indicator
+Create a pricing page with comparison table for different listing tiers
+Implement a review and rating system with verified user badges
+Design an FAQ page with expandable sections and search functionality
+Create a responsive footer with sitemap, social links, and newsletter signup
+Implement schema markup for local businesses and organization
+Design a contact page with form, map, and direct contact options
+Create a blog section with category filtering and featured posts
+Implement a notification system for listing updates and messages
+Design a privacy policy page with clear sections and updated cookie consent
+Create terms of service page with collapsible sections for easy navigation
+Implement social sharing buttons for listings and blog posts
+Design a 404 page with search functionality and popular category links
+Create an about page showcasing company history and team members
+Implement a responsive image gallery with lazy loading and lightbox effect
+Design a testimonials page with filter options and trust indicators
+Create a sitemap page for easy navigation and SEO benefits
+Implement breadcrumb navigation throughout the site
+Design a mobile app promotion page with download links and features
+Create a partners page with logos and integration information
+Implement a help center with searchable knowledge base and ticket system
+Design an advertising page with ad placement options and pricing
+Create a stats page showcasing directory growth and user engagement
+Implement a newsletter archive page with categorized past issues
+Design a community guidelines page with clear rules and reporting process
+Create a careers page with current openings and application process
+Implement a user-generated content section for {{industry.name}} tips and advice
+Design an events calendar page with filtering and registration options
+Create a resources page with downloadable guides and whitepapers
+Implement a dark mode toggle for improved user experience
+Design a comparison tool for side-by-side listing evaluation
+Create a trending searches page updated in real-time

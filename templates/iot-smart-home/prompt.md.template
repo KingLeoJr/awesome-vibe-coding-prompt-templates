@@ -1,0 +1,78 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  auth.protocol: "{{auth.protocol}}"
+  device.protocol: "{{device.protocol}}"
+  ui.library: "{{ui.library}}"
+  state.management: "{{state.management}}"
+  rules.engine: "{{rules.engine}}"
+  charts.library: "{{charts.library}}"
+  voice.provider: "{{voice.provider}}"
+  ml.runtime: "{{ml.runtime}}"
+  mobile.framework: "{{mobile.framework}}"
+  encryption: "{{encryption}}"
+  audit.ledger: "{{audit.ledger}}"
+  automation.integration: "{{automation.integration}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{frontend.framework}} for SSR
+Implement user authentication and device pairing using {{auth.protocol}} and {{device.protocol}} protocol
+Design an intuitive dashboard UI using {{ui.library}} for Material Design components
+Use {{state.management}} for state management and relational data handling
+Create a real-time device status monitoring system using WebSockets
+Implement a rules engine for automated device interactions and scenes using {{rules.engine}}
+Design a customizable floor plan creator with drag-and-drop device placement
+Create an energy consumption analytics dashboard with {{charts.library}} visualizations
+Implement voice control integration using {{voice.provider}} for natural language processing
+Design a notification system for device alerts and anomaly detection
+Create a multi-user access control system with customizable permissions
+Implement a machine learning-based predictive maintenance system using {{ml.runtime}}
+Design a responsive mobile app interface using {{mobile.framework}} for cross-platform deployment
+Create a secure remote access system with end-to-end encryption using {{encryption}}
+Implement a blockchain-based audit trail for device actions using {{audit.ledger}}
+Design an AI-powered scene suggestion system based on user behavior patterns
+Create a virtual 3D home tour with device status overlays using Three.js
+Implement geofencing capabilities for location-based automations
+Design a smart energy grid integration for optimized power consumption
+Create a multi-protocol device discovery system (Zigbee, Z-Wave, Wi-Fi, Bluetooth)
+Implement a time-based scheduling system for device actions and scenes
+Design a smart appliance integration system with {{automation.integration}} compatibility
+Create a customizable reporting system for long-term trend analysis
+Implement a facial recognition system for personalized automations using {{ml.runtime}}
+Design a smart security system with AI-powered anomaly detection
+Create a voice-activated digital assistant for hands-free control
+Implement a smart water management system with leak detection and usage analytics
+Design an air quality monitoring and purification control system
+Create a smart lighting system with circadian rhythm optimization
+Implement a smart thermostat with AI-driven temperature optimization
+Design a smart lock system with temporary access codes and entry logs
+Create a video surveillance system with object detection and tracking
+Implement a smart garden management system with automated watering and care
+Design a pet care system with feeding schedules and activity monitoring
+Create a smart kitchen assistant with recipe suggestions and inventory management
+Implement a health monitoring system integration for personalized environment control
+Design a smart waste management system with fill-level monitoring and collection scheduling
+Create a smart parking system for garages with availability tracking
+Implement a package delivery management system with secure access options
+Design a smart mirror interface for personalized information display
+Create an emergency response system with automatic alerts to authorities
+Implement a smart entertainment system with multi-room audio and video synchronization
+Design a smart closet system with outfit suggestions based on weather and calendar
+Create a voice-controlled smart home bot with natural language interaction
+Implement a smart window and blind control system for optimal lighting and privacy
+Design a smart HVAC system with multi-zone control and air quality optimization
+Create a smart home gym with personalized workout tracking and equipment integration
+Implement a smart sleep optimization system with environmental controls
+Design a smart home maintenance scheduler with service provider integration
+Create a smart home inventory system with automatic reordering capabilities
+Implement a smart home sharing economy platform for temporary access granting
+Design a smart home insurance integration with real-time risk assessment
+Create a smart home energy trading system for micro-grid participation

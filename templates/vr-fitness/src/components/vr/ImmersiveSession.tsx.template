@@ -1,0 +1,70 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Sun, Moon } from "lucide-react";
+
+interface VRFitnessClass {
+  id: string;
+  title: string;
+  type: string;
+  duration: number;
+}
+
+interface WorkoutProgress {
+  caloriesBurned: number;
+  duration: number;
+  heartRate?: number;
+}
+
+interface ImmersiveSessionProps {
+  currentClass: VRFitnessClass;
+  progress: WorkoutProgress;
+  onComplete: () => void;
+}
+
+export default function ImmersiveSession({ currentClass, progress, onComplete }: ImmersiveSessionProps) {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="relative min-h-[500px] w-full rounded-2xl overflow-hidden dark:border-gray-800"
+    >
+      <motion.img
+        src={currentClass.imageUrl || "/placeholder-vr-session.jpg"}
+        alt={currentClass.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+        transition={{ opacity: [0, 1] }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent sm:from-black/40 dark:bg-black/80 dark:via-transparent sm:dark:via-black/40" />
+      <div className="absolute bottom-0 left-0 right-0 p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-bold text-2xl text-white">{currentClass.title}</h2>
+            <p className="text-sm text-white/70">{currentClass.duration} min • {currentClass.type}</p>
+          </div>
+          <button
+            onClick={onComplete}
+            className="px-4 py-2 rounded-full bg-white/20 text-white text-sm hover:bg-white/30 transition"
+            aria-label="Complete workout"
+          >
+            <Sun size={18} /> Complete
+          </button>
+          <Moon size={18} />
+        </div>
+        <div className="absolute top-6 left-6 right-6">
+          <div className="bg-white/10 dark:bg-gray-900/50 rounded-full h-2.5">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] transform transition-transform"
+              style={{ width: `${(progress.caloriesBurned / 500) * 100}%` }}
+            />
+          </div>
+          <p className="text-xs text-white/60 mt-1 text-center">Calories burned</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

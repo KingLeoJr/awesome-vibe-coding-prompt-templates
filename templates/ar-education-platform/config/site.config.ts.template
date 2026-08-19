@@ -1,0 +1,34 @@
+export const SITE_TITLE = "{{app.name}}";
+export const SITE_DESCRIPTION = "{{app.tagline}}";
+export const SITE_URL = "{{deployment.url}}";
+
+export const NAV_ITEMS = [
+  { label: "Scan", href: "#scan" },
+  { label: "Library", href: "#library" },
+  { label: "Labs", href: "#labs" },
+  { label: "Quests", href: "#quests" },
+  { label: "Explore", href: "#explore" },
+];
+
+export const SUBJECTS = ["Science", "Math", "History", "Language", "Art", "Geography"];
+
+export const LESSON_MODES = ["ar", "3d", "interactive"] as const;
+
+export const CONTACT = {
+  email: "{{contact.email}}",
+  phone: "{{contact.phone}}",
+};
+
+export const SOCIAL = {
+  github: "{{social.github}}",
+  linkedin: "{{social.linkedin}}",
+  twitter: "{{social.twitter}}",
+};
+
+export const ANALYTICS_ID = "{{deployment.analytics_id}}";
+
+export const SAFETY = {
+  parentalControls: true,
+  coppaAligned: true,
+  ageRange: "K-12",
+};

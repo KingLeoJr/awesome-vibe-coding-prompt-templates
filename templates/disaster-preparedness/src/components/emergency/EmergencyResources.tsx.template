@@ -1,0 +1,163 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Clock, MapPin, Phone, Search, Star, Utensils, BedDouble, Stethoscope, Zap, Droplets, type LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface EmergencyResource {
+  id: string;
+  name: string;
+  type: string;
+  category: string;
+  address: string;
+  phone: string;
+  distanceMiles: number;
+  rating: number;
+  hours: string;
+}
+
+interface EmergencyResourcesProps {
+  resources: EmergencyResource[];
+  categories?: string[];
+}
+
+const TYPE_ICONS: Record<string, LucideIcon> = {
+  Shelter: BedDouble,
+  "Food Bank": Utensils,
+  Medical: Stethoscope,
+  Utility: Zap,
+  Water: Droplets,
+};
+
+export default function EmergencyResources({
+  resources,
+  categories = ["Shelter", "Food Bank", "Medical", "Utility", "Water"],
+}: EmergencyResourcesProps) {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All");
+
+  const filtered = useMemo(() => {
+    return resources.filter((r) => {
+      const matchesQuery = r.name.toLowerCase().includes(query.toLowerCase()) || r.address.toLowerCase().includes(query.toLowerCase());
+      const matchesCategory = category === "All" || r.category === category;
+      return matchesQuery && matchesCategory;
+    });
+  }, [resources, query, category]);
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="resources-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+              <MapPin size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="resources-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Local resources</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Emergency services and resources near you — shelters, food banks, and more.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <div className="relative flex-1 min-w-[200px] max-w-xs">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search resources…"
+              className="w-full rounded-full border border-gray-300 dark:border-gray-700 bg-transparent pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+              aria-label="Search local resources"
+            />
+          </div>
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter resources by category">
+            {["All", ...categories].map((c) => (
+              <button
+                key={c}
+                onClick={() => setCategory(c)}
+                aria-pressed={category === c}
+                className={cn(
+                  "rounded-full px-4 py-1.5 text-sm font-medium transition",
+                  category === c
+                    ? "bg-[var(--color-primary)] text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                )}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <ul className="flex flex-col gap-3" aria-label="Local resource list">
+          {filtered.map((r, i) => {
+            const Icon = TYPE_ICONS[r.category] ?? MapPin;
+            return (
+              <motion.li
+                key={r.id}
+                initial={{ opacity: 0, x: -8 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.4) }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-6 py-5"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+                      <Icon size={20} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <h3 className="font-semibold text-gray-900 dark:text-white">{r.name}</h3>
+                        <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[11px] font-medium text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                          {r.category}
+                        </span>
+                      </div>
+                      <p className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+                        <span className="inline-flex items-center gap-1.5">
+                          <MapPin size={14} aria-hidden="true" />
+                          {r.address}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Phone size={14} aria-hidden="true" />
+                          {r.phone}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex shrink-0 items-center gap-5 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Clock size={14} aria-hidden="true" />
+                      {r.hours}
+                    </span>
+                    <span className="inline-flex items-center gap-1 font-medium text-[var(--color-accent)]">
+                      <Star size={14} aria-hidden="true" />
+                      {r.rating.toFixed(1)}
+                    </span>
+                    <span className="rounded-full bg-[var(--color-secondary)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-secondary)]">
+                      {r.distanceMiles.toFixed(1)} mi
+                    </span>
+                  </div>
+                </div>
+              </motion.li>
+            );
+          })}
+        </ul>
+
+        {filtered.length === 0 && (
+          <p className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            No resources match your search.
+          </p>
+        )}
+      </motion.div>
+    </section>
+  );
+}

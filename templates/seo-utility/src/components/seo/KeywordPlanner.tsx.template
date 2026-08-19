@@ -1,0 +1,142 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Search, Plus, Loader2, FileText, Check, X } from "lucide-react";
+import { useState } from "react";
+
+interface Keyword {
+  id: string;
+  term: string;
+  searchVolume: number;
+  difficulty: number;
+  priority: "high" | "medium" | "low";
+}
+
+interface KeywordPlannerProps {
+  keywords: Keyword[];
+  onAdd: (term: string, searchVolume: number, difficulty: number) => void;
+}
+
+export default function KeywordPlanner({ keywords, onAdd }: KeywordPlannerProps) {
+  const [newTerm, setNewTerm] = useState("");
+  const [newVolume, setNewVolume] = useState("");
+  const [newDifficulty, setNewDifficulty] = useState("medium");
+
+  const handleAdd = () => {
+    onAdd(newTerm, parseInt(newVolume), newDifficulty === "hard" ? 80 : newDifficulty === "medium" ? 60 : 40);
+    setNewTerm("");
+    setNewVolume("");
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-6"
+    >
+      <div className="bg-white dark:bg-gray-950 rounded-2xl p-6 shadow-sm">
+        <h2 className="font-bold text-2xl text-gray-900 dark:text-white mb-4">Keyword Planner</h2>
+        <p className="text-gray-500 dark:text-gray-400 mb-6">Add keywords to track search volume and difficulty.</p>
+        <form className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Keyword</label>
+              <input
+                type="text"
+                value={newTerm}
+                onChange={(e) => setNewTerm(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 p-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:text-gray-100"
+                placeholder="Enter keyword"
+                aria-label="Keyword"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search Volume</label>
+              <input
+                type="number"
+                value={newVolume}
+                onChange={(e) => setNewVolume(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 p-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:text-gray-100"
+                placeholder="e.g. 5000"
+                aria-label="Search volume"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Difficulty</label>
+              <select
+                value={newDifficulty}
+                onChange={(e) => setNewDifficulty(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 p-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:text-gray-100"
+              >
+                <option value="low">Low (0-40)</option>
+                <option value="medium">Medium (41-60)</option>
+                <option value="high">High (61-100)</option>
+              </select>
+            </div>
+          </div>
+          <button
+            type="submit"
+            onClick={handleAdd}
+            className="w-full rounded-md border border-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition"
+            aria-label="Add keyword"
+          >
+            Add Keyword
+          </button>
+        </form>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white dark:bg-gray-950 rounded-xl overflow-hidden">
+          <thead>
+            <tr className="border-b dark:border-gray-700">
+              <th className="text-left text-sm font-medium text-gray-600 dark:text-gray-300 p-3">Keyword</th>
+              <th className="text-left text-sm font-medium text-gray-600 dark:text-gray-300 p-3">Volume</th>
+              <th className="text-left text-sm font-medium text-gray-600 dark:text-gray-300 p-3">Difficulty</th>
+              <th className="text-left text-sm font-medium text-gray-600 dark:text-gray-300 p-3">Priority</th>
+              <th className="text-left text-sm font-medium text-gray-600 dark:text-gray-300 p-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {keywords.map((kw) => (
+              <motion.div
+                key={kw.id}
+                initial={{ opacity: 0, y: -10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: keywords.indexOf(kw) * 0.02 }}
+                className="border-b dark:border-gray-800"
+              >
+                <td className="p-3 font-medium text-gray-900 dark:text-white">{kw.term}</td>
+                <td className="p-3 text-center text-gray-500 dark:text-gray-400">{kw.searchVolume}</td>
+                <td className="p-3 text-center">
+                  <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] transition-width"
+                      style={{ width: `${kw.difficulty}%` }}
+                    />
+                  </div>
+                  <span className="text-xs {kw.difficulty > 70 ? "text-red-600" : kw.difficulty > 40 ? "text-yellow-600" : "text-green-600"}">{kw.difficulty}</span>
+                </td>
+                <td className="p-3">
+                  <span className="px-2 py-1 rounded text-xs font-medium {kw.priority === "high" ? "bg-red-100 text-red-800" : kw.priority === "medium" ? "bg-yellow-100 text-yellow-800" : "bg-green-100 text-green-800"}">
+                    {kw.priority}
+                  </span>
+                </td>
+                <td className="p-3">
+                  <button className="text-xs text-[var(--color-primary)] hover:underline" aria-label="Edit keyword">
+                    Edit
+                  </button>
+                  <button className="text-xs text-red-600 hover:underline ml-2" aria-label="Remove keyword">
+                    Remove
+                  </button>
+                </td>
+              </motion.div>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </motion.div>
+  );
+}

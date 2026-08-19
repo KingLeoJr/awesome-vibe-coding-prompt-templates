@@ -1,0 +1,152 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { BookOpen, Clock, PlayCircle, SlidersHorizontal, Youtube } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface VideoTutorial {
+  id: string;
+  title: string;
+  cuisine: string;
+  difficulty: string;
+  dietary: string;
+  duration: string;
+  views: number;
+  url: string;
+}
+
+interface VideoLibraryProps {
+  tutorials: VideoTutorial[];
+  cuisines?: string[];
+  difficultyLevels?: string[];
+}
+
+const difficultyTone: Record<string, string> = {
+  Beginner: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  Intermediate: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  Advanced: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function VideoLibrary({
+  tutorials,
+  cuisines = ["Italian", "Japanese", "Mexican", "French", "Indian"],
+  difficultyLevels = ["Beginner", "Intermediate", "Advanced"],
+}: VideoLibraryProps) {
+  const [cuisine, setCuisine] = useState("All");
+  const [difficulty, setDifficulty] = useState("All");
+
+  const filtered = useMemo(() => {
+    return tutorials.filter((t) => {
+      const matchesCuisine = cuisine === "All" || t.cuisine === cuisine;
+      const matchesDifficulty = difficulty === "All" || t.difficulty === difficulty;
+      return matchesCuisine && matchesDifficulty;
+    });
+  }, [tutorials, cuisine, difficulty]);
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="tutorials-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+              <Youtube size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="tutorials-heading" className="text-3xl font-bold text-gray-900 dark:text-white">On-demand tutorials</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Learn any technique, any time — filtered by cuisine and level.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal size={16} className="text-gray-400" aria-hidden="true" />
+            <label htmlFor="tutorial-cuisine" className="text-sm text-gray-500 dark:text-gray-400">Cuisine</label>
+            <select
+              id="tutorial-cuisine"
+              value={cuisine}
+              onChange={(e) => setCuisine(e.target.value)}
+              className="rounded-full border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)]"
+            >
+              <option value="All">All cuisines</option>
+              {cuisines.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+          <div className="flex items-center gap-2">
+            <label htmlFor="tutorial-difficulty" className="text-sm text-gray-500 dark:text-gray-400">Level</label>
+            <select
+              id="tutorial-difficulty"
+              value={difficulty}
+              onChange={(e) => setDifficulty(e.target.value)}
+              className="rounded-full border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)]"
+            >
+              <option value="All">All levels</option>
+              {difficultyLevels.map((d) => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {filtered.map((t, i) => (
+            <motion.a
+              key={t.id}
+              href={t.url}
+              target="_blank"
+              rel="noreferrer"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
+              className="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 transition hover:shadow-lg hover:-translate-y-0.5"
+            >
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+                  <PlayCircle size={22} aria-hidden="true" />
+                </span>
+                <span className={cn("rounded-full px-2.5 py-1 text-[11px] font-medium capitalize", difficultyTone[t.difficulty])}>
+                  {t.difficulty}
+                </span>
+              </div>
+
+              <h3 className="mt-4 font-semibold text-gray-900 dark:text-white group-hover:text-[var(--color-secondary)] transition-colors">
+                {t.title}
+              </h3>
+
+              <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
+                <span className="rounded-full bg-gray-100 px-2 py-0.5 dark:bg-gray-900">{t.cuisine}</span>
+                <span>{t.dietary}</span>
+              </p>
+
+              <div className="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3 text-xs text-gray-500 dark:text-gray-400">
+                <span className="flex items-center gap-1">
+                  <Clock size={13} aria-hidden="true" />
+                  {t.duration}
+                </span>
+                <span className="flex items-center gap-1">
+                  <BookOpen size={13} aria-hidden="true" />
+                  {t.views.toLocaleString()} views
+                </span>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+
+        {filtered.length === 0 && (
+          <p className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            No tutorials match those filters.
+          </p>
+        )}
+      </motion.div>
+    </section>
+  );
+}

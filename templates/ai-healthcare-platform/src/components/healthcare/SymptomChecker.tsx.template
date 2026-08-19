@@ -1,0 +1,220 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Brain, Check, ShieldAlert, Stethoscope, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface SymptomOption {
+  id: string;
+  label: string;
+  system: string;
+}
+
+export interface Condition {
+  id: string;
+  name: string;
+  severity: "low" | "moderate" | "urgent";
+  matchScore: number;
+  description: string;
+  advice: string;
+  associatedSymptoms: string[];
+}
+
+interface SymptomCheckerProps {
+  symptoms: SymptomOption[];
+  conditions: Condition[];
+}
+
+const severityTone: Record<Condition["severity"], string> = {
+  low: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  moderate: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  urgent: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function SymptomChecker({ symptoms, conditions }: SymptomCheckerProps) {
+  const [selected, setSelected] = useState<string[]>([]);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [result, setResult] = useState<Condition[]>([]);
+
+  const systems = useMemo(() => Array.from(new Set(symptoms.map((s) => s.system))), [symptoms]);
+
+  const toggle = (id: string) => {
+    setSelected((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]));
+    setResult([]);
+  };
+
+  const analyze = () => {
+    if (selected.length === 0) return;
+    setAnalyzing(true);
+    setResult([]);
+    window.setTimeout(() => {
+      const matches = conditions
+        .map((c) => ({
+          ...c,
+          overlap: c.associatedSymptoms.filter((s) => selected.includes(s)).length,
+        }))
+        .filter((c) => c.overlap > 0)
+        .sort((a, b) => b.overlap - a.overlap || b.matchScore - a.matchScore);
+      setResult(matches);
+      setAnalyzing(false);
+    }, 900);
+  };
+
+  const clear = () => {
+    setSelected([]);
+    setResult([]);
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="symptom-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <Brain size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="symptom-heading" className="text-3xl font-bold text-gray-900 dark:text-white">AI symptom checker</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Describe what you feel. This is triage guidance — not a diagnosis.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold text-gray-900 dark:text-white">Select symptoms</h3>
+              <div className="flex items-center gap-2">
+                {selected.length > 0 && (
+                  <button
+                    onClick={clear}
+                    className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs text-gray-500 hover:text-gray-900 dark:hover:text-white transition"
+                  >
+                    <X size={12} aria-hidden="true" />
+                    Clear
+                  </button>
+                )}
+                <span className="rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-medium text-[var(--color-primary)]">
+                  {selected.length} selected
+                </span>
+              </div>
+            </div>
+
+            {systems.map((system) => (
+              <div key={system} className="mb-4">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">{system}</p>
+                <div className="flex flex-wrap gap-2">
+                  {symptoms
+                    .filter((s) => s.system === system)
+                    .map((s) => {
+                      const active = selected.includes(s.id);
+                      return (
+                        <button
+                          key={s.id}
+                          onClick={() => toggle(s.id)}
+                          aria-pressed={active}
+                          className={cn(
+                            "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition",
+                            active
+                              ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                              : "border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-[var(--color-primary)]"
+                          )}
+                        >
+                          {active && <Check size={13} aria-hidden="true" />}
+                          {s.label}
+                        </button>
+                      );
+                    })}
+                </div>
+              </div>
+            ))}
+
+            <button
+              onClick={analyze}
+              disabled={selected.length === 0}
+              className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <Stethoscope size={16} aria-hidden="true" />
+              {analyzing ? "Analyzing…" : "Analyze symptoms"}
+            </button>
+          </div>
+
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Possible matches</h3>
+
+            <AnimatePresence>
+              {analyzing && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col items-center justify-center gap-3 py-16 text-center"
+                >
+                  <motion.span
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
+                    className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                  >
+                    <Stethoscope size={22} aria-hidden="true" />
+                  </motion.span>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Running NLP triage model…</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {!analyzing && result.length === 0 && (
+              <div className="flex h-full flex-col items-center justify-center gap-3 py-16 text-center text-gray-400 dark:text-gray-600">
+                <Brain size={40} aria-hidden="true" />
+                <p className="max-w-xs text-sm">Select at least one symptom above, then analyze to see ranked possibilities.</p>
+              </div>
+            )}
+
+            {!analyzing && result.length > 0 && (
+              <ul className="flex flex-col gap-4">
+                {result.map((c, i) => (
+                  <motion.li
+                    key={c.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: i * 0.08 }}
+                    className="rounded-2xl border border-gray-200 dark:border-gray-800 p-4"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <h4 className="font-semibold text-gray-900 dark:text-white">{c.name}</h4>
+                      <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium capitalize ${severityTone[c.severity]}`}>
+                        {c.severity}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{c.description}</p>
+                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Next step: {c.advice}</p>
+                    <div className="mt-3 flex items-center gap-2">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">Match strength</span>
+                      <span className="flex-1 h-1.5 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" aria-hidden="true">
+                        <span
+                          className="block h-full rounded-full bg-[var(--color-primary)]"
+                          style={{ width: `${Math.round(c.matchScore * 100)}%` }}
+                        />
+                      </span>
+                      <span className="text-xs font-medium text-gray-900 dark:text-white">{Math.round(c.matchScore * 100)}%</span>
+                    </div>
+                  </motion.li>
+                ))}
+              </ul>
+            )}
+
+            <p className="mt-4 flex items-start gap-2 text-xs text-gray-400 dark:text-gray-600">
+              <ShieldAlert size={14} className="mt-0.5 shrink-0" aria-hidden="true" />
+              For urgent symptoms (chest pain, severe bleeding, breathing trouble) call emergency services immediately.
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

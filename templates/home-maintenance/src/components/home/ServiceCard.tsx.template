@@ -1,0 +1,84 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+
+interface ServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  serviceType: "plumbing" | "electrical" | "hvac" | "carpentry" | "cleaning" | "other";
+  estimatedCost: string;
+  duration: string;
+}
+
+interface ProviderSummary {
+  name: string;
+  rating: number;
+  trade: string;
+  serviceArea: string;
+}
+
+interface ServiceCardProps {
+  service: ServiceItem;
+  provider: ProviderSummary;
+  onBook: () => void;
+  delay?: number;
+}
+
+export default function ServiceCard({ service, provider, onBook, delay = 0 }: ServiceCardProps) {
+  const typeColors: Record<string, string> = {
+    plumbing: "bg-blue-500",
+    electrical: "bg-yellow-500",
+    hvac: "bg-red-500",
+    carpentry: "bg-orange-500",
+    cleaning: "bg-green-500",
+    other: "bg-gray-500",
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay }}
+      className={cn(
+        "rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950",
+        "hover:shadow-lg transition-shadow",
+        "pb-4"
+      )}
+    >
+      <div className="p-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{service.title}</h3>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{service.description}</p>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              <span className={typeColors[service.serviceType]} mr-2 rounded text-xs font-medium capitalize>
+                {service.serviceType}
+              </span>
+              • {service.estimatedCost} • {service.duration}
+            </p>
+          </div>
+          <ProviderBadge provider={provider} />
+        </div>
+        <Button onClick={onBook} variant="primary" size="sm">
+          Book Now
+        </Button>
+      </div>
+    </motion.div>
+  );
+}
+
+function ProviderBadge({ name, rating, trade, serviceArea }: ProviderSummary) {
+  return (
+    <div className="flex items-center gap-2 text-sm">
+      <span className="text-gray-500 dark:text-gray-300">{name}</span>
+      <span className="text-yellow-500">★{rating.toFixed(1)}</span>
+      <span className="text-gray-500 dark:text-gray-400">({trade})</span>
+      <span className="text-gray-400 dark:text-gray-500 text-xs">-{serviceArea}</span>
+    </div>
+  );
+}

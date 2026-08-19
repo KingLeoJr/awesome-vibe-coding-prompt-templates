@@ -1,0 +1,101 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Calendar, PiggyBank, Plus } from "lucide-react";
+
+export interface SavingsGoal {
+  id: string;
+  name: string;
+  target: number;
+  saved: number;
+  deadline: string;
+  autoAllocate: boolean;
+}
+
+interface SavingsGoalsProps {
+  goals: SavingsGoal[];
+  currency?: string;
+}
+
+export default function SavingsGoals({ goals, currency = "{{currency.symbol}}" }: SavingsGoalsProps) {
+  const totalSaved = goals.reduce((a, b) => a + b.saved, 0);
+  const totalTarget = goals.reduce((a, b) => a + b.target, 0);
+  const overall = totalTarget > 0 ? Math.round((totalSaved / totalTarget) * 100) : 0;
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="savings-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <PiggyBank size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="savings-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Savings goals</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {currency}{totalSaved.toLocaleString()} of {currency}{totalTarget.toLocaleString()} saved ({overall}%).
+              </p>
+            </div>
+          </div>
+          <button className="inline-flex items-center gap-2 rounded-full bg-[var(--color-secondary)] px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 transition">
+            <Plus size={16} aria-hidden="true" />
+            New goal
+          </button>
+        </div>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {goals.map((goal, i) => {
+            const pct = goal.target > 0 ? Math.min(100, Math.round((goal.saved / goal.target) * 100)) : 0;
+            return (
+              <motion.article
+                key={goal.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{goal.name}</h3>
+                  {goal.autoAllocate && (
+                    <span className="rounded-full bg-[var(--color-accent)]/10 px-2.5 py-1 text-[11px] font-medium text-[var(--color-accent)]">
+                      Auto
+                    </span>
+                  )}
+                </div>
+
+                <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                  {currency}{goal.saved.toLocaleString()}
+                  <span className="text-base font-normal text-gray-400"> / {currency}{goal.target.toLocaleString()}</span>
+                </p>
+
+                <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label={`${goal.name} progress`}>
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${pct}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+                  />
+                </div>
+
+                <div className="mt-3 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                  <span className="flex items-center gap-1.5">
+                    <Calendar size={14} aria-hidden="true" />
+                    {goal.deadline}
+                  </span>
+                  <span className="font-medium text-gray-900 dark:text-white">{pct}%</span>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

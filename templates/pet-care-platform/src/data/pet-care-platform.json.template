@@ -1,0 +1,31 @@
+{
+  "appName": "PetCare",
+  "tagline": "Your trusted partner in pet care — find providers, schedule services, and keep your pets happy and healthy.",
+  "currency": "$",
+  "totalPets": 1247,
+  "adoptionProgress": 85,
+  "providers": [
+    { "id": "p1", "name": "Happy Paws Grooming", "type": "groomer", "rating": 4.8, "priceRange": "$45-85", "bio": "Professional grooming services for all breeds. Spa treatments and de-shing available.", "availability": "Mon-Sat 8am-6pm" },
+    { "id": "p2", "name": "Fetch! Training Co.", "type": "trainer", "rating": 4.9, "priceRange": "$65-120", "bio": "Positive reinforcement training for puppies and adult dogs. Behavior modification specialists.", "availability": "Tue-Sat 9am-5pm" },
+    { "id": "p3", "name": "City Vet Clinic", "type": "vet", "rating": 4.7, "priceRange": "$55-95", "bio": "Full-service veterinary care with 24-hour emergency services. Fear-free certified.", "availability": "Mon-Fri 7am-9pm, Sat 8am-4pm" },
+    { "id": "p4", "name": "Tailored Walks", "type": "walker", "rating": 4.8, "priceRange": "$20-35", "bio": "Daily dog walking and exercise services. Group and private walks available. Key included.", "availability": "Daily 7am-10pm" }
+  ],
+  "healthRecords": [
+    { "id": "h1", "date": "2024-01-15", "vaccinationType": "Rabies", "vetName": "Dr. Smith", "nextDueDate": "2025-01-15" },
+    { "id": "h2", "date": "2024-01-10", "vaccinationType": "DHPP", "vetName": "Dr. Smith", "nextDueDate": "2025-01-10" },
+    { "id": "h3", "date": "2024-01-20", "vaccinationType": "Bordetella", "vetName": "Dr. Jones", "nextDueDate": "2024-07-20" }
+  ],
+  "articles": [
+    { "id": "a1", "title": "5 Signs Your Pet Needs a Vet Visit", "category": "Health", "contentSummary": "Learn the key indicators that warrant a veterinary check-up for your furry friend.", "url": "/pet-care/health/signs-need-vet" },
+    { "id": "a2", "title": "Best Nutrition for Active Dogs", "category": "Nutrition", "contentSummary": "A complete guide to feeding your dog for optimal energy and health.", "url": "/pet-care/nutrition/best-dog-food" },
+    { "id": "a3", "title": "Training Tips for Rescue Dogs", "category": "Training", "contentSummary": "Gentle approaches to help rescue dogs adjust and thrive in their new homes.", "url": "/pet-care/training/rescue-dog-tips" }
+  ],
+  "defaultProvider": {
+    "id": "p1",
+    "name": "Happy Paws Grooming",
+    "type": "groomer",
+    "rating": 4.8,
+    "priceRange": "$45-85"
+  },
+  "defaultBudget": 100
+}

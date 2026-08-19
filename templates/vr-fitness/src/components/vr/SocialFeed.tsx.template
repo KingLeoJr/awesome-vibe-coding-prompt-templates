@@ -1,0 +1,124 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Trophy, Medal, Zap } from "lucide-react";
+
+interface Challenge {
+  id: string;
+  title: string;
+  description: string;
+  target: number;
+  current: number;
+}
+
+interface Activity {
+  id: string;
+  title: string;
+  type: string;
+  duration: number;
+}
+
+interface LeaderboardEntry {
+  rank: number;
+  name: string;
+  xp: number;
+  streak: number;
+}
+
+interface SocialFeedProps {
+  challenges: Challenge[];
+  recentActivities: Activity[];
+  userLeaderboard: LeaderboardEntry[];
+}
+
+export default function SocialFeed({ challenges, recentActivities, userLeaderboard }: SocialFeedProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-6"
+    >
+      {/* Challenges */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Challenges</h2>
+        <div className="grid grid-cols-2 gap-4">
+          {challenges.map((challenge) => (
+            <motion.div
+              key={challenge.id}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: challenge.id.length * 0.02 }}
+              className="group rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-4 hover:shadow-lg transition-shadow"
+            >
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "var(--color-primary)" }}>
+                  <Zap size={16} />
+                </div>
+                <div>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{challenge.title}</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{challenge.description}</p>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <p className="text-sm text-gray-500 dark:text-gray-300">{challenge.current}/{challenge.target}</p>
+                <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] transition-width"
+                    style={{ width: `${(challenge.current / challenge.target) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </motion.div>
+          ))
+        </div>
+      </div>
+
+      {/* Recent Activities */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Recent Activity</h2>
+        <div className="space-y-3">
+          {recentActivities.map((activity) => (
+            <motion.div
+              key={activity.id}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: activity.id.length * 0.01 }}
+              className="flex items-center gap-3 rounded-md border p-3 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:bg-gray-50 dark:hover:bg-gray-950 transition-colors"
+            >
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "var(--color-accent)" }}>
+                {activity.type.slice(0, 1)}
+              </div>
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">{activity.title}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{activity.duration} min • {activity.type}</p>
+              </div>
+            </motion.div>
+          ))
+        </div>
+      </div>
+
+      {/* User Leaderboard */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Leaderboard</h2>
+        <ol className="mt-4 space-y-2">
+          {userLeaderboard.map((entry) => (
+            <motion.li
+              key={entry.rank}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: entry.rank * 0.02 }}
+              className="flex items-center gap-3 rounded-md border p-3 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:bg-gray-50 dark:hover:bg-gray-950 transition-colors"
+            >
+              <span className="font-bold text-lg text-[var(--color-primary)]">{entry.rank}</span>
+              <span className="flex-1 font-medium text-gray-900 dark:text-white">{entry.name}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-300">{entry.xp} XP · {entry.streak}d streak</span>
+            </motion.li>
+          ))}
+        </ol>
+      </div>
+    </motion.div>
+  );
+}

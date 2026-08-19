@@ -1,0 +1,64 @@
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+type Variant = "primary" | "secondary" | "outline" | "ghost" | "danger";
+type Size = "sm" | "md" | "lg";
+
+interface ButtonProps {
+  children: React.ReactNode;
+  href?: string;
+  variant?: Variant;
+  size?: Size;
+  className?: string;
+  onClick?: () => void;
+  type?: "button" | "submit";
+  disabled?: boolean;
+  target?: string;
+}
+
+const variants: Record<Variant, string> = {
+  primary: "bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:opacity-90",
+  secondary: "bg-{{theme.color.primary}} text-white hover:opacity-90",
+  outline: "border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900",
+  ghost: "hover:bg-gray-100 dark:hover:bg-gray-900",
+  danger: "bg-red-600 text-white hover:bg-red-700",
+};
+
+const sizes: Record<Size, string> = {
+  sm: "px-4 py-2 text-sm",
+  md: "px-6 py-3 text-base",
+  lg: "px-8 py-3.5 text-base",
+};
+
+export default function Button({
+  children,
+  href,
+  variant = "primary",
+  size = "md",
+  className,
+  onClick,
+  type = "button",
+  disabled,
+  target,
+}: ButtonProps) {
+  const classes = cn(
+    "inline-flex items-center justify-center rounded-full font-medium transition disabled:opacity-40 disabled:cursor-not-allowed",
+    variants[variant],
+    sizes[size],
+    className
+  );
+
+  if (href) {
+    return (
+      <Link href={href} target={target} className={classes} onClick={onClick}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <button type={type} className={classes} onClick={onClick} disabled={disabled}>
+      {children}
+    </button>
+  );
+}

@@ -1,0 +1,231 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  Plus,
+  Receipt,
+  Search,
+  SlidersHorizontal,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface Transaction {
+  id: string;
+  date: string;
+  merchant: string;
+  category: string;
+  amount: number;
+  type: "income" | "expense";
+}
+
+interface ExpenseTrackerProps {
+  transactions: Transaction[];
+  categories?: string[];
+  currency?: string;
+}
+
+export default function ExpenseTracker({
+  transactions,
+  categories = ["Groceries", "Dining", "Transport", "Housing", "Utilities", "Salary", "Freelance", "Investments"],
+  currency = "{{currency.symbol}}",
+}: ExpenseTrackerProps) {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All");
+  const [showForm, setShowForm] = useState(false);
+  const [items, setItems] = useState<Transaction[]>(transactions);
+  const [draft, setDraft] = useState<Omit<Transaction, "id">>({
+    date: new Date().toISOString().slice(0, 10),
+    merchant: "",
+    category: "Groceries",
+    amount: 0,
+    type: "expense",
+  });
+
+  const filtered = useMemo(() => {
+    return items.filter((t) => {
+      const matchesQuery = t.merchant.toLowerCase().includes(query.toLowerCase());
+      const matchesCategory = category === "All" || t.category === category;
+      return matchesQuery && matchesCategory;
+    });
+  }, [items, query, category]);
+
+  const totalIncome = filtered.filter((t) => t.type === "income").reduce((a, b) => a + b.amount, 0);
+  const totalExpenses = filtered.filter((t) => t.type === "expense").reduce((a, b) => a + b.amount, 0);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!draft.merchant || draft.amount <= 0) return;
+    setItems((prev) => [{ ...draft, id: `tx-${Date.now()}` }, ...prev]);
+    setDraft({ date: new Date().toISOString().slice(0, 10), merchant: "", category: draft.category, amount: 0, type: draft.type });
+    setShowForm(false);
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="transactions-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+              <Receipt size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="transactions-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Transactions</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Every expense, synced in real time. Manual entry works too.</p>
+            </div>
+          </div>
+          <button
+            onClick={() => setShowForm((v) => !v)}
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 transition"
+          >
+            <Plus size={16} aria-hidden="true" />
+            Log transaction
+          </button>
+        </div>
+
+        <div className="grid sm:grid-cols-3 gap-4 mb-6">
+          {[
+            { label: "Income", value: currency + totalIncome.toLocaleString(), tone: "text-emerald-500" },
+            { label: "Expenses", value: currency + totalExpenses.toLocaleString(), tone: "text-rose-500" },
+            { label: "Net", value: currency + (totalIncome - totalExpenses).toLocaleString(), tone: "text-gray-900 dark:text-white" },
+          ].map((s) => (
+            <div key={s.label} className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
+              <p className={cn("mt-1 text-xl font-bold", s.tone)}>{s.value}</p>
+            </div>
+          ))}
+        </div>
+
+        {showForm && (
+          <motion.form
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            className="mb-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-5"
+            onSubmit={submit}
+            aria-label="Log a transaction"
+          >
+            <div className="grid sm:grid-cols-5 gap-3">
+              <input
+                type="text"
+                placeholder="Merchant (e.g. Coffee Shop)"
+                value={draft.merchant}
+                onChange={(e) => setDraft({ ...draft, merchant: e.target.value })}
+                className="rounded-xl border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                aria-label="Merchant"
+                required
+              />
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Amount"
+                value={draft.amount || ""}
+                onChange={(e) => setDraft({ ...draft, amount: Number(e.target.value) })}
+                className="rounded-xl border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                aria-label="Amount"
+                required
+              />
+              <select
+                value={draft.category}
+                onChange={(e) => setDraft({ ...draft, category: e.target.value })}
+                className="rounded-xl border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                aria-label="Category"
+              >
+                {categories.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              <select
+                value={draft.type}
+                onChange={(e) => setDraft({ ...draft, type: e.target.value as "income" | "expense" })}
+                className="rounded-xl border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                aria-label="Type"
+              >
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+              <button
+                type="submit"
+                className="rounded-xl bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition"
+              >
+                Save
+              </button>
+            </div>
+          </motion.form>
+        )}
+
+        <div className="mb-5 flex flex-wrap items-center gap-3">
+          <div className="relative flex-1 min-w-[200px] max-w-xs">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search merchant…"
+              className="w-full rounded-full border border-gray-300 dark:border-gray-700 bg-transparent pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              aria-label="Search transactions"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal size={16} className="text-gray-400" aria-hidden="true" />
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="rounded-full border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              aria-label="Filter by category"
+            >
+              <option value="All">All categories</option>
+              {categories.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <ul className="flex flex-col gap-3" aria-label="Transaction list">
+          {filtered.map((t, i) => (
+            <motion.li
+              key={t.id}
+              initial={{ opacity: 0, x: -8 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.4) }}
+              className="flex items-center justify-between rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-5 py-4"
+            >
+              <div className="flex items-center gap-3">
+                {t.type === "income" ? (
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500">
+                    <ArrowUpRight size={18} aria-hidden="true" />
+                  </span>
+                ) : (
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-500/10 text-rose-500">
+                    <ArrowDownRight size={18} aria-hidden="true" />
+                  </span>
+                )}
+                <div>
+                  <p className="font-medium text-gray-900 dark:text-white">{t.merchant}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{t.category} · {t.date}</p>
+                </div>
+              </div>
+              <p className={cn("font-semibold tabular-nums", t.type === "income" ? "text-emerald-500" : "text-gray-900 dark:text-white")}>
+                {t.type === "income" ? "+" : "−"}{currency}{t.amount.toLocaleString()}
+              </p>
+            </motion.li>
+          ))}
+          {filtered.length === 0 && (
+            <li className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-8 text-center text-sm text-gray-500 dark:text-gray-400">
+              No transactions match your filters.
+            </li>
+          )}
+        </ul>
+      </motion.div>
+    </section>
+  );
+}

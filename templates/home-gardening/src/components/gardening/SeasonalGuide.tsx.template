@@ -1,0 +1,92 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { CalendarDays, CloudSun, Flower2, Sun, Snowflake, Sprout } from "lucide-react";
+
+export interface SeasonalGuideItem {
+  id: string;
+  season: string;
+  region: string;
+  title: string;
+  actions: string[];
+  plants: string[];
+}
+
+interface SeasonalGuideProps {
+  seasons: SeasonalGuideItem[];
+}
+
+const SEASON_ICONS = {
+  Spring: Sprout,
+  Summer: Sun,
+  Autumn: CloudSun,
+  Winter: Snowflake,
+} as const;
+
+export default function SeasonalGuide({ seasons }: SeasonalGuideProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="seasonal-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+            <CalendarDays size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="seasonal-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Seasonal gardening guide</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">What to plant and maintain this year, tailored to your region.</p>
+          </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2">
+          {seasons.map((season, i) => {
+            const Icon = SEASON_ICONS[season.season as keyof typeof SEASON_ICONS] ?? Flower2;
+            return (
+              <motion.article
+                key={season.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                      <Icon size={20} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">{season.season} · {season.region}</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{season.title}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <ul className="mt-4 space-y-2" aria-label={`${season.season} to-do list`}>
+                  {season.actions.map((action) => (
+                    <li key={action} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" aria-hidden="true" />
+                      {action}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-4 flex flex-wrap gap-2 border-t border-gray-100 pt-4 dark:border-gray-800">
+                  {season.plants.map((plant) => (
+                    <span key={plant} className="rounded-full bg-[var(--color-secondary)]/10 px-2.5 py-1 text-xs font-medium text-[var(--color-secondary)]">
+                      {plant}
+                    </span>
+                  ))}
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

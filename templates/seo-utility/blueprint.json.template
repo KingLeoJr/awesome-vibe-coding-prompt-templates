@@ -1,0 +1,145 @@
+{
+  "blueprint_id": "seo-utility-0001",
+  "slug": "seo-utility",
+  "name": "SEO",
+  "category": "Utility",
+  "archetype": "UtilityChecklist",
+  "tagline": "Comprehensive SEO audit and optimization tool",
+  "builder_prompt_source": "prompts/seo.md",
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React + Next.js 15", "version_hint": "15.x", "purpose": "SEO audit dashboard and results display" },
+    { "layer": "backend", "technology": "Node.js", "version_hint": "20.x", "purpose": "API routes for audit execution, report generation" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16.x", "purpose": "Audit results, keyword history, site configs" },
+    { "layer": "auth", "technology": "OAuth 2.0 / Credentials", "version_hint": "", "purpose": "User authentication for saved audits and projects" },
+    { "layer": "state", "technology": "React Query", "version_hint": "5.x", "purpose": "Data fetching and caching for audit data" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Clean, professional, accessible UI with dark mode" },
+    { "layer": "charts", "technology": "Recharts", "version_hint": "2.x", "purpose": "SEO score visualizations and trend charts" }
+  ],
+  "features": [
+    { "description": "Implement clear, concise title tag and compelling meta description with primary keyword", "priority": "core", "order_index": 1 },
+    { "description": "Use single H1 tag and structure content with H2-H6 tags, incorporating relevant keywords", "priority": "core", "order_index": 2 },
+    { "description": "Optimize URL, include primary keyword in first 100 words, ensure comprehensive content", "priority": "core", "order_index": 3 },
+    { "description": "Implement schema markup using JSON-LD for rich snippets, including FAQ, product, review, and event schemas", "priority": "core", "order_index": 4 },
+    { "description": "Create XML sitemap, implement robots.txt, ensure mobile-friendliness and HTTPS", "priority": "core", "order_index": 5 },
+    { "description": "Optimize page speed, implement lazy loading, use CDN, minimize HTTP requests", "priority": "core", "order_index": 6 },
+    { "description": "Add internal links with descriptive anchor texts, implement breadcrumb navigation and markup", "priority": "core", "order_index": 7 },
+    { "description": "Use canonical tags, hreflang tags, and proper indexing meta robots tags", "priority": "core", "order_index": 8 },
+    { "description": "Implement AMP for news/blog content, optimize for featured snippets", "priority": "enhanced", "order_index": 9 },
+    { "description": "Add social media meta tags, create clear site structure with logical URL hierarchy", "priority": "enhanced", "order_index": 10 },
+    { "description": "Optimize images with descriptive ALT tags and SEO-friendly file names", "priority": "enhanced", "order_index": 11 },
+    { "description": "Implement structured data for local business information and video content", "priority": "enhanced", "order_index": 12 },
+    { "description": "Maintain HTML sitemap, use rel=\"nofollow\" for paid/untrusted links", "priority": "enhanced", "order_index": 13 },
+    { "description": "Implement proper pagination, 301 redirects, and rel=\"prev/next\" tags", "priority": "enhanced", "order_index": 14 },
+    { "description": "Use schema markup for article dates and authors, optimize for voice search", "priority": "enhanced", "order_index": 15 },
+    { "description": "Implement semantic HTML5 elements, ensure proper heading hierarchy", "priority": "enhanced", "order_index": 16 },
+    { "description": "Use long-tail keywords, implement LSI keywords throughout content", "priority": "advanced", "order_index": 17 },
+    { "description": "Optimize for mobile-first indexing, implement responsive design", "priority": "advanced", "order_index": 18 },
+    { "description": "Use schema markup for organization and website information", "priority": "advanced", "order_index": 19 },
+    { "description": "Implement proper handling of JavaScript for search engine crawlers", "priority": "advanced", "order_index": 20 },
+    { "description": "Optimize for Core Web Vitals: LCP, FID, and CLS", "priority": "advanced", "order_index": 21 },
+    { "description": "Implement proper handling of international targeting and hreflang", "priority": "advanced", "order_index": 22 },
+    { "description": "Use dynamic rendering for JavaScript-heavy pages if necessary", "priority": "advanced", "order_index": 23 },
+    { "description": "Implement proper handling of faceted navigation for e-commerce sites", "priority": "advanced", "order_index": 24 },
+    { "description": "Optimize for Google Discover, implement proper image SEO", "priority": "advanced", "order_index": 25 },
+    { "description": "Use proper data-vocabulary for breadcrumbs and navigation", "priority": "advanced", "order_index": 26 },
+    { "description": "Implement proper handling of infinite scroll for SEO", "priority": "advanced", "order_index": 27 },
+    { "description": "Use proper schema markup for job postings if applicable", "priority": "advanced", "order_index": 28 },
+    { "description": "Implement proper handling of pagination for SEO", "priority": "advanced", "order_index": 29 },
+    { "description": "Optimize for Google News if applicable, use news_keywords meta tag", "priority": "advanced", "order_index": 30 },
+    { "description": "Implement proper handling of duplicate content across domains", "priority": "advanced", "order_index": 31 },
+    { "description": "Use proper schema markup for recipes if applicable", "priority": "advanced", "order_index": 32 },
+    { "description": "Implement proper handling of URL parameters for SEO", "priority": "advanced", "order_index": 33 },
+    { "description": "Use proper schema markup for software applications if applicable", "priority": "advanced", "order_index": 34 },
+    { "description": "Implement proper handling of archived content for SEO", "priority": "advanced", "order_index": 35 }
+  ],
+  "sections": [
+    { "name": "Audit", "component_path": "src/components/seo/AuditChecklist.tsx", "layout_type": "form", "is_visible": true, "order_index": 1 },
+    { "name": "Score", "component_path": "src/components/seo/ScoreGauge.tsx", "layout_type": "dashboard", "is_visible": true, "order_index": 2 },
+    { "name": "Keywords", "component_path": "src/components/seo/KeywordPlanner.tsx", "layout_type": "grid", "is_visible": true, "order_index": 3 },
+    { "name": "Reports", "component_path": "src/components/seo/ReportExporter.tsx", "layout_type": "document", "is_visible": true, "order_index": 4 },
+    { "name": "Backlinks", "component_path": "src/components/seo/BacklinkChecker.tsx", "layout_type": "list", "is_visible": true, "order_index": 5 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "brandName": "string", "navItems": "NavItem[]", "ctaText": "string", "ctaHref": "string", "isFixed": "boolean" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "AuditChecklist", "path": "src/components/seo/AuditChecklist.tsx", "props": { "siteUrl": "string", "selectedChecklist": "string[]", onSave: "fn" } },
+    { "name": "ScoreGauge", "path": "src/components/seo/ScoreGauge.tsx", "props": { "score": "number", "category": "string" } },
+    { "name": "KeywordPlanner", "path": "src/components/seo/KeywordPlanner.tsx", "props": { "keywords": "Keyword[]", onAdd: "fn" } },
+    { "name": "ReportExporter", "path": "src/components/seo/ReportExporter.tsx", "props": { "format": "pdf|excel|html", onExport: "fn" } },
+    { "name": "BacklinkChecker", "path": "src/components/seo/BacklinkChecker.tsx", "props": { "domain": "string", onCheck: "fn" } },
+    { "name": "Footer", "path": "src/components/shared/Footer.tsx", "props": { "name": "string", "description": "string" }, "mixins": ["_shared/Footer.tsx.template"] }
+  ],
+  "data_models": [
+    { "name": "SEOConfig", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "siteUrl", "type": "string", "required": true }, { "name": "titleTag", "type": "string", "required": true }, { "name": "metaDescription", "type": "string", "required": false }, { "name": "primaryKeyword", "type": "string", "required": true }, { "name": "hreflang", "type": "string", "required": false } ] },
+    { "name": "AuditResult", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "configId", "type": "uuid", "required": true }, { "name": "score", "type": "number", "required": true }, { "name": "passed", "type": "integer", "required": true }, { "name": "failed", "type": "integer", "required": true }, { "name": "warnings", "type": "integer", "required": true }, { "name": "checkedAt", "type": "date", "required": true } ] },
+    { "name": "Keyword", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "term", "type": "string", "required": true }, { "name": "searchVolume", "type": "integer", "required": true }, { "name": "difficulty", "type": "number", "required": true }, { "name": "priority", "type": "enum(high|medium|low)", "required": true } ] },
+    { "name": "AuditChecklistItem", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "description", "type": "string", "required": true }, { "name": "category", "type": "enum(title|meta|schema|sitemap|speed|internal|canonical|amp|social|images|structured|pagination|canonical|voice|mobile|warnings|faceted|javascript|corewebvitals|international|google-news|duplicate|recipes|url-params|software|archived)", "required": true }, { "name": "status", "type": "enum(passed|failed|warning)", "required": true }, { "name": "detail", "type": "string", "required": false } ] }
+  ],
+  "integrations": [
+    { "service": "Google Search Console", "purpose": "Fetch indexed pages, sitemap status, and performance data", "config_params": { "property": "site-url" } },
+    { "service": "Screaming Frog API", "purpose": "Crawl website and extract on-page SEO elements", "config_params": { "domain": "example.com" } },
+    { "service": "Google Analytics", "purpose": "Track organic traffic and user behavior", "config_params": { "property": "GA4" } },
+    { "service": "OAuth 2.0 / Credentials provider", "purpose": "User authentication for saved audits and projects", "config_params": { "flows": ["authorization_code", "pkce"] } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "OAuth 2.0 for auth; audit data encrypted at rest (AES-256)" },
+    { "type": "Performance", "requirement": "Audit forms render in under 2s; charts update in real-time" },
+    { "type": "Responsive", "requirement": "Full responsive layout from 320px phones to 4K desktops" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA; semantic form labels, aria-labels, focus-visible states" },
+    { "type": "SEO", "requirement": "Generated output follows SEO best practices and validates against schema.org" },
+    { "type": "Testing", "requirement": "Unit tests for checklist validation, component tests for score gauge and keyword planner" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#3b82f6" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#10b981" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f59e0b" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#2563eb" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#34d399" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#eab308" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+    { "token_type": "font", "token_name": "font.mono", "token_value": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "0.75rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "framework": "nextjs", "url": "{{deployment.url}}", "analytics_id": "{{deployment.analytics_id}}" } }
+  ],
+  "template_files": [
+    { "path": "README.md", "source": "templates/seo-utility/README.md", "syntax": "mustache" },
+    { "path": "blueprint.json", "source": "templates/seo-utility/blueprint.json.template", "syntax": "mustache" },
+    { "path": "prompt.md", "source": "templates/seo-utility/prompt.md.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/seo-utility/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/seo-utility/package.json.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/seo-utility/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "src/app/page.tsx", "source": "templates/seo-utility/src/app/page.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/seo-utility/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/seo/AuditChecklist.tsx", "source": "templates/seo-utility/src/components/seo/AuditChecklist.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/seo/ScoreGauge.tsx", "source": "templates/seo-utility/src/components/seo/ScoreGauge.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/seo/KeywordPlanner.tsx", "source": "templates/seo-utility/src/components/seo/KeywordPlanner.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/seo/ReportExporter.tsx", "source": "templates/seo-utility/src/components/seo/ReportExporter.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/seo/BacklinkChecker.tsx", "source": "templates/seo-utility/src/components/seo/BacklinkChecker.tsx.template", "syntax": "mustache" },
+    { "path": "src/data/seo-utility.json", "source": "templates/seo-utility/src/data/seo-utility.json.template", "syntax": "mustache" }
+  ],
+  "extra_config": {
+    "app": {
+      "name": "SEO Utility",
+      "slug": "seo-utility",
+      "tagline": "Comprehensive SEO audit and optimization tool"
+    },
+    "theme": {
+      "color": { "primary": "#3b82f6", "secondary": "#10b981", "accent": "#f59e0b", "primary_dark": "#2563eb", "secondary_dark": "#34d399", "accent_dark": "#eab308" },
+      "font": { "sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif", "mono": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+      "radius": { "card": "0.75rem" }
+    },
+    "header": { "cta_text": "Run Audit", "cta_href": "#audit", "is_fixed": true },
+    "seo": { "og_image": "https://images.unsplash.com/photo-1581091012189-335610d5d321", "schema_type": "WebApplication" },
+    "deployment": { "url": "https://seo-utility.vercel.app", "analytics_id": "G-SEOUTil01" },
+    "contact": { "email": "hello@seo-utility.example.com", "phone": "+1 (555) 010-2042" },
+    "social": { "github": "https://github.com/seo-utility", "linkedin": "https://linkedin.com/company/seo-utility", "twitter": "https://x.com/seo_utility" },
+    "frontend": { "framework": "React (Next.js 15)", "language": "TypeScript" },
+    "backend": { "framework": "Node.js", "language": "TypeScript" },
+    "ui": { "library": "Tailwind CSS", "charts": "Recharts" },
+    "state": { "manager": "React Query" },
+    "auth": { "protocol": "OAuth 2.0 / Credentials" },
+    "payments": { "provider": "Stripe" }
+  }
+}

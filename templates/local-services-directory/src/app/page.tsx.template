@@ -1,0 +1,59 @@
+import type { Metadata } from "next";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/shared/Footer";
+import Button from "@/components/shared/Button";
+import SearchExplorer from "@/components/directory/SearchExplorer";
+import ListingCard from "@/components/directory/ListingCard";
+import BookingWidget from "@/components/directory/BookingWidget";
+import ReviewTimeline from "@/components/directory/ReviewTimeline";
+import ProviderDashboard from "@/components/directory/ProviderDashboard";
+import data from "@/data/local-services-directory";
+
+const { categories, providers, reviews, bookingSlots, dashboardMetrics } = data;
+
+export const metadata: Metadata = {
+  title: "{{seo.title}}",
+  description: "{{app.tagline}}",
+  openGraph: {
+    title: "{{seo.title}}",
+    description: "{{app.tagline}}",
+    images: ["{{seo.og_image}}"],
+  },
+};
+
+export default function HomePage() {
+  return (
+    <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+      <Header />
+      <main className="flex-1">
+        <SearchExplorer categories={categories} providers={providers} />
+
+        <section id="browse" className="mx-auto max-w-7xl px-6 py-20">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+                Featured pros
+              </p>
+              <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+                Top-rated local services
+              </h2>
+            </div>
+            <Button href="#bookings" variant="outline" size="sm">
+              Book a service now
+            </Button>
+          </div>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {providers.map((provider) => (
+              <ListingCard key={provider.id} provider={provider} />
+            ))}
+          </div>
+        </section>
+
+        <BookingWidget providers={providers} slots={bookingSlots} />
+        <ReviewTimeline reviews={reviews} />
+        <ProviderDashboard metrics={dashboardMetrics} />
+      </main>
+      <Footer />
+    </div>
+  );
+}

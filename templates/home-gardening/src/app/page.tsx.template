@@ -1,0 +1,57 @@
+import Header from "@/components/layout/Header";
+import CareReminders, { type CareTask } from "@/components/gardening/CareReminders";
+import GardenHealthTracker, { type GardenHealthData } from "@/components/gardening/GardenHealthTracker";
+import GardenPlanner, { type GardenPlot } from "@/components/gardening/GardenPlanner";
+import PlantDatabase, { type Plant } from "@/components/gardening/PlantDatabase";
+import SeasonalGuide, { type SeasonalGuideItem } from "@/components/gardening/SeasonalGuide";
+import ServiceProviderDirectory, { type ServiceProvider } from "@/components/gardening/ServiceProviderDirectory";
+import Footer from "@/components/shared/Footer";
+import data from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main>
+        <section className="bg-gradient-to-br from-[var(--color-primary)]/15 via-transparent to-[var(--color-secondary)]/15">
+          <div className="mx-auto max-w-7xl px-6 pt-28 pb-16 text-center md:pt-36">
+            <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+              {{app.tagline}}
+            </p>
+            <h1 className="mx-auto mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+              {{hero.headline}}
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-300">
+              {{hero.subtext}}
+            </p>
+          </div>
+        </section>
+
+        <section id="planner" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
+          <GardenPlanner plots={data.plots as GardenPlot[]} />
+        </section>
+
+        <section id="plants" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <PlantDatabase plants={data.plants as Plant[]} />
+        </section>
+
+        <section id="services" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
+          <ServiceProviderDirectory providers={data.providers as ServiceProvider[]} />
+        </section>
+
+        <section id="care" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <CareReminders tasks={data.careTasks as CareTask[]} />
+        </section>
+
+        <section id="health" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
+          <GardenHealthTracker health={data.health as GardenHealthData} />
+        </section>
+
+        <section id="seasonal" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <SeasonalGuide seasons={data.seasonal as SeasonalGuideItem[]} />
+        </section>
+      </main>
+      <Footer name={data.app.name as string} description={data.app.tagline as string} />
+    </>
+  );
+}

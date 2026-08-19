@@ -1,0 +1,83 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { AlertTriangle, FileText, TrendingDown } from "lucide-react";
+
+export interface UtilityBill {
+  id: string;
+  period: string;
+  amount: number;
+  usageKwh: number;
+  provider: string;
+  anomaly?: string;
+  insight?: string;
+}
+
+interface UtilityBillAnalyzerProps {
+  bills: UtilityBill[];
+  currency?: string;
+}
+
+export default function UtilityBillAnalyzer({ bills, currency = "{{currency.symbol}}" }: UtilityBillAnalyzerProps) {
+  const totalAmount = bills.reduce((a, b) => a + b.amount, 0);
+  const totalKwh = bills.reduce((a, b) => a + b.usageKwh, 0);
+  const avgPerKwh = totalKwh > 0 ? totalAmount / totalKwh : 0;
+
+  return (
+    <section aria-labelledby="bills-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <FileText size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="bills-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Utility bill analyzer</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Uploaded bills, pattern-matched — {currency}{avgPerKwh.toFixed(3)}/kWh average over {bills.length} periods.
+            </p>
+          </div>
+        </div>
+
+        <ul className="flex flex-col gap-4" aria-label="Utility bills">
+          {bills.map((bill, i) => (
+            <motion.li
+              key={bill.id}
+              initial={{ opacity: 0, x: -8 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: i * 0.05 }}
+              className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-5"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="font-medium text-gray-900 dark:text-white">{bill.period} · {bill.provider}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{bill.usageKwh} kWh consumed</p>
+                </div>
+                <p className="text-xl font-bold text-gray-900 dark:text-white">{currency}{bill.amount.toLocaleString()}</p>
+              </div>
+
+              {bill.anomaly && (
+                <div className="mt-3 flex items-start gap-2 rounded-xl bg-rose-500/10 p-3 text-sm text-rose-600 dark:text-rose-400">
+                  <AlertTriangle size={15} className="mt-0.5 shrink-0" aria-hidden="true" />
+                  {bill.anomaly}
+                </div>
+              )}
+
+              {bill.insight && (
+                <p className="mt-3 flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
+                  <TrendingDown size={15} className="mt-0.5 shrink-0 text-[var(--color-secondary)]" aria-hidden="true" />
+                  {bill.insight}
+                </p>
+              )}
+            </motion.li>
+          ))}
+        </ul>
+      </motion.div>
+    </section>
+  );
+}

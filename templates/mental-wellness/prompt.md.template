@@ -1,0 +1,44 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  backend.technology: "{{backend.technology}}"
+  frontend.framework: "{{frontend.framework}}"
+  auth.solution: "{{auth.solution}}"
+  ui.library: "{{ui.library}}"
+  state.management: "{{state.management}}"
+  ai.provider: "{{ai.provider}}"
+  email.provider: "{{email.provider}}"
+---
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{backend.technology}} for backend and {{frontend.framework}} for frontend
+Implement user authentication and authorization using {{auth.solution}} for secure access
+Design an engaging UI using {{ui.library}} for a modern and user-friendly experience
+Use {{state.management}} for state management to handle complex application states
+Create customizable user profiles that include mental health goals, current stress levels, preferred self-care activities, and any specific concerns
+Implement an interactive tool that generates personalized wellness plans based on user profiles, preferences, and mental health assessments
+Provide options for users to select specific areas of focus (e.g., anxiety management, mindfulness practices, emotional resilience)
+Develop a library of resources including articles, videos, guided meditations, and self-help exercises tailored to various mental health topics
+Design a dashboard where users can track their mood over time, including metrics such as daily feelings, triggers, and coping strategies used
+Include visual graphs and statistics to help users visualize their emotional patterns
+Establish a community forum where users can share experiences, ask questions about mental wellness, and provide support to one another
+Design an inspiration gallery showcasing user success stories with testimonials about their mental wellness journeys
+Create personalized notifications for upcoming self-care activities, reminders for mood tracking, and motivational messages based on user preferences
+Design an FAQ section addressing common questions about mental wellness practices, therapy options, and using the platform effectively
+Create a blog featuring expert advice on mental health trends, self-care tips, coping strategies, and success stories from users who have utilized the service
+Implement a referral program that rewards users for inviting friends or family members to join the platform or use its services
+Develop an interactive planner that helps users schedule self-care activities throughout their week based on their preferences and availability
+Allow users to access guided meditation sessions tailored to their specific needs (e.g., relaxation, focus enhancement)
+Implement data analytics to personalize recommendations based on user behavior and preferences in mental wellness activities
+Design a custom API for third-party developers to integrate with the platform (e.g., teletherapy services)
+Create an event calendar highlighting local workshops or seminars related to mental wellness that users can participate in or attend
+Incorporate gamification elements such as badges for completing self-care challenges or participating in community discussions
+Implement GDPR compliance features such as cookie consent and data protection policies
+Design an accessibility feature to ensure compliance with WCAG standards
+Create a loyalty program for frequent users with tiered rewards and benefits
+Implement push notifications in the mobile app for real-time updates about self-care activities and reminders

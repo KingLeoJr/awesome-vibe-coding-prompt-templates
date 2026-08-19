@@ -1,0 +1,86 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Search, Calendar, Airplane } from "lucide-react";
+
+interface FlightSearchProps {
+  origin: string;
+  destination: string;
+  departureDate: string;
+  returnDate: string;
+}
+
+export default function FlightSearch({ origin, destination, departureDate, returnDate }: FlightSearchProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <Search className="mr-2" /> Origin
+          </label>
+          <input
+            type="text"
+            value={origin}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+            placeholder="e.g., New York"
+            aria-label="Origin city"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <Airplane className="mr-2" /> Destination
+          </label>
+          <input
+            type="text"
+            value={destination}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+            placeholder="e.g., London"
+            aria-label="Destination city"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <Calendar className="mr-2" /> Departure
+          </label>
+          <input
+            type="date"
+            value={departureDate}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+            aria-label="Departure date"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <Calendar className="mr-2" /> Return
+          </label>
+          <input
+            type="date"
+            value={returnDate}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+            aria-label="Return date"
+          />
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <button
+          className="inline-flex items-center justify-center rounded-full bg-[[theme.color.primary]] text-white px-6 py-3 text-sm font-medium hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Search flights"
+        >
+          <Airplane className="mr-2 h-4 w-4" />
+          Search Flights
+        </button>
+      </div>
+    </motion.div>
+  );
+}

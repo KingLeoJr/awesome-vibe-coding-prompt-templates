@@ -1,0 +1,37 @@
+{
+  "appName": "FitCoach",
+  "tagline": "Transform your fitness journey with personalized workout plans, nutrition tracking, and certified coach support.",
+  "currency": "$",
+  "currentStreak": 5,
+  "videoCategories": ["Cardio", "Strength", "Flexibility", "Mobility"],
+  "workouts": [
+    { "id": "w1", "title": "Full Body Strength", "duration": 45, "difficulty": "Intermediate" },
+    { "id": "w2", "title": "HIIT Cardio", "duration": 30, "difficulty": "Advanced" },
+    { "id": "w3", "title": "Yoga Flow", "duration": 60, "difficulty": "Beginner" }
+  ],
+  "coach": {
+    "id": "c1",
+    "name": "Alex Morgan",
+    "certifications": ["NASM CPT", "PN Level 2", "CPR Certified"],
+    "specialty": "Strength Training & Muscle Building",
+    "sessionPrice": 120,
+    "bio": "Certified personal trainer with 8 years of experience helping clients reach their strength and fitness goals."
+  },
+  "progress": [
+    { "id": "p1", "date": "2024-01-15", "weight": 185, "muscleGain": 5, "workoutCompleted": true },
+    { "id": "p2", "date": "2024-01-10", "weight": 187, "muscleGain": 3, "workoutCompleted": false },
+    { "id": "p3", "date": "2024-01-05", "weight": 188, "muscleGain": 2, "workoutCompleted": true }
+  ],
+  "mealLogs": [
+    { "id": "m1", "mealName": "Grilled Chicken Bowl", "calories": 520, "protein": 45, "carbs": 40, "fat": 15, "loggedAt": "2024-01-15" },
+    { "id": "m2", "mealName": "Protein Smoothie", "calories": 320, "protein": 30, "carbs": 35, "fat": 8, "loggedAt": "2024-01-15" }
+  ],
+  "videos": [
+    { "id": "v1", "title": "Beginner Squat Tutorial", "level": "Beginner", "duration": "8:42", "url": "https://www.youtube.com/embed/qN318S7SYcU", "category": "Strength" },
+    { "id": "v2", "title": "HIIT Warm-up", "level": "Intermediate", "duration": "5:33", "url": "https://www.youtube.com/embed/xH1XstersIn8", "category": "Cardio" }
+  ],
+  "forumPosts": [
+    { "id": "f1", "userId": "u1", "content": "Started my strength program this week and already feeling the difference in my core stability!", "createdAt": "2024-01-15", "likes": 3, "replies": 1 },
+    { "id": "f2", "userId": "u2", "content": "The nutrition tracker helped me hit my protein goals consistently. Highly recommend!", "createdAt": "2024-01-14", "likes": 7, "replies": 2 }
+  ]
+}

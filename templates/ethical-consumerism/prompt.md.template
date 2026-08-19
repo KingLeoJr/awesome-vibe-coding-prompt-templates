@@ -1,0 +1,40 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  frontend.language: "{{frontend.language}}"
+  backend.framework: "{{backend.framework}}"
+  backend.language: "{{backend.language}}"
+  auth.protocol: "{{auth.protocol}}"
+  ui.library: "{{ui.library}}"
+  state.manager: "{{state.manager}}"
+  ai.provider: "{{ai.provider}}"
+  ai.capabilities: "{{ai.capabilities}}"
+  email.provider: "{{email.provider}}"
+  maps.provider: "{{maps.provider}}"
+  community.forum: "{{community.forum}}"
+  gamification.engine: "{{gamification.engine}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive online personalized ethical consumerism resource platform using {{frontend.framework}} ({{frontend.language}}) for the frontend and {{backend.framework}} ({{backend.language}}) for the backend
+Implement user authentication with {{auth.protocol}} for secure access and account management
+Design an intuitive UI using {{ui.library}} for a modern and user-friendly experience
+Use {{state.manager}} for state management to efficiently handle user data, product preferences, and ethical brand information
+Create customizable user profiles that include ethical preferences (e.g., sustainability, fair trade, cruelty-free) and shopping habits
+Implement an interactive product search tool that allows users to find ethically sourced products based on their values and preferences
+Develop a database of ethical brands with detailed information on their practices, certifications, and product offerings
+Create a community forum ({{community.forum}}) where users can share experiences, ask questions about ethical consumerism, and provide recommendations to one another
+Implement a resource library with articles, videos, and guides on topics such as sustainable living, ethical shopping practices, and brand transparency
+Design personalized notifications via {{email.provider}} for new ethical products, brand updates, and community discussions based on user interests
+Create a feature that allows users to track their purchases and see the impact of their buying choices on sustainability and social justice
+Implement a referral program that rewards users for inviting friends or family members to join the platform or participate in discussions about ethical consumerism
+Develop an interactive quiz powered by {{ai.provider}} that helps users identify their ethical shopping preferences and suggests brands aligned with their values
+Create a feature using {{maps.provider}} that highlights local businesses committed to ethical practices in the user's area
+Implement {{gamification.engine}} elements such as badges for engaging with content, sharing resources, or completing challenges related to ethical consumption

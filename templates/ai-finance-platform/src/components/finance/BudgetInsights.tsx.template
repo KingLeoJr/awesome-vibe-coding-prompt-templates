@@ -1,0 +1,104 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { PiggyBank, Sparkles, TrendingDown } from "lucide-react";
+
+export interface BudgetRecommendation {
+  id: string;
+  category: string;
+  suggestion: string;
+  currentSpend: number;
+  suggestedLimit: number;
+  potentialSavings: number;
+  confidence: number;
+  urgency: "low" | "medium" | "high";
+}
+
+interface BudgetInsightsProps {
+  recommendations: BudgetRecommendation[];
+  currency?: string;
+}
+
+const urgencyTone: Record<BudgetRecommendation["urgency"], string> = {
+  low: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  medium: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  high: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function BudgetInsights({ recommendations, currency = "{{currency.symbol}}" }: BudgetInsightsProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="budgets-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+            <Sparkles size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="budgets-heading" className="text-3xl font-bold text-gray-900 dark:text-white">AI budget insights</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Personalized recommendations from your spending patterns.</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-5">
+          {recommendations.map((r, i) => {
+            const pct = r.suggestedLimit > 0 ? Math.min(100, Math.round((r.currentSpend / r.suggestedLimit) * 100)) : 0;
+            return (
+              <motion.article
+                key={r.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">{r.category}</h3>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{r.suggestion}</p>
+                  </div>
+                  <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium capitalize ${urgencyTone[r.urgency]}`}>
+                    {r.urgency}
+                  </span>
+                </div>
+
+                <div className="mt-4">
+                  <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-1.5">
+                    <span>Spent {currency}{r.currentSpend.toLocaleString()}</span>
+                    <span>Limit {currency}{r.suggestedLimit.toLocaleString()}</span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label={`${r.category} budget usage`}>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${pct}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.7, ease: "easeOut" }}
+                      className={pct > 100 ? "h-full bg-rose-500" : "h-full bg-[var(--color-primary)]"}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4">
+                  <span className="flex items-center gap-1.5 text-sm text-[var(--color-primary)]">
+                    <TrendingDown size={16} aria-hidden="true" />
+                    Save up to {currency}{r.potentialSavings.toLocaleString()}/mo
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">{Math.round(r.confidence * 100)}% confidence</span>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 flex items-center gap-3 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-5 text-sm text-gray-500 dark:text-gray-400">
+          <PiggyBank size={18} className="shrink-0 text-[var(--color-primary)]" aria-hidden="true" />
+          Recommendations refresh as your spending changes — connect more accounts for sharper signals.
+        </div>
+      </motion.div>
+    </section>
+  );
+}

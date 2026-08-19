@@ -1,0 +1,161 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Car, Clock, MapPin, Phone, Search, Star, Utensils, Users2, type LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface CareService {
+  id: string;
+  name: string;
+  category: string;
+  address: string;
+  phone: string;
+  distanceMiles: number;
+  rating: number;
+  hours: string;
+}
+
+interface ServiceDirectoryProps {
+  services: CareService[];
+  categories?: string[];
+}
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  "Home Health Aide": Users2,
+  "Meal Delivery": Utensils,
+  Transportation: Car,
+  "Social Activities": Users2,
+};
+
+export default function ServiceDirectory({
+  services,
+  categories = ["Home Health Aide", "Meal Delivery", "Transportation", "Social Activities"],
+}: ServiceDirectoryProps) {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All");
+
+  const filtered = useMemo(() => {
+    return services.filter((s) => {
+      const matchesQuery = s.name.toLowerCase().includes(query.toLowerCase()) || s.address.toLowerCase().includes(query.toLowerCase());
+      const matchesCategory = category === "All" || s.category === category;
+      return matchesQuery && matchesCategory;
+    });
+  }, [services, query, category]);
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="services-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+              <MapPin size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="services-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Local services</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Home health aides, meal delivery, transportation, and social activities near you.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <div className="relative flex-1 min-w-[200px] max-w-xs">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search services…"
+              className="w-full rounded-full border border-gray-300 dark:border-gray-700 bg-transparent pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+              aria-label="Search local services"
+            />
+          </div>
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter services by category">
+            {["All", ...categories].map((c) => (
+              <button
+                key={c}
+                onClick={() => setCategory(c)}
+                aria-pressed={category === c}
+                className={cn(
+                  "rounded-full px-4 py-1.5 text-sm font-medium transition",
+                  category === c
+                    ? "bg-[var(--color-primary)] text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                )}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <ul className="flex flex-col gap-3" aria-label="Local service list">
+          {filtered.map((s, i) => {
+            const Icon = CATEGORY_ICONS[s.category] ?? Users2;
+            return (
+              <motion.li
+                key={s.id}
+                initial={{ opacity: 0, x: -8 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.4) }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-6 py-5"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+                      <Icon size={20} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <h3 className="font-semibold text-gray-900 dark:text-white">{s.name}</h3>
+                        <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[11px] font-medium text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                          {s.category}
+                        </span>
+                      </div>
+                      <p className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+                        <span className="inline-flex items-center gap-1.5">
+                          <MapPin size={14} aria-hidden="true" />
+                          {s.address}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Phone size={14} aria-hidden="true" />
+                          {s.phone}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex shrink-0 items-center gap-5 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Clock size={14} aria-hidden="true" />
+                      {s.hours}
+                    </span>
+                    <span className="inline-flex items-center gap-1 font-medium text-[var(--color-accent)]">
+                      <Star size={14} aria-hidden="true" />
+                      {s.rating.toFixed(1)}
+                    </span>
+                    <span className="rounded-full bg-[var(--color-secondary)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-secondary)]">
+                      {s.distanceMiles.toFixed(1)} mi
+                    </span>
+                  </div>
+                </div>
+              </motion.li>
+            );
+          })}
+        </ul>
+
+        {filtered.length === 0 && (
+          <p className="rounded-2xl border border-dashed border-gray-300 p-8 text-center text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
+            No services match your search.
+          </p>
+        )}
+      </motion.div>
+    </section>
+  );
+}

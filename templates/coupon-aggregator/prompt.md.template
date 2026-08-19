@@ -1,0 +1,63 @@
+# {{app.name}}
+
+> {{app.tagline}}
+
+Build a production-grade **{{app.category}}** (archetype: `{{app.archetype}}`) that
+realizes every requirement below. All `{{placeholders}}` have been resolved from
+`blueprint.json`; treat this prompt as the single source of truth for scope.
+
+> **Stack adaptation** — the original prompt specifies PHP (Laravel) + Vue.js +
+> Bootstrap 5 + Vuex. This template ecosystem ships Next.js + TypeScript +
+> Tailwind. Backend concerns (auth, submission verification, referral logic)
+> map to Next.js API Routes; auth maps to JWT; state maps to Redux Toolkit.
+> Requirements below are tech-agnostic so either stack satisfies them.
+
+## Non-negotiable platform choices
+
+| Layer | Technology | Purpose |
+|---|---|---|
+{{#each tech_stack}}| {{layer}} | {{technology}} | {{purpose}} |
+{{/each}}
+
+## Requirement backlog (ordered, priority-tagged)
+
+{{#each features}}
+1. **[{{priority}}]** {{description}}
+{{/each}}
+
+## Page sections (render order)
+
+{{#each sections}}
+- `{{name}}` → `{{component_path}}` (layout: `{{layout_type}}`)
+{{/each}}
+
+## Domain data models
+
+{{#each data_models}}
+- **{{name}}**: {{#each fields}}`{{name}}: {{type}}`{{#if required}} (required){{/if}}{{#unless @last}}, {{/unless}}{{/each}}
+{{/each}}
+
+## Integrations
+
+{{#each integrations}}
+- **{{service}}** — {{purpose}}
+{{/each}}
+
+## Non-functional requirements
+
+{{#each nfrs}}
+- **{{type}}**: {{requirement}}
+{{/each}}
+
+## Design tokens
+
+{{#each design_tokens}}
+- `{{token_name}}` ({{token_type}}) = `{{token_value}}`
+{{/each}}
+
+## Definition of done
+
+- TypeScript, dark mode, responsive, accessible, animated (Framer Motion), Tailwind-first design.
+- Zero hard-coded business values — everything flows through `src/data/{{app.slug}}.json` or props.
+- Default locale and currency (`{{i18n.default_locale}}` / `{{i18n.currency}}`) come from `config/site.config.ts`.
+- `npm run build`, `npm run typecheck`, and `npm run lint` pass clean.

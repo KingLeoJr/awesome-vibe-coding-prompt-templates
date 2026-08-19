@@ -1,0 +1,81 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Lightbulb, Sparkles, TrendingDown } from "lucide-react";
+
+export interface SavingsRecommendation {
+  id: string;
+  title: string;
+  detail: string;
+  estimatedSavingsKwh: number;
+  estimatedSavingsCost: number;
+  priority: "low" | "medium" | "high";
+}
+
+interface SavingsRecommendationsProps {
+  recommendations: SavingsRecommendation[];
+  currency?: string;
+}
+
+const priorityTone: Record<SavingsRecommendation["priority"], string> = {
+  low: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  medium: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  high: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function SavingsRecommendations({ recommendations, currency = "{{currency.symbol}}" }: SavingsRecommendationsProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="savings-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+            <Sparkles size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="savings-heading" className="text-3xl font-bold text-gray-900 dark:text-white">AI savings recommendations</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Personalized to your home, your appliances, and your habits.</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {recommendations.map((r, i) => (
+            <motion.article
+              key={r.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                  <Lightbulb size={18} aria-hidden="true" />
+                </span>
+                <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium capitalize ${priorityTone[r.priority]}`}>
+                  {r.priority}
+                </span>
+              </div>
+              <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">{r.title}</h3>
+              <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{r.detail}</p>
+
+              <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  up to {r.estimatedSavingsKwh} kWh
+                </span>
+                <span className="flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)]">
+                  <TrendingDown size={15} aria-hidden="true" />
+                  {currency}{r.estimatedSavingsCost.toLocaleString()}/mo
+                </span>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

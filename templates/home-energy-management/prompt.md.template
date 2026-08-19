@@ -1,0 +1,56 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  backend.framework: "{{backend.framework}}"
+  auth.protocol: "{{auth.protocol}}"
+  security.encryption: "{{security.encryption}}"
+  security.password: "{{security.password}}"
+  ui.library: "{{ui.library}}"
+  state.manager: "{{state.manager}}"
+  ai.provider: "{{ai.provider}}"
+  ai.capabilities: "{{ai.capabilities}}"
+  devices.protocol: "{{devices.protocol}}"
+  email.provider: "{{email.provider}}"
+  analytics.provider: "{{analytics.provider}}"
+  api.visibility: "{{api.visibility}}"
+  calendar.provider: "{{calendar.provider}}"
+  gamification.engine: "{{gamification.engine}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive online personalized home energy management platform using {{backend.framework}} for the backend and {{frontend.framework}} for the frontend
+Implement user authentication and authorization using {{auth.protocol}} for secure access
+Ensure data protection with {{security.encryption}} encryption and {{security.password}} for secure password storage
+Design an engaging UI using {{ui.library}} to create a modern and user-friendly experience
+Use responsive design principles to ensure compatibility across devices (desktop, tablet, mobile)
+Create customizable user profiles that include home details (e.g., square footage, number of occupants, energy consumption patterns)
+Allow users to input specific needs or concerns regarding their energy usage (e.g., high bills, appliance efficiency)
+Implement an interactive dashboard that tracks real-time energy consumption from connected devices and appliances
+Provide visualizations of energy usage trends over time, helping users identify peak usage periods
+Use AI algorithms ({{ai.provider}}) to analyze user data and provide personalized recommendations for reducing energy consumption (e.g., optimal thermostat settings, appliance upgrades)
+Offer tips on energy-efficient practices tailored to the user's lifestyle and home setup
+Create a feature that allows users to upload and analyze their utility bills to identify patterns and discrepancies
+Provide insights into potential savings based on historical usage data compared to current rates
+Integrate with popular smart home devices (e.g., smart thermostats, smart plugs) using {{devices.protocol}} to automate energy-saving actions based on user preferences
+Allow users to control their devices through the platform for enhanced convenience
+Establish a community forum where users can share experiences, ask questions about energy management, and provide tips to one another
+Create categories for different topics such as renewable energy solutions, appliance efficiency, and DIY projects
+Create a resource library with articles, videos, and guides on energy management topics such as solar power installation, insulation improvements, and sustainable living practices
+Implement search functionality allowing users to filter resources by topic or type of information
+Create personalized notifications via {{email.provider}} for upcoming peak usage times, reminders for maintenance tasks (e.g., changing air filters), and alerts for unusual consumption patterns based on user preferences
+Design an FAQ section addressing common questions about energy management strategies, platform features, and usage tips
+Create a blog featuring expert advice on energy efficiency trends, sustainable living tips, government incentives for renewable energy, and success stories from users who have reduced their energy costs
+Implement a referral program that rewards users for inviting friends or family members to join the platform or use its services
+Develop an interactive energy calculator that helps users estimate potential savings from various improvements (e.g., solar panels, LED lighting)
+Allow users to conduct a virtual home energy audit by answering questions about their home setup and receiving tailored recommendations
+Implement data analytics with {{analytics.provider}} to personalize recommendations based on user behavior and preferences in energy consumption
+Design a custom {{api.visibility}} for third-party developers to integrate with the platform (e.g., utility companies or smart device manufacturers)
+Create an event calendar via {{calendar.provider}} highlighting local workshops or seminars related to energy efficiency practices that users can participate in or attend
+Incorporate {{gamification.engine}} elements such as badges for achieving energy-saving milestones or participating in community discussions

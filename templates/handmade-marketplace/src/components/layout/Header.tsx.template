@@ -1,0 +1,132 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, Store, X } from "lucide-react";
+import ThemeToggle from "@/components/shared/ThemeToggle";
+
+interface HeaderProps {
+  logoText?: string;
+  logoUrl?: string;
+  navItems?: { label: string; href: string }[];
+  ctaText?: string;
+  ctaHref?: string;
+  isFixed?: boolean;
+}
+
+export default function Header({
+  logoText = "{{app.name}}",
+  logoUrl,
+  navItems = [
+    {{#each sections}}
+    { label: "{{name}}", href: "#{{name | lowercase}}" },
+    {{/each}}
+  ],
+  ctaText = "{{header.cta_text}}",
+  ctaHref = "{{header.cta_href}}",
+  isFixed = {{header.is_fixed}},
+}: HeaderProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const linkClass =
+    "text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors";
+
+  return (
+    <header
+      className={`${isFixed ? "fixed" : "relative"} top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/85 dark:bg-gray-950/85 backdrop-blur-md shadow-sm"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto max-w-7xl px-6 py-4">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5 font-bold text-xl" aria-label={`${logoText} home`}>
+            {logoUrl ? (
+              <img src={logoUrl} alt={logoText} className="h-8 w-auto" />
+            ) : (
+              <>
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-primary)] text-white">
+                  <Store size={18} aria-hidden="true" />
+                </span>
+                <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] bg-clip-text text-transparent">
+                  {logoText}
+                </span>
+              </>
+            )}
+          </Link>
+
+          <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
+            {navItems.map((item) => (
+              <Link key={item.href} href={item.href} className={linkClass}>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            {ctaText && (
+              <Link
+                href={ctaHref}
+                className="hidden sm:inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] text-white px-5 py-2 text-sm font-medium hover:opacity-90 transition"
+              >
+                {ctaText}
+              </Link>
+            )}
+            <button
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+              onClick={() => setIsOpen((v) => !v)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+            >
+              {isOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden overflow-hidden bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800"
+          >
+            <nav className="mx-auto max-w-7xl px-6 py-6 flex flex-col gap-4" aria-label="Mobile">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-lg font-medium text-gray-700 dark:text-gray-200"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              {ctaText && (
+                <Link
+                  href={ctaHref}
+                  onClick={() => setIsOpen(false)}
+                  className="mt-2 inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] text-white px-5 py-3 text-sm font-medium"
+                >
+                  {ctaText}
+                </Link>
+              )}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}

@@ -1,0 +1,43 @@
+import Header from "@/components/layout/Header";
+import WorkoutLobby from "@/components/vr/WorkoutLobby";
+import ImmersiveSession from "@/components/vr/ImmersiveSession";
+import PerformanceMetrics from "@/components/vr/PerformanceMetrics";
+import ClassBrowser from "@/components/vr/ClassBrowser";
+import SocialFeed from "@/components/vr/SocialFeed";
+import OnboardingTutorial from "@/components/vr/OnboardingTutorial";
+import Footer from "@/components/shared/Footer";
+import fitness from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="dashboard" className="scroll-mt-24">
+          <WorkoutLobby classes={fitness.classes as any} onSelect={fitness.onSelect as any} userLevel={fitness.userLevel as any} />
+        </section>
+
+        <section id="classes" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <ClassBrowser categories={fitness.categories as any} filteredClasses={fitness.filteredClasses as any} onFilterChange={fitness.onFilterChange as any} />
+        </section>
+
+        <section id="session" className="scroll-mt-24">
+          <ImmersiveSession currentClass={fitness.currentClass as any} progress={fitness.progress as any} onComplete={fitness.onComplete as any} />
+        </section>
+
+        <section id="progress" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <PerformanceMetrics workouts={fitness.workouts as any} caloriesBurned={fitness.caloriesBurned as any} improvements={fitness.improvements as any} />
+        </section>
+
+        <section id="social" className="scroll-mt-24">
+          <SocialFeed challenges={fitness.challenges as any} recentActivities={fitness.recentActivities as any} userLeaderboard={fitness.userLeaderboard as any} />
+        </section>
+
+        <section id="onboarding" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <OnboardingTutorial steps={fitness.steps as any} onComplete={fitness.onComplete as any} />
+        </section>
+      </main>
+      <Footer name={fitness.app.name as string} description={fitness.app.tagline as string} />
+    </>
+  );
+}

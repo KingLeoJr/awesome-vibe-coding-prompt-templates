@@ -1,0 +1,76 @@
+import Header from "@/components/layout/Header";
+import DestinationCard from "@/components/travel/DestinationCard";
+import FlightSearch from "@/components/travel/FlightSearch";
+import HotelBooking from "@/components/travel/HotelBooking";
+import CarRental from "@/components/travel/CarRental";
+import ItineraryPlanner from "@/components/travel/ItineraryPlanner";
+import MapView from "@/components/travel/MapView";
+import CommunityForum from "@/components/travel/CommunityForum";
+import Footer from "@/components/shared/Footer";
+import travel from "@/data/travel-planning.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="hero" className="scroll-mt-24">
+          <DestinationCard
+            destination={travel.destinations[0] as any}
+            showRating={true}
+            showPrice={true}
+          />
+        </section>
+
+        <section id="flights" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <FlightSearch
+            origin={travel.flights[0].origin as string}
+            destination={travel.flights[0].destination as string}
+            departureDate={travel.flights[0].departureDate as string}
+            returnDate={travel.flights[0].returnDate as string}
+          />
+        </section>
+
+        <section id="hotels" className="scroll-mt-24">
+          <HotelBooking
+            location={travel.hotels[0].name as string}
+            checkIn={travel.hotels[0].checkIn as string}
+            checkOut={travel.hotels[0].checkOut as string}
+            guests={travel.hotels[0].guests as number}
+          />
+        </section>
+
+        <section id="car-rental" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <CarRental
+            pickupLocation={travel.carRentals[0].pickupLocation as string}
+            dropOffLocation={travel.carRentals[0].dropOffLocation as string}
+            pickupDate={travel.carRentals[0].pickupDate as string}
+            returnDate={travel.carRentals[0].returnDate as string}
+            carType={travel.carRentals[0].carType as string}
+          />
+        </section>
+
+        <section id="itinerary" className="scroll-mt-24">
+          <ItineraryPlanner
+            tripId={travel.itineraries[0].tripId as string}
+            days={travel.itineraries[0].days as number}
+          />
+        </section>
+
+        <section id="map" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <MapView
+            destination={travel.destinations[0] as any}
+            routeCoordinates={travel.itineraries[0].routeCoordinates as any}
+          />
+        </section>
+
+        <section id="community" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <CommunityForum
+            posts={travel.communityPosts as any}
+          />
+        </section>
+      </main>
+      <Footer name={travel.app.name as string} description={travel.app.tagline as string} />
+    </>
+  );
+}

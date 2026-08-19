@@ -1,0 +1,60 @@
+import Header from "@/components/layout/Header";
+import AlternativeFinder, { type ProductAlternative } from "@/components/consumerism/AlternativeFinder";
+import BrandScorecard, { type EthicalBrand } from "@/components/consumerism/BrandScorecard";
+import EthicalQuiz, { type QuizQuestion } from "@/components/consumerism/EthicalQuiz";
+import ImpactBadge, { type ImpactData } from "@/components/consumerism/ImpactBadge";
+import LocalEthicsFinder, { type LocalBusiness } from "@/components/consumerism/LocalEthicsFinder";
+import ResourceLibrary, { type ResourceItem } from "@/components/consumerism/ResourceLibrary";
+import Footer from "@/components/shared/Footer";
+import data from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main>
+        <section className="bg-gradient-to-br from-[var(--color-primary)]/15 via-transparent to-[var(--color-secondary)]/15">
+          <div className="mx-auto max-w-7xl px-6 pt-28 pb-16 text-center md:pt-36">
+            <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+              {{app.tagline}}
+            </p>
+            <h1 className="mx-auto mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+              {{hero.headline}}
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-300">
+              {{hero.subtext}}
+            </p>
+          </div>
+        </section>
+
+        <section id="brands" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
+          <BrandScorecard brands={data.brands as EthicalBrand[]} />
+        </section>
+
+        <section id="explore" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <AlternativeFinder
+            alternatives={data.alternatives as ProductAlternative[]}
+            currency={data.currency as string}
+          />
+        </section>
+
+        <section id="impact" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
+          <ImpactBadge impact={data.impact as ImpactData} />
+        </section>
+
+        <section id="quiz" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <EthicalQuiz questions={data.quizQuestions as QuizQuestion[]} />
+        </section>
+
+        <section id="local" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
+          <LocalEthicsFinder businesses={data.localBusinesses as LocalBusiness[]} />
+        </section>
+
+        <section id="learn" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <ResourceLibrary resources={data.resources as ResourceItem[]} />
+        </section>
+      </main>
+      <Footer name={data.app.name as string} description={data.app.tagline as string} />
+    </>
+  );
+}

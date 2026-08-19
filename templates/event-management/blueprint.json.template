@@ -1,0 +1,237 @@
+{
+  "slug": "event-management",
+  "name": "Event Management Platform",
+  "category": "Platform",
+  "archetype": "Dashboard",
+  "tagline": "Plan, ticket, and grow unforgettable events — from first announcement to final analytics.",
+  "builder_prompt_source": "prompt.md.template",
+  "extra_config": {
+    "app": {
+      "slug": "event-management",
+      "name": "Event Management Platform",
+      "tagline": "Plan, ticket, and grow unforgettable events — from first announcement to final analytics.",
+      "category": "Platform",
+      "archetype": "Dashboard"
+    },
+    "header": {
+      "cta_text": "Create an event",
+      "cta_href": "/create",
+      "is_fixed": true
+    },
+    "seo": {
+      "og_image": "https://event-management.example.com/og.png",
+      "schema_type": "EventSeries"
+    },
+    "contact": {
+      "email": "hello@event-management.example.com",
+      "phone": "+1 (555) 010-2030"
+    },
+    "social": {
+      "github": "https://github.com/example/event-management",
+      "linkedin": "https://linkedin.com/company/event-management",
+      "twitter": "https://twitter.com/eventmgmt"
+    },
+    "deployment": {
+      "url": "https://event-management.example.com",
+      "analytics_id": "G-EM001"
+    },
+    "theme": {
+      "color": {
+        "primary": "#6366f1",
+        "secondary": "#ec4899",
+        "accent": "#f59e0b",
+        "primary_dark": "#818cf8",
+        "secondary_dark": "#f472b6",
+        "accent_dark": "#fbbf24"
+      },
+      "font": {
+        "sans": "Inter"
+      },
+      "radius": {
+        "card": "1rem"
+      }
+    }
+  },
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React 18", "purpose": "Component-driven UI shell" },
+    { "layer": "frontend", "technology": "Next.js 15 (App Router)", "purpose": "SSR/SSG hosting for the web app" },
+    { "layer": "backend", "technology": "Ruby on Rails 7 (API mode)", "purpose": "Domain logic, events, ticketing, dashboards" },
+    { "layer": "database", "technology": "PostgreSQL", "purpose": "Relational storage for events, orders, attendees" },
+    { "layer": "auth", "technology": "Devise + JWT", "purpose": "User authentication and authorization" },
+    { "layer": "state", "technology": "Redux Toolkit", "purpose": "Complex application state management" },
+    { "layer": "ui", "technology": "Bootstrap 5 (design language) / Tailwind CSS", "purpose": "Responsive, modern UI" },
+    { "layer": "animation", "technology": "Framer Motion", "purpose": "Micro-interactions and page transitions" },
+    { "layer": "realtime", "technology": "Action Cable / WebSockets", "purpose": "Live RSVP and check-in updates" },
+    { "layer": "payments", "technology": "Stripe + PayPal", "purpose": "Secure ticket payments" },
+    { "layer": "email", "technology": "Mailchimp API", "purpose": "Promotional and lifecycle email marketing" },
+    { "layer": "sms", "technology": "Twilio", "purpose": "RSVP reminders and check-in alerts" },
+    { "layer": "ai_ml", "technology": "Dialogflow", "purpose": "Chatbot support for attendees" },
+    { "layer": "mobile", "technology": "React Native", "purpose": "On-the-go attendee and organizer app" },
+    { "layer": "maps", "technology": "Google Maps API", "purpose": "Venue maps and seating plans" },
+    { "layer": "video", "technology": "WebRTC / Zoom API", "purpose": "Hybrid and virtual event streaming" },
+    { "layer": "calendar", "technology": "Google Calendar + Outlook APIs", "purpose": "One-click event sync" },
+    { "layer": "analytics", "technology": "Recharts + Google Analytics", "purpose": "Sales, attendance, and revenue insights" },
+    { "layer": "devops", "technology": "Vercel + Railway", "purpose": "Frontend/backend deployment" }
+  ],
+  "features": [
+    { "description": "Responsive event management platform (Rails backend, React frontend)", "priority": "core", "order_index": 1 },
+    { "description": "User authentication and authorization with Devise", "priority": "core", "order_index": 2 },
+    { "description": "Modern, user-friendly Bootstrap 5 responsive UI", "priority": "core", "order_index": 3 },
+    { "description": "Redux state management for complex application states", "priority": "core", "order_index": 4 },
+    { "description": "Event creation system with customizable templates per event type", "priority": "core", "order_index": 5 },
+    { "description": "Ticketing system with pricing tiers and discount codes", "priority": "core", "order_index": 6 },
+    { "description": "Real-time event calendar with date, category, and location filters", "priority": "core", "order_index": 7 },
+    { "description": "Organizer dashboard for events, registrations, and ticket sales", "priority": "core", "order_index": 8 },
+    { "description": "Stripe/PayPal payment processing for secure transactions", "priority": "core", "order_index": 9 },
+    { "description": "Analytics dashboard for ticket sales, attendance, and revenue", "priority": "core", "order_index": 10 },
+    { "description": "Advanced search with date, location, and category filters", "priority": "core", "order_index": 11 },
+    { "description": "Attendee profiles for registrations, preferences, and payment methods", "priority": "core", "order_index": 12 },
+    { "description": "Social media integration for event sharing and promotion", "priority": "enhanced", "order_index": 13 },
+    { "description": "RSVP system with automated email and SMS reminders", "priority": "enhanced", "order_index": 14 },
+    { "description": "Interactive venue maps with seating arrangements via Google Maps", "priority": "enhanced", "order_index": 15 },
+    { "description": "Feedback and review system for attendees to rate events", "priority": "enhanced", "order_index": 16 },
+    { "description": "Sponsorship management module for tracking sponsors and partnerships", "priority": "enhanced", "order_index": 17 },
+    { "description": "Mobile app via React Native for on-the-go event access", "priority": "enhanced", "order_index": 18 },
+    { "description": "Mailchimp-powered customizable email marketing", "priority": "enhanced", "order_index": 19 },
+    { "description": "Guest list management with QR-code check-in", "priority": "enhanced", "order_index": 20 },
+    { "description": "Event blog for news, updates, and insights", "priority": "enhanced", "order_index": 21 },
+    { "description": "Community forum for attendees to discuss and network", "priority": "enhanced", "order_index": 22 },
+    { "description": "Multi-language support with i18next", "priority": "enhanced", "order_index": 23 },
+    { "description": "Event merchandise store with inventory management", "priority": "enhanced", "order_index": 24 },
+    { "description": "Referral program rewarding attendees for promotion", "priority": "enhanced", "order_index": 25 },
+    { "description": "Automated post-event surveys", "priority": "enhanced", "order_index": 26 },
+    { "description": "Virtual event platform integration for webinars and conferences", "priority": "enhanced", "order_index": 27 },
+    { "description": "Custom API for third-party integrations (CRM, ERP)", "priority": "enhanced", "order_index": 28 },
+    { "description": "GDPR compliance with cookie consent and data protection policies", "priority": "enhanced", "order_index": 29 },
+    { "description": "WCAG-compliant accessibility", "priority": "enhanced", "order_index": 30 },
+    { "description": "Loyalty program with tiered rewards for frequent attendees", "priority": "enhanced", "order_index": 31 },
+    { "description": "Interactive agenda builder for multi-session events with speaker profiles", "priority": "enhanced", "order_index": 32 },
+    { "description": "Sponsorship package management with tiered offerings", "priority": "enhanced", "order_index": 33 },
+    { "description": "Custom badge generator based on participation or achievements", "priority": "enhanced", "order_index": 34 },
+    { "description": "Live streaming for hybrid events via WebRTC/Zoom", "priority": "enhanced", "order_index": 35 },
+    { "description": "Event countdown timer on the homepage", "priority": "enhanced", "order_index": 36 },
+    { "description": "FAQ section for attendee questions and policies", "priority": "enhanced", "order_index": 37 },
+    { "description": "Dialogflow chatbot for instant attendee support", "priority": "advanced", "order_index": 38 },
+    { "description": "Image gallery showcasing past events via photos and videos", "priority": "advanced", "order_index": 39 },
+    { "description": "Affiliate marketing with commissions on ticket sales", "priority": "advanced", "order_index": 40 },
+    { "description": "Custom URL shorteners for event link sharing", "priority": "advanced", "order_index": 41 },
+    { "description": "Volunteer management to coordinate staff and volunteers", "priority": "advanced", "order_index": 42 },
+    { "description": "Sponsorship proposal generator", "priority": "advanced", "order_index": 43 },
+    { "description": "Push notifications in the mobile app for real-time updates", "priority": "advanced", "order_index": 44 },
+    { "description": "Interactive live polls during events", "priority": "advanced", "order_index": 45 },
+    { "description": "Resource center with downloadable event materials", "priority": "advanced", "order_index": 46 },
+    { "description": "Custom reporting tool for detailed metric reports", "priority": "advanced", "order_index": 47 },
+    { "description": "Google Calendar / Outlook integration for one-click sync", "priority": "advanced", "order_index": 48 },
+    { "description": "Session recording for virtual events so attendees can catch up", "priority": "advanced", "order_index": 49 }
+  ],
+  "sections": [
+    { "name": "Overview", "component_path": "src/components/events/CountdownTimer.tsx", "layout_type": "hero", "order_index": 1 },
+    { "name": "Events", "component_path": "src/components/events/EventCalendar.tsx", "layout_type": "grid", "order_index": 2 },
+    { "name": "Tickets", "component_path": "src/components/events/TicketTierCard.tsx", "layout_type": "list", "order_index": 3 },
+    { "name": "Analytics", "component_path": "src/components/dashboard/AnalyticsOverview.tsx", "layout_type": "dashboard", "order_index": 4 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx.template", "props": { "logoText": "{{app.name}}", "navItems": "sections", "ctaText": "{{header.cta_text}}", "ctaHref": "{{header.cta_href}}" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "Footer", "path": "src/components/layout/Footer.tsx", "props": { "name": "{{app.name}}", "navItems": "sections" }, "mixins": ["_shared/Footer.tsx.template"] },
+    { "name": "EventCard", "path": "src/components/events/EventCard.tsx.template", "props": { "event": "EventItem", "currency": "$" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "EventCalendar", "path": "src/components/events/EventCalendar.tsx.template", "props": { "events": "EventItem[]", "categories": "string[]", "locations": "string[]" } },
+    { "name": "CountdownTimer", "path": "src/components/events/CountdownTimer.tsx.template", "props": { "event": "CountdownEvent", "title": "string", "subtitle": "string", "ctaText": "string", "ctaHref": "string" } },
+    { "name": "TicketTierCard", "path": "src/components/events/TicketTierCard.tsx.template", "props": { "tier": "TicketTier", "discountCode": "DiscountCode", "currency": "$", "featured": "boolean" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "AnalyticsOverview", "path": "src/components/dashboard/AnalyticsOverview.tsx.template", "props": { "analytics": "Analytics", "currency": "$" }, "mixins": ["_shared/Card.tsx.template"] }
+  ],
+  "data_models": [
+    {
+      "name": "Event",
+      "fields": [
+        { "name": "id", "type": "integer", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "description", "type": "text", "required": false },
+        { "name": "date", "type": "datetime", "required": true },
+        { "name": "category", "type": "string", "required": true },
+        { "name": "location", "type": "string", "required": true },
+        { "name": "venue", "type": "string", "required": false },
+        { "name": "capacity", "type": "integer", "required": true, "default": 0 },
+        { "name": "registered", "type": "integer", "required": true, "default": 0 },
+        { "name": "price_from", "type": "decimal", "required": true },
+        { "name": "status", "type": "enum", "required": true, "default": "draft" },
+        { "name": "tags", "type": "string[]", "required": false }
+      ]
+    },
+    {
+      "name": "TicketTier",
+      "fields": [
+        { "name": "tier", "type": "string", "required": true },
+        { "name": "price", "type": "decimal", "required": true },
+        { "name": "original_price", "type": "decimal", "required": false },
+        { "name": "benefits", "type": "string[]", "required": false },
+        { "name": "remaining", "type": "integer", "required": true, "default": 0 }
+      ]
+    },
+    {
+      "name": "DiscountCode",
+      "fields": [
+        { "name": "code", "type": "string", "required": true },
+        { "name": "percent", "type": "integer", "required": true },
+        { "name": "expires_at", "type": "datetime", "required": false }
+      ]
+    },
+    {
+      "name": "Sponsor",
+      "fields": [
+        { "name": "name", "type": "string", "required": true },
+        { "name": "tier", "type": "string", "required": true },
+        { "name": "logo_url", "type": "string", "required": false },
+        { "name": "website", "type": "string", "required": false }
+      ]
+    },
+    {
+      "name": "Attendee",
+      "fields": [
+        { "name": "user_id", "type": "integer", "required": true },
+        { "name": "event_id", "type": "integer", "required": true },
+        { "name": "status", "type": "enum", "required": true, "default": "registered" },
+        { "name": "checked_in_at", "type": "datetime", "required": false },
+        { "name": "qr_code", "type": "string", "required": true }
+      ]
+    }
+  ],
+  "integrations": [
+    { "service": "Stripe", "purpose": "Card payments, refunds, and payout reconciliation", "config_params": { "mode": "payment_intents" } },
+    { "service": "PayPal", "purpose": "Alternative payment method for tickets", "config_params": {} },
+    { "service": "Mailchimp", "purpose": "Email marketing campaigns and audience segments", "config_params": { "audience": "attendees" } },
+    { "service": "Twilio", "purpose": "SMS RSVP reminders and mobile alerts", "config_params": {} },
+    { "service": "Google Maps", "purpose": "Venue maps and interactive seating", "config_params": { "libraries": ["places"] } },
+    { "service": "Zoom", "purpose": "Virtual event hosting and session streaming", "config_params": {} },
+    { "service": "Dialogflow", "purpose": "Chatbot for attendee self-service", "config_params": {} },
+    { "service": "Google Calendar", "purpose": "One-click event sync to attendee calendars", "config_params": {} },
+    { "service": "Outlook", "purpose": "One-click event sync to Microsoft calendars", "config_params": {} },
+    { "service": "Google Analytics", "purpose": "Marketing and conversion tracking", "config_params": { "id": "{{deployment.analytics_id}}" } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "GDPR compliance with cookie consent, data minimization, and export/deletion APIs" },
+    { "type": "Security", "requirement": "PCI-DSS-aligned payment handling via Stripe/PayPal tokens (no raw card data)" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA across all public and organizer surfaces" },
+    { "type": "Performance", "requirement": "Lighthouse performance and accessibility scores of 90+ on key pages" },
+    { "type": "Responsive", "requirement": "Fully responsive from 320px to 4K; tested mobile-first" },
+    { "type": "i18n", "requirement": "Multi-language via i18next with at least 5 locales" },
+    { "type": "SEO", "requirement": "Per-event SEO metadata, Open Graph, and structured data (Event schema)" },
+    { "type": "PWA", "requirement": "Installable web app with push notifications for updates" },
+    { "type": "Testing", "requirement": "RSpec + Jest coverage for ticketing, payments, and check-in flows" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#6366f1" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#818cf8" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#ec4899" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#f472b6" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f59e0b" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fbbf24" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "Inter" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "spacing", "token_name": "spacing.section", "token_value": "6rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "url": "https://event-management.example.com", "framework": "Next.js", "region": "iad1" } },
+    { "platform": "Railway", "config": { "service": "Rails API + PostgreSQL", "region": "us-east" } }
+  ]
+}

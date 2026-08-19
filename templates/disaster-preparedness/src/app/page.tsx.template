@@ -1,0 +1,46 @@
+import Header from "@/components/layout/Header";
+import PlanBuilder, { type EmergencyPlan } from "@/components/emergency/PlanBuilder";
+import DisasterChecklists, { type PreparednessChecklist } from "@/components/emergency/DisasterChecklists";
+import TrainingModules, { type TrainingModule } from "@/components/emergency/TrainingModules";
+import EmergencyResources, { type EmergencyResource } from "@/components/emergency/EmergencyResources";
+import AlertCenter, { type EmergencyAlert } from "@/components/emergency/AlertCenter";
+import CommunityForum, { type ForumPost } from "@/components/emergency/CommunityForum";
+import Footer from "@/components/shared/Footer";
+import preparedness from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="plans" className="scroll-mt-24">
+          <PlanBuilder plan={preparedness.plan as EmergencyPlan} />
+        </section>
+
+        <section id="checklists" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <DisasterChecklists checklists={preparedness.checklists as PreparednessChecklist[]} />
+        </section>
+
+        <section id="training" className="scroll-mt-24">
+          <TrainingModules modules={preparedness.trainingModules as TrainingModule[]} />
+        </section>
+
+        <section id="resources" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <EmergencyResources
+            resources={preparedness.resources as EmergencyResource[]}
+            categories={preparedness.resourceCategories as string[]}
+          />
+        </section>
+
+        <section id="alerts" className="scroll-mt-24">
+          <AlertCenter alerts={preparedness.alerts as EmergencyAlert[]} />
+        </section>
+
+        <section id="community" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <CommunityForum posts={preparedness.forumPosts as ForumPost[]} />
+        </section>
+      </main>
+      <Footer name={preparedness.app.name as string} description={preparedness.app.tagline as string} />
+    </>
+  );
+}

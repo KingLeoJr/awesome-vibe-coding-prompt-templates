@@ -1,0 +1,40 @@
+export const SITE_TITLE = "{{app.name}}";
+export const SITE_DESCRIPTION = "{{app.tagline}}";
+export const SITE_URL = "{{deployment.url}}";
+
+export const NAV_ITEMS = [
+  {{#each sections}}
+  { label: "{{name}}", href: "#{{name | lowercase}}" },
+  {{/each}}
+];
+
+export const DEFAULT_TOPICS = [
+  "Anxiety",
+  "Depression",
+  "Stress Management",
+  "Mindfulness",
+  "Sleep",
+  "Relationships",
+];
+
+export const DEFAULT_FORMATS = ["article", "video", "podcast", "worksheet"];
+
+export const WELLNESS_CONFIG = {
+  moodScaleMax: 5,
+  moodScaleLabels: ["Low", "Okay", "Good", "Great"],
+  crisisLineNote: "In crisis? Reach a professional immediately.",
+  sessionModes: ["video", "in_person"],
+};
+
+export const CONTACT = {
+  email: "{{contact.email}}",
+  phone: "{{contact.phone}}",
+};
+
+export const SOCIAL = {
+  github: "{{social.github}}",
+  linkedin: "{{social.linkedin}}",
+  twitter: "{{social.twitter}}",
+};
+
+export const ANALYTICS_ID = "{{deployment.analytics_id}}";

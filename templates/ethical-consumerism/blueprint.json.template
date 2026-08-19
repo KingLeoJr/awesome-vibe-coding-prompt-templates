@@ -1,0 +1,150 @@
+{
+  "blueprint_id": "7a1b9c4d-2e6f-4a8b-9c3d-5f1e2a4b6c87",
+  "slug": "ethical-consumerism",
+  "name": "Personalized Ethical Consumerism Resource Platform",
+  "category": "Vertical",
+  "archetype": "PersonalizedVertical",
+  "tagline": "Shop your values — every purchase is a vote for the world you want.",
+  "builder_prompt_source": "prompts/ethical-consumerism.md",
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React + Next.js 15 (reference UI)", "version_hint": "15.x", "purpose": "Responsive reference app emitted by this template set" },
+    { "layer": "frontend", "technology": "React", "version_hint": "19.x", "purpose": "Source-prompt frontend runtime" },
+    { "layer": "backend", "technology": "Node.js + Express", "version_hint": "20.x", "purpose": "REST API, account management, recommendation glue" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16.x", "purpose": "User profiles, ethical brands, products, community posts" },
+    { "layer": "auth", "technology": "JWT", "version_hint": "", "purpose": "Secure access and account management" },
+    { "layer": "state", "technology": "Redux Toolkit", "version_hint": "2.x", "purpose": "User data, product preferences, ethical brand information" },
+    { "layer": "ui", "technology": "Bootstrap 5", "version_hint": "5.x", "purpose": "Source-prompt UI framework" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Reference UI styling with dark mode" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and section reveals" },
+    { "layer": "ai_ml", "technology": "OpenAI", "version_hint": "", "purpose": "Values quiz scoring and brand-match recommendations" },
+    { "layer": "devops", "technology": "Vercel + Netlify", "version_hint": "", "purpose": "CI/CD hosting and deployment" }
+  ],
+  "features": [
+    { "description": "Create a responsive online personalized ethical consumerism resource platform using React for the frontend and Node.js for the backend", "priority": "core", "order_index": 1 },
+    { "description": "Implement user authentication with JWT for secure access and account management", "priority": "core", "order_index": 2 },
+    { "description": "Design an intuitive UI using Bootstrap 5 for a modern and user-friendly experience", "priority": "core", "order_index": 3 },
+    { "description": "Use Redux for state management to efficiently handle user data, product preferences, and ethical brand information", "priority": "core", "order_index": 4 },
+    { "description": "Create customizable user profiles that include ethical preferences (e.g., sustainability, fair trade, cruelty-free) and shopping habits", "priority": "core", "order_index": 5 },
+    { "description": "Implement an interactive product search tool that allows users to find ethically sourced products based on their values and preferences", "priority": "core", "order_index": 6 },
+    { "description": "Develop a database of ethical brands with detailed information on their practices, certifications, and product offerings", "priority": "core", "order_index": 7 },
+    { "description": "Create a community forum where users can share experiences, ask questions about ethical consumerism, and provide recommendations to one another", "priority": "enhanced", "order_index": 8 },
+    { "description": "Implement a resource library with articles, videos, and guides on topics such as sustainable living, ethical shopping practices, and brand transparency", "priority": "enhanced", "order_index": 9 },
+    { "description": "Design personalized notifications for new ethical products, brand updates, and community discussions based on user interests", "priority": "enhanced", "order_index": 10 },
+    { "description": "Create a feature that allows users to track their purchases and see the impact of their buying choices on sustainability and social justice", "priority": "enhanced", "order_index": 11 },
+    { "description": "Implement a referral program that rewards users for inviting friends or family members to join the platform or participate in discussions about ethical consumerism", "priority": "enhanced", "order_index": 12 },
+    { "description": "Develop an interactive quiz that helps users identify their ethical shopping preferences and suggests brands aligned with their values", "priority": "enhanced", "order_index": 13 },
+    { "description": "Create a feature that highlights local businesses committed to ethical practices in the user's area", "priority": "advanced", "order_index": 14 },
+    { "description": "Implement gamification elements such as badges for engaging with content, sharing resources, or completing challenges related to ethical consumption", "priority": "advanced", "order_index": 15 }
+  ],
+  "sections": [
+    { "name": "Brands", "component_path": "src/components/consumerism/BrandScorecard.tsx", "layout_type": "grid", "is_visible": true, "order_index": 1 },
+    { "name": "Explore", "component_path": "src/components/consumerism/AlternativeFinder.tsx", "layout_type": "search", "is_visible": true, "order_index": 2 },
+    { "name": "Impact", "component_path": "src/components/consumerism/ImpactBadge.tsx", "layout_type": "dashboard", "is_visible": true, "order_index": 3 },
+    { "name": "Quiz", "component_path": "src/components/consumerism/EthicalQuiz.tsx", "layout_type": "interactive", "is_visible": true, "order_index": 4 },
+    { "name": "Local", "component_path": "src/components/consumerism/LocalEthicsFinder.tsx", "layout_type": "list", "is_visible": true, "order_index": 5 },
+    { "name": "Learn", "component_path": "src/components/consumerism/ResourceLibrary.tsx", "layout_type": "grid", "is_visible": true, "order_index": 6 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "brandName": "string", "navItems": "NavItem[]", "ctaText": "string", "ctaHref": "string", "isFixed": "boolean" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "BrandScorecard", "path": "src/components/consumerism/BrandScorecard.tsx", "props": { "brands": "EthicalBrand[]" } },
+    { "name": "AlternativeFinder", "path": "src/components/consumerism/AlternativeFinder.tsx", "props": { "alternatives": "ProductAlternative[]", "currency": "string" } },
+    { "name": "ImpactBadge", "path": "src/components/consumerism/ImpactBadge.tsx", "props": { "impact": "ImpactData" } },
+    { "name": "EthicalQuiz", "path": "src/components/consumerism/EthicalQuiz.tsx", "props": { "questions": "QuizQuestion[]" } },
+    { "name": "LocalEthicsFinder", "path": "src/components/consumerism/LocalEthicsFinder.tsx", "props": { "businesses": "LocalBusiness[]" } },
+    { "name": "ResourceLibrary", "path": "src/components/consumerism/ResourceLibrary.tsx", "props": { "resources": "ResourceItem[]" } },
+    { "name": "Footer", "path": "src/components/shared/Footer.tsx", "props": { "name": "string", "description": "string" }, "mixins": ["_shared/Footer.tsx.template"] }
+  ],
+  "data_models": [
+    { "name": "UserProfile", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "email", "type": "string", "required": true }, { "name": "ethicalPreferences", "type": "string[]", "required": true }, { "name": "shoppingHabits", "type": "object[]", "required": false }, { "name": "location", "type": "string", "required": false } ] },
+    { "name": "EthicalBrand", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "name", "type": "string", "required": true }, { "name": "category", "type": "string", "required": true }, { "name": "certifications", "type": "string[]", "required": false }, { "name": "ethicsScore", "type": "integer", "required": true }, { "name": "practices", "type": "string[]", "required": false }, { "name": "offerings", "type": "string[]", "required": false }, { "name": "impactNote", "type": "string", "required": false } ] },
+    { "name": "ProductAlternative", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "product", "type": "string", "required": true }, { "name": "category", "type": "string", "required": true }, { "name": "conventionalBrand", "type": "string", "required": true }, { "name": "ethicalBrand", "type": "string", "required": true }, { "name": "ethicsScore", "type": "integer", "required": true }, { "name": "priceDelta", "type": "string", "required": false }, { "name": "co2SavedKg", "type": "decimal", "required": false }, { "name": "why", "type": "string", "required": false } ] },
+    { "name": "PurchaseImpact", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "product", "type": "string", "required": true }, { "name": "date", "type": "date", "required": true }, { "name": "impactNote", "type": "string", "required": false }, { "name": "co2SavedKg", "type": "decimal", "required": true }, { "name": "fairTradeSupport", "type": "boolean", "required": false } ] },
+    { "name": "Badge", "fields": [ { "name": "name", "type": "string", "required": true }, { "name": "description", "type": "string", "required": false }, { "name": "earned", "type": "boolean", "required": true } ] },
+    { "name": "QuizQuestion", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "prompt", "type": "string", "required": true }, { "name": "options", "type": "object[]", "required": true } ] },
+    { "name": "LocalBusiness", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "name", "type": "string", "required": true }, { "name": "category", "type": "string", "required": true }, { "name": "distance", "type": "string", "required": false }, { "name": "address", "type": "string", "required": true }, { "name": "tags", "type": "string[]", "required": false }, { "name": "rating", "type": "decimal", "required": false } ] },
+    { "name": "ResourceItem", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "type", "type": "enum(article|video|tool)", "required": true }, { "name": "topic", "type": "string", "required": true }, { "name": "duration", "type": "string", "required": false }, { "name": "url", "type": "string", "required": true } ] }
+  ],
+  "integrations": [
+    { "service": "JWT provider", "purpose": "Secure authentication and account management", "config_params": { "token_ttl": "7d", "algorithm": "HS256" } },
+    { "service": "OpenAI", "purpose": "Values quiz scoring and brand recommendations", "config_params": { "model": "gpt-4o" } },
+    { "service": "SendGrid", "purpose": "Personalized notifications and referral emails", "config_params": { "templates": ["product_alerts", "referral_invite"] } },
+    { "service": "Google Maps Places", "purpose": "Highlight local ethical businesses near the user", "config_params": { "radius_km": 25, "types": ["store", "shopping_mall"] } },
+    { "service": "Ethical ratings API", "purpose": "Brand certifications and ethics scores", "config_params": { "source": "open-sustainability-ratings" } },
+    { "service": "Google Analytics", "purpose": "Product usage analytics", "config_params": { "id": "{{deployment.analytics_id}}" } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "JWT with short-lived tokens and refresh rotation; passwords hashed with bcrypt; TLS 1.3 in transit" },
+    { "type": "Performance", "requirement": "Brand directory and product search render in under 2s on mid-range mobile" },
+    { "type": "Responsive", "requirement": "Full responsive layout from 320px to 4K; grids and forms reflow on mobile" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA; semantic landmarks, aria-labels, focus-visible states, reduced-motion support" },
+    { "type": "i18n", "requirement": "Locale-aware strings with ICU message catalogs and RTL-capable layout" },
+    { "type": "SEO", "requirement": "Server-rendered shell with Open Graph tags and JSON-LD schema" },
+    { "type": "Testing", "requirement": "Unit tests for quiz scoring and state reducers; component tests for scorecards and finders" },
+    { "type": "Privacy", "requirement": "Explicit consent for profile-derived personalization; data export and delete flows" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#16a34a" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#0ea5e9" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f59e0b" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#4ade80" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#38bdf8" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fbbf24" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+    { "token_type": "font", "token_name": "font.mono", "token_value": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "framework": "nextjs", "url": "{{deployment.url}}", "analytics_id": "{{deployment.analytics_id}}" } },
+    { "platform": "Netlify", "config": { "framework": "nextjs", "env": "production" } }
+  ],
+  "template_files": [
+    { "path": "README.md", "source": "templates/ethical-consumerism/README.md", "syntax": "mustache" },
+    { "path": "blueprint.json", "source": "templates/ethical-consumerism/blueprint.json.template", "syntax": "mustache" },
+    { "path": "prompt.md", "source": "templates/ethical-consumerism/prompt.md.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/ethical-consumerism/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/ethical-consumerism/package.json.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/ethical-consumerism/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "src/app/page.tsx", "source": "templates/ethical-consumerism/src/app/page.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/ethical-consumerism/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/consumerism/BrandScorecard.tsx", "source": "templates/ethical-consumerism/src/components/consumerism/BrandScorecard.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/consumerism/AlternativeFinder.tsx", "source": "templates/ethical-consumerism/src/components/consumerism/AlternativeFinder.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/consumerism/ImpactBadge.tsx", "source": "templates/ethical-consumerism/src/components/consumerism/ImpactBadge.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/consumerism/EthicalQuiz.tsx", "source": "templates/ethical-consumerism/src/components/consumerism/EthicalQuiz.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/consumerism/LocalEthicsFinder.tsx", "source": "templates/ethical-consumerism/src/components/consumerism/LocalEthicsFinder.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/consumerism/ResourceLibrary.tsx", "source": "templates/ethical-consumerism/src/components/consumerism/ResourceLibrary.tsx.template", "syntax": "mustache" },
+    { "path": "src/data/ethical-consumerism.json", "source": "templates/ethical-consumerism/src/data/ethical-consumerism.json.template", "syntax": "mustache" }
+  ],
+  "extra_config": {
+    "app": {
+      "name": "Ethos",
+      "slug": "ethical-consumerism",
+      "tagline": "Shop your values — every purchase is a vote for the world you want."
+    },
+    "hero": {
+      "headline": "Every purchase is a vote for the world you want.",
+      "subtext": "Find ethically sourced products, compare brands by real certifications, track your impact, and join a community of conscious consumers."
+    },
+    "theme": {
+      "color": { "primary": "#16a34a", "secondary": "#0ea5e9", "accent": "#f59e0b", "primary_dark": "#4ade80", "secondary_dark": "#38bdf8", "accent_dark": "#fbbf24" },
+      "font": { "sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif", "mono": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+      "radius": { "card": "1rem" }
+    },
+    "header": { "cta_text": "Take the quiz", "cta_href": "#quiz", "is_fixed": true },
+    "seo": { "og_image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c", "schema_type": "Organization" },
+    "deployment": { "url": "https://ethos-consumer.vercel.app", "analytics_id": "G-ETHOS001" },
+    "contact": { "email": "hello@ethosconsumer.app", "phone": "+1 (555) 010-2060" },
+    "social": { "github": "https://github.com/ethosconsumer", "linkedin": "https://linkedin.com/company/ethosconsumer", "twitter": "https://x.com/ethosconsumer" },
+    "frontend": { "framework": "React (Next.js 15)", "language": "TypeScript" },
+    "backend": { "framework": "Node.js + Express", "language": "JavaScript" },
+    "ui": { "library": "Bootstrap 5", "reference_ui": "Tailwind CSS" },
+    "state": { "manager": "Redux Toolkit" },
+    "auth": { "protocol": "JWT (JSON Web Tokens)" },
+    "ai": { "provider": "OpenAI GPT-4o", "capabilities": "values quiz scoring and brand-match recommendations" },
+    "email": { "provider": "SendGrid" },
+    "maps": { "provider": "Google Maps Places" },
+    "community": { "forum": "Discourse-style forum" },
+    "gamification": { "engine": "Badges + impact points" },
+    "currency": { "symbol": "$" }
+  }
+}

@@ -1,0 +1,77 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+export interface ActivityRingData {
+  label: string;
+  value: number;
+  max: number;
+  color?: string;
+}
+
+interface ActivityRingProps {
+  rings: ActivityRingData[];
+  size?: number;
+  strokeWidth?: number;
+}
+
+const RING_COLORS = [
+  "var(--color-primary)",
+  "var(--color-secondary)",
+  "var(--color-accent)",
+];
+
+export default function ActivityRing({ rings, size = 140, strokeWidth = 12 }: ActivityRingProps) {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-8">
+      {rings.map((ring, index) => {
+        const ratio = Math.min(1, ring.value / ring.max);
+        const offset = circumference * (1 - ratio);
+        const color = ring.color ?? RING_COLORS[index % RING_COLORS.length];
+
+        return (
+          <div key={ring.label} className="flex flex-col items-center gap-3">
+            <div className="relative" style={{ width: size, height: size }}>
+              <svg width={size} height={size} className="-rotate-90" role="img" aria-label={`${ring.label}: ${ring.value} of ${ring.max}`}>
+                <circle
+                  cx={size / 2}
+                  cy={size / 2}
+                  r={radius}
+                  fill="none"
+                  stroke="rgba(148, 163, 184, 0.2)"
+                  strokeWidth={strokeWidth}
+                />
+                <motion.circle
+                  cx={size / 2}
+                  cy={size / 2}
+                  r={radius}
+                  fill="none"
+                  stroke={color}
+                  strokeWidth={strokeWidth}
+                  strokeLinecap="round"
+                  strokeDasharray={circumference}
+                  initial={{ strokeDashoffset: circumference }}
+                  whileInView={{ strokeDashoffset: offset }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.1, ease: "easeOut", delay: index * 0.1 }}
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
+                  {ring.value.toLocaleString()}
+                </span>
+                <span className="text-xs text-gray-400 dark:text-gray-500">
+                  of {ring.max.toLocaleString()}
+                </span>
+              </div>
+            </div>
+            <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">{ring.label}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+}

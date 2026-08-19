@@ -1,0 +1,52 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  frontend.language: "{{frontend.language}}"
+  backend.framework: "{{backend.framework}}"
+  backend.language: "{{backend.language}}"
+  auth.protocol: "{{auth.protocol}}"
+  ui.library: "{{ui.library}}"
+  state.manager: "{{state.manager}}"
+  payments.provider: "{{payments.provider}}"
+  notifications.provider: "{{notifications.provider}}"
+  telehealth.provider: "{{telehealth.provider}}"
+  analytics.provider: "{{analytics.provider}}"
+  ai.provider: "{{ai.provider}}"
+  ai.capabilities: "{{ai.capabilities}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive online personalized elder care and support platform using {{backend.framework}} for the backend and {{frontend.framework}} for the frontend
+Implement user authentication and authorization using {{auth.protocol}} for secure access
+Ensure data protection with SSL encryption and secure password storage
+Design an engaging UI using {{ui.library}} to create a modern and user-friendly experience
+Use responsive design principles to ensure compatibility across devices (desktop, tablet, mobile)
+Create customizable user profiles that include personal details (e.g., age, health conditions, mobility level) and care preferences
+Allow users to input specific needs or concerns regarding their elder care (e.g., medication management, daily activities)
+Implement an interactive tool that matches users with qualified caregivers based on their specific needs and preferences
+Provide options for users to view caregiver profiles, including qualifications, experience, and reviews from other families
+Create a searchable directory of local elder care services, including home health aides, meal delivery services, transportation options, and social activities
+Implement a review and rating system that allows users to provide feedback on services based on their experiences
+Design a feature that allows users to create and manage personalized care plans that outline daily routines, medication schedules, and health monitoring
+Include reminders for important tasks such as medication times or doctor appointments using {{notifications.provider}}
+Establish a communication portal where family members can share updates, schedules, and messages regarding the elder's care
+Create categories for different topics such as health updates, social activities, or caregiver feedback
+Create a resource library with articles, videos, and guides on elder care topics such as health management, safety tips at home, and emotional support strategies
+Implement search functionality allowing users to filter resources by topic or type of care
+Create personalized notifications for upcoming appointments, medication reminders, new resources in the library, and caregiver updates based on user preferences
+Design an FAQ section addressing common questions about elder care services, caregiver qualifications, and using the platform effectively
+Create a blog featuring expert advice on elder care trends, tips for family caregivers, health management strategies, and success stories from families who have utilized the service
+Implement a referral program that rewards users for inviting friends or family members to join the platform or use its services
+Develop an interactive health tracker that helps users log vital signs (e.g., blood pressure, glucose levels) and monitor changes over time
+Allow users to plan social activities or outings for their elders by suggesting local events or groups based on interests
+Implement data analytics to personalize recommendations based on user behavior and preferences in elder care services using {{analytics.provider}}
+Design a custom API for third-party developers to integrate with the platform (e.g., {{telehealth.provider}})
+Create an event calendar highlighting local senior events or workshops related to health and wellness that users can participate in or attend
+Incorporate gamification elements such as badges for completing educational modules or participating in community discussions

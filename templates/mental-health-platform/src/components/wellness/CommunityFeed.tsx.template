@@ -1,0 +1,119 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Heart, MessageCircle, Users } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface CommunityPost {
+  id: string;
+  author: string;
+  avatar: string;
+  title: string;
+  body: string;
+  tags: string[];
+  likes: number;
+  replies: number;
+  time: string;
+}
+
+interface CommunityFeedProps {
+  posts: CommunityPost[];
+}
+
+export default function CommunityFeed({ posts }: CommunityFeedProps) {
+  const [liked, setLiked] = useState<Set<string>>(() => new Set());
+
+  const toggleLike = (id: string) => {
+    setLiked((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="community-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <Users size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="community-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Community</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              A supportive space to share experiences and support each other.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-2">
+          {posts.map((post, index) => {
+            const isLiked = liked.has(post.id);
+            return (
+              <motion.article
+                key={post.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.06 }}
+              >
+                <Card className="h-full p-6">
+                  <div className="flex items-center gap-3">
+                    <img src={post.avatar} alt="" className="h-10 w-10 rounded-full object-cover" />
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">{post.author}</p>
+                      <p className="text-xs text-gray-400">{post.time}</p>
+                    </div>
+                  </div>
+
+                  <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">{post.title}</h3>
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{post.body}</p>
+
+                  {post.tags.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-[var(--color-primary)]/10 px-2.5 py-0.5 text-[11px] font-medium text-[var(--color-primary)]"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="mt-4 flex items-center gap-5 border-t border-gray-100 dark:border-gray-800 pt-4 text-sm">
+                    <button
+                      onClick={() => toggleLike(post.id)}
+                      aria-pressed={isLiked}
+                      aria-label={isLiked ? "Unlike this post" : "Like this post"}
+                      className={cn(
+                        "flex items-center gap-1.5 transition",
+                        isLiked ? "text-[var(--color-accent)]" : "text-gray-500 dark:text-gray-400 hover:text-[var(--color-accent)]"
+                      )}
+                    >
+                      <Heart size={16} className={isLiked ? "fill-[var(--color-accent)]" : ""} aria-hidden="true" />
+                      {post.likes + (isLiked ? 1 : 0)}
+                    </button>
+                    <span className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                      <MessageCircle size={16} aria-hidden="true" />
+                      {post.replies}
+                    </span>
+                  </div>
+                </Card>
+              </motion.article>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

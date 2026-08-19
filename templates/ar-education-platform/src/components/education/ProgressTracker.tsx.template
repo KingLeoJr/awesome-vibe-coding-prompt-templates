@@ -1,0 +1,174 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Award, Flame, Star, Target, Trophy, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface Badge {
+  id: string;
+  name: string;
+  icon: string;
+  earned: boolean;
+}
+
+export interface Quest {
+  id: string;
+  title: string;
+  xp: number;
+  progress: number;
+  total: number;
+  active: boolean;
+}
+
+export interface LearnerProgress {
+  xp: number;
+  level: number;
+  streak: number;
+  badges: Badge[];
+  quests: Quest[];
+}
+
+interface ProgressTrackerProps {
+  progress: LearnerProgress;
+}
+
+const badgeIcon: Record<string, typeof Star> = {
+  Star: Star,
+  Zap: Zap,
+  Trophy: Trophy,
+  Award: Award,
+  Target: Target,
+};
+
+export default function ProgressTracker({ progress }: ProgressTrackerProps) {
+  const nextLevelXp = progress.level * 1000;
+  const levelPct = Math.min(100, Math.round((progress.xp / nextLevelXp) * 100));
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="quests-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <Trophy size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="quests-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Your quests</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Keep your streak alive and earn badges as you explore.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {[
+            { label: "Total XP", value: progress.xp.toLocaleString(), icon: Zap, tone: "text-[var(--color-accent)]" },
+            { label: "Level", value: `${progress.level}`, icon: Trophy, tone: "text-[var(--color-primary)]" },
+            { label: "Day streak", value: `${progress.streak}`, icon: Flame, tone: "text-orange-500" },
+            { label: "Badges", value: `${progress.badges.filter((b) => b.earned).length}/${progress.badges.length}`, icon: Award, tone: "text-[var(--color-secondary)]" },
+          ].map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-5"
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
+                <s.icon size={18} className={s.tone} aria-hidden="true" />
+              </div>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{s.value}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 mb-6">
+          <div className="flex items-center justify-between text-sm mb-2">
+            <span className="font-medium text-gray-900 dark:text-white">
+              Level {progress.level} → Level {progress.level + 1}
+            </span>
+            <span className="text-gray-500 dark:text-gray-400">
+              {progress.xp.toLocaleString()} / {nextLevelXp.toLocaleString()} XP
+            </span>
+          </div>
+          <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={levelPct} aria-valuemin={0} aria-valuemax={100} aria-label="Level progress">
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: `${levelPct}%` }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+            />
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+            <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">Active quests</h3>
+            <ul className="flex flex-col gap-4">
+              {progress.quests.filter((q) => q.active).map((q, i) => {
+                const pct = q.total > 0 ? Math.min(100, Math.round((q.progress / q.total) * 100)) : 0;
+                return (
+                  <li key={q.id}>
+                    <div className="flex items-center justify-between text-sm mb-1.5">
+                      <span className="font-medium text-gray-900 dark:text-white">{q.title}</span>
+                      <span className="flex items-center gap-1 text-xs text-[var(--color-accent)]">
+                        <Zap size={12} aria-hidden="true" />
+                        {q.xp} XP
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label={`${q.title} progress`}>
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${pct}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.7, delay: i * 0.08, ease: "easeOut" }}
+                          className="h-full rounded-full bg-[var(--color-accent)]"
+                        />
+                      </div>
+                      <span className="text-xs tabular-nums text-gray-500 dark:text-gray-400">
+                        {q.progress}/{q.total}
+                      </span>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+            <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">Badge collection</h3>
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+              {progress.badges.map((badge, i) => {
+                const Icon = badgeIcon[badge.icon] ?? Award;
+                return (
+                  <motion.div
+                    key={badge.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.05 }}
+                    className={cn(
+                      "flex flex-col items-center gap-1.5 rounded-xl border p-3 text-center",
+                      badge.earned
+                        ? "border-[var(--color-primary)]/40 bg-[var(--color-primary)]/5"
+                        : "border-gray-200 dark:border-gray-800 opacity-50 grayscale"
+                    )}
+                  >
+                    <Icon size={20} className={badge.earned ? "text-[var(--color-primary)]" : "text-gray-400"} aria-hidden="true" />
+                    <span className="text-[10px] font-medium leading-tight text-gray-600 dark:text-gray-300">{badge.name}</span>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

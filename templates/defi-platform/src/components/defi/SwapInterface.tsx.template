@@ -1,0 +1,224 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowDown, ArrowDownUp, Gauge, Repeat, ShieldCheck, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { tokens as sampleTokens } from "@/data/{{app.slug}}.json";
+
+export interface Token {
+  symbol: string;
+  name: string;
+  priceUsd: number;
+  change24h: number;
+}
+
+interface SwapInterfaceProps {
+  tokens?: Token[];
+  slippageBps?: number;
+  locale?: string;
+}
+
+export default function SwapInterface({
+  tokens = sampleTokens,
+  slippageBps = 50,
+  locale = "{{i18n.default_locale}}",
+}: SwapInterfaceProps) {
+  const [fromSymbol, setFromSymbol] = useState(tokens[0]?.symbol ?? "ETH");
+  const [toSymbol, setToSymbol] = useState(tokens[1]?.symbol ?? "USDC");
+  const [amount, setAmount] = useState("");
+  const [status, setStatus] = useState<"idle" | "quoting" | "ready">("idle");
+
+  const fromToken = tokens.find((t) => t.symbol === fromSymbol) ?? tokens[0];
+  const toToken = tokens.find((t) => t.symbol === toSymbol) ?? tokens[1];
+
+  const amountIn = Number.parseFloat(amount) || 0;
+  const rate = fromToken.priceUsd > 0 ? toToken.priceUsd / fromToken.priceUsd : 0;
+  const amountOut = amountIn * rate;
+  const minReceived = amountOut * (1 - slippageBps / 10_000);
+  const priceImpact = amountIn > 0 ? Math.min(0.4 + amountIn * 0.02, 4.2) : 0;
+
+  const quote = useMemo(
+    () =>
+      amountIn <= 0
+        ? null
+        : { amountOut, minReceived, rate, priceImpact },
+    [amountIn, amountOut, minReceived, rate, priceImpact]
+  );
+
+  const swap = () => {
+    if (!amountIn) return;
+    setStatus("quoting");
+    window.setTimeout(() => setStatus("ready"), 1200);
+  };
+
+  const flip = () => {
+    setFromSymbol(toSymbol);
+    setToSymbol(fromSymbol);
+  };
+
+  const selectClass =
+    "w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-800 outline-none transition focus:border-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="mx-auto max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950"
+    >
+      <div className="mb-5 flex items-center justify-between">
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">
+          <Repeat size={16} className="text-[var(--color-primary)]" />
+          Swap tokens
+        </h3>
+        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-primary)]/10 px-2.5 py-1 text-[11px] font-medium text-[var(--color-primary)]">
+          <Zap size={11} />
+          Chainlink priced
+        </span>
+      </div>
+
+      <div className="space-y-2">
+        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900">
+          <div className="mb-2 flex items-center justify-between text-xs text-gray-400">
+            <label htmlFor="swap-amount">You pay</label>
+            <span>Bal: {fromToken.symbol === "USDC" ? "1,240.00" : "3.4281"}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <input
+              id="swap-amount"
+              type="number"
+              min="0"
+              inputMode="decimal"
+              placeholder="0.0"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="w-full bg-transparent text-2xl font-bold text-gray-900 outline-none placeholder:text-gray-300 dark:text-white"
+              aria-label="Amount to swap"
+            />
+            <div className="relative shrink-0">
+              <select
+                value={fromSymbol}
+                onChange={(e) => setFromSymbol(e.target.value)}
+                className={selectClass}
+                aria-label="Token to pay"
+              >
+                {tokens.map((t) => (
+                  <option key={t.symbol} value={t.symbol}>
+                    {t.symbol}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <p className="mt-1 text-xs text-gray-400">
+            ≈ {new Intl.NumberFormat(locale, { style: "currency", currency: "USD" }).format(amountIn * fromToken.priceUsd)}
+          </p>
+        </div>
+
+        <div className="flex justify-center">
+          <button
+            onClick={flip}
+            aria-label="Reverse swap direction"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 transition hover:rotate-180 hover:text-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-950"
+          >
+            <ArrowDownUp size={16} />
+          </button>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900">
+          <div className="mb-2 flex items-center justify-between text-xs text-gray-400">
+            <label htmlFor="swap-receive">You receive</label>
+            <span>Bal: 0.0000</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <input
+              id="swap-receive"
+              type="text"
+              readOnly
+              value={amountOut > 0 ? amountOut.toFixed(6) : "0.0"}
+              className="w-full bg-transparent text-2xl font-bold text-gray-900 outline-none dark:text-white"
+              aria-label="Amount to receive"
+            />
+            <div className="relative shrink-0">
+              <select
+                value={toSymbol}
+                onChange={(e) => setToSymbol(e.target.value)}
+                className={selectClass}
+                aria-label="Token to receive"
+              >
+                {tokens.map((t) => (
+                  <option key={t.symbol} value={t.symbol}>
+                    {t.symbol}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <p className="mt-1 text-xs text-gray-400">
+            ≈ {new Intl.NumberFormat(locale, { style: "currency", currency: "USD" }).format(amountOut * toToken.priceUsd)}
+          </p>
+        </div>
+      </div>
+
+      <div
+        className="mt-4 space-y-2 rounded-2xl bg-gray-50 p-4 text-xs text-gray-500 dark:bg-gray-900 dark:text-gray-400"
+        aria-live="polite"
+      >
+        <div className="flex items-center justify-between">
+          <span>Rate</span>
+          <span className="font-mono">
+            1 {fromSymbol} = {rate.toFixed(4)} {toSymbol}
+          </span>
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="inline-flex items-center gap-1">
+            <Gauge size={12} />
+            Slippage tolerance
+          </span>
+          <span>{slippageBps / 100}%</span>
+        </div>
+        {quote && (
+          <>
+            <div className="flex items-center justify-between">
+              <span>Minimum received</span>
+              <span className="font-mono">
+                {minReceived.toFixed(6)} {toSymbol}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span>Price impact</span>
+              <span className={cn("font-medium", priceImpact > 2 ? "text-amber-600 dark:text-amber-400" : "")}>
+                {priceImpact.toFixed(2)}%
+              </span>
+            </div>
+          </>
+        )}
+      </div>
+
+      <button
+        onClick={swap}
+        disabled={!amountIn || status === "quoting"}
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] px-6 py-3.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        {status === "quoting" ? (
+          <>
+            <ArrowDown size={16} className="animate-bounce" />
+            Quoting…
+          </>
+        ) : (
+          <>
+            <Zap size={16} />
+            {amountIn ? `Swap ${fromSymbol} for ${toSymbol}` : "Enter an amount"}
+          </>
+        )}
+      </button>
+
+      <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-[11px] text-gray-400">
+        <ShieldCheck size={12} className="text-[var(--color-accent)]" />
+        Gas optimized · EIP-1559 aware · no custody of funds
+      </p>
+    </motion.div>
+  );
+}

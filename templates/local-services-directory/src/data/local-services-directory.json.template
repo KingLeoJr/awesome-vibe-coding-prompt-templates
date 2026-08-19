@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "title": "{{app.name}}",
+    "description": "{{app.tagline}}"
+  },
+  "categories": [
+    { "name": "Plumbing", "slug": "plumbing", "icon": "wrench", "count": 128 },
+    { "name": "Electrical", "slug": "electrical", "icon": "zap", "count": 96 },
+    { "name": "Cleaning", "slug": "cleaning", "icon": "sparkles", "count": 154 },
+    { "name": "Landscaping", "slug": "landscaping", "icon": "leaf", "count": 87 },
+    { "name": "HVAC", "slug": "hvac", "icon": "wind", "count": 73 },
+    { "name": "Painting", "slug": "painting", "icon": "paintbrush", "count": 61 }
+  ],
+  "providers": [
+    {
+      "id": "prov-001",
+      "name": "Rapid Rooter Plumbing",
+      "category": "Plumbing",
+      "area": "Downtown",
+      "rating": 4.9,
+      "reviewCount": 214,
+      "verified": true,
+      "priceFrom": 85,
+      "services": ["Drain cleaning", "Leak repair", "Water heater", "Emergency calls"],
+      "availability": true,
+      "distanceKm": 1.2,
+      "imageUrl": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "prov-002",
+      "name": "BrightSpark Electric",
+      "category": "Electrical",
+      "area": "Riverside",
+      "rating": 4.8,
+      "reviewCount": 167,
+      "verified": true,
+      "priceFrom": 95,
+      "services": ["Wiring", "Panel upgrades", "EV chargers", "Smart home"],
+      "availability": true,
+      "distanceKm": 3.4,
+      "imageUrl": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "prov-003",
+      "name": "FreshNest Cleaning Co.",
+      "category": "Cleaning",
+      "area": "Maple Grove",
+      "rating": 4.7,
+      "reviewCount": 342,
+      "verified": true,
+      "priceFrom": 45,
+      "services": ["Home cleaning", "Deep clean", "Move-out", "Office"],
+      "availability": true,
+      "distanceKm": 5.1,
+      "imageUrl": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "prov-004",
+      "name": "EverGreen Landscapes",
+      "category": "Landscaping",
+      "area": "Hillcrest",
+      "rating": 4.6,
+      "reviewCount": 98,
+      "verified": false,
+      "priceFrom": 70,
+      "services": ["Lawn care", "Garden design", "Irrigation", "Seasonal cleanups"],
+      "availability": true,
+      "distanceKm": 7.8,
+      "imageUrl": "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "prov-005",
+      "name": "Arctic Air HVAC",
+      "category": "HVAC",
+      "area": "West End",
+      "rating": 4.8,
+      "reviewCount": 129,
+      "verified": true,
+      "priceFrom": 110,
+      "services": ["AC repair", "Furnace tune-up", "Duct cleaning", "Thermostats"],
+      "availability": false,
+      "distanceKm": 4.2,
+      "imageUrl": "https://images.unsplash.com/photo-1631545806609-35bc16bb7afd?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "prov-006",
+      "name": "TrueHue Painting",
+      "category": "Painting",
+      "area": "Old Town",
+      "rating": 4.5,
+      "reviewCount": 76,
+      "verified": false,
+      "priceFrom": 60,
+      "services": ["Interior painting", "Exterior painting", "Drywall repair", "Staining"],
+      "availability": true,
+      "distanceKm": 6.5,
+      "imageUrl": "https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-001",
+      "providerId": "prov-001",
+      "author": "Maya R.",
+      "rating": 5,
+      "date": "2026-07-14",
+      "service": "Water heater replacement",
+      "comment": "Fast, fair pricing, and spotless work. They even followed up the next day to make sure everything was fine.",
+      "verified": true
+    },
+    {
+      "id": "rev-002",
+      "providerId": "prov-001",
+      "author": "Daniel K.",
+      "rating": 5,
+      "date": "2026-06-28",
+      "service": "Drain cleaning",
+      "comment": "Showed up on time with a clear quote. Cleared a stubborn clog in under an hour.",
+      "verified": true
+    },
+    {
+      "id": "rev-003",
+      "providerId": "prov-002",
+      "author": "Priya S.",
+      "rating": 5,
+      "date": "2026-06-15",
+      "service": "EV charger install",
+      "comment": "Clean install, explained everything, and left the site tidier than they found it.",
+      "verified": true
+    },
+    {
+      "id": "rev-004",
+      "providerId": "prov-002",
+      "author": "Tom W.",
+      "rating": 4,
+      "date": "2026-05-30",
+      "service": "Panel upgrade",
+      "comment": "Great work and transparent pricing. Slight delay on parts but communication was solid.",
+      "verified": true
+    },
+    {
+      "id": "rev-005",
+      "providerId": "prov-003",
+      "author": "Alicia M.",
+      "rating": 5,
+      "date": "2026-05-18",
+      "service": "Deep clean",
+      "comment": "Booking through the app took two minutes and the deep clean was thorough. Highly recommend.",
+      "verified": true
+    },
+    {
+      "id": "rev-006",
+      "providerId": "prov-004",
+      "author": "Chris B.",
+      "rating": 4,
+      "date": "2026-04-22",
+      "service": "Garden design",
+      "comment": "Lovely redesign of our front yard. Would love faster responses to messages next time.",
+      "verified": false
+    }
+  ],
+  "bookingSlots": [
+    { "id": "slot-001", "providerId": "prov-001", "date": "2026-08-21", "startTime": "09:00", "endTime": "11:00", "available": true },
+    { "id": "slot-002", "providerId": "prov-001", "date": "2026-08-21", "startTime": "14:00", "endTime": "16:00", "available": true },
+    { "id": "slot-003", "providerId": "prov-001", "date": "2026-08-22", "startTime": "10:00", "endTime": "12:00", "available": true },
+    { "id": "slot-004", "providerId": "prov-002", "date": "2026-08-21", "startTime": "11:00", "endTime": "13:00", "available": true },
+    { "id": "slot-005", "providerId": "prov-002", "date": "2026-08-22", "startTime": "09:00", "endTime": "11:00", "available": false },
+    { "id": "slot-006", "providerId": "prov-003", "date": "2026-08-21", "startTime": "13:00", "endTime": "15:00", "available": true }
+  ],
+  "dashboardMetrics": {
+    "bookings": 148,
+    "monthlyTrend": 12.4,
+    "avgRating": 4.8,
+    "views": 4820,
+    "responseRate": 96,
+    "weeklyBookings": [22, 27, 25, 34, 41, 36, 44],
+    "topServices": [
+      { "name": "Drain cleaning", "share": 34 },
+      { "name": "Water heater", "share": 26 },
+      { "name": "Leak repair", "share": 22 },
+      { "name": "Emergency calls", "share": 18 }
+    ]
+  }
+}

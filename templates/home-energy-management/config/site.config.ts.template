@@ -1,0 +1,30 @@
+export const SITE_TITLE = "{{app.name}}";
+export const SITE_DESCRIPTION = "{{app.tagline}}";
+export const SITE_URL = "{{deployment.url}}";
+
+export const NAV_ITEMS = [
+  {{#each sections}}
+  { label: "{{name}}", href: "#{{name | lowercase}}" },
+  {{/each}}
+];
+
+export const CURRENCY = "{{currency.symbol}}";
+
+export const ENERGY_UNIT = "kWh";
+
+export const PEAK_HOURS = ["17:00", "18:00", "19:00", "20:00"];
+
+export const DEVICE_PROTOCOL = "{{devices.protocol}}";
+
+export const CONTACT = {
+  email: "{{contact.email}}",
+  phone: "{{contact.phone}}",
+};
+
+export const SOCIAL = {
+  github: "{{social.github}}",
+  linkedin: "{{social.linkedin}}",
+  twitter: "{{social.twitter}}",
+};
+
+export const ANALYTICS_ID = "{{deployment.analytics_id}}";

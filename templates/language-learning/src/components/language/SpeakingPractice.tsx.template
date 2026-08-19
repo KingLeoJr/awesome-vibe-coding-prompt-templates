@@ -1,0 +1,116 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+import { lucideReact } from "lucide-react";
+import { Mic, Check, Clock, X } from "lucide-react";
+
+interface SpeakingPrompt {
+  id: string;
+  scenario: string;
+  instructions: string;
+  timeoutSeconds: number;
+}
+
+interface SpeakingPracticeProps {
+  prompt: SpeakingPrompt;
+  onRecord: () => void;
+}
+
+export default function SpeakingPractice({ prompt, onRecord }: SpeakingPracticeProps) {
+  const [isRecording, setIsRecording] = useState(false);
+  const [timer, setTimer] = useState(prompt.timeoutSeconds);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [showReview, setShowReview] = useState(false);
+
+  useEffect(() => {
+    let seconds = prompt.timeoutSeconds;
+    if (isRecording) {
+      const interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            setIsRecording(false);
+            setTimer(prompt.timeoutSeconds);
+            setShowReview(true);
+            return prev;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+    return () => {};
+  }, [isRecording, prompt.timeoutSeconds]);
+
+  const handleStart = () => {
+    setIsRecording(true);
+    setTimer(prompt.timeoutSeconds);
+  };
+
+  const handleStop = () => {
+    setIsRecording(false);
+    // In a real app, would capture and save audio
+    setShowReview(true);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-xl border bg-gray-50 dark:bg-gray-900 p-6 hover:shadow-lg transition-shadow",
+        "pb-4"
+      )}
+    >
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            Speaking Prompt
+          </h3>
+          <p className="mt-2 text-gray-500 dark:text-gray-400">{prompt.scenario}</p>
+          <p className="mt-1 text-sm italic text-gray-400 dark:text-gray-600">{prompt.instructions}</p>
+        </div>
+
+        <div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Time remaining: <span className="font-medium text-gray-900 dark:text-white">{timer}</span>s
+          </p>
+          <Button
+            onClick={handleStart}
+            disabled={isRecording}
+            variant={isRecording ? "secondary" : "primary"}
+            size="lg"
+            className="w-full"
+          >
+            {isRecording ? "Stop Recording" : "Start Recording"}
+          </Button>
+        </div>
+
+        {isRecording && (
+          <div className="mt-4">
+            <Clock size={20} className="text-gray-400 dark:text-gray-500 mr-1" />
+            <span className="text-sm text-gray-500 dark:text-gray-400">Listening...</span>
+          </div>
+        )}
+
+        {!isRecording && showReview && (
+          <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-900 rounded border border-gray-300 dark:border-gray-700">
+            <Check size={20} className="text-green-500 mb-2 flex-shrink-0" />
+            <p className="text-sm text-gray-700 dark:text-gray-300">
+              Recording complete. Great practice!
+            </p>
+            <Button onClick={() => setShowReview(false)} variant="outline" size="sm">
+              Close
+            </Button>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}

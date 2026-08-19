@@ -1,0 +1,249 @@
+{
+  "slug": "iot-smart-home",
+  "name": "Internet of Things (IoT) Smart Home Management Platform",
+  "category": "Platform",
+  "archetype": "Dashboard",
+  "tagline": "One dashboard for every room, device, and scene — your whole home, in sync.",
+  "builder_prompt_source": "prompt.md.template",
+  "extra_config": {
+    "app": {
+      "slug": "iot-smart-home",
+      "name": "Internet of Things (IoT) Smart Home Management Platform",
+      "tagline": "One dashboard for every room, device, and scene — your whole home, in sync.",
+      "category": "Platform",
+      "archetype": "Dashboard"
+    },
+    "header": {
+      "cta_text": "Add device",
+      "cta_href": "/devices/new",
+      "is_fixed": true
+    },
+    "seo": {
+      "og_image": "https://iot-smart-home.example.com/og.png",
+      "schema_type": "HomeAndConstructionBusiness"
+    },
+    "contact": {
+      "email": "hello@iot-smart-home.example.com",
+      "phone": "+1 (555) 010-2050"
+    },
+    "social": {
+      "github": "https://github.com/example/iot-smart-home",
+      "linkedin": "https://linkedin.com/company/iot-smart-home",
+      "twitter": "https://twitter.com/smarthomeiot"
+    },
+    "deployment": {
+      "url": "https://iot-smart-home.example.com",
+      "analytics_id": "G-IOT001"
+    },
+    "theme": {
+      "color": {
+        "primary": "#0ea5e9",
+        "secondary": "#22c55e",
+        "accent": "#f59e0b",
+        "primary_dark": "#38bdf8",
+        "secondary_dark": "#4ade80",
+        "accent_dark": "#fbbf24"
+      },
+      "font": {
+        "sans": "Inter"
+      },
+      "radius": {
+        "card": "1.25rem"
+      }
+    }
+  },
+  "tech_stack": [
+    { "layer": "frontend", "technology": "Vue.js 3 + Nuxt.js 3", "purpose": "SSR web application for home control" },
+    { "layer": "frontend", "technology": "Next.js 15 (App Router)", "purpose": "Reference dashboard UI shipped by this template set" },
+    { "layer": "ui", "technology": "Vuetify (Material Design)", "purpose": "Component library for the dashboard" },
+    { "layer": "state", "technology": "Vuex + Vuex-ORM", "purpose": "Relational device and scene state" },
+    { "layer": "realtime", "technology": "WebSockets + MQTT over WSS", "purpose": "Real-time device status monitoring" },
+    { "layer": "device", "technology": "MQTT (EMQX broker)", "purpose": "Device command and telemetry bus" },
+    { "layer": "rules", "technology": "Node-RED", "purpose": "Automation rules engine and scenes" },
+    { "layer": "backend", "technology": "Node.js + PostgreSQL + Redis", "purpose": "API, relational device registry, caching" },
+    { "layer": "auth", "technology": "OAuth 2.0", "purpose": "Authentication and device pairing" },
+    { "layer": "security", "technology": "libsodium", "purpose": "End-to-end encryption for remote access" },
+    { "layer": "ai_ml", "technology": "TensorFlow.js", "purpose": "Predictive maintenance and facial recognition" },
+    { "layer": "blockchain", "technology": "Hyperledger Fabric", "purpose": "Tamper-proof audit trail of device actions" },
+    { "layer": "3d", "technology": "Three.js", "purpose": "Virtual 3D home tour with device overlays" },
+    { "layer": "voice", "technology": "Dialogflow", "purpose": "Natural language voice control" },
+    { "layer": "mobile", "technology": "Capacitor", "purpose": "Cross-platform mobile wrapper" },
+    { "layer": "analytics", "technology": "Chart.js", "purpose": "Energy and trend visualizations" },
+    { "layer": "devops", "technology": "Docker + AWS", "purpose": "Edge and cloud deployment" }
+  ],
+  "features": [
+    { "description": "Responsive IoT smart home platform (Vue/Nuxt SSR)", "priority": "core", "order_index": 1 },
+    { "description": "Authentication and device pairing via OAuth 2.0 and MQTT", "priority": "core", "order_index": 2 },
+    { "description": "Intuitive dashboard UI with Vuetify Material Design", "priority": "core", "order_index": 3 },
+    { "description": "Vuex + Vuex-ORM state management for relational data", "priority": "core", "order_index": 4 },
+    { "description": "Real-time device status monitoring via WebSockets", "priority": "core", "order_index": 5 },
+    { "description": "Rules engine for automations and scenes using Node-RED", "priority": "core", "order_index": 6 },
+    { "description": "Customizable floor plan creator with drag-and-drop devices", "priority": "core", "order_index": 7 },
+    { "description": "Energy consumption analytics dashboard with Chart.js", "priority": "core", "order_index": 8 },
+    { "description": "Voice control integration via Dialogflow", "priority": "core", "order_index": 9 },
+    { "description": "Notification system for device alerts and anomaly detection", "priority": "core", "order_index": 10 },
+    { "description": "Multi-user access control with customizable permissions", "priority": "core", "order_index": 11 },
+    { "description": "Time-based scheduling for device actions and scenes", "priority": "core", "order_index": 12 },
+    { "description": "Multi-protocol device discovery (Zigbee, Z-Wave, Wi-Fi, Bluetooth)", "priority": "core", "order_index": 13 },
+    { "description": "Secure remote access with end-to-end encryption (libsodium)", "priority": "core", "order_index": 14 },
+    { "description": "Blockchain-based audit trail for device actions (Hyperledger Fabric)", "priority": "core", "order_index": 15 },
+    { "description": "AI-powered scene suggestions from user behavior", "priority": "enhanced", "order_index": 16 },
+    { "description": "Virtual 3D home tour with device overlays (Three.js)", "priority": "enhanced", "order_index": 17 },
+    { "description": "Geofencing for location-based automations", "priority": "enhanced", "order_index": 18 },
+    { "description": "Smart energy grid integration for optimized consumption", "priority": "enhanced", "order_index": 19 },
+    { "description": "Smart appliance integration with IFTTT compatibility", "priority": "enhanced", "order_index": 20 },
+    { "description": "Customizable long-term trend reporting", "priority": "enhanced", "order_index": 21 },
+    { "description": "Facial recognition for personalized automations (TensorFlow.js)", "priority": "enhanced", "order_index": 22 },
+    { "description": "Smart security system with AI anomaly detection", "priority": "enhanced", "order_index": 23 },
+    { "description": "Voice-activated digital assistant for hands-free control", "priority": "enhanced", "order_index": 24 },
+    { "description": "Smart water management with leak detection and usage analytics", "priority": "enhanced", "order_index": 25 },
+    { "description": "Air quality monitoring and purification control", "priority": "enhanced", "order_index": 26 },
+    { "description": "Smart lighting with circadian rhythm optimization", "priority": "enhanced", "order_index": 27 },
+    { "description": "Smart thermostat with AI-driven temperature optimization", "priority": "enhanced", "order_index": 28 },
+    { "description": "Smart lock with temporary access codes and entry logs", "priority": "enhanced", "order_index": 29 },
+    { "description": "Video surveillance with object detection and tracking", "priority": "enhanced", "order_index": 30 },
+    { "description": "Smart garden with automated watering and care", "priority": "enhanced", "order_index": 31 },
+    { "description": "Pet care with feeding schedules and activity monitoring", "priority": "enhanced", "order_index": 32 },
+    { "description": "Smart kitchen assistant with recipes and inventory", "priority": "enhanced", "order_index": 33 },
+    { "description": "Health monitoring integration for personalized environment control", "priority": "enhanced", "order_index": 34 },
+    { "description": "Smart waste management with fill-level monitoring", "priority": "enhanced", "order_index": 35 },
+    { "description": "Smart parking for garages with availability tracking", "priority": "advanced", "order_index": 36 },
+    { "description": "Package delivery management with secure access", "priority": "advanced", "order_index": 37 },
+    { "description": "Smart mirror for personalized information display", "priority": "advanced", "order_index": 38 },
+    { "description": "Emergency response with automatic alerts to authorities", "priority": "advanced", "order_index": 39 },
+    { "description": "Multi-room audio/video synchronization entertainment", "priority": "advanced", "order_index": 40 },
+    { "description": "Smart closet with weather/calendar outfit suggestions", "priority": "advanced", "order_index": 41 },
+    { "description": "Voice-controlled smart home bot", "priority": "advanced", "order_index": 42 },
+    { "description": "Smart window and blind control for lighting/privacy", "priority": "advanced", "order_index": 43 },
+    { "description": "Multi-zone HVAC with air quality optimization", "priority": "advanced", "order_index": 44 },
+    { "description": "Smart home gym with personalized tracking and equipment", "priority": "advanced", "order_index": 45 },
+    { "description": "Smart sleep optimization with environmental controls", "priority": "advanced", "order_index": 46 },
+    { "description": "Maintenance scheduler with service provider integration", "priority": "advanced", "order_index": 47 },
+    { "description": "Home inventory with automatic reordering", "priority": "advanced", "order_index": 48 },
+    { "description": "Sharing-economy platform for temporary access granting", "priority": "advanced", "order_index": 49 },
+    { "description": "Smart home insurance integration with real-time risk assessment", "priority": "advanced", "order_index": 50 },
+    { "description": "Home energy trading for micro-grid participation", "priority": "advanced", "order_index": 51 },
+    { "description": "ML-based predictive maintenance using TensorFlow.js", "priority": "advanced", "order_index": 52 },
+    { "description": "Responsive mobile app via Capacitor", "priority": "advanced", "order_index": 53 }
+  ],
+  "sections": [
+    { "name": "Overview", "component_path": "src/components/home/AlertPanel.tsx", "layout_type": "dashboard", "order_index": 1 },
+    { "name": "Rooms", "component_path": "src/components/home/RoomSection.tsx", "layout_type": "grid", "order_index": 2 },
+    { "name": "Scenes", "component_path": "src/components/home/SceneControls.tsx", "layout_type": "control", "order_index": 3 },
+    { "name": "Energy", "component_path": "src/components/home/EnergyDashboard.tsx", "layout_type": "dashboard", "order_index": 4 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx.template", "props": { "logoText": "{{app.name}}", "navItems": "sections", "ctaText": "{{header.cta_text}}", "ctaHref": "{{header.cta_href}}" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "Footer", "path": "src/components/layout/Footer.tsx", "props": { "name": "{{app.name}}", "navItems": "sections" }, "mixins": ["_shared/Footer.tsx.template"] },
+    { "name": "DeviceCard", "path": "src/components/home/DeviceCard.tsx.template", "props": { "device": "HomeDevice", "onToggle": "fn" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "RoomSection", "path": "src/components/home/RoomSection.tsx.template", "props": { "room": "Room", "delay": "number" } },
+    { "name": "EnergyDashboard", "path": "src/components/home/EnergyDashboard.tsx.template", "props": { "energy": "Energy" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "SceneControls", "path": "src/components/home/SceneControls.tsx.template", "props": { "scenes": "Scene[]" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "AlertPanel", "path": "src/components/home/AlertPanel.tsx.template", "props": { "alerts": "HomeAlert[]" }, "mixins": ["_shared/Card.tsx.template"] }
+  ],
+  "data_models": [
+    {
+      "name": "Home",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "owner_id", "type": "string", "required": true },
+        { "name": "timezone", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "Room",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "icon", "type": "string", "required": false },
+        { "name": "floor_plan_position", "type": "json", "required": false }
+      ]
+    },
+    {
+      "name": "Device",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "room_id", "type": "string", "required": true },
+        { "name": "type", "type": "enum", "required": true },
+        { "name": "protocol", "type": "enum", "required": true, "default": "wifi" },
+        { "name": "status", "type": "enum", "required": true, "default": "off" },
+        { "name": "value", "type": "float", "required": false },
+        { "name": "reading", "type": "string", "required": false },
+        { "name": "online", "type": "boolean", "required": true, "default": true }
+      ]
+    },
+    {
+      "name": "Scene",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "description", "type": "string", "required": false },
+        { "name": "icon", "type": "string", "required": true },
+        { "name": "active", "type": "boolean", "required": true, "default": false }
+      ]
+    },
+    {
+      "name": "EnergyReading",
+      "fields": [
+        { "name": "measured_at", "type": "datetime", "required": true },
+        { "name": "kwh", "type": "float", "required": true },
+        { "name": "cost", "type": "decimal", "required": false },
+        { "name": "solar_produced", "type": "float", "required": false },
+        { "name": "solar_exported", "type": "float", "required": false }
+      ]
+    },
+    {
+      "name": "Alert",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "severity", "type": "enum", "required": true },
+        { "name": "device_id", "type": "string", "required": true },
+        { "name": "message", "type": "string", "required": true },
+        { "name": "created_at", "type": "datetime", "required": true },
+        { "name": "resolved", "type": "boolean", "required": true, "default": false }
+      ]
+    }
+  ],
+  "integrations": [
+    { "service": "MQTT (EMQX)", "purpose": "Device telemetry and command bus", "config_params": { "protocol": "mqtt", "port": 8883 } },
+    { "service": "Node-RED", "purpose": "Automation rules engine and scene orchestration", "config_params": {} },
+    { "service": "Dialogflow", "purpose": "Voice control and natural language commands", "config_params": {} },
+    { "service": "TensorFlow.js", "purpose": "Predictive maintenance and facial recognition models", "config_params": {} },
+    { "service": "Hyperledger Fabric", "purpose": "Immutable audit trail of device actions", "config_params": {} },
+    { "service": "IFTTT", "purpose": "Third-party appliance automation recipes", "config_params": {} },
+    { "service": "libsodium", "purpose": "End-to-end encryption for remote device access", "config_params": {} },
+    { "service": "Chart.js", "purpose": "Energy and trend analytics visualizations", "config_params": {} },
+    { "service": "Three.js", "purpose": "3D home tour with device status overlays", "config_params": {} },
+    { "service": "Google Analytics", "purpose": "Product usage analytics", "config_params": { "id": "{{deployment.analytics_id}}" } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "End-to-end encryption of control commands; OAuth 2.0 with short-lived tokens" },
+    { "type": "Security", "requirement": "Tamper-evident audit trail for all device actions" },
+    { "type": "Performance", "requirement": "Telemetry updates delivered in under 100ms via WebSockets" },
+    { "type": "Reliability", "requirement": "Graceful degradation when devices go offline; local fallback commands" },
+    { "type": "Responsive", "requirement": "Dashboard usable from 320px phones to large wall panels" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA; large touch targets for control surfaces" },
+    { "type": "Privacy", "requirement": "Granular consent for camera, biometric, and geolocation data" },
+    { "type": "Offline", "requirement": "Scene execution and critical alerts cached locally" },
+    { "type": "Testing", "requirement": "Integration tests for MQTT ingest, rules, and alert pipelines" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#0ea5e9" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#38bdf8" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#22c55e" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#4ade80" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f59e0b" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fbbf24" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "Inter" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1.25rem" },
+    { "token_type": "spacing", "token_name": "spacing.section", "token_value": "6rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "url": "https://iot-smart-home.example.com", "framework": "Next.js" } },
+    { "platform": "AWS", "config": { "services": ["ECS", "RDS", "ElastiCache", "IoT Core"], "region": "us-west-2" } },
+    { "platform": "Edge / Raspberry Pi", "config": { "role": "local gateway and offline fallback" } }
+  ]
+}

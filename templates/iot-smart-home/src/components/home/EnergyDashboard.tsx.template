@@ -1,0 +1,118 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { BatteryCharging, Sun, TrendingDown, Zap } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface Energy {
+  today: { kwh: number; cost: number; trendPercent: number };
+  targetKwh: number;
+  solar: { produced: number; exported: number };
+  weekly: { label: string; kwh: number }[];
+}
+
+interface EnergyDashboardProps {
+  energy: Energy;
+  currency?: string;
+}
+
+export default function EnergyDashboard({ energy, currency = "$" }: EnergyDashboardProps) {
+  const maxKwh = Math.max(...energy.weekly.map((day) => day.kwh), energy.targetKwh, 1);
+
+  const stats = [
+    {
+      label: "Used today",
+      value: `${energy.today.kwh} kWh`,
+      sub: `target ${energy.targetKwh} kWh`,
+      icon: Zap,
+      accent: "text-[var(--color-primary)]",
+    },
+    {
+      label: "Cost today",
+      value: `${currency}${energy.today.cost.toFixed(2)}`,
+      sub: `${energy.today.trendPercent > 0 ? "+" : ""}${energy.today.trendPercent}% vs yesterday`,
+      icon: TrendingDown,
+      accent: "text-[var(--color-accent)]",
+    },
+    {
+      label: "Solar produced",
+      value: `${energy.solar.produced} kWh`,
+      sub: `${energy.solar.exported} kWh exported to grid`,
+      icon: Sun,
+      accent: "text-[var(--color-secondary)]",
+    },
+    {
+      label: "Grid status",
+      value: "Balanced",
+      sub: "micro-grid trading enabled",
+      icon: BatteryCharging,
+      accent: "text-emerald-500",
+    },
+  ];
+
+  return (
+    <div className="space-y-8">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, index) => {
+          const Icon = stat.icon;
+          return (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.07 }}
+            >
+              <Card className="flex items-center gap-4 p-5">
+                <span className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-900 ${stat.accent}`}>
+                  <Icon size={22} aria-hidden />
+                </span>
+                <div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">{stat.sub}</p>
+                </div>
+              </Card>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <Card className="p-6">
+        <h3 className="mb-6 text-lg font-bold text-gray-900 dark:text-white">Daily consumption (kWh)</h3>
+        <div className="relative">
+          <div
+            className="pointer-events-none absolute inset-x-0 top-[2px] h-px border-t-2 border-dashed border-gray-300 dark:border-gray-700"
+            aria-hidden
+          >
+            <span className="absolute -top-2 right-0 text-[10px] font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">
+              target {energy.targetKwh} kWh
+            </span>
+          </div>
+
+          <div className="flex items-end justify-between gap-3 pt-6" role="img" aria-label="Daily energy consumption bar chart">
+            {energy.weekly.map((day, index) => (
+              <div key={day.label} className="flex flex-1 flex-col items-center gap-2">
+                <motion.div
+                  initial={{ height: 0 }}
+                  whileInView={{ height: `${Math.max(8, (day.kwh / maxKwh) * 100)}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  className={cn(
+                    "w-full rounded-lg bg-gradient-to-t",
+                    day.kwh > energy.targetKwh
+                      ? "from-[var(--color-accent)] to-[var(--color-accent)]/70"
+                      : "from-[var(--color-primary)] to-[var(--color-secondary)]"
+                  )}
+                  style={{ minHeight: 8 }}
+                />
+                <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{day.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}

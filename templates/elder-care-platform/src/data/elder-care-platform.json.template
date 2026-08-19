@@ -1,0 +1,346 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "nav": [
+    { "label": "CarePlans", "href": "#careplans" },
+    { "label": "Caregivers", "href": "#caregivers" },
+    { "label": "Services", "href": "#services" },
+    { "label": "Health", "href": "#health" },
+    { "label": "Events", "href": "#events" },
+    { "label": "Resources", "href": "#resources" }
+  ],
+  "currency": "{{currency.symbol}}",
+  "carePlan": {
+    "patient": {
+      "name": "Eleanor Whitfield",
+      "age": 82,
+      "conditions": ["Type 2 diabetes", "Mild hypertension"],
+      "mobility": "Uses a walker"
+    },
+    "routine": [
+      { "id": "r1", "time": "08:00", "activity": "Breakfast & morning medications" },
+      { "id": "r2", "time": "09:30", "activity": "Morning walk in the garden" },
+      { "id": "r3", "time": "12:00", "activity": "Lunch & blood glucose check" },
+      { "id": "r4", "time": "15:00", "activity": "Chair yoga with Maria" },
+      { "id": "r5", "time": "18:00", "activity": "Dinner & evening medications" },
+      { "id": "r6", "time": "21:00", "activity": "Evening vitals & wind-down" }
+    ],
+    "medications": [
+      { "id": "m1", "name": "Metformin", "dosage": "500 mg", "schedule": "Twice daily with meals", "taken": true, "reminder": true },
+      { "id": "m2", "name": "Lisinopril", "dosage": "10 mg", "schedule": "Once daily, morning", "taken": true, "reminder": true },
+      { "id": "m3", "name": "Vitamin D3", "dosage": "2000 IU", "schedule": "Once daily, breakfast", "taken": false, "reminder": true },
+      { "id": "m4", "name": "Aspirin", "dosage": "81 mg", "schedule": "Once daily, evening", "taken": false, "reminder": false }
+    ],
+    "appointments": [
+      { "id": "a1", "title": "Primary care follow-up", "date": "Aug 24", "time": "10:30 AM", "provider": "Dr. Reyes — Clinic" },
+      { "id": "a2", "title": "Podiatry check", "date": "Sep 02", "time": "2:00 PM", "provider": "Dr. Osei — Foot Center" },
+      { "id": "a3", "title": "Physical therapy", "date": "Sep 09", "time": "9:00 AM", "provider": "Northside Rehab" }
+    ]
+  },
+  "caregivers": [
+    {
+      "id": "cg1",
+      "name": "Maria Santos",
+      "role": "Companion Caregiver",
+      "rating": 4.9,
+      "reviews": 38,
+      "yearsExperience": 6,
+      "hourlyRate": 28,
+      "specialties": ["Dementia Care", "Mobility Support"],
+      "availableNow": true
+    },
+    {
+      "id": "cg2",
+      "name": "James Okafor",
+      "role": "Home Health Aide",
+      "rating": 4.8,
+      "reviews": 24,
+      "yearsExperience": 4,
+      "hourlyRate": 25,
+      "specialties": ["Medication Reminders", "Meal Prep"],
+      "availableNow": true
+    },
+    {
+      "id": "cg3",
+      "name": "Linda Park",
+      "role": "Registered Nurse",
+      "rating": 5.0,
+      "reviews": 51,
+      "yearsExperience": 11,
+      "hourlyRate": 45,
+      "specialties": ["Diabetes Management", "Wound Care"],
+      "availableNow": false
+    },
+    {
+      "id": "cg4",
+      "name": "Tomás Herrera",
+      "role": "Companion Caregiver",
+      "rating": 4.7,
+      "reviews": 17,
+      "yearsExperience": 3,
+      "hourlyRate": 22,
+      "specialties": ["Companionship", "Transportation"],
+      "availableNow": false
+    },
+    {
+      "id": "cg5",
+      "name": "Aisha Rahman",
+      "role": "Home Health Aide",
+      "rating": 4.9,
+      "reviews": 29,
+      "yearsExperience": 5,
+      "hourlyRate": 27,
+      "specialties": ["Housekeeping", "Personal Care"],
+      "availableNow": true
+    },
+    {
+      "id": "cg6",
+      "name": "Robert Chen",
+      "role": "Physical Therapist",
+      "rating": 4.8,
+      "reviews": 33,
+      "yearsExperience": 9,
+      "hourlyRate": 50,
+      "specialties": ["Balance & Falls", "Post-Surgery Rehab"],
+      "availableNow": false
+    }
+  ],
+  "serviceCategories": ["Home Health Aide", "Meal Delivery", "Transportation", "Social Activities"],
+  "services": [
+    {
+      "id": "sv1",
+      "name": "BrightSide Home Care",
+      "category": "Home Health Aide",
+      "address": "220 Elm Street",
+      "phone": "(555) 410-2233",
+      "distanceMiles": 1.2,
+      "rating": 4.8,
+      "hours": "7 AM – 9 PM"
+    },
+    {
+      "id": "sv2",
+      "name": "Sunrise Companions",
+      "category": "Home Health Aide",
+      "address": "84 Maple Avenue",
+      "phone": "(555) 410-1144",
+      "distanceMiles": 2.5,
+      "rating": 4.6,
+      "hours": "Open 24 hours"
+    },
+    {
+      "id": "sv3",
+      "name": "FreshTray Meals",
+      "category": "Meal Delivery",
+      "address": "30 Oak Drive",
+      "phone": "(555) 410-5566",
+      "distanceMiles": 3.1,
+      "rating": 4.7,
+      "hours": "10 AM – 7 PM"
+    },
+    {
+      "id": "sv4",
+      "name": "Community Nutrition Kitchen",
+      "category": "Meal Delivery",
+      "address": "5 Pine Court",
+      "phone": "(555) 410-7788",
+      "distanceMiles": 4.0,
+      "rating": 4.5,
+      "hours": "8 AM – 6 PM"
+    },
+    {
+      "id": "sv5",
+      "name": "SeniorGo Transit",
+      "category": "Transportation",
+      "address": "15 Cedar Lane",
+      "phone": "(555) 410-9900",
+      "distanceMiles": 0.9,
+      "rating": 4.9,
+      "hours": "6 AM – 10 PM"
+    },
+    {
+      "id": "sv6",
+      "name": "Golden Years Ride",
+      "category": "Transportation",
+      "address": "77 Birch Road",
+      "phone": "(555) 410-3344",
+      "distanceMiles": 2.8,
+      "rating": 4.6,
+      "hours": "By appointment"
+    },
+    {
+      "id": "sv7",
+      "name": "Second Wind Social Club",
+      "category": "Social Activities",
+      "address": "19 Willow Way",
+      "phone": "(555) 410-6677",
+      "distanceMiles": 1.7,
+      "rating": 4.8,
+      "hours": "9 AM – 5 PM"
+    },
+    {
+      "id": "sv8",
+      "name": "Maplewood Senior Center",
+      "category": "Social Activities",
+      "address": "60 Aspen Street",
+      "phone": "(555) 410-1122",
+      "distanceMiles": 2.2,
+      "rating": 4.7,
+      "hours": "8 AM – 8 PM"
+    }
+  ],
+  "vitals": {
+    "metrics": [
+      { "key": "bloodPressure", "label": "Blood pressure", "unit": "mmHg", "latest": 122, "status": "Normal" },
+      { "key": "glucose", "label": "Blood glucose", "unit": "mg/dL", "latest": 142, "status": "Manageable" },
+      { "key": "heartRate", "label": "Heart rate", "unit": "bpm", "latest": 74, "status": "Normal" },
+      { "key": "weight", "label": "Weight", "unit": "lb", "latest": 154, "status": "Stable" }
+    ],
+    "series": {
+      "bloodPressure": [
+        { "date": "Aug 14", "value": 128, "systolic": 128, "diastolic": 82 },
+        { "date": "Aug 15", "value": 130, "systolic": 130, "diastolic": 84 },
+        { "date": "Aug 16", "value": 126, "systolic": 126, "diastolic": 80 },
+        { "date": "Aug 17", "value": 124, "systolic": 124, "diastolic": 78 },
+        { "date": "Aug 18", "value": 122, "systolic": 122, "diastolic": 76 }
+      ],
+      "glucose": [
+        { "date": "Aug 14", "value": 148 },
+        { "date": "Aug 15", "value": 145 },
+        { "date": "Aug 16", "value": 150 },
+        { "date": "Aug 17", "value": 139 },
+        { "date": "Aug 18", "value": 142 }
+      ],
+      "heartRate": [
+        { "date": "Aug 14", "value": 76 },
+        { "date": "Aug 15", "value": 72 },
+        { "date": "Aug 16", "value": 78 },
+        { "date": "Aug 17", "value": 71 },
+        { "date": "Aug 18", "value": 74 }
+      ],
+      "weight": [
+        { "date": "Aug 14", "value": 156 },
+        { "date": "Aug 15", "value": 155 },
+        { "date": "Aug 16", "value": 155 },
+        { "date": "Aug 17", "value": 154 },
+        { "date": "Aug 18", "value": 154 }
+      ]
+    }
+  },
+  "eventCategories": ["Health & Wellness", "Social", "Workshop", "Support Group"],
+  "events": [
+    {
+      "id": "ev1",
+      "title": "Morning chair yoga",
+      "date": "Mon Aug 24",
+      "time": "10:00 AM",
+      "location": "Maplewood Senior Center",
+      "category": "Health & Wellness",
+      "type": "in-person"
+    },
+    {
+      "id": "ev2",
+      "title": "Bingo social hour",
+      "date": "Tue Aug 25",
+      "time": "2:00 PM",
+      "location": "Second Wind Social Club",
+      "category": "Social",
+      "type": "in-person"
+    },
+    {
+      "id": "ev3",
+      "title": "Managing diabetes day to day",
+      "date": "Wed Aug 26",
+      "time": "11:00 AM",
+      "location": "Virtual session",
+      "category": "Health & Wellness",
+      "type": "virtual"
+    },
+    {
+      "id": "ev4",
+      "title": "Tech help for tablets & smartphones",
+      "date": "Thu Aug 27",
+      "time": "3:00 PM",
+      "location": "Maplewood Senior Center",
+      "category": "Workshop",
+      "type": "in-person"
+    },
+    {
+      "id": "ev5",
+      "title": "Caregiver coffee & connect",
+      "date": "Fri Aug 28",
+      "time": "9:30 AM",
+      "location": "Community Nutrition Kitchen",
+      "category": "Support Group",
+      "type": "in-person"
+    },
+    {
+      "id": "ev6",
+      "title": "Understanding Medicare changes",
+      "date": "Sat Aug 29",
+      "time": "1:00 PM",
+      "location": "Virtual session",
+      "category": "Workshop",
+      "type": "virtual"
+    }
+  ],
+  "resourceTopics": ["Medication Safety", "Home Safety", "Nutrition", "Caregiving Basics"],
+  "resources": [
+    {
+      "id": "rc1",
+      "title": "Medication organizer checklist",
+      "description": "A printable checklist to set up weekly pill organizers and avoid missed doses.",
+      "topic": "Medication Safety",
+      "type": "guide",
+      "readTime": "10 min read",
+      "link": "/resources/medication-organizer"
+    },
+    {
+      "id": "rc2",
+      "title": "Fall-proofing your home",
+      "description": "Room-by-room tips for reducing fall risks — rugs, lighting, grab bars, and more.",
+      "topic": "Home Safety",
+      "type": "guide",
+      "readTime": "12 min read",
+      "link": "/resources/fall-proofing"
+    },
+    {
+      "id": "rc3",
+      "title": "Heart-healthy meals on a budget",
+      "description": "Simple, low-sodium recipes designed for seniors shopping on a fixed income.",
+      "topic": "Nutrition",
+      "type": "article",
+      "readTime": "8 min read",
+      "link": "/resources/heart-healthy-meals"
+    },
+    {
+      "id": "rc4",
+      "title": "Daily care routine template",
+      "description": "A fillable template for family caregivers to build a consistent daily schedule.",
+      "topic": "Caregiving Basics",
+      "type": "guide",
+      "readTime": "15 min read",
+      "link": "/resources/care-routine-template"
+    },
+    {
+      "id": "rc5",
+      "title": "How to give medications safely",
+      "description": "Watch a 6-minute video on the right way to prepare and give oral medications.",
+      "topic": "Medication Safety",
+      "type": "video",
+      "readTime": "6 min watch",
+      "link": "/resources/safe-medication-video"
+    },
+    {
+      "id": "rc6",
+      "title": "Reading food labels for seniors",
+      "description": "A quick guide to sodium, sugar, and serving sizes on common packaged foods.",
+      "topic": "Nutrition",
+      "type": "article",
+      "readTime": "6 min read",
+      "link": "/resources/food-labels"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Calendar, Loader2, ClipboardList, CheckCircle } from "lucide-react";
+
+interface ProjectDashboardProps {
+  project: {
+    id: string;
+    name: string;
+    description: string;
+    budget: number;
+    timeline: string;
+    status: "active" | "completed" | "archived";
+  };
+  onUpdate: (updates: Partial<{ budget: number; timeline: string; status: string }>) => void;
+}
+
+export default function ProjectDashboard({ project, onUpdate }: ProjectDashboardProps) {
+  const [budget, setBudget] = React.useState(project.budget);
+  const [timeline, setTimeline] = React.useState(project.timeline);
+  const [status, setStatus] = React.useState(project.status);
+  const [loading, setLoading] = React.useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="rounded-lg border border-gray-200 dark:border-gray-800 p-6 space-y-4"
+      aria-label={`Project dashboard: ${project.name}`}
+    >
+      <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+        <Calendar className="mr-2 h-4 w-4" /> {project.name}
+      </h2>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <ClipboardList className="mr-2 h-3.5 w-3.5" /> Budget
+        </label>
+        <input
+          type="number"
+          value={budget}
+          onChange={(e) => setBudget(Number(e.target.value))}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+          aria-label="Project budget"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <Calendar className="mr-2 h-3.5 w-3.5" /> Timeline
+        </label>
+        <input
+          value={timeline}
+          onChange={(e) => setTimeline(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+          aria-label="Project timeline"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <CheckCircle className="mr-2 h-3.5 w-3.5" /> Status
+        </label>
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value as "active" | "completed" | "archived")}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring appearance-none"
+          aria-label="Project status"
+        >
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="archived">Archived</option>
+        </select>
+      </div>
+
+      <button
+        onClick={() => {
+          setLoading(true);
+          onUpdate({ budget, timeline, status });
+          setTimeout(() => setLoading(false), 1500);
+        }}
+        className="w-full rounded-full bg-[[theme.color.primary]] text-white py-3 text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
+        aria-label "Save project updates"
+      >
+        {loading ? "Saving..." : "Save Changes"}
+      </button>
+    </motion.div>
+  );
+}

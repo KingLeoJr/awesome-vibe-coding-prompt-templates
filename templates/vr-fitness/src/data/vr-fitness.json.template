@@ -1,0 +1,114 @@
+{
+  "app": {
+    "name": "VrFitness",
+    "tagline": "Immersive VR fitness classes to achieve your health goals"
+  },
+  "userLevel": "intermediate",
+  "categories": ["yoga", "HIIT", "dance", "strength", "cardio"],
+  "classes": [
+    {
+      "id": "cls-001",
+      "title": "Morning Yoga Flow",
+      "type": "yoga",
+      "duration": 30,
+      "difficulty": "beginner",
+      "environment": "beach",
+      "caloriesPerMinute": 4,
+      "imageUrl": "/vr-classes/yoga.jpg",
+      "isFeatured": true
+    },
+    {
+      "id": "cls-002",
+      "title": "HIIT Power Circuit",
+      "type": "HIIT",
+      "duration": 20,
+      "difficulty": "intermediate",
+      "environment": "gym",
+      "caloriesPerMinute": 12,
+      "imageUrl": "/vr-classes/hiit.jpg",
+      "isFeatured": true
+    },
+    {
+      "id": "cls-003",
+      "title": "Dance Cardio Mix",
+      "type": "dance",
+      "duration": 25,
+      "difficulty": "intermediate",
+      "environment": "city",
+      "caloriesPerMinute": 8,
+      "imageUrl": "/vr-classes/dance.jpg",
+      "isFeatured": false
+    },
+    {
+      "id": "cls-004",
+      "title": "Strength Training",
+      "type": "strength",
+      "duration": 45,
+      "difficulty": "advanced",
+      "environment": "gym",
+      "caloriesPerMinute": 6,
+      "imageUrl": "/vr-classes/strength.jpg",
+      "isFeatured": false
+    },
+    {
+      "id": "cls-005",
+      "title": "Evening Yoga Reset",
+      "type": "yoga",
+      "duration": 20,
+      "difficulty": "beginner",
+      "environment": "forest",
+      "caloriesPerMinute": 3,
+      "imageUrl": "/vr-classes/yoga2.jpg",
+      "isFeatured": false
+    }
+  ],
+  "progress": {
+    "caloriesBurned": 2450,
+    "totalWorkouts": 12,
+    "longestSession": 45
+  },
+  "challenges": [
+    {
+      "id": "ch-001",
+      "title": "30-Day Streak",
+      "description": "Work out consecutively for 30 days",
+      "target": 30,
+      "current": 12
+    },
+    {
+      "id": "ch-002",
+      "title": "5000 Calories",
+      "description": "Burn 5000 calories in VR workouts",
+      "target": 5000,
+      "current": 2450
+    }
+  ],
+  "recentActivities": [
+    {
+      "id": "act-001",
+      "title": "Completed Morning Yoga Flow",
+      "type": "workout",
+      "duration": 30
+    },
+    {
+      "id": "act-002",
+      "title": "Started HIIT Power Circuit",
+      "type": "workout",
+      "duration": 20
+    }
+  ],
+  "userLeaderboard": [
+    {
+      "rank": 1,
+      "name": "Alex",
+      "xp": 5200,
+      "streak": 45
+    },
+    {
+      "rank": 2,
+      "name": "Sam",
+      "xp": 4800,
+      "streak": 38
+    }
+  ]
+}

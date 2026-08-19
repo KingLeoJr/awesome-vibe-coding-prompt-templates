@@ -1,0 +1,186 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { ClipboardList, FileText, MapPin, PhoneCall, Share2, ShieldCheck, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface PlanContact {
+  name: string;
+  role: string;
+  phone: string;
+}
+
+export interface PlanMeetingPoint {
+  name: string;
+  address: string;
+}
+
+export interface PlanRoute {
+  name: string;
+  route: string;
+}
+
+export interface PlanDocument {
+  name: string;
+  location: string;
+}
+
+export interface FamilyMember {
+  name: string;
+  needs: string;
+}
+
+export interface EmergencyPlan {
+  emergencyContacts: PlanContact[];
+  meetingPoints: PlanMeetingPoint[];
+  evacuationRoutes: PlanRoute[];
+  importantDocuments: PlanDocument[];
+  familyMembers: FamilyMember[];
+  sharedWithFamily: boolean;
+}
+
+interface PlanBuilderProps {
+  plan: EmergencyPlan;
+}
+
+export default function PlanBuilder({ plan }: PlanBuilderProps) {
+  const [shared, setShared] = useState(plan.sharedWithFamily);
+
+  const readiness = useMemo(() => {
+    const checks = [
+      plan.emergencyContacts.length > 0,
+      plan.meetingPoints.length > 0,
+      plan.evacuationRoutes.length > 0,
+      plan.importantDocuments.length > 0,
+      plan.familyMembers.length > 0,
+      shared,
+    ];
+    return Math.round((checks.filter(Boolean).length / checks.length) * 100);
+  }, [plan, shared]);
+
+  const cards = [
+    {
+      title: "Emergency contacts",
+      icon: PhoneCall,
+      items: plan.emergencyContacts.map((c) => `${c.name} (${c.role}) — ${c.phone}`),
+    },
+    {
+      title: "Meeting points",
+      icon: MapPin,
+      items: plan.meetingPoints.map((m) => `${m.name} — ${m.address}`),
+    },
+    {
+      title: "Evacuation routes",
+      icon: ClipboardList,
+      items: plan.evacuationRoutes.map((r) => `${r.name} — ${r.route}`),
+    },
+    {
+      title: "Important documents",
+      icon: FileText,
+      items: plan.importantDocuments.map((d) => `${d.name} — ${d.location}`),
+    },
+  ];
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="plans-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <ShieldCheck size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="plans-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Your emergency plan</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Personalized response strategy built around your household.</p>
+            </div>
+          </div>
+
+          <div className="w-full max-w-xs">
+            <div className="mb-2 flex items-center justify-between text-sm">
+              <span className="text-gray-500 dark:text-gray-400">Readiness</span>
+              <span className="font-bold text-gray-900 dark:text-white tabular-nums">{readiness}%</span>
+            </div>
+            <div
+              className="h-2.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800"
+              role="progressbar"
+              aria-label="Plan readiness"
+              aria-valuenow={readiness}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            >
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: `${readiness}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2">
+          {cards.map((card, i) => (
+            <motion.article
+              key={card.title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+            >
+              <h3 className="flex items-center gap-2.5 font-semibold text-gray-900 dark:text-white">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                  <card.icon size={18} aria-hidden="true" />
+                </span>
+                {card.title}
+              </h3>
+              <ul className="mt-4 flex flex-col gap-2 text-sm text-gray-600 dark:text-gray-300" aria-label={card.title}>
+                {card.items.map((item) => (
+                  <li key={item} className="rounded-xl bg-gray-50 px-3 py-2 dark:bg-gray-900">{item}</li>
+                ))}
+              </ul>
+            </motion.article>
+          ))}
+        </div>
+
+        <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h3 className="flex items-center gap-2.5 font-semibold text-gray-900 dark:text-white">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+                <Users size={18} aria-hidden="true" />
+              </span>
+              Household
+            </h3>
+            <div className="mt-3 flex flex-wrap gap-2" role="list" aria-label="Family members">
+              {plan.familyMembers.map((member) => (
+                <span key={member.name} className="rounded-full border border-gray-200 px-3 py-1 text-xs font-medium text-gray-600 dark:border-gray-800 dark:text-gray-300">
+                  {member.name} · {member.needs}
+                </span>
+              ))}
+            </div>
+          </div>
+          <button
+            onClick={() => setShared((v) => !v)}
+            aria-pressed={shared}
+            className={cn(
+              "inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition",
+              shared
+                ? "bg-[var(--color-secondary)] text-white hover:opacity-90"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+            )}
+          >
+            <Share2 size={16} aria-hidden="true" />
+            {shared ? "Shared with family" : "Share with family"}
+          </button>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

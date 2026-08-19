@@ -1,0 +1,39 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  auth.protocol: "{{auth.protocol}}"
+  backend.technology: "{{backend.technology}}"
+  database: "{{database.technology}}"
+  state.management: "{{state.management}}"
+  ui.library: "{{ui.library}}"
+  animation: "{{animation.technology}}"
+  payments.provider: "{{payments.provider}}"
+  realtime: "{{realtime.technology}}"
+  devops: "{{devops.technology}}"
+  currency: "{{currency.symbol}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{frontend.framework}} for the frontend and {{backend.technology}} for the backend. Implement user authentication and authorization using {{auth.protocol}} for secure access. Design an engaging UI using {{ui.library}} for a modern and user-friendly experience. Use {{state.management}} for state management to handle complex application states. Create a personalized workout plan generator that tailors routines based on user input and progress tracking. Design a nutrition tracking feature that allows users to log meals, track calories, and receive meal suggestions based on dietary needs. Create an interactive video library with exercise demonstrations and instructional content for various fitness levels. Implement a live coaching feature that allows users to schedule sessions with certified trainers via video calls. Design a community forum where users can share experiences, ask questions, and support each other in their fitness journeys. Create an analytics dashboard that provides insights into user activity, progress over time, and goal achievement. Implement gamification elements like badges, challenges, and leaderboards to motivate users and enhance engagement. Design a mobile app version of the platform using React Native for on-the-go access to workouts and coaching. Create a secure payment processing system using {{payments.provider}} integration for subscription plans and one-on-one coaching fees. Design an onboarding process with tutorials guiding new users through app features and setting up their profiles. Create a referral program that rewards users for inviting friends to join the platform. Implement multi-language support to cater to international users. Design an accessibility feature ensuring compliance with WCAG standards. Integrate wearable devices ({{wearables.provider}}) for real-time data syncing. Design an interactive calendar feature for scheduling workouts, meal prep, and coaching sessions. Create personalized notifications for workout reminders, meal prep suggestions, and hydration alerts. Design a resource center with articles, videos, and tips on fitness, nutrition, and mental well-being. Design an emergency contact feature that provides local emergency numbers based on the user's location. Implement advanced search functionality across exercises, recipes, and community posts. Design user profiles where clients can manage their progress, preferences, and payment methods. Create educational resources such as video tutorials or guides on fitness techniques available in the platform. Implement push notifications for new features or community events within the app. Design an interactive quiz to assess fitness knowledge or readiness for specific programs. Create a custom API for third-party developers to integrate with the platform (e.g., wellness apps). Implement session recording features allowing trainers to review client workouts for better feedback. Design a motivational quotes section that updates daily to inspire users. Create a progress tracker that visualizes achievements in weight loss or muscle gain over time.
+
+## Non-functional requirements
+
+- **Security:** OAuth 2.0 with short-lived access tokens + refresh rotation; passwords hashed; TLS 1.3 in transit.
+- **Performance:** core screens under 2s on mid-range mobile; video streams adaptive bitrate.
+- **Responsive:** 320px → 4K, grids and booking UI reflow gracefully on mobile.
+- **Accessibility:** WCAG 2.1 AA, reduced-motion support, semantic landmarks, aria-labels.
+- **SEO:** server-rendered marketing shell, Open Graph + JSON-LD schema.
+
+## Acceptance criteria
+
+- A user can sign in, onboarding, create a workout plan, log nutrition, and view progress dashboard.
+- A user can book a coaching session, receive payment, and access video call.
+- The analytics dashboard renders user activity trends and goal progress on mobile and desktop.
+- The app passes `npm run lint` and `npm run typecheck` with no errors.

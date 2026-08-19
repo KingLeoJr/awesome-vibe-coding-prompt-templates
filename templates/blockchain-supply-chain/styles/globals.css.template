@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: {{theme.color.primary}};
+    --color-secondary: {{theme.color.secondary}};
+    --color-accent: {{theme.color.accent}};
+    --font-heading: "{{theme.font.heading}}", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "{{theme.font.body}}", ui-sans-serif, system-ui, sans-serif;
+    --radius-card: {{theme.radius}};
+    --spacing-section: {{theme.spacing.section}};
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .section-pad {
+    padding-block: var(--spacing-section);
+  }
+
+  .card-surface {
+    border-radius: var(--radius-card);
+    border: 1px solid rgb(229 231 235 / 1);
+    background-color: rgb(255 255 255 / 1);
+  }
+
+  .dark .card-surface {
+    border-color: rgb(31 41 55 / 1);
+    background-color: rgb(3 7 18 / 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

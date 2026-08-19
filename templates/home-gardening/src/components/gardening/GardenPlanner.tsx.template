@@ -1,0 +1,149 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { LayoutGrid, Plus, Sprout, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface GardenPlantRef {
+  id: string;
+  name: string;
+  x: number;
+  y: number;
+}
+
+export interface GardenPlot {
+  id: string;
+  name: string;
+  plants: GardenPlantRef[];
+  features: string[];
+}
+
+interface GardenPlannerProps {
+  plots: GardenPlot[];
+}
+
+const PALETTE = ["Tomato", "Basil", "Lavender", "Hostas", "Rose", "Kale", "Marigold", "Fern"];
+
+export default function GardenPlanner({ plots }: GardenPlannerProps) {
+  const [activePlot, setActivePlot] = useState<Record<string, GardenPlantRef[]>>(() =>
+    Object.fromEntries(plots.map((p) => [p.id, p.plants]))
+  );
+
+  const addPlant = (plotId: string, name: string) => {
+    setActivePlot((prev) => {
+      const current = prev[plotId] ?? [];
+      if (current.some((p) => p.name === name)) return prev;
+      const next = [...current, { id: `${plotId}-${name.toLowerCase()}`, name, x: 20 + Math.random() * 60, y: 20 + Math.random() * 60 }];
+      return { ...prev, [plotId]: next };
+    });
+  };
+
+  const removePlant = (plotId: string, plantId: string) => {
+    setActivePlot((prev) => ({ ...prev, [plotId]: (prev[plotId] ?? []).filter((p) => p.id !== plantId) }));
+  };
+
+  return (
+    <section aria-labelledby="planner-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <LayoutGrid size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="planner-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Garden planner</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Design each bed — add plants from the palette and see your layout.</p>
+          </div>
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-2">
+          {plots.map((plot, i) => {
+            const placed = activePlot[plot.id] ?? [];
+            return (
+              <motion.div
+                key={plot.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">{plot.name}</h3>
+                  <span className="rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-primary)]">
+                    {placed.length} plants
+                  </span>
+                </div>
+
+                <div
+                  className="relative mt-4 h-56 overflow-hidden rounded-xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+                  role="img"
+                  aria-label={`${plot.name} layout preview`}
+                >
+                  {placed.map((plant) => (
+                    <motion.button
+                      key={plant.id}
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      style={{ left: `${plant.x}%`, top: `${plant.y}%` }}
+                      onClick={() => removePlant(plot.id, plant.id)}
+                      className="absolute -translate-x-1/2 -translate-y-1/2"
+                      aria-label={`Remove ${plant.name}`}
+                    >
+                      <span className="flex items-center gap-1 rounded-full bg-[var(--color-primary)]/15 px-2 py-1 text-xs font-medium text-[var(--color-primary)] hover:bg-[var(--color-primary)]/25 transition">
+                        <Sprout size={12} aria-hidden="true" />
+                        {plant.name}
+                        <X size={11} aria-hidden="true" />
+                      </span>
+                    </motion.button>
+                  ))}
+                  {placed.length === 0 && (
+                    <span className="absolute inset-0 flex items-center justify-center text-sm text-gray-400 dark:text-gray-500">
+                      Pick plants from the palette below
+                    </span>
+                  )}
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label={`Add plants to ${plot.name}`}>
+                  {PALETTE.map((plantName) => {
+                    const isPlaced = placed.some((p) => p.name === plantName);
+                    return (
+                      <button
+                        key={plantName}
+                        onClick={() => addPlant(plot.id, plantName)}
+                        disabled={isPlaced}
+                        className={cn(
+                          "inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition",
+                          isPlaced
+                            ? "border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-500 opacity-60"
+                            : "border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+                        )}
+                      >
+                        <Plus size={12} aria-hidden="true" />
+                        {plantName}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2 border-t border-gray-100 pt-4 dark:border-gray-800">
+                  {plot.features.map((feature) => (
+                    <span key={feature} className="rounded-full bg-[var(--color-accent)]/10 px-2.5 py-1 text-xs font-medium text-[var(--color-accent)]">
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

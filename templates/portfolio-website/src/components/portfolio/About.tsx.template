@@ -1,0 +1,80 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Moon, Sun, Users, Shield, Palette, Users as UsersIcon } from "lucide-react";
+
+interface AboutProps {
+  headshot: string;
+  bio: string;
+  socialLinks: { platform: string; url: string }[];
+}
+
+export default function About({ headshot, bio, socialLinks }: AboutProps) {
+  const animateVariants = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 }
+  };
+
+  return (
+    <section
+      className="py-16 bg-white dark:bg-gray-900"
+      id="about"
+    >
+      <motion.div
+        initial={animateVariants.initial}
+        whileInView={animateVariants.whileInView}
+        viewport={animateVariants.viewport}
+        transition={animateVariants.transition}
+        className="container mx-auto px-6 max-w-3xl"
+      >
+        <div className="flex flex-col md:flex-row items-center gap-6">
+          {headshot && (
+            <img
+              src={headshot}
+              alt={bio}
+              className="w-32 h-32 rounded-full object-cover flex-shrink-0 border-4 border-[var(--color-primary)] dark:border-gray-900"
+              loading="lazy"
+            />
+          )}
+          <div>
+            <h2 className="text-3xl font-bold text-[var(--color-primary)] dark:text-white mb-4">
+              About
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              {bio}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-900 text-sm font-medium rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                >
+                  {link.platform}
+                  <svg
+                    className="ml-1 h-4 w-4"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M10 15l-5-5a1 1 0 0 1 0-1.42l7-7a1 1 0 0 1 1.42 0l7 7a1 1 0 0 1-1.42 1.42L18 14.58l-5.3 5.3a1 1 0 0 1-1.42 0z" />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll-based storytelling indicators */}
+        <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Scroll down to discover more — use AOS for animated reveals
+          </p>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

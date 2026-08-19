@@ -1,0 +1,156 @@
+﻿{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "stats": [
+    { "label": "Total value locked", "value": "$1.42B", "delta": "+3.8%" },
+    { "label": "24h volume", "value": "$386M", "delta": "+12.4%" },
+    { "label": "Active wallets", "value": "214k", "delta": "+6.1%" },
+    { "label": "Total farms", "value": "48", "delta": "+4 new" }
+  ],
+  "tokens": [
+    { "symbol": "ETH", "name": "Ethereum", "priceUsd": 3245.18, "change24h": 1.42 },
+    { "symbol": "USDC", "name": "USD Coin", "priceUsd": 1.0002, "change24h": 0.01 },
+    { "symbol": "DHB", "name": "DefiHub", "priceUsd": 2.84, "change24h": 5.67 },
+    { "symbol": "WBTC", "name": "Wrapped Bitcoin", "priceUsd": 61120.4, "change24h": -0.84 },
+    { "symbol": "LINK", "name": "Chainlink", "priceUsd": 14.32, "change24h": 2.13 },
+    { "symbol": "DAI", "name": "Dai Stablecoin", "priceUsd": 1.0001, "change24h": 0.0 }
+  ],
+  "wallet": {
+    "account": {
+      "address": "0x3f5aB84bB94cD47aC9Df34aB8c1A6Ee5F7d0E42c",
+      "chainId": 1,
+      "balanceUsd": 12450.32
+    }
+  },
+  "pools": [
+    {
+      "id": "PL-ETH-USDC",
+      "pair": "ETH / USDC",
+      "symbolA": "ETH",
+      "symbolB": "USDC",
+      "tvlUsd": 412000000,
+      "apr": 18.42,
+      "volume24h": 96400000,
+      "feeTier": 0.3,
+      "change24h": 1.2
+    },
+    {
+      "id": "PL-DHB-ETH",
+      "pair": "DHB / ETH",
+      "symbolA": "DHB",
+      "symbolB": "ETH",
+      "tvlUsd": 98700000,
+      "apr": 34.1,
+      "volume24h": 21500000,
+      "feeTier": 0.3,
+      "change24h": 4.6
+    },
+    {
+      "id": "PL-WBTC-USDC",
+      "pair": "WBTC / USDC",
+      "symbolA": "WBTC",
+      "symbolB": "USDC",
+      "tvlUsd": 265000000,
+      "apr": 11.8,
+      "volume24h": 52100000,
+      "feeTier": 0.05,
+      "change24h": -0.6
+    },
+    {
+      "id": "PL-ETH-DAI",
+      "pair": "ETH / DAI",
+      "symbolA": "ETH",
+      "symbolB": "DAI",
+      "tvlUsd": 84300000,
+      "apr": 22.65,
+      "volume24h": 18900000,
+      "feeTier": 0.3,
+      "change24h": 2.1
+    },
+    {
+      "id": "PL-LINK-ETH",
+      "pair": "LINK / ETH",
+      "symbolA": "LINK",
+      "symbolB": "ETH",
+      "tvlUsd": 46200000,
+      "apr": 27.3,
+      "volume24h": 9800000,
+      "feeTier": 0.3,
+      "change24h": 3.4
+    }
+  ],
+  "farms": [
+    {
+      "id": "FRM-01",
+      "token": "DHB / ETH LP",
+      "symbol": "LP",
+      "apy": 68.4,
+      "totalStaked": 3120000,
+      "rewardToken": "DHB",
+      "lockDays": 7,
+      "tvlUsd": 98700000
+    },
+    {
+      "id": "FRM-02",
+      "token": "USDC / ETH LP",
+      "symbol": "LP",
+      "apy": 42.1,
+      "totalStaked": 8450000,
+      "rewardToken": "DHB",
+      "lockDays": 30,
+      "tvlUsd": 412000000
+    },
+    {
+      "id": "FRM-03",
+      "token": "DHB Single Stake",
+      "symbol": "DHB",
+      "apy": 34.8,
+      "totalStaked": 21400000,
+      "rewardToken": "DHB",
+      "lockDays": 14,
+      "tvlUsd": 60800000
+    },
+    {
+      "id": "FRM-04",
+      "token": "WBTC / USDC LP",
+      "symbol": "LP",
+      "apy": 26.9,
+      "totalStaked": 4870000,
+      "rewardToken": "DHB",
+      "lockDays": 0,
+      "tvlUsd": 265000000
+    }
+  ],
+  "proposals": [
+    {
+      "id": "PROP-128",
+      "title": "Reduce DHB emissions on stablecoin farms by 20%",
+      "status": "Active",
+      "forVotes": 1284000,
+      "againstVotes": 612000,
+      "quorum": 1500000,
+      "deadline": "Aug 26, 2026"
+    },
+    {
+      "id": "PROP-127",
+      "title": "Add ETH / DAI pool to the boosted rewards program",
+      "status": "Active",
+      "forVotes": 1420000,
+      "againstVotes": 318000,
+      "quorum": 1500000,
+      "deadline": "Aug 24, 2026"
+    },
+    {
+      "id": "PROP-126",
+      "title": "Deploy fee switch â€” route 15% of swap fees to DHB stakers",
+      "status": "Passed",
+      "forVotes": 2108000,
+      "againstVotes": 294000,
+      "quorum": 1500000,
+      "deadline": "Aug 12, 2026"
+    }
+  ]
+}

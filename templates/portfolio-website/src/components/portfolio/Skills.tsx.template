@@ -1,0 +1,91 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Chart as ChartComponent, PiggyBank, TrendingUp, TrendingDown, Wallet } from "lucide-react";
+import WordCloud from "react-wordcloud";
+import Tooltip from "react-tooltip";
+
+interface SkillsProps {
+  progressBars: { name: string; percentage: number; color?: string }[];
+  wordCloudData: { word: string; size: number }[];
+}
+
+export default function Skills({ progressBars, wordCloudData }: SkillsProps) {
+  const animateVariants = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 }
+  };
+
+  return (
+    <section
+      className="py-16 bg-white dark:bg-gray-900"
+      id="skills"
+    >
+      <motion.div
+        initial={animateVariants.initial}
+        whileInView={animateVariants.whileInView}
+        viewport={animateVariants.viewport}
+        transition={animateVariants.transition}
+        className="container mx-auto px-6 max-w-2xl"
+      >
+        <h2 className="text-3xl font-bold text-[var(--color-primary)] dark:text-white mb-8">
+          Skills
+        </h2>
+
+        {/* Animated Progress Bars */}
+        <div className="space-y-4">
+          {progressBars.map((bar, index) => (
+            <motion.div
+              key={bar.name}
+              initial={animateVariants.initial}
+              whileInView={animateVariants.whileInView}
+              viewport={animateVariants.viewport}
+              transition={{
+                ...animateVariants.transition,
+                delay: index * 0.08
+              }}
+              className="flex items-center gap-3"
+            >
+              <span className="text-sm text-gray-500 dark:text-gray-400">{bar.name}</span>
+              <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                <div
+                  style={{ width: bar.percentage + "%" }}
+                  className="h-full bg-[var(--color-primary)] dark:bg-[var(--color-primary-dark)] transition-all duration-2 ease-out"
+                />
+              </div>
+              <span className="text-sm font-medium text-[var(--color-primary)] dark:text-white ms-3">{bar.percentage}%</span>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Word Cloud */}
+        {wordCloudData.length > 0 && (
+          <div className="mt-8">
+            <WordCloud
+              data={wordCloudData}
+              className="text-[var(--color-secondary)]"
+              size={120}
+              shape="circle"
+              gridSize={8}
+              weightFactor="optical"
+              rotateAngle={0.3}
+            />
+            <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+              Interactive skills visualization
+            </div>
+          </div>
+        )}
+
+        {/* Skill Tooltips */}
+        <div className="mt-8">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Hover over skill bars for detailed breakdown
+          </p>
+          {/* Tooltip will appear on hover */}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

@@ -1,0 +1,205 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "topics": ["Anxiety", "Depression", "Stress Management", "Mindfulness", "Sleep", "Relationships"],
+  "formats": ["article", "video", "podcast", "worksheet"],
+  "resources": [
+    {
+      "id": "res-001",
+      "title": "Box breathing: a 5-minute reset for anxious moments",
+      "type": "article",
+      "topic": "Anxiety",
+      "duration": "5 min",
+      "level": "beginner",
+      "author": "Dr. Ana Reyes",
+      "url": "https://example.com/library/box-breathing"
+    },
+    {
+      "id": "res-002",
+      "title": "A gentle guide to your first therapy session",
+      "type": "video",
+      "topic": "Depression",
+      "duration": "14 min",
+      "level": "beginner",
+      "author": "The Care Collective",
+      "url": "https://example.com/library/first-session"
+    },
+    {
+      "id": "res-003",
+      "title": "Morning check-in meditation",
+      "type": "podcast",
+      "topic": "Mindfulness",
+      "duration": "10 min",
+      "level": "beginner",
+      "author": "Mia Chen",
+      "url": "https://example.com/library/morning-meditation"
+    },
+    {
+      "id": "res-004",
+      "title": "Cognitive restructuring worksheet",
+      "type": "worksheet",
+      "topic": "Stress Management",
+      "duration": "20 min",
+      "level": "intermediate",
+      "author": "Dr. Sam Okafor",
+      "url": "https://example.com/library/cbt-worksheet"
+    },
+    {
+      "id": "res-005",
+      "title": "Sleep hygiene: what actually helps",
+      "type": "article",
+      "topic": "Sleep",
+      "duration": "8 min",
+      "level": "beginner",
+      "author": "Dr. Lena Torres",
+      "url": "https://example.com/library/sleep-hygiene"
+    },
+    {
+      "id": "res-006",
+      "title": "Repairing a relationship after conflict",
+      "type": "podcast",
+      "topic": "Relationships",
+      "duration": "32 min",
+      "level": "intermediate",
+      "author": "Nadia & Sam",
+      "url": "https://example.com/library/repair-conflict"
+    }
+  ],
+  "moodLog": [
+    { "day": "Mon", "mood": 3, "energy": 3, "note": "Steady start to the week" },
+    { "day": "Tue", "mood": 2, "energy": 2, "note": "A bit low after a late night" },
+    { "day": "Wed", "mood": 3, "energy": 3, "note": "Better after a walk at lunch" },
+    { "day": "Thu", "mood": 4, "energy": 4, "note": "Good session with my therapist" },
+    { "day": "Fri", "mood": 3, "energy": 3, "note": "" },
+    { "day": "Sat", "mood": 5, "energy": 4, "note": "Saw friends — felt supported" },
+    { "day": "Sun", "mood": 4, "energy": 3, "note": "Rest day" }
+  ],
+  "moodSummary": {
+    "average": 3.4,
+    "trend": "+12% vs last week",
+    "bestDay": "Saturday"
+  },
+  "assessment": {
+    "title": "Weekly check-in",
+    "intro": "A few gentle questions to reflect on how you're doing — there are no right answers.",
+    "questions": [
+      { "id": "q1", "text": "Over the past week, how often have you felt overwhelmed?", "options": ["Rarely", "Sometimes", "Often", "Almost always"] },
+      { "id": "q2", "text": "How has your sleep been this week?", "options": ["Restful and consistent", "Mostly fine", "Frequently disrupted", "Very poor"] },
+      { "id": "q3", "text": "How connected do you feel to people around you?", "options": ["Very connected", "Somewhat connected", "A little distant", "Very isolated"] },
+      { "id": "q4", "text": "How well are you managing daily responsibilities?", "options": ["Very well", "Okay", "With difficulty", "Struggling"] },
+      { "id": "q5", "text": "How much are you enjoying activities you usually like?", "options": ["A lot", "Somewhat", "A little", "Not at all"] }
+    ]
+  },
+  "therapists": [
+    {
+      "id": "th-001",
+      "name": "Dr. Ana Reyes",
+      "specialty": "Anxiety",
+      "credentials": "PsyD",
+      "rating": 4.9,
+      "sessions": 420,
+      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2",
+      "modality": ["CBT", "Mindfulness-based"],
+      "languages": ["English", "Spanish"],
+      "nextAvailable": "Tomorrow",
+      "videoOnly": true
+    },
+    {
+      "id": "th-002",
+      "name": "Marcus Hill",
+      "specialty": "Depression",
+      "credentials": "LCSW",
+      "rating": 4.8,
+      "sessions": 310,
+      "avatar": "https://images.unsplash.com/photo-1560250097-0b93528c311a",
+      "modality": ["Interpersonal", "CBT"],
+      "languages": ["English"],
+      "nextAvailable": "Thu, Aug 21"
+    },
+    {
+      "id": "th-003",
+      "name": "Dr. Lena Torres",
+      "specialty": "Stress Management",
+      "credentials": "PhD",
+      "rating": 4.9,
+      "sessions": 505,
+      "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956",
+      "modality": ["Somatic", "Mindfulness-based"],
+      "languages": ["English", "Portuguese"],
+      "nextAvailable": "Today",
+      "videoOnly": true
+    }
+  ],
+  "community": [
+    {
+      "id": "post-001",
+      "author": "Jordan P.",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
+      "title": "Week six of therapy — sharing a small win",
+      "body": "I finally said the hard thing out loud in session. If you're nervous to start, the first step is the hardest — and it's worth it.",
+      "tags": ["therapy", "progress"],
+      "likes": 64,
+      "replies": 12,
+      "time": "2h ago"
+    },
+    {
+      "id": "post-002",
+      "author": "Mei L.",
+      "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
+      "title": "What helps when the anxiety spikes at night?",
+      "body": "Looking for gentle, practical things others do when a quiet house makes the thoughts louder. Grounding tips welcome.",
+      "tags": ["anxiety", "grounding"],
+      "likes": 41,
+      "replies": 23,
+      "time": "6h ago"
+    },
+    {
+      "id": "post-003",
+      "author": "Sam K.",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+      "title": "Gratitude for this space",
+      "body": "Reading everyone's posts this morning made me feel less alone before my shift. Thank you for being here.",
+      "tags": ["gratitude", "support"],
+      "likes": 88,
+      "replies": 9,
+      "time": "Yesterday"
+    },
+    {
+      "id": "post-004",
+      "author": "Priya S.",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb",
+      "title": "Trying the 10-minute morning meditation",
+      "body": "Three days in — my mind still wanders, but the pause before checking my phone has changed my whole morning.",
+      "tags": ["mindfulness", "habit"],
+      "likes": 53,
+      "replies": 15,
+      "time": "2 days ago"
+    }
+  ],
+  "wellness": {
+    "summary": [
+      { "label": "Sessions attended", "value": "12" },
+      { "label": "Resources explored", "value": "27" },
+      { "label": "Check-ins completed", "value": "9" },
+      { "label": "Day streak", "value": "14" }
+    ],
+    "weeklyEngagement": [
+      { "label": "Mon", "minutes": 24 },
+      { "label": "Tue", "minutes": 38 },
+      { "label": "Wed", "minutes": 18 },
+      { "label": "Thu", "minutes": 52 },
+      { "label": "Fri", "minutes": 30 },
+      { "label": "Sat", "minutes": 45 },
+      { "label": "Sun", "minutes": 22 }
+    ],
+    "topicsCovered": [
+      { "topic": "Anxiety", "pct": 38 },
+      { "topic": "Mindfulness", "pct": 27 },
+      { "topic": "Sleep", "pct": 19 },
+      { "topic": "Relationships", "pct": 16 }
+    ]
+  }
+}

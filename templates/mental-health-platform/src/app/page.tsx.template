@@ -1,0 +1,52 @@
+import Header from "@/components/layout/Header";
+import ResourceCard, { type WellnessResource } from "@/components/wellness/ResourceCard";
+import MoodTracker, { type MoodEntry, type MoodSummary } from "@/components/wellness/MoodTracker";
+import SelfAssessment, { type Assessment } from "@/components/wellness/SelfAssessment";
+import TherapistCard, { type Therapist } from "@/components/wellness/TherapistCard";
+import CommunityFeed, { type CommunityPost } from "@/components/wellness/CommunityFeed";
+import WellnessDashboard, { type WellnessData } from "@/components/wellness/WellnessDashboard";
+import Footer from "@/components/shared/Footer";
+import data from "@/data/{{app.slug}}.json";
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Header />
+
+      <main>
+        <section
+          id="resources"
+          className="bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10 scroll-mt-24"
+        >
+          <ResourceCard
+            resources={data.resources as WellnessResource[]}
+            topics={data.topics as string[]}
+            formats={data.formats as string[]}
+          />
+        </section>
+
+        <section id="mood" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <MoodTracker log={data.moodLog as MoodEntry[]} summary={data.moodSummary as MoodSummary} />
+        </section>
+
+        <section id="checkin" className="scroll-mt-24">
+          <SelfAssessment assessment={data.assessment as Assessment} />
+        </section>
+
+        <section id="therapists" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <TherapistCard therapists={data.therapists as Therapist[]} />
+        </section>
+
+        <section id="community" className="scroll-mt-24">
+          <CommunityFeed posts={data.community as CommunityPost[]} />
+        </section>
+
+        <section id="insights" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <WellnessDashboard wellness={data.wellness as WellnessData} />
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

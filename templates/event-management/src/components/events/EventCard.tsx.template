@@ -1,0 +1,101 @@
+"use client";
+
+import { CalendarDays, MapPin, Ticket, Users } from "lucide-react";
+import Card from "@/components/shared/Card";
+
+export interface EventItem {
+  id: number;
+  name: string;
+  description: string;
+  date: string;
+  category: string;
+  location: string;
+  venue: string;
+  capacity: number;
+  registered: number;
+  priceFrom: number;
+  status: "published" | "draft" | "sold_out" | "cancelled";
+  tags: string[];
+}
+
+interface EventCardProps {
+  event: EventItem;
+  currency?: string;
+  delay?: number;
+}
+
+export default function EventCard({ event, currency = "$", delay = 0 }: EventCardProps) {
+  const fill = Math.min(100, Math.round((event.registered / event.capacity) * 100));
+  const formattedDate = new Date(event.date).toLocaleDateString(undefined, {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+  const soldOut = event.status === "sold_out";
+
+  return (
+    <Card delay={delay} className="flex h-full flex-col gap-4 p-6">
+      <div className="flex items-start justify-between gap-3">
+        <span className="inline-flex items-center rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-primary)]">
+          {event.category}
+        </span>
+        {soldOut && (
+          <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700 dark:bg-red-900/40 dark:text-red-300">
+            Sold out
+          </span>
+        )}
+      </div>
+
+      <div>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">{event.name}</h3>
+        <p className="mt-1.5 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{event.description}</p>
+      </div>
+
+      <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-gray-500 dark:text-gray-400">
+        <span className="inline-flex items-center gap-1.5">
+          <CalendarDays size={15} aria-hidden /> {formattedDate}
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <MapPin size={15} aria-hidden /> {event.location}
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <Users size={15} aria-hidden /> {event.registered}/{event.capacity}
+        </span>
+      </div>
+
+      <div
+        className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800"
+        role="progressbar"
+        aria-label={`${fill}% of capacity booked`}
+        aria-valuenow={fill}
+        aria-valuemin={0}
+        aria-valuemax={100}
+      >
+        <div
+          className="h-full rounded-full bg-[var(--color-primary)] transition-all"
+          style={{ width: `${fill}%` }}
+        />
+      </div>
+
+      <div className="mt-auto flex items-center justify-between gap-3">
+        <p className="text-sm">
+          <span className="text-gray-400 dark:text-gray-500">from </span>
+          <span className="text-lg font-bold text-gray-900 dark:text-white">
+            {currency}
+            {event.priceFrom}
+          </span>
+        </p>
+        <a
+          href="#"
+          aria-disabled={soldOut}
+          aria-label={`Get tickets for ${event.name}`}
+          className={`inline-flex items-center justify-center gap-1.5 rounded-full border border-[color:var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] transition hover:bg-[var(--color-primary)]/10 disabled:cursor-not-allowed disabled:opacity-40 ${
+            soldOut ? "pointer-events-none" : ""
+          }`}
+        >
+          <Ticket size={15} aria-hidden /> {soldOut ? "Sold out" : "Tickets"}
+        </a>
+      </div>
+    </Card>
+  );
+}

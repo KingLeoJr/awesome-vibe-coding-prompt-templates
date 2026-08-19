@@ -1,0 +1,123 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Drumstick, Flame, Footprints, Moon, Trophy, type LucideIcon } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface Badge {
+  name: string;
+  description: string;
+  icon: string;
+  earned: boolean;
+}
+
+export interface Challenge {
+  name: string;
+  description: string;
+  progress: number;
+  target: number;
+}
+
+interface AchievementBadgeProps {
+  badges: Badge[];
+  challenges: Challenge[];
+}
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  flame: Flame,
+  footprints: Footprints,
+  moon: Moon,
+  drumstick: Drumstick,
+  trophy: Trophy,
+};
+
+export default function AchievementBadge({ badges, challenges }: AchievementBadgeProps) {
+  return (
+    <div className="space-y-8">
+      <div>
+        <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Badges</h3>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {badges.map((badge, index) => {
+            const Icon = ICON_MAP[badge.icon] ?? Trophy;
+            return (
+              <motion.div
+                key={badge.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.06 }}
+              >
+                <Card
+                  className={cn(
+                    "flex h-full flex-col items-center gap-2 p-5 text-center",
+                    !badge.earned && "opacity-50 grayscale"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "flex h-12 w-12 items-center justify-center rounded-2xl",
+                      badge.earned
+                        ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                        : "bg-gray-100 dark:bg-gray-900 text-gray-400"
+                    )}
+                  >
+                    <Icon size={24} aria-hidden />
+                  </span>
+                  <p className="text-sm font-bold text-gray-900 dark:text-white">{badge.name}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{badge.description}</p>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Challenges</h3>
+        <div className="grid gap-4 lg:grid-cols-2">
+          {challenges.map((challenge, index) => {
+            const ratio = Math.min(1, challenge.progress / challenge.target);
+            return (
+              <motion.div
+                key={challenge.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+              >
+                <Card className="p-5">
+                  <div className="mb-2 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-bold text-gray-900 dark:text-white">{challenge.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{challenge.description}</p>
+                    </div>
+                    <span className="text-sm font-semibold text-[var(--color-primary)] tabular-nums">
+                      {challenge.progress}/{challenge.target}
+                    </span>
+                  </div>
+                  <div
+                    className="h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800"
+                    role="progressbar"
+                    aria-label={`${challenge.name} progress`}
+                    aria-valuenow={Math.round(ratio * 100)}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${ratio * 100}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.08 }}
+                      className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)]"
+                    />
+                  </div>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}

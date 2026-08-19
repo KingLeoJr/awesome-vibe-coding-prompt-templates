@@ -1,0 +1,160 @@
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Lock, MessageSquare, Send, ShieldCheck } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface Message {
+  id: string;
+  from: "patient" | "provider";
+  text: string;
+  time: string;
+}
+
+export interface MessageThread {
+  id: string;
+  participantId: string;
+  participantName: string;
+  role: string;
+  unread: number;
+  messages: Message[];
+}
+
+interface CareMessageCenterProps {
+  conversations: MessageThread[];
+}
+
+export default function CareMessageCenter({ conversations }: CareMessageCenterProps) {
+  const [activeId, setActiveId] = useState(conversations[0]?.id ?? "");
+  const [threads, setThreads] = useState<MessageThread[]>(conversations);
+  const [draft, setDraft] = useState("");
+
+  const active = threads.find((t) => t.id === activeId) ?? threads[0];
+
+  const send = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!draft.trim() || !active) return;
+    const now = new Date();
+    const message: Message = {
+      id: `msg-${Date.now()}`,
+      from: "patient",
+      text: draft.trim(),
+      time: now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+    setThreads((prev) =>
+      prev.map((t) => (t.id === active.id ? { ...t, messages: [...t.messages, message], unread: 0 } : t))
+    );
+    setDraft("");
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="messages-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <MessageSquare size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="messages-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Secure messages</h2>
+            <p className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+              <ShieldCheck size={14} className="text-emerald-500" aria-hidden="true" />
+              End-to-end encrypted patient-provider communication.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-[320px_1fr] gap-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-4">
+          <nav aria-label="Conversations" className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible">
+            {threads.map((t) => {
+              const isActive = t.id === active?.id;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => {
+                    setActiveId(t.id);
+                    setThreads((prev) => prev.map((x) => (x.id === t.id ? { ...x, unread: 0 } : x)));
+                  }}
+                  aria-pressed={isActive}
+                  className={cn(
+                    "shrink-0 lg:w-full text-left rounded-xl border p-3 transition",
+                    isActive
+                      ? "border-[var(--color-secondary)] bg-[var(--color-secondary)]/5"
+                      : "border-gray-200 dark:border-gray-800 hover:border-[var(--color-secondary)]"
+                  )}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="font-semibold text-gray-900 dark:text-white">{t.participantName}</p>
+                    {t.unread > 0 && (
+                      <span className="rounded-full bg-[var(--color-primary)] px-2 py-0.5 text-[11px] font-semibold text-white">
+                        {t.unread}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{t.role}</p>
+                  <p className="mt-1 truncate text-xs text-gray-400 dark:text-gray-600">
+                    {t.messages[t.messages.length - 1]?.text}
+                  </p>
+                </button>
+              );
+            })}
+          </nav>
+
+          <div className="flex min-h-[420px] flex-col rounded-xl bg-gray-50 dark:bg-gray-900">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-4 py-3">
+              <div>
+                <p className="font-semibold text-gray-900 dark:text-white">{active?.participantName}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{active?.role}</p>
+              </div>
+              <span className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+                <Lock size={11} aria-hidden="true" />
+                Encrypted
+              </span>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3" aria-live="polite">
+              <AnimatePresence initial={false}>
+                {active?.messages.map((m) => (
+                  <motion.div
+                    key={m.id}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className={cn("max-w-[75%] rounded-2xl px-4 py-2.5 text-sm", m.from === "patient" ? "self-end bg-[var(--color-primary)] text-white" : "self-start bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100")}
+                  >
+                    <p>{m.text}</p>
+                    <p className={cn("mt-1 text-[10px]", m.from === "patient" ? "text-white/70" : "text-gray-400")}>{m.time}</p>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+
+            <form onSubmit={send} className="flex items-center gap-2 border-t border-gray-200 dark:border-gray-800 p-3" aria-label="Send message">
+              <input
+                type="text"
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                placeholder="Type a secure message…"
+                aria-label="Message text"
+                className="flex-1 rounded-full border border-gray-300 dark:border-gray-700 bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)]"
+              />
+              <button
+                type="submit"
+                disabled={!draft.trim()}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-secondary)] text-white hover:opacity-90 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label="Send message"
+              >
+                <Send size={16} aria-hidden="true" />
+              </button>
+            </form>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

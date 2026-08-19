@@ -1,0 +1,98 @@
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  BadgeCheck,
+  FileSearch,
+  Package,
+  PackageCheck,
+  Ship,
+  Truck,
+  Warehouse,
+  type LucideIcon,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { trackingEvents as sampleEvents } from "@/data/{{app.slug}}.json";
+
+export interface ChainEvent {
+  id: number;
+  status: string;
+  location: string;
+  handler: string;
+  timestamp: string;
+  confirmed: boolean;
+  blockNumber?: number;
+}
+
+interface TrackingTimelineProps {
+  events?: ChainEvent[];
+  shipmentLabel?: string;
+}
+
+function iconFor(status: string): LucideIcon {
+  const s = status.toLowerCase();
+  if (s.includes("custom")) return FileSearch;
+  if (s.includes("deliver") || s.includes("receive")) return PackageCheck;
+  if (s.includes("warehouse") || s.includes("hub")) return Warehouse;
+  if (s.includes("dispatch") || s.includes("pickup") || s.includes("collect")) return Truck;
+  if (s.includes("transit") || s.includes("ship") || s.includes("ocean")) return Ship;
+  return Package;
+}
+
+export default function TrackingTimeline({
+  events = sampleEvents,
+  shipmentLabel = "SC-4821",
+}: TrackingTimelineProps) {
+  return (
+    <div aria-label={`Chain-of-custody timeline for shipment ${shipmentLabel}`}>
+      <ol className="relative space-y-8 before:absolute before:left-[21px] before:top-2 before:h-[calc(100%-16px)] before:w-px before:bg-gradient-to-b before:from-[var(--color-primary)] before:via-gray-200 before:to-transparent before:dark:via-gray-800">
+        {events.map((event, index) => {
+          const Icon = iconFor(event.status);
+          return (
+            <motion.li
+              key={event.id}
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: index * 0.08 }}
+              className="relative flex gap-5"
+            >
+              <span
+                className={cn(
+                  "z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 bg-white dark:bg-gray-950",
+                  index === 0
+                    ? "border-[var(--color-primary)] text-[var(--color-primary)]"
+                    : "border-gray-200 text-gray-400 dark:border-gray-700 dark:text-gray-500"
+                )}
+              >
+                <Icon size={18} />
+              </span>
+
+              <div className="flex-1 rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-950">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <h4 className="font-semibold text-gray-900 dark:text-white">{event.status}</h4>
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium",
+                      event.confirmed
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
+                        : "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+                    )}
+                  >
+                    <BadgeCheck size={12} />
+                    {event.confirmed ? `Confirmed · block ${event.blockNumber}` : "Pending"}
+                  </span>
+                </div>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{event.location}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-400 dark:text-gray-500">
+                  <span>Handler: {event.handler}</span>
+                  <span>{event.timestamp}</span>
+                </div>
+              </div>
+            </motion.li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}

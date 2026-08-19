@@ -1,0 +1,114 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { SkipForward, SkipBackward, Volume2, MoreVertical } from "lucide-react";
+
+interface PlaybackControlsProps {
+  isPlaying: boolean;
+  progress: number; // 0-100
+  onPlayPause?: () => void;
+  onSeek?: (time: number) => void;
+  onFullscreen?: () => void;
+  volume?: number;
+  onVolumeChange?: (volume: number) => void;
+}
+
+export default function PlaybackControls({
+  isPlaying,
+  progress,
+  onPlayPause,
+  onSeek,
+  onFullscreen,
+  volume = 100,
+  onVolumeChange,
+}: PlaybackControlsProps) {
+  const handlePlayPause = () => {
+    onPlayPause?.();
+  };
+
+  const handleSeek = (e: React.MouseEvent, time: number) => {
+    onSeek?.(time);
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent) => {
+    const val = parseInt((e.target.value as string) || "100", 10);
+    onVolumeChange?.(val);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="fixed bottom-0 left-0 right-0 padding-4 flex items-center justify-between z-50"
+    >
+      <div className="flex items-center gap-3">
+        <button
+          onClick={handlePlayPause}
+          className="rounded-full p-2 bg-white/20 hover:bg-white/30 transition"
+          aria-label="Pause playback"
+        >
+          {isPlaying ? (
+            <SkipBackward className="h-5 w-5 text-white" />
+          ) : (
+            <Play className="h-5 w-5 text-white" />
+          )}
+        </button>
+
+        <button
+          onClick={onFullscreen}
+          className="rounded-full p-2 bg-white/20 hover:bg-white/30 transition"
+          aria-label "Enter fullscreen"
+        >
+          <MoreVertical className="h-5 w-5 text-white" />
+        </button>
+      </div>
+
+      <div className="flex-1 mx-8">
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={Math.round(progress)}
+          onChange={(e) => onSeek?.(parseInt(e.target.value as string, 10))}
+          className="w-full appearance-none rounded-full h-2 bg-gray-300 dark:bg-gray-700 outline-none"
+          aria-label "Video progress"
+        />
+        <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-600">
+          <div
+            className="h-full rounded-full bg-[[theme.color.primary]] transition-width"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+        <span>
+          {progress > 0 ? `${Math.round(progress / 60)}:%` : `0:00`}
+        </span>
+        <span>{`/${Math.round(100 / (progress > 0 ? progress / 60 : 1)) % :00}`}</span>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => onVolumeChange?.(0)}
+          className="rounded-full p-1 bg-white/20 hover:bg-white/30 transition"
+          aria-label "Mute volume"
+        >
+          <Volume2 className="h-4 w-4 text-white" />
+        </button>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={volume}
+          onChange={handleVolumeChange}
+          className="w-32 appearance-none rounded-full h-2 bg-gray-300 dark:bg-gray-700 outline-none"
+          aria-label "Volume control"
+        />
+      </div>
+    </motion.div>
+  );
+}

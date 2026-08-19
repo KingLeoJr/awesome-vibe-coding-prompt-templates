@@ -1,0 +1,139 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Activity, BatteryCharging, Gauge, TrendingUp, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface EnergyData {
+  current: { kwh: number; cost: number; percentOfTarget: number; status: string };
+  peakPeriods: string[];
+  hourly: { label: string; kwh: number }[];
+  targetKwh: number;
+}
+
+interface EnergyDashboardProps {
+  energy: EnergyData;
+  currency?: string;
+}
+
+export default function EnergyDashboard({ energy, currency = "{{currency.symbol}}" }: EnergyDashboardProps) {
+  const maxKwh = Math.max(...energy.hourly.map((h) => h.kwh), energy.targetKwh, 1);
+
+  const stats = [
+    {
+      label: "Consumed today",
+      value: `${energy.current.kwh} kWh`,
+      sub: `${Math.round(energy.current.percentOfTarget)}% of daily target`,
+      icon: Zap,
+      tone: "text-[var(--color-primary)]",
+    },
+    {
+      label: "Cost today",
+      value: `${currency}${energy.current.cost.toFixed(2)}`,
+      sub: "at current tariff",
+      icon: Gauge,
+      tone: "text-[var(--color-accent)]",
+    },
+    {
+      label: "Status",
+      value: energy.current.status,
+      sub: "live telemetry",
+      icon: Activity,
+      tone: "text-[var(--color-secondary)]",
+    },
+    {
+      label: "Peak window",
+      value: energy.peakPeriods[0] ?? "—",
+      sub: "shift usage to save",
+      icon: BatteryCharging,
+      tone: "text-emerald-500",
+    },
+  ];
+
+  return (
+    <section aria-labelledby="overview-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <Activity size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="overview-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Energy dashboard</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Real-time consumption across every connected device.</p>
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-5"
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+                <stat.icon size={18} className={stat.tone} aria-hidden="true" />
+              </div>
+              <p className="mt-2 text-xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">{stat.sub}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white">Hourly usage (kWh)</h3>
+            <span className="rounded-full bg-[var(--color-accent)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-accent)]">
+              Target {energy.targetKwh} kWh/day
+            </span>
+          </div>
+
+          <div className="relative">
+            <div
+              className="pointer-events-none absolute inset-x-0 top-[2px] h-px border-t-2 border-dashed border-gray-300 dark:border-gray-700"
+              aria-hidden
+            >
+              <span className="absolute -top-2 right-0 text-[10px] font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">
+                target
+              </span>
+            </div>
+
+            <div className="flex items-end justify-between gap-2 pt-6" role="img" aria-label="Hourly energy consumption bar chart">
+              {energy.hourly.map((hour, i) => (
+                <div key={hour.label} className="flex flex-1 flex-col items-center gap-2">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    whileInView={{ height: `${Math.max(8, (hour.kwh / maxKwh) * 100)}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.04 }}
+                    className={cn(
+                      "w-full rounded-lg bg-gradient-to-t",
+                      hour.kwh > energy.targetKwh / energy.hourly.length
+                        ? "from-[var(--color-accent)] to-[var(--color-accent)]/70"
+                        : "from-[var(--color-primary)] to-[var(--color-secondary)]"
+                    )}
+                    style={{ minHeight: 8 }}
+                  />
+                  <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400">{hour.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="mt-6 flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+            <TrendingUp size={15} className="text-[var(--color-secondary)]" aria-hidden="true" />
+            Peak usage clusters around {energy.peakPeriods.join(", ")} — shift laundry and dishwashing outside this window.
+          </p>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

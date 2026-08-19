@@ -1,0 +1,99 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "nav": [
+    { "label": "Classes", "href": "#classes" },
+    { "label": "Tutorials", "href": "#tutorials" },
+    { "label": "Recipes", "href": "#recipes" },
+    { "label": "MealPlanner", "href": "#mealplanner" },
+    { "label": "Chefs", "href": "#chefs" },
+    { "label": "Community", "href": "#community" }
+  ],
+  "cuisines": ["Italian", "Japanese", "Mexican", "French", "Indian"],
+  "dietaryFocuses": ["Vegetarian", "Vegan", "Gluten-Free", "Dairy-Free", "High-Protein"],
+  "difficultyLevels": ["Beginner", "Intermediate", "Advanced"],
+  "classes": [
+    { "id": "cls-001", "title": "Fresh Pasta from Scratch", "cuisine": "Italian", "difficulty": "Intermediate", "dietary": "Vegetarian", "instructor": "Chef Marco Bellini", "date": "2026-08-26", "time": "18:00", "duration": "90 min", "seats": 12, "booked": false, "price": 39 },
+    { "id": "cls-002", "title": "Sushi Rolling Fundamentals", "cuisine": "Japanese", "difficulty": "Beginner", "dietary": "Gluten-Free", "instructor": "Chef Aiko Tanaka", "date": "2026-08-27", "time": "19:30", "duration": "120 min", "seats": 10, "booked": true, "price": 45 },
+    { "id": "cls-003", "title": "Street Tacos & Salsas", "cuisine": "Mexican", "difficulty": "Beginner", "dietary": "Gluten-Free", "instructor": "Chef Rosa Delgado", "date": "2026-08-28", "time": "17:00", "duration": "75 min", "seats": 14, "booked": false, "price": 35 },
+    { "id": "cls-004", "title": "Classic French Sauces", "cuisine": "French", "difficulty": "Advanced", "dietary": "Dairy-Free", "instructor": "Chef Luc Moreau", "date": "2026-08-29", "time": "18:30", "duration": "150 min", "seats": 8, "booked": false, "price": 55 },
+    { "id": "cls-005", "title": "Plant-Based Curry Night", "cuisine": "Indian", "difficulty": "Intermediate", "dietary": "Vegan", "instructor": "Chef Priya Sharma", "date": "2026-08-30", "time": "19:00", "duration": "90 min", "seats": 12, "booked": true, "price": 38 },
+    { "id": "cls-006", "title": "Sourdough Bread Workshop", "cuisine": "French", "difficulty": "Advanced", "dietary": "Vegan", "instructor": "Chef Marc Dubois", "date": "2026-09-01", "time": "16:30", "duration": "180 min", "seats": 8, "booked": false, "price": 49 }
+  ],
+  "tutorials": [
+    { "id": "vid-001", "title": "Knife Skills: Chop Like a Pro", "cuisine": "French", "difficulty": "Beginner", "dietary": "Vegan", "duration": "12 min", "views": 84200, "url": "https://example.com/tutorials/knife-skills" },
+    { "id": "vid-002", "title": "Perfect Ramen Tonkotsu Broth", "cuisine": "Japanese", "difficulty": "Advanced", "dietary": "High-Protein", "duration": "28 min", "views": 41500, "url": "https://example.com/tutorials/ramen-broth" },
+    { "id": "vid-003", "title": "Mole Poblano from First Principles", "cuisine": "Mexican", "difficulty": "Advanced", "dietary": "Gluten-Free", "duration": "34 min", "views": 28900, "url": "https://example.com/tutorials/mole-poblano" },
+    { "id": "vid-004", "title": "Risotto Techniques: Creamy Without Cream", "cuisine": "Italian", "difficulty": "Intermediate", "dietary": "Vegetarian", "duration": "18 min", "views": 52300, "url": "https://example.com/tutorials/risotto" },
+    { "id": "vid-005", "title": "Dosa Batter & Fermentation", "cuisine": "Indian", "difficulty": "Intermediate", "dietary": "Vegan", "duration": "22 min", "views": 19400, "url": "https://example.com/tutorials/dosa" },
+    { "id": "vid-006", "title": "Tempering & Blooming Spices", "cuisine": "Indian", "difficulty": "Beginner", "dietary": "Vegan", "duration": "9 min", "views": 33700, "url": "https://example.com/tutorials/tempering-spices" }
+  ],
+  "recipes": [
+    { "id": "rec-001", "title": "Rustic Margherita Pizza", "cuisine": "Italian", "difficulty": "Beginner", "dietary": "Vegetarian", "prepTime": 20, "cookTime": 12, "servings": 2, "calories": 640, "rating": 4.8, "ingredientCount": 7 },
+    { "id": "rec-002", "title": "Spicy Thai Green Curry", "cuisine": "Thai", "difficulty": "Intermediate", "dietary": "Vegan", "prepTime": 25, "cookTime": 20, "servings": 4, "calories": 480, "rating": 4.6, "ingredientCount": 12 },
+    { "id": "rec-003", "title": "Fluffy Gluten-Free Pancakes", "cuisine": "American", "difficulty": "Beginner", "dietary": "Gluten-Free", "prepTime": 10, "cookTime": 15, "servings": 3, "calories": 320, "rating": 4.5, "ingredientCount": 8 },
+    { "id": "rec-004", "title": "Sous-Vide Salmon with Herb Butter", "cuisine": "French", "difficulty": "Advanced", "dietary": "High-Protein", "prepTime": 15, "cookTime": 45, "servings": 2, "calories": 510, "rating": 4.9, "ingredientCount": 9 },
+    { "id": "rec-005", "title": "Chana Masala with Basmati", "cuisine": "Indian", "difficulty": "Intermediate", "dietary": "Vegan", "prepTime": 15, "cookTime": 35, "servings": 4, "calories": 420, "rating": 4.7, "ingredientCount": 14 },
+    { "id": "rec-006", "title": "Vegan Alfredo with Cashew Cream", "cuisine": "Italian", "difficulty": "Intermediate", "dietary": "Dairy-Free", "prepTime": 20, "cookTime": 15, "servings": 3, "calories": 560, "rating": 4.4, "ingredientCount": 10 }
+  ],
+  "mealPlan": {
+    "weekLabel": "Week of August 24",
+    "days": [
+      {
+        "day": "Monday",
+        "meals": [
+          { "meal": "Breakfast", "title": "Gluten-Free Pancakes", "recipeId": "rec-003", "prepTime": 25, "dietary": "Gluten-Free" },
+          { "meal": "Lunch", "title": "Chana Masala", "recipeId": "rec-005", "prepTime": 50, "dietary": "Vegan" },
+          { "meal": "Dinner", "title": "Thai Green Curry", "recipeId": "rec-002", "prepTime": 45, "dietary": "Vegan" }
+        ]
+      },
+      {
+        "day": "Tuesday",
+        "meals": [
+          { "meal": "Breakfast", "title": "Overnight Oats", "recipeId": "rec-007", "prepTime": 5, "dietary": "Vegetarian" },
+          { "meal": "Lunch", "title": "Margherita Pizza", "recipeId": "rec-001", "prepTime": 32, "dietary": "Vegetarian" },
+          { "meal": "Dinner", "title": "Sous-Vide Salmon", "recipeId": "rec-004", "prepTime": 60, "dietary": "High-Protein" }
+        ]
+      },
+      {
+        "day": "Wednesday",
+        "meals": [
+          { "meal": "Breakfast", "title": "Avocado Toast", "recipeId": "rec-008", "prepTime": 10, "dietary": "Vegan" },
+          { "meal": "Lunch", "title": "Vegan Alfredo", "recipeId": "rec-006", "prepTime": 35, "dietary": "Dairy-Free" },
+          { "meal": "Dinner", "title": "Chana Masala", "recipeId": "rec-005", "prepTime": 50, "dietary": "Vegan" }
+        ]
+      },
+      {
+        "day": "Thursday",
+        "meals": [
+          { "meal": "Breakfast", "title": "Smoothie Bowl", "recipeId": "rec-009", "prepTime": 8, "dietary": "Vegan" },
+          { "meal": "Lunch", "title": "Thai Green Curry", "recipeId": "rec-002", "prepTime": 45, "dietary": "Vegan" },
+          { "meal": "Dinner", "title": "Margherita Pizza", "recipeId": "rec-001", "prepTime": 32, "dietary": "Vegetarian" }
+        ]
+      },
+      {
+        "day": "Friday",
+        "meals": [
+          { "meal": "Breakfast", "title": "Gluten-Free Pancakes", "recipeId": "rec-003", "prepTime": 25, "dietary": "Gluten-Free" },
+          { "meal": "Lunch", "title": "Vegan Alfredo", "recipeId": "rec-006", "prepTime": 35, "dietary": "Dairy-Free" },
+          { "meal": "Dinner", "title": "Sous-Vide Salmon", "recipeId": "rec-004", "prepTime": 60, "dietary": "High-Protein" }
+        ]
+      }
+    ]
+  },
+  "chefs": [
+    { "id": "chef-001", "name": "Marco Bellini", "specialty": "Italian & pasta", "rating": 4.9, "reviews": 128, "sessionPrice": 60, "bio": "Born in Naples, trained in Bologna. Coaches home cooks through the classics with patience and zero intimidation." },
+    { "id": "chef-002", "name": "Aiko Tanaka", "specialty": "Japanese & knife work", "rating": 4.8, "reviews": 96, "sessionPrice": 65, "bio": "Former Tokyo kaiseki line cook. Specializes in precision knife skills and umami-forward home cooking." },
+    { "id": "chef-003", "name": "Priya Sharma", "specialty": "Indian plant-based", "rating": 4.9, "reviews": 141, "sessionPrice": 55, "bio": "Spice-first cooking teacher focused on vegan and vegetarian Indian food that feels indulgent." }
+  ],
+  "forumPosts": [
+    { "id": "post-001", "title": "Best pan for high-heat searing on a budget?", "author": "foodie_mike", "category": "Technique", "replies": 23, "likes": 87, "time": "2 hours ago", "excerpt": "Looking to upgrade from non-stick without breaking the bank. Cast iron vs carbon steel?" },
+    { "id": "post-002", "title": "My first successful sourdough loaf!", "author": "sourdough_sam", "category": "Success Story", "replies": 41, "likes": 210, "time": "5 hours ago", "excerpt": "After three failed attempts, the crumb finally opened up. Here's the hydration and timing that worked for me." },
+    { "id": "post-003", "title": "Meal prep for a busy work week", "author": "weekly_meal", "category": "Meal Prep", "replies": 18, "likes": 64, "time": "Yesterday", "excerpt": "Sharing my Sunday prep routine: 2 proteins, 1 grain, 2 sauces — everything else comes together in minutes." },
+    { "id": "post-004", "title": "How do I fix a split emulsion?", "author": "sauce_question", "category": "Technique", "replies": 12, "likes": 33, "time": "Yesterday", "excerpt": "My hollandaise broke mid-service last night. Any rescue tricks before I start over?" }
+  ]
+}

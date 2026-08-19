@@ -1,0 +1,75 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Book, Search, Globe } from "lucide-react";
+import { cn } from "@/lib-utils";
+
+interface ResourceArticle {
+  id: string;
+  title: string;
+  category: string;
+  contentSummary: string;
+  url: string;
+}
+
+interface ResourceLibraryProps {
+  articles: ResourceArticle[];
+}
+
+export default function ResourceLibrary({ articles }: ResourceLibraryProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Search className="h-5 w-5 text-gray-500 dark:text-gray-400 flex-1" />
+          <select
+            className="rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:text-white"
+            disabled
+          >
+            <option>All Categories</option>
+            <option>Nutrition</option>
+            <option>Training</option>
+            <option>Health</option>
+            <option>General Care</option>
+          </select>
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+          {articles.map((article, index) => (
+            <motion.div
+              key={article.id}
+              className="group rounded border overflow-hidden bg-gray-50 dark:bg-gray-800 hover:border-[var(--color-primary)] transition-colors"
+              animate={{ opacity: [0.8, 1], transition: { duration: 0.3, delay: index * 0.08 } }}
+            >
+              <div className="aspect-[4/3] w-full rounded-t-lg overflow-hidden">
+                <a href={article.url} target="_blank" rel="noopener noreferrer" className="w-full h-full block">
+                  <img
+                    src="/placeholder-pet-care.jpg"
+                    alt={article.title}
+                    className="w-full h-full object-cover"
+                  />
+                </a>
+              </div>
+              <div className="p-4">
+                <h4 className="font-medium text-gray-900 dark:text-white group-hover:text-[var(--color-primary)] transition-colors">{article.title}</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{article.category}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{article.contentSummary}</p>
+              </div>
+            </motion.div>
+          ))}
+          {articles.length === 0 && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-12">
+              No articles available yet. Add pet care resources to the library.
+            </p>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}

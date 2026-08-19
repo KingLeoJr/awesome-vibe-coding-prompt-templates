@@ -1,0 +1,70 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  auth.protocol: "{{auth.protocol}}"
+  state.management: "{{state.management}}"
+  ui.library: "{{ui.library}}"
+  charts.library: "{{charts.library}}"
+  payments.provider: "{{payments.provider}}"
+  database: "{{database}}"
+---
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive SEO audit and optimization tool using {{frontend.framework}}. Implement user authentication and authorization using {{auth.protocol}} for secure access. Design an intuitive dashboard UI using {{ui.library}} for responsive layouts and dark mode. Use {{state.management}} for data fetching and caching for audit data. Visualize SEO scores and trends using {{charts.library}}. Implement secure payment processing using {{payments.provider}}. Store audit results and keyword history using {{database}}. Design a comprehensive SEO audit form covering title tags, meta descriptions, headings, schema markup, sitemaps, page speed, internal links, canonical tags, hreflang, AMP, social media meta tags, image optimization, structured data, pagination, Core Web Vitals, international targeting, Google News, duplicate content, and more. Enable users to run audits on their websites, view detailed results with pass/fail status, and receive actionable recommendations. Provide a keyword planner with search volume, difficulty, and priority rankings. Allow users to export audit reports in PDF, Excel, or HTML formats. Implement a backlink checker to analyze domain authority and link quality.
+
+## Feature requirements (core / enhanced / advanced)
+
+Group into **core** (ship first), **enhanced**, and **advanced**.
+
+### Core
+1. Clear, concise title tag and compelling meta description with primary keyword
+2. Single H1 tag and structured content with H2-H6 tags, incorporating relevant keywords
+3. Optimized URL with primary keyword in first 100 words and comprehensive content
+4. Schema markup using JSON-LD for rich snippets including FAQ, product, review, and event schemas
+5. XML sitemap, robots.txt, mobile-friendliness and HTTPS enforcement
+
+### Enhanced
+6. Page speed optimization with lazy loading, CDN, and minimized HTTP requests
+7. Internal links with descriptive anchor texts and breadcrumb navigation
+8. Canonical tags, hreflang tags, and proper indexing meta robots tags
+9. Social media meta tags and clear site structure with logical URL hierarchy
+
+### Advanced
+10. Optimize for Core Web Vitals: LCP, FID, and CLS
+11. Proper handling of international targeting and hreflang tags
+12. Dynamic rendering for JavaScript-heavy pages
+13. Proper handling of faceted navigation for e-commerce sites
+14. Optimize for Google Discover with proper image SEO
+15. Proper data-vocabulary for breadcrumbs and navigation
+16. Proper handling of infinite scroll for SEO
+17. Proper schema markup for job postings if applicable
+18. Proper handling of pagination for SEO
+19. Optimize for Google News with news_keywords meta tag
+20. Proper handling of duplicate content across domains
+21. Proper schema markup for recipes if applicable
+22. Proper handling of URL parameters for SEO
+23. Proper schema markup for software applications if applicable
+24. Proper handling of archived content for SEO
+
+## Non-functional requirements
+
+- **Security:** OAuth 2.0 for auth; audit data encrypted at rest (AES-256)
+- **Performance:** audit forms render in under 2s; charts update in real-time
+- **Responsive:** 320px → 4K, responsive design for all audit views
+- **Accessibility:** WCAG 2.1 AA; semantic form labels, aria-labels, focus-visible states
+- **SEO:** generated output follows SEO best practices and validates against schema.org
+
+## Acceptance criteria
+
+- A user can sign in, enter a website URL, and run a comprehensive SEO audit.
+- The audit form covers all 35 checklist items across core, enhanced, and advanced categories.
+- The score gauge displays the SEO score with pass/fail/warning breakdown.
+- The keyword planner shows search volume, difficulty, and priority rankings.
+- The report exporter generates PDF, Excel, and HTML reports.
+- The app passes `npm run lint` and `npm run typecheck` with no errors.

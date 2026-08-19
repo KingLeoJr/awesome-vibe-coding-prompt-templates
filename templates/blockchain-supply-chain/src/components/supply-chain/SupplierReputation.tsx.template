@@ -1,0 +1,100 @@
+import { motion } from "framer-motion";
+import { Award, BadgeCheck, Globe2, Star } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { suppliers as sampleSuppliers } from "@/data/{{app.slug}}.json";
+
+export interface Supplier {
+  id: string;
+  name: string;
+  category: string;
+  location: string;
+  reputation: number;
+  rating: number;
+  verified: boolean;
+  contracts: number;
+}
+
+interface SupplierReputationProps {
+  suppliers?: Supplier[];
+}
+
+const reputationTone = (score: number) =>
+  score >= 85
+    ? "text-emerald-600 dark:text-emerald-400"
+    : score >= 65
+      ? "text-amber-600 dark:text-amber-400"
+      : "text-rose-600 dark:text-rose-400";
+
+export default function SupplierReputation({
+  suppliers = sampleSuppliers,
+}: SupplierReputationProps) {
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      {suppliers.map((supplier, index) => (
+        <motion.article
+          key={supplier.id}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.45, delay: index * 0.07 }}
+          className="flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-[var(--color-primary)]/40 hover:shadow-md dark:border-gray-800 dark:bg-gray-950"
+        >
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] text-sm font-bold text-white">
+              {supplier.name
+                .split(" ")
+                .map((w) => w[0])
+                .slice(0, 2)
+                .join("")}
+            </span>
+            <div className="min-w-0">
+              <h3 className="flex items-center gap-1.5 truncate font-semibold text-gray-900 dark:text-white">
+                {supplier.name}
+                {supplier.verified && (
+                  <BadgeCheck size={15} className="shrink-0 text-[var(--color-primary)]" aria-label="Verified" />
+                )}
+              </h3>
+              <p className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                <Globe2 size={12} />
+                {supplier.category} · {supplier.location}
+              </p>
+            </div>
+            <span
+              className={cn(
+                "ml-auto inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 text-xs font-semibold dark:bg-gray-900",
+                reputationTone(supplier.reputation)
+              )}
+            >
+              <Award size={13} />
+              {supplier.reputation}
+            </span>
+          </div>
+
+          <div>
+            <div className="mb-1.5 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span>On-chain reputation</span>
+              <span className="flex items-center gap-0.5 text-amber-500">
+                <Star size={12} fill="currentColor" />
+                {supplier.rating}
+              </span>
+            </div>
+            <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: `${supplier.reputation}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, ease: "easeOut" }}
+                className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+              />
+            </div>
+          </div>
+
+          <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-3 text-xs text-gray-400 dark:border-gray-800">
+            <span>{supplier.contracts} on-chain contracts</span>
+            <span className="font-mono">{supplier.id}</span>
+          </div>
+        </motion.article>
+      ))}
+    </div>
+  );
+}

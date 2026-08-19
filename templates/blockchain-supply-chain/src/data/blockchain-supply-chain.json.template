@@ -1,0 +1,221 @@
+﻿{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "stats": [
+    { "label": "Active shipments", "value": "12,480", "trend": "+8.2%" },
+    { "label": "Products verified", "value": "1.2M", "trend": "+14.6%" },
+    { "label": "Countries covered", "value": "43", "trend": "stable" },
+    { "label": "On-time delivery", "value": "96.4%", "trend": "+2.1%" }
+  ],
+  "shipments": [
+    {
+      "id": "SC-4821",
+      "product": "Organic Arabica Coffee Beans",
+      "sku": "CRF-8823",
+      "origin": "Tegucigalpa, Honduras",
+      "destination": "Portland, OR, USA",
+      "carrier": "BlueHorizon Logistics",
+      "status": "In Transit",
+      "progress": 62,
+      "temperatureC": 6.4,
+      "humidity": 54,
+      "eta": "Aug 24, 2026",
+      "lastEvent": "Departed regional hub â€” Tegucigalpa",
+      "verified": true,
+      "trackingHash": "0x7f3aâ€¦c21e"
+    },
+    {
+      "id": "SC-4798",
+      "product": "Cold-Pressed Avocado Oil",
+      "sku": "OIL-1047",
+      "origin": "MichoacÃ¡n, Mexico",
+      "destination": "Austin, TX, USA",
+      "carrier": "SwiftFleet Carriers",
+      "status": "In Customs",
+      "progress": 81,
+      "temperatureC": 8.1,
+      "humidity": 48,
+      "eta": "Aug 21, 2026",
+      "lastEvent": "Cleared export customs â€” Laredo POE",
+      "verified": true,
+      "trackingHash": "0x9b2dâ€¦44a1"
+    },
+    {
+      "id": "SC-4773",
+      "product": "Stainless Steel Fasteners",
+      "sku": "FST-2231",
+      "origin": "Kaohsiung, Taiwan",
+      "destination": "Chicago, IL, USA",
+      "carrier": "Pacific Bridge Shipping",
+      "status": "In Transit",
+      "progress": 35,
+      "temperatureC": 21.3,
+      "humidity": 40,
+      "eta": "Sep 02, 2026",
+      "lastEvent": "Vessel departed Kaohsiung â€” ETA LAX Sep 01",
+      "verified": true,
+      "trackingHash": "0xc81eâ€¦9f04"
+    },
+    {
+      "id": "SC-4756",
+      "product": "Alpaca Wool Blankets",
+      "sku": "TEX-3319",
+      "origin": "Arequipa, Peru",
+      "destination": "New York, NY, USA",
+      "carrier": "Andes Air Cargo",
+      "status": "Pending",
+      "progress": 8,
+      "temperatureC": 18.5,
+      "humidity": 44,
+      "eta": "Aug 30, 2026",
+      "lastEvent": "Order confirmed â€” awaiting pickup",
+      "verified": false,
+      "trackingHash": "0x2f57â€¦70d3"
+    },
+    {
+      "id": "SC-4741",
+      "product": "Ceramic Dinnerware Set",
+      "sku": "HME-8802",
+      "origin": "Foshan, China",
+      "destination": "Toronto, ON, Canada",
+      "carrier": "Pacific Bridge Shipping",
+      "status": "Exception",
+      "progress": 47,
+      "temperatureC": 19.8,
+      "humidity": 51,
+      "eta": "Aug 28, 2026",
+      "lastEvent": "Customs hold â€” documentation review",
+      "verified": true,
+      "trackingHash": "0x14aeâ€¦b22c"
+    }
+  ],
+  "trackingEvents": [
+    {
+      "id": 1,
+      "status": "Order Placed",
+      "location": "Tegucigalpa, Honduras",
+      "handler": "GreenValley Farms",
+      "timestamp": "Aug 18, 2026 Â· 09:12 UTC",
+      "confirmed": true,
+      "blockNumber": 7842119
+    },
+    {
+      "id": 2,
+      "status": "Collected by Carrier",
+      "location": "GreenValley Farms, Tegucigalpa",
+      "handler": "BlueHorizon Logistics",
+      "timestamp": "Aug 18, 2026 Â· 14:37 UTC",
+      "confirmed": true,
+      "blockNumber": 7842331
+    },
+    {
+      "id": 3,
+      "status": "Quality Inspection Passed",
+      "location": "Regional QA Hub, San Pedro Sula",
+      "handler": "CertiScan QA",
+      "timestamp": "Aug 19, 2026 Â· 08:05 UTC",
+      "confirmed": true,
+      "blockNumber": 7843002
+    },
+    {
+      "id": 4,
+      "status": "Departed Regional Hub",
+      "location": "San Pedro Sula, Honduras",
+      "handler": "BlueHorizon Logistics",
+      "timestamp": "Aug 19, 2026 Â· 11:48 UTC",
+      "confirmed": true,
+      "blockNumber": 7843118
+    },
+    {
+      "id": 5,
+      "status": "In Transit to Port of Houston",
+      "location": "Gulf Corridor, Mexico",
+      "handler": "SwiftFleet Carriers",
+      "timestamp": "Aug 20, 2026 Â· 03:21 UTC",
+      "confirmed": false
+    }
+  ],
+  "products": [
+    {
+      "id": "CRF-8823",
+      "name": "Organic Arabica Coffee Beans",
+      "batch": "B-2026-118",
+      "origin": "Tegucigalpa, Honduras",
+      "certifications": ["Fair Trade", "USDA Organic"],
+      "currentStage": "In Transit",
+      "authentic": true
+    },
+    {
+      "id": "OIL-1047",
+      "name": "Cold-Pressed Avocado Oil",
+      "batch": "B-2026-094",
+      "origin": "MichoacÃ¡n, Mexico",
+      "certifications": ["Non-GMO", "Kosher"],
+      "currentStage": "In Customs",
+      "authentic": true
+    },
+    {
+      "id": "FST-2231",
+      "name": "Stainless Steel Fasteners",
+      "batch": "B-2026-141",
+      "origin": "Kaohsiung, Taiwan",
+      "certifications": ["ISO 9001", "RoHS"],
+      "currentStage": "In Transit",
+      "authentic": true
+    },
+    {
+      "id": "TEX-3319",
+      "name": "Alpaca Wool Blankets",
+      "batch": "B-2026-102",
+      "origin": "Arequipa, Peru",
+      "certifications": ["Fair Trade", "Cruelty-Free"],
+      "currentStage": "Pending",
+      "authentic": false
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "SUP-104",
+      "name": "GreenValley Farms",
+      "category": "Raw Materials",
+      "location": "Honduras",
+      "reputation": 94,
+      "rating": 4.8,
+      "verified": true,
+      "contracts": 128
+    },
+    {
+      "id": "SUP-087",
+      "name": "SwiftFleet Carriers",
+      "category": "Logistics",
+      "location": "Mexico",
+      "reputation": 88,
+      "rating": 4.5,
+      "verified": true,
+      "contracts": 341
+    },
+    {
+      "id": "SUP-066",
+      "name": "Pacific Bridge Shipping",
+      "category": "Ocean Freight",
+      "location": "Taiwan",
+      "reputation": 91,
+      "rating": 4.7,
+      "verified": true,
+      "contracts": 209
+    },
+    {
+      "id": "SUP-052",
+      "name": "Andes Air Cargo",
+      "category": "Air Freight",
+      "location": "Peru",
+      "reputation": 76,
+      "rating": 4.1,
+      "verified": false,
+      "contracts": 58
+    }
+  ]
+}

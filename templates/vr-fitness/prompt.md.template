@@ -1,0 +1,36 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  frontend.framework: "{{frontend.framework}}"
+  auth.protocol: "{{auth.protocol}}"
+  state.management: "{{state.management}}"
+  ui.library: "{{ui.library}}"
+  animation.runtime: "{{animation.runtime}}"
+  vr.platform: "{{vr.platform}}"
+  payments.provider: "{{payments.provider}}"
+  wearables.integrations: "{{wearables.integrations}}"
+  api.protocol: "{{api.protocol}}"
+---
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{frontend.framework}} for the web interface and {{vr.platform}} for immersive VR experiences. Implement user authentication and authorization using {{auth.protocol}} for secure access. Design an intuitive dashboard UI using {{ui.library}} for responsive layouts and dark mode. Use {{state.management}} for complex application state management involving workout tracking, progress, and social features. Create micro-interactions and section reveals using {{animation.runtime}}. Design 3D workout environments and VR rendering using {{vr.platform}}. Implement secure payment processing and subscription management using {{payments.provider}}. Integrate wearable device data from {{wearables.integrations}} for real-time health metrics during workouts. Expose a custom {{api.protocol}} for third-party developers to integrate with the platform (e.g., health apps). Design an analytics dashboard that visualizes user activity, progress over time, and achievement of fitness goals. Create a social feature that allows users to invite friends to join workouts in VR or compete in challenges together. Implement a progress tracking system that monitors user performance metrics like calories burned, workout duration, and strength improvements. Design an onboarding process with tutorials guiding new users through platform features and VR setup instructions. Create a referral program that rewards users for inviting friends to join the platform or complete challenges together. Implement personalized notifications for workout reminders, class schedules, and wellness tips based on user preferences. Design an interactive calendar feature that allows users to schedule workouts and track their fitness activities in advance. Create a feedback system allowing users to rate classes and provide suggestions for improvement to trainers. Implement gamification elements like achievements, leaderboards, and virtual rewards to motivate users to engage regularly with the platform. Design a live chat feature connecting users with trainers during workouts for real-time support and guidance. Create an impact reporting feature highlighting the benefits of VR fitness training compared to traditional methods through data analytics. Implement advanced search functionality allowing users to filter classes by type (cardio, strength), duration, or intensity level. Design user profiles where customers can manage their fitness data, preferences, subscriptions, and payment methods effectively. Create multi-language support to cater to a diverse global audience. Design accessibility features ensuring compliance with WCAG standards for inclusive VR fitness.
+
+## Non-functional requirements
+
+- **Security:** OAuth 2.0 with PKCE; sensitive health data encrypted at rest and in transit.
+- **Performance:** core screens under 2s on mid-range mobile; 3D environments load progressively.
+- **Responsive:** 320px → 4K, VR environments adapt to screen size.
+- **Accessibility:** WCAG 2.1 AA, reduced-motion support, semantic landmarks.
+- **SEO:** server-rendered marketing shell, Open Graph + JSON-LD.
+
+## Acceptance criteria
+
+- A user can sign in, browse classes, start a VR workout session, and track progress.
+- A user can connect a wearable device and see real-time health data during workouts.
+- The analytics dashboard renders all fitness metrics on mobile and desktop.
+- The app passes `npm run lint` and `npm run typecheck` with no errors.

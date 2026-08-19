@@ -1,0 +1,69 @@
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import ServiceCard from "@/components/home/ServiceCard";
+import ProviderCard from "@/components/home/ProviderCard";
+import BookingForm from "@/components/home/BookingForm";
+import ReminderCard from "@/components/home/ReminderCard";
+import data from "@/data/home-maintenance.json";
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Header />
+
+      <main>
+        <section id="overview" className="container mx-auto px-6 py-20">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Home Maintenance Overview
+            </h2>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              Discover services for your home and book with trusted providers.
+            </p>
+          </div>
+
+          <ServiceCard service={data.overview.service} provider={data.overview.provider} delay={0} />
+
+          <section id="request-service" className="scroll-mt-24 px-6 py-20">
+            <div className="mb-10 max-w-2xl">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                Request a Service
+              </h2>
+              <p className="mt-2 text-gray-500 dark:text-gray-400">
+                Submit a maintenance request and connect with local providers.
+              </p>
+            </div>
+            <ProviderCard provider={data.requestService.provider} onBook={} delay={0} />
+          </section>
+
+          <section id="bookings" className="bg-white dark:bg-gray-900 scroll-mt-24">
+            <div className="container mx-auto px-6 py-20">
+              <div className="mb-10 max-w-2xl">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                  Your Bookings
+                </h2>
+                <p className="mt-2 text-gray-500 dark:text-gray-400">
+                  View and manage your scheduled appointments.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="reminders" className="scroll-mt-24 px-6 py-20">
+            <div className="mb-10 max-w-2xl">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                Maintenance Reminders
+              </h2>
+              <p className="mt-2 text-gray-500 dark:text-gray-400">
+                Stay on top of regular home maintenance tasks.
+              </p>
+            </div>
+            <ReminderCard reminder={data.reminders[0]} onToggle={() => {}} />
+          </section>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

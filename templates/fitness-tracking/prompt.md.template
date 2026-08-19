@@ -1,0 +1,67 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  mobile.framework: "{{mobile.framework}}"
+  auth.solution: "{{auth.solution}}"
+  ui.system: "{{ui.system}}"
+  state.management: "{{state.management}}"
+  backend.provider: "{{backend.provider}}"
+  wearable.primary: "{{wearable.primary}}"
+  wearable.secondary: "{{wearable.secondary}}"
+  nutrition.import: "{{nutrition.import}}"
+  running.import: "{{running.import}}"
+  ai.coach: "{{ai.coach}}"
+  barcode.lookup: "{{barcode.lookup}}"
+  notifications: "{{notifications}}"
+  analytics.provider: "{{analytics.provider}}"
+---
+
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{mobile.framework}} for cross-platform mobile development
+Implement user authentication and authorization using {{auth.solution}} for secure access
+Design an engaging UI using {{ui.system}} principles for a seamless user experience
+Use {{state.management}} for state management to handle user data and application state effectively
+Create a customizable user profile system that includes fitness goals, dietary preferences, and health metrics
+Implement a workout tracking module that allows users to log exercises, sets, reps, and weights
+Design a nutrition tracking feature that enables users to log meals with barcode scanning and {{barcode.lookup}}
+Create a meal planning system with recipe suggestions based on user preferences and dietary restrictions
+Implement a hydration tracker that reminds users to drink water throughout the day
+Design an activity tracking feature that integrates with wearable devices ({{wearable.primary}}, {{wearable.secondary}}) for real-time data syncing
+Create a social sharing feature that allows users to share achievements and progress on social media platforms
+Implement a gamification system with badges, challenges, and leaderboards to motivate users
+Design a customizable workout calendar that allows users to schedule workouts and set reminders
+Create a video library of exercises with instructional content for various fitness levels
+Implement an {{ai.coach}} personal trainer feature that provides workout recommendations based on user data
+Design a wellness journal feature where users can log their thoughts, moods, and progress over time
+Create a community forum for users to connect, share tips, and support each other in their fitness journeys
+Implement personalized notifications for workout reminders, meal prep suggestions, and hydration alerts via {{notifications}}
+Design an analytics dashboard that provides insights into user activity, progress over time, and goal achievement using {{analytics.provider}}
+Create a rewards system where users can earn points for completing workouts or achieving milestones
+Implement integration with third-party fitness apps ({{nutrition.import}}, {{running.import}}) for comprehensive tracking
+Design an educational resource center with articles, videos, and tips on fitness and nutrition
+Create a custom workout generator that creates personalized routines based on equipment availability
+Implement a virtual coaching feature with video calls or messaging for real-time support
+Design an interactive body measurement tracker to visualize progress in weight loss or muscle gain
+Create a sleep tracking feature that monitors sleep patterns and provides tips for improvement
+Implement recipe scaling functionality that adjusts ingredient quantities based on serving sizes
+Design a workout intensity tracker that helps users gauge their effort levels during exercises
+Create an event calendar for local fitness classes, workshops, or community events
+Implement integration with grocery delivery services for easy meal prep shopping
+Design an FAQ section addressing common questions about fitness tracking and app usage
+Create a mood tracker that correlates mental health with physical activity levels
+Implement biometric data entry fields (weight, height, age) to personalize user experience
+Design an interactive quiz to assess fitness knowledge or readiness for specific programs
+Create a feedback system allowing users to rate workouts or recipes they tried
+Implement push notifications for new features or community events within the app
+Design an onboarding process with tutorials guiding new users through app features
+Create a referral program where users can invite friends and earn rewards
+Implement data export functionality allowing users to download their progress reports
+Design a custom color theme option enabling users to personalize the app's appearance
+Create a motivational quotes section that updates daily to inspire users
+Implement location-based features to find nearby gyms or fitness events

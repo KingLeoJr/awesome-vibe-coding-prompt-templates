@@ -1,0 +1,43 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  backend.technology: "{{backend.technology}}"
+  frontend.framework: "{{frontend.framework}}"
+  auth.solution: "{{auth.solution}}"
+  ui.library: "{{ui.library}}"
+  state.management: "{{state.management}}"
+  ai.provider: "{{ai.provider}}"
+  email.provider: "{{email.provider}}"
+  maps.provider: "{{maps.provider}}"
+---
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{backend.technology}} for backend and {{frontend.framework}} for frontend
+Implement user authentication and authorization using {{auth.solution}} for secure access
+Design a modern, user-friendly UI using {{ui.library}} for responsive design
+Use {{state.management}} for state management to handle complex application states
+Create a user profile system with language preferences, current proficiency levels, and learning goals
+Implement an interactive tool that generates personalized learning paths based on user profiles, preferences, and proficiency levels
+Develop a library of interactive lessons that include multimedia resources such as videos, audio clips, and quizzes
+Design a dashboard where users can track their learning progress over time, including metrics such as completed lessons, quiz scores, and language proficiency improvements
+Establish a community forum where users can connect with each other for language exchange partnerships, share learning tips, and provide support
+Create an inspiration gallery showcasing user success stories with testimonials about their language learning experiences
+Create personalized notifications for upcoming lessons, reminders for practice sessions, and motivational messages based on user preferences
+Design an FAQ section addressing common questions about language learning methods, platform features, and usage tips
+Create a blog featuring expert advice on language learning strategies, cultural insights, study tips, and success stories from users who have benefited from the service
+Implement a referral program that rewards users for inviting friends to join the platform or participate in language exchange activities
+Develop an interactive vocabulary builder tool that helps users learn new words through flashcards and spaced repetition techniques
+Allow users to participate in weekly or monthly language challenges to encourage consistent practice and engagement
+Implement data analytics to personalize recommendations based on user behavior and preferences in language learning
+Design a custom API for third-party developers to integrate with the platform (e.g., translation services or educational apps)
+Create an event calendar highlighting local language meetups, workshops, or cultural events that users can participate in or attend
+Incorporate gamification elements such as badges for completing lessons or achieving milestones in their language learning journey
+Implement GDPR compliance features such as cookie consent and data protection policies
+Design an accessibility feature to ensure compliance with WCAG standards
+Create a loyalty program for frequent learners with tiered rewards and benefits
+Implement push notifications in the mobile app for real-time updates about lessons and reminders

@@ -1,0 +1,70 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { particlesEngine } from "particles.js";
+import { LineChart, Chart as ChartComponent, PiggyBank, TrendingUp, TrendingDown, Wallet, Moon, Sun } from "lucide-react";
+
+interface HeroProps {
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  ctaHref: string;
+  showParticles: boolean;
+  showCursor: boolean;
+}
+
+export default function Hero({ title, subtitle, ctaText, ctaHref, showParticles, showCursor }: HeroProps) {
+  const animateVariants = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 }
+  };
+
+  return (
+    <section
+      className="bg-gradient-to-br from-[var(--color-primary)]/15 via-transparent to-[var(--color-secondary)]/15 pt-24 md:pt-32 pb-16"
+      id="hero"
+    >
+      <motion.div
+        initial={animateVariants.initial}
+        whileInView={animateVariants.whileInView}
+        viewport={animateVariants.viewport}
+        transition={animateVariants.transition}
+        className="container mx-auto px-6"
+      >
+        <div className="flex flex-col md:flex-start items-center md-items-start gap-6">
+          <div>
+            <h1 className="text-5xl md:text-6xl font-bold text-[var(--color-primary)] dark:text-white mb-4">
+              {title}
+            </h1>
+            <p className="text-lg md:text-xl text-[var(--color-secondary)] dark:text-gray-400 mb-8">
+              {subtitle}
+            </p>
+          </div>
+          {showParticles && (
+            <div
+              ref={el => el && particlesEngine.el(el, { particles: { number: { value: 80 } } } )}
+              className="absolute inset-0 overflow-hidden"
+            />
+          )}
+          {showCursor && (
+            <div className="absolute bottom-6 right-6">
+              <span className="cursor-pointer text-[var(--color-accent)]" role="button">
+                {/* Custom cursor element */}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {ctaText && (
+          <div className="mt-8 flex items-center gap-3">
+            <a href={ctaHref} className="inline-block px-6 py-3 bg-[var(--color-accent)] text-white font-medium rounded hover:bg-[var(--color-accent-dark)] transition-colors">
+              {ctaText}
+            </a>
+          </div>
+        )}
+      </motion.div>
+    </section>
+  );
+}

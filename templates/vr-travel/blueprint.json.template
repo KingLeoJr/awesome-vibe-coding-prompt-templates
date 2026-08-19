@@ -1,0 +1,151 @@
+{
+  "blueprint_id": "vr-travel-0001",
+  "slug": "vr-travel",
+  "name": "Virtual Reality (VR) Travel Experience Platform",
+  "category": "Specialized",
+  "archetype": "ImmersiveXR",
+  "tagline": "Explore the world in 360-degree virtual experiences",
+  "builder_prompt_source": "prompts/vr-travel.md",
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React + Next.js 15", "version_hint": "15.x", "purpose": "Responsive marketing + VR travel dashboard shell" },
+    { "layer": "backend", "technology": "Node.js", "version_hint": "", "purpose": "REST API, booking logic, realtime sync" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16.x", "purpose": "Users, destinations, bookings, reviews, profiles" },
+    { "layer": "auth", "technology": "OAuth 2.0 / OpenID Connect", "version_hint": "", "purpose": "Secure user authentication and authorization" },
+    { "layer": "state", "technology": "Redux Toolkit", "version_hint": "2.x", "purpose": "Complex application state management" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Modern, accessible, dark-mode UI" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and section reveals" },
+    { "layer": "3d", "technology": "Three.js / WebGL", "version_hint": "", "purpose": "3D environments and VR rendering" },
+    { "layer": "payments", "technology": "Stripe", "version_hint": "", "purpose": "Booking fees and subscription payments" },
+    { "layer": "mobile", "technology": "React Native", "version_hint": "", "purpose": "Mobile app for VR content access on-the-go" },
+    { "layer": "api", "technology": "Custom REST API", "version_hint": "", "purpose": "Third-party developer integration (travel blogs, institutions)" }
+  ],
+  "features": [
+    { "description": "Implement user authentication and authorization using OAuth 2.0 for secure access", "priority": "core", "order_index": 1 },
+    { "description": "Design an immersive UI using WebGL and 3D graphics to enhance user engagement", "priority": "core", "order_index": 2 },
+    { "description": "Use Redux for state management to handle complex application states effectively", "priority": "core", "order_index": 3 },
+    { "description": "Create a library of virtual destinations that users can explore in 360-degree views, including famous landmarks, natural wonders, and cultural experiences", "priority": "core", "order_index": 4 },
+    { "description": "Implement a booking system that allows users to schedule guided VR tours with live hosts or pre-recorded content", "priority": "core", "order_index": 5 },
+    { "description": "Design interactive experiences that include historical reenactments, local cuisine tastings, or cultural festivals in virtual environments", "priority": "core", "order_index": 6 },
+    { "description": "Create a community feature where users can share their experiences, tips, and favorite destinations through forums or social media integration", "priority": "core", "order_index": 7 },
+    { "description": "Implement a personalized recommendation engine that suggests destinations based on user preferences and previous interactions", "priority": "core", "order_index": 8 },
+    { "description": "Design an analytics dashboard for users to track their travel history, favorite experiences, and engagement metrics", "priority": "core", "order_index": 9 },
+    { "description": "Create a mobile app version of the platform using React Native for accessing VR content on-the-go or through mobile devices", "priority": "enhanced", "order_index": 10 },
+    { "description": "Implement a secure payment processing system using Stripe or PayPal integration for booking fees and subscriptions", "priority": "enhanced", "order_index": 11 },
+    { "description": "Design an educational resource center with articles, videos, and tools about different cultures, languages, and travel tips", "priority": "enhanced", "order_index": 12 },
+    { "description": "Create partnerships with tourism boards or local businesses to offer exclusive virtual experiences or promotions", "priority": "enhanced", "order_index": 13 },
+    { "description": "Implement multi-language support to cater to a global audience", "priority": "enhanced", "order_index": 14 },
+    { "description": "Design an onboarding process with tutorials guiding new users through platform features and VR setup instructions", "priority": "enhanced", "order_index": 15 },
+    { "description": "Create a referral program that rewards users for inviting friends to join the platform", "priority": "enhanced", "order_index": 16 },
+    { "description": "Implement push notifications for new destination launches, special events, and community updates", "priority": "enhanced", "order_index": 17 },
+    { "description": "Design an interactive map feature that allows users to explore destinations visually and plan their virtual travels", "priority": "enhanced", "order_index": 18 },
+    { "description": "Create a feedback system allowing users to rate experiences and provide suggestions for improvement", "priority": "enhanced", "order_index": 19 },
+    { "description": "Implement gamification elements like badges for visiting multiple destinations or completing challenges within the VR environment", "priority": "enhanced", "order_index": 20 },
+    { "description": "Design a live chat feature connecting users with travel experts or guides during virtual tours for real-time interaction", "priority": "enhanced", "order_index": 21 },
+    { "description": "Create an impact reporting feature highlighting the environmental benefits of virtual travel compared to traditional tourism", "priority": "enhanced", "order_index": 22 },
+    { "description": "Implement advanced search functionality allowing users to filter experiences by type (adventure, relaxation, cultural) or region", "priority": "enhanced", "order_index": 23 },
+    { "description": "Design user profiles where travelers can manage their preferences, saved experiences, and payment methods", "priority": "enhanced", "order_index": 24 },
+    { "description": "Create integration with social media platforms allowing users to share their virtual travel experiences easily", "priority": "enhanced", "order_index": 25 },
+    { "description": "Implement data analytics to personalize recommendations based on user behavior and preferences", "priority": "advanced", "order_index": 26 },
+    { "description": "Design a custom API for third-party developers to integrate with the platform (e.g., travel blogs or educational institutions)", "priority": "advanced", "order_index": 27 },
+    { "description": "Create an event calendar highlighting upcoming live virtual tours or special guest speakers in the travel industry", "priority": "advanced", "order_index": 28 },
+    { "description": "Implement a loyalty program where frequent users earn rewards or discounts on future bookings", "priority": "advanced", "order_index": 29 },
+    { "description": "Design multi-language support to cater to a diverse global audience", "priority": "advanced", "order_index": 30 }
+  ],
+  "sections": [
+    { "name": "Dashboard", "component_path": "src/components/vr/DestinationBrowser.tsx", "layout_type": "dashboard", "is_visible": true, "order_index": 1 },
+    { "name": "Tours", "component_path": "src/components/vr/VirtualTour.tsx", "layout_type": "grid", "is_visible": true, "order_index": 2 },
+    { "name": "Itinerary", "component_path": "src/components/vr/ItineraryBuilder.tsx", "layout_type": "control", "is_visible": true, "order_index": 3 },
+    { "name": "Social", "component_path": "src/components/vr/SocialShare.tsx", "layout_type": "social", "is_visible": true, "order_index": 4 },
+    { "name": "Map", "component_path": "src/components/vr/MapView.tsx", "layout_type": "map", "is_visible": true, "order_index": 5 },
+    { "name": "Onboarding", "component_path": "src/components/vr/OnboardingTutorial.tsx", "layout_type": "onboarding", "is_visible": true, "order_index": 6 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "brandName": "string", "navItems": "NavItem[]", "ctaText": "string", "ctaHref": "string", "isFixed": "boolean" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "DestinationBrowser", "path": "src/components/vr/DestinationBrowser.tsx", "props": { "destinations": "VirtualDestination[]", "onSelect": "fn", "filter": "string" } },
+    { "name": "VirtualTour", "path": "src/components/vr/VirtualTour.tsx", "props": { "destination": "VirtualDestination", "onBook": "fn" } },
+    { "name": "ItineraryBuilder", "path": "src/components/vr/ItineraryBuilder.tsx", "props": { "bookings": "Booking[]", "onAddActivity": "fn" } },
+    { "name": "SocialShare", "path": "src/components/vr/SocialShare.tsx", "props": { "shareText": "string", "onShare": "fn" } },
+    { "name": "MapView", "path": "src/components/vr/MapView.tsx", "props": { "destination": "VirtualDestination", "onZoomChange": "fn" } },
+    { "name": "Footer", "path": "src/components/shared/Footer.tsx", "props": { "name": "string", "description": "string" }, "mixins": ["_shared/Footer.tsx.template"] }
+  ],
+  "data_models": [
+    { "name": "User", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "email", "type": "string", "required": true }, { "name": "name", "type": "string", "required": true }, { "name": "travelLevel", "type": "enum(beginner|intermediate|advanced)", "required": true }, { "name": "onboarded", "type": "boolean", "required": true, "default": false } ] },
+    { "name": "VirtualDestination", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "region", "type": "enum(africa|asia|europe|north-america|south-america|oceania|antarctica)", "required": true }, { "name": "landmarks", "type": "string[]", "required": true }, { "name": "description", "type": "string", "required": true }, { "name": "duration", "type": "integer", "required": true }, { "name": "price", "type": "decimal", "required": true }, { "name": "imageUrl", "type": "string", "required": false }, { "name": "isFeatured", "type": "boolean", "required": true, "default": false } ] },
+    { "name": "Booking", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "userId", "type": "uuid", "required": true }, { "name": "destinationId", "type": "uuid", "required": true }, { "name": "tourType", "type": "enum(guided|self-guided)", "required": true }, { "name": "startDate", "type": "date", "required": true }, { "name": "endDate", "type": "date", "required": true }, { "name": "status", "type": "enum(booked|confirmed|completed|cancelled)", "required": true, "default": "booked" }, { "name": "totalPrice", "type": "decimal", "required": true } ] },
+    { "name": "TravelPreference", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "userId", "type": "uuid", "required": true }, { "name": "preferredRegions", "type": "string[]", "required": true }, { "name": "budgetRange", "type": "enum(under-100|100-500|500-1000|over-1000)", "required": true }, "name": "travelStyle", "type": "enum(relaxed|adventure|cultural|luxury)", "required": true } ] },
+    { "name": "LeaderboardEntry", "fields": [ { "name": "rank", "type": "integer", "required": true }, { "name": "userId", "type": "uuid", "required": true }, { "name": "totalVisits", "type": "integer", "required": true }, { "name": "totalXP", "type": "integer", "required": true } ] }
+  ],
+  "integrations": [
+    { "service": "Stripe", "purpose": "Secure payment processing for booking fees and subscriptions", "config_params": { "billing_interval": "monthly" } },
+    { "service": "OAuth 2.0 / OpenID Connect provider", "purpose": "Secure user authentication and authorization", "config_params": { "flows": ["authorization_code", "pkce"] } },
+    { "service": "React Native", "purpose": "Cross-platform mobile wrapper for VR content access", "config_params": { "platforms": ["iOS", "Android"] } },
+    { "service": "Social Media APIs", "purpose": "Content sharing and user-generated experience sharing", "config_params": { "platforms": ["twitter", "linkedin", "facebook"] } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "OAuth 2.0 with PKCE; booking data encrypted at rest (AES-256) and in transit (TLS 1.3)" },
+    { "type": "Performance", "requirement": "Tour renders in under 3s on mid-range mobile; 3D environments load progressively" },
+    { "type": "Responsive", "requirement": "Full responsive layout from 320px phones to 4K desktop monitors; VR environments adapt to screen size" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA; semantic landmarks, aria-labels on interactive elements, reduced-motion support for non-VR users" },
+    { "type": "i18n", "requirement": "Multi-language support with ICU message catalogs; UI text flows right-to-left compatible" },
+    { "type": "SEO", "requirement": "Server-rendered marketing shell with Open Graph tags and JSON-LD schema for travel services" },
+    { "type": "Testing", "requirement": "Unit tests for booking flow, component tests for destination cards, integration tests for mobile wrapper" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#0ea5e9" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#22c55e" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f59e0b" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#38bdf8" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#4ade80" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fbbf24" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+    { "token_type": "font", "token_name": "font.mono", "token_value": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "framework": "nextjs", "url": "{{deployment.url}}", "analytics_id": "{{deployment.analytics_id}}" } },
+    { "platform": "AWS", "config": { "service": "node-api", "env": "production" } }
+  ],
+  "template_files": [
+    { "path": "README.md", "source": "templates/vr-travel/README.md", "syntax": "mustache" },
+    { "path": "blueprint.json", "source": "templates/vr-travel/blueprint.json.template", "syntax": "mustache" },
+    { "path": "prompt.md", "source": "templates/vr-travel/prompt.md.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/vr-travel/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/vr-travel/package.json.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/vr-travel/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "src/app/page.tsx", "source": "templates/vr-travel/src/app/page.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/vr-travel/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/vr/DestinationBrowser.tsx", "source": "templates/vr-travel/src/components/vr/DestinationBrowser.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/vr/VirtualTour.tsx", "source": "templates/vr-travel/src/components/vr/VirtualTour.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/vr/ItineraryBuilder.tsx", "source": "templates/vr-travel/src/components/vr/ItineraryBuilder.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/vr/SocialShare.tsx", "source": "templates/vr-travel/src/components/vr/SocialShare.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/vr/MapView.tsx", "source": "templates/vr-travel/src/components/vr/MapView.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/vr/OnboardingTutorial.tsx", "source": "templates/vr-travel/src/components/vr/OnboardingTutorial.tsx.template", "syntax": "mustache" },
+    { "path": "src/data/vr-travel.json", "source": "templates/vr-travel/src/data/vr-travel.json.template", "syntax": "mustache" }
+  ],
+  "extra_config": {
+    "app": {
+      "name": "VrTravel",
+      "slug": "vr-travel",
+      "tagline": "Explore the world in 360-degree virtual experiences"
+    },
+    "theme": {
+      "color": { "primary": "#0ea5e9", "secondary": "#22c55e", "accent": "#f59e0b", "primary_dark": "#38bdf8", "secondary_dark": "#4ade80", "accent_dark": "#fbbf24" },
+      "font": { "sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif", "mono": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+      "radius": { "card": "1rem" }
+    },
+    "header": { "cta_text": "Book Tour", "cta_href": "#tours", "is_fixed": true },
+    "seo": { "og_image": "https://images.unsplash.com/photo-1514085539298-bd89b8a6613f", "schema_type": "TravelAgency" },
+    "deployment": { "url": "https-vr-travel.vercel.app", "analytics_id": "G-VRTRAVEL01" },
+    "contact": { "email": "hello@vr-travel.example.com", "phone": "+1 (555) 010-2041" },
+    "social": { "github": "https://github.com/vr-travel", "linkedin": "https://linkedin.com/company/vr-travel", "twitter": "https://x.com/vr_travel" },
+    "frontend": { "framework": "React (Next.js 15)", "language": "TypeScript" },
+    "backend": { "framework": "Node.js", "language": "JavaScript/TypeScript" },
+    "ui": { "library": "Tailwind CSS", "charts": "Recharts / Three.js" },
+    "state": { "manager": "Redux Toolkit" },
+    "auth": { "protocol": "OAuth 2.0 / OpenID Connect" },
+    "payments": { "provider": "Stripe" },
+    "mobile": { "framework": "React Native" },
+    "api": { "protocol": "Custom REST API" }
+  }
+}

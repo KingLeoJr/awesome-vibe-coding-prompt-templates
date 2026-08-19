@@ -1,0 +1,268 @@
+{
+  "meta": {
+    "title": "{{app.name}}",
+    "description": "{{app.tagline}}"
+  },
+  "articles": [
+    {
+      "id": "art-001",
+      "title": "A practical guide to cutting your home's carbon footprint this year",
+      "excerpt": "From insulation to induction cooktops, the highest-impact swaps you can make at home - ranked by cost, effort, and CO2 saved.",
+      "topic": "Climate change",
+      "readTime": 8,
+      "format": "article",
+      "imageUrl": "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=800&q=80",
+      "author": "Dr. Lena Ortiz",
+      "published": "2026-07-22"
+    },
+    {
+      "id": "art-002",
+      "title": "Community solar: how neighborhoods are pooling power",
+      "excerpt": "Shared solar arrays let renters and small homes go renewable without rooftop panels. Here is how to start one near you.",
+      "topic": "Renewable energy",
+      "readTime": 6,
+      "format": "article",
+      "imageUrl": "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80",
+      "author": "Marcus Hale",
+      "published": "2026-07-15"
+    },
+    {
+      "id": "art-003",
+      "title": "The zero-waste kitchen challenge: 30 days, 5 simple rules",
+      "excerpt": "A filmed series following three families through a month of composting, bulk shopping, and repairing instead of replacing.",
+      "topic": "Waste reduction",
+      "readTime": 12,
+      "format": "video",
+      "imageUrl": "https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?auto=format&fit=crop&w=800&q=80",
+      "author": "Studio Verde",
+      "published": "2026-07-08"
+    },
+    {
+      "id": "art-004",
+      "title": "Rewilding your backyard: a beginner's planting calendar",
+      "excerpt": "Native plants, pollinator corridors, and rain gardens - a season-by-season plan to bring biodiversity back home.",
+      "topic": "Conservation",
+      "readTime": 9,
+      "format": "article",
+      "imageUrl": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80",
+      "author": "Amara Singh",
+      "published": "2026-06-30"
+    },
+    {
+      "id": "art-005",
+      "title": "E-bikes are outselling cars in our city. What changed?",
+      "excerpt": "Incentives, bike lanes, and battery tech turned a niche product into the default commute. A success story worth copying.",
+      "topic": "Sustainable living",
+      "readTime": 5,
+      "format": "article",
+      "imageUrl": "https://images.unsplash.com/photo-1571068316344-75bc76f77890?auto=format&fit=crop&w=800&q=80",
+      "author": "Jon Bell",
+      "published": "2026-06-19"
+    },
+    {
+      "id": "art-006",
+      "title": "Fixing fast fashion: a video tour of a repair cafe",
+      "excerpt": "Watch volunteers mend clothes, bikes, and small electronics - and learn how to host a repair cafe in your neighborhood.",
+      "topic": "Waste reduction",
+      "readTime": 10,
+      "format": "video",
+      "imageUrl": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=800&q=80",
+      "author": "Repair & Share Collective",
+      "published": "2026-06-05"
+    }
+  ],
+  "resources": [
+    {
+      "id": "res-001",
+      "title": "Home energy audit checklist",
+      "description": "A room-by-room checklist to find drafts, upgrade lighting, and size your solar system.",
+      "type": "checklist",
+      "topic": "Renewable energy",
+      "format": "pdf",
+      "downloads": 4820,
+      "size": "1.2 MB"
+    },
+    {
+      "id": "res-002",
+      "title": "Zero-waste starter toolkit",
+      "description": "Printable labels, swap lists, and a 30-day habit tracker for reducing single-use waste.",
+      "type": "toolkit",
+      "topic": "Waste reduction",
+      "format": "pdf",
+      "downloads": 3150,
+      "size": "4.6 MB"
+    },
+    {
+      "id": "res-003",
+      "title": "Understanding carbon offsets (video explainer)",
+      "description": "A 12-minute explainer on how offsets work, what to look for, and when to skip them.",
+      "type": "video",
+      "topic": "Climate change",
+      "format": "video",
+      "downloads": 1980,
+      "size": "stream"
+    },
+    {
+      "id": "res-004",
+      "title": "Native plant pocket guide",
+      "description": "The 40 best native species for pollinators, with photos and planting tips for every region.",
+      "type": "guide",
+      "topic": "Conservation",
+      "format": "pdf",
+      "downloads": 2740,
+      "size": "8.1 MB"
+    },
+    {
+      "id": "res-005",
+      "title": "Community garden startup kit",
+      "description": "Lease templates, soil-testing checklists, and a budgeting spreadsheet for new garden groups.",
+      "type": "toolkit",
+      "topic": "Sustainable living",
+      "format": "pdf",
+      "downloads": 1230,
+      "size": "3.3 MB"
+    },
+    {
+      "id": "res-006",
+      "title": "Solar savings calculator walkthrough",
+      "description": "Step-by-step video on estimating payback periods, incentives, and financing for rooftop solar.",
+      "type": "video",
+      "topic": "Renewable energy",
+      "format": "video",
+      "downloads": 2210,
+      "size": "stream"
+    },
+    {
+      "id": "res-007",
+      "title": "Low-impact shopping guide",
+      "description": "How to read ecolabels, choose durable goods, and shop second-hand with confidence.",
+      "type": "guide",
+      "topic": "Waste reduction",
+      "format": "text",
+      "downloads": 3460,
+      "size": "web"
+    },
+    {
+      "id": "res-008",
+      "title": "Volunteer organizer handbook",
+      "description": "Everything you need to plan cleanups, tree plantings, and education stalls from scratch.",
+      "type": "guide",
+      "topic": "Conservation",
+      "format": "pdf",
+      "downloads": 980,
+      "size": "2.9 MB"
+    }
+  ],
+  "mapPoints": [
+    {
+      "id": "pt-001",
+      "name": "Riverside Repair Cafe",
+      "type": "initiative",
+      "location": "Community Hall, 12 Riverside Dr",
+      "distanceKm": 0.8,
+      "description": "Free monthly repair sessions for clothes, bikes, and electronics. Volunteers welcome.",
+      "x": 28,
+      "y": 34
+    },
+    {
+      "id": "pt-002",
+      "name": "Maple Grove Recycling Hub",
+      "type": "recycling",
+      "location": "450 Maple Grove Rd",
+      "distanceKm": 1.6,
+      "description": "Accepts electronics, batteries, glass, and textiles. Open Saturdays 9am-1pm.",
+      "x": 62,
+      "y": 22
+    },
+    {
+      "id": "pt-003",
+      "name": "Sunflower Community Garden",
+      "type": "garden",
+      "location": "Behind the old mill, Old Town",
+      "distanceKm": 2.1,
+      "description": "40 plots plus a shared orchard. New gardeners can join the spring waiting list.",
+      "x": 45,
+      "y": 58
+    },
+    {
+      "id": "pt-004",
+      "name": "Hillcrest Solar Co-op",
+      "type": "initiative",
+      "location": "Hillcrest Community Center",
+      "distanceKm": 3.4,
+      "description": "A neighborhood-owned 120 kW array. Members save on bills and earn energy credits.",
+      "x": 74,
+      "y": 41
+    },
+    {
+      "id": "pt-005",
+      "name": "West End Bottle Drop",
+      "type": "recycling",
+      "location": "West End Transit Hub",
+      "distanceKm": 4.2,
+      "description": "Bottle and can returns with on-site sorting. 24/7 access with a member card.",
+      "x": 18,
+      "y": 72
+    },
+    {
+      "id": "pt-006",
+      "name": "Bee Garden Learning Farm",
+      "type": "garden",
+      "location": "Old Town Farm Lane",
+      "distanceKm": 5.0,
+      "description": "Hands-on workshops in composting, beekeeping, and seasonal planting for all ages.",
+      "x": 58,
+      "y": 80
+    },
+    {
+      "id": "pt-007",
+      "name": "Downtown Climate Action Hub",
+      "type": "initiative",
+      "location": "208 Main Street",
+      "distanceKm": 0.4,
+      "description": "Hosts monthly climate cafés, book swaps, and a tool lending library.",
+      "x": 38,
+      "y": 46
+    },
+    {
+      "id": "pt-008",
+      "name": "Green Route Compost Drop",
+      "type": "recycling",
+      "location": "Green Route Farmers Market",
+      "distanceKm": 2.8,
+      "description": "Food-scrap drop-off every Saturday. Bring your own bucket and swap for finished compost.",
+      "x": 85,
+      "y": 62
+    }
+  ],
+  "impactMetrics": {
+    "co2SavedKg": 6420,
+    "wasteDivertedKg": 1180,
+    "treesPlanted": 46,
+    "volunteerHours": 210,
+    "goalCo2Kg": 10000,
+    "weeklyActivity": [
+      { "label": "Mon", "value": 4 },
+      { "label": "Tue", "value": 7 },
+      { "label": "Wed", "value": 5 },
+      { "label": "Thu", "value": 9 },
+      { "label": "Fri", "value": 11 },
+      { "label": "Sat", "value": 16 },
+      { "label": "Sun", "value": 12 }
+    ],
+    "badges": [
+      { "name": "First Steps", "earned": true },
+      { "name": "Zero Waste Week", "earned": true },
+      { "name": "Green Commuter", "earned": true },
+      { "name": "100kg Club", "earned": false },
+      { "name": "Garden Guardian", "earned": false },
+      { "name": "Community Captain", "earned": false }
+    ]
+  },
+  "events": [
+    { "id": "evt-001", "title": "Riverfront Cleanup Day", "date": "Aug 24, 2026", "location": "Riverside Park", "type": "cleanup", "seats": 40 },
+    { "id": "evt-002", "title": "Intro to Solar for Renters", "date": "Sep 02, 2026", "location": "Online webinar", "type": "webinar", "seats": 120 },
+    { "id": "evt-003", "title": "Seed-Saving Workshop", "date": "Sep 12, 2026", "location": "Sunflower Community Garden", "type": "workshop", "seats": 25 },
+    { "id": "evt-004", "title": "Tree Planting Weekend", "date": "Oct 10, 2026", "location": "Hillcrest Ridge", "type": "volunteer", "seats": 60 }
+  ]
+}

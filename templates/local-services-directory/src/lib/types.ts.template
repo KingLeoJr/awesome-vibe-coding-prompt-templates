@@ -1,0 +1,61 @@
+export interface Category {
+  name: string;
+  slug: string;
+  icon: string;
+  count: number;
+}
+
+export interface Provider {
+  id: string;
+  name: string;
+  category: string;
+  area: string;
+  rating: number;
+  reviewCount: number;
+  verified: boolean;
+  priceFrom: number;
+  services: string[];
+  availability: boolean;
+  distanceKm: number;
+  imageUrl: string;
+}
+
+export interface Review {
+  id: string;
+  providerId: string;
+  author: string;
+  rating: number;
+  date: string;
+  service: string;
+  comment: string;
+  verified: boolean;
+}
+
+export interface BookingSlot {
+  id: string;
+  providerId: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  available: boolean;
+}
+
+export interface Booking {
+  id: string;
+  providerId: string;
+  userId: string;
+  slotId: string;
+  status: "pending" | "confirmed" | "completed" | "cancelled";
+  amount: number;
+  paymentMethod: string;
+}
+
+export interface DashboardMetrics {
+  bookings: number;
+  monthlyTrend: number;
+  avgRating: number;
+  views: number;
+  responseRate: number;
+  weeklyBookings: number[];
+  topServices: { name: string; share: number }[];
+}

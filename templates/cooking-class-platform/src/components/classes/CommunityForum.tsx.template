@@ -1,0 +1,83 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Heart, MessageCircle, MessagesSquare } from "lucide-react";
+
+export interface ForumPost {
+  id: string;
+  title: string;
+  author: string;
+  category: string;
+  replies: number;
+  likes: number;
+  time: string;
+  excerpt: string;
+}
+
+interface CommunityForumProps {
+  posts: ForumPost[];
+}
+
+export default function CommunityForum({ posts }: CommunityForumProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="community-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+              <MessagesSquare size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="community-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Community forum</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Share experiences, ask questions, and support fellow cooks.</p>
+            </div>
+          </div>
+        </div>
+
+        <ul className="flex flex-col gap-3" aria-label="Forum discussions">
+          {posts.map((post, i) => (
+            <motion.li
+              key={post.id}
+              initial={{ opacity: 0, x: -8 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: Math.min(i * 0.05, 0.4) }}
+              className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-6 py-5"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">{post.title}</h3>
+                    <span className="rounded-full bg-[var(--color-primary)]/10 px-2.5 py-0.5 text-[11px] font-medium text-[var(--color-primary)]">
+                      {post.category}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{post.excerpt}</p>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    by {post.author} · {post.time}
+                  </p>
+                </div>
+
+                <div className="flex shrink-0 items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="flex items-center gap-1.5">
+                    <MessageCircle size={16} aria-hidden="true" />
+                    {post.replies}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Heart size={16} aria-hidden="true" />
+                    {post.likes}
+                  </span>
+                </div>
+              </div>
+            </motion.li>
+          ))}
+        </ul>
+      </motion.div>
+    </section>
+  );
+}

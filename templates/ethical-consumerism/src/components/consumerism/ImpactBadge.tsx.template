@@ -1,0 +1,149 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Coins, Footprints, HeartHandshake, Trophy } from "lucide-react";
+
+export interface PurchaseImpact {
+  id: string;
+  product: string;
+  date: string;
+  impactNote: string;
+  co2SavedKg: number;
+  fairTradeSupport: boolean;
+}
+
+export interface ImpactMetrics {
+  co2SavedKg: number;
+  fairTradePurchases: number;
+  crueltyFreePurchases: number;
+  localSpend: number;
+  goalKg: number;
+}
+
+export interface ImpactBadgeItem {
+  name: string;
+  description: string;
+  earned: boolean;
+}
+
+export interface ImpactData {
+  purchases: PurchaseImpact[];
+  metrics: ImpactMetrics;
+  badges: ImpactBadgeItem[];
+}
+
+interface ImpactBadgeProps {
+  impact: ImpactData;
+  currency?: string;
+}
+
+export default function ImpactBadge({ impact, currency = "{{currency.symbol}}" }: ImpactBadgeProps) {
+  const { metrics, purchases, badges } = impact;
+  const goalPct = metrics.goalKg > 0 ? Math.min(100, Math.round((metrics.co2SavedKg / metrics.goalKg) * 100)) : 0;
+
+  const stats = [
+    { label: "CO₂ avoided", value: `${metrics.co2SavedKg} kg`, icon: Footprints, tone: "text-[var(--color-primary)]" },
+    { label: "Fair trade buys", value: `${metrics.fairTradePurchases}`, icon: HeartHandshake, tone: "text-[var(--color-secondary)]" },
+    { label: "Cruelty-free buys", value: `${metrics.crueltyFreePurchases}`, icon: Coins, tone: "text-[var(--color-accent)]" },
+    { label: "Spent local", value: `${currency}${metrics.localSpend.toLocaleString()}`, icon: Trophy, tone: "text-emerald-500" },
+  ];
+
+  return (
+    <section aria-labelledby="impact-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+            <HeartHandshake size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="impact-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Your purchase impact</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">See what your buying choices do for the planet and people.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-5"
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+                <stat.icon size={18} className={stat.tone} aria-hidden="true" />
+              </div>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-2">
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+            <h3 className="font-semibold text-gray-900 dark:text-white">Toward your yearly goal</h3>
+            <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={goalPct} aria-valuemin={0} aria-valuemax={100} aria-label="Impact goal progress">
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: `${goalPct}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+              />
+            </div>
+            <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+              {metrics.co2SavedKg} of {metrics.goalKg} kg CO₂ avoided ({goalPct}%).
+            </p>
+
+            <ul className="mt-6 space-y-3" aria-label="Recent impactful purchases">
+              {purchases.map((p, i) => (
+                <motion.li
+                  key={p.id}
+                  initial={{ opacity: 0, x: -8 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: i * 0.05 }}
+                  className="flex items-center justify-between gap-3 border-b border-gray-100 pb-3 text-sm dark:border-gray-800 last:border-0 last:pb-0"
+                >
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">{p.product}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{p.date} · {p.impactNote}</p>
+                  </div>
+                  <span className="shrink-0 rounded-full bg-[var(--color-primary)]/10 px-2.5 py-1 text-xs font-semibold text-[var(--color-primary)]">
+                    {p.co2SavedKg} kg
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+            <h3 className="font-semibold text-gray-900 dark:text-white">Badges earned</h3>
+            <div className="mt-4 grid grid-cols-2 gap-4">
+              {badges.map((badge, i) => (
+                <motion.div
+                  key={badge.name}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: i * 0.06 }}
+                  className={`rounded-xl p-4 text-center ${badge.earned ? "bg-[var(--color-primary)]/10" : "bg-gray-100 dark:bg-gray-900 opacity-60"}`}
+                >
+                  <Trophy size={20} className={`mx-auto ${badge.earned ? "text-[var(--color-primary)]" : "text-gray-400"}`} aria-hidden="true" />
+                  <p className="mt-2 text-sm font-semibold text-gray-900 dark:text-white">{badge.name}</p>
+                  <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{badge.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

@@ -1,0 +1,167 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Award, Leaf, Recycle, Sprout, TreePine, Users, TrendingUp } from "lucide-react";
+import type { ImpactMetrics } from "@/lib/types";
+
+interface ImpactDashboardProps {
+  metrics: ImpactMetrics;
+}
+
+const GOAL_LABEL = "{{impact.goal_co2}}";
+
+export default function ImpactDashboard({ metrics }: ImpactDashboardProps) {
+  const [view, setView] = useState<"personal" | "collective">("personal");
+  const progress = Math.min(100, Math.round((metrics.co2SavedKg / metrics.goalCo2Kg) * 100));
+
+  const stats =
+    view === "personal"
+      ? [
+          { label: `CO2e avoided`, value: `${metrics.co2SavedKg.toLocaleString()}`, unit: `kg`, icon: Leaf },
+          { label: "Waste diverted", value: `${metrics.wasteDivertedKg.toLocaleString()}`, unit: "kg", icon: Recycle },
+          { label: "Trees planted", value: `${metrics.treesPlanted}`, unit: "trees", icon: TreePine },
+          { label: "Volunteer hours", value: `${metrics.volunteerHours}`, unit: "hours", icon: Users },
+        ]
+      : [
+          { label: `CO2e avoided`, value: `${(metrics.co2SavedKg * 42).toLocaleString()}`, unit: `kg`, icon: Leaf },
+          { label: "Waste diverted", value: `${(metrics.wasteDivertedKg * 42).toLocaleString()}`, unit: "kg", icon: Recycle },
+          { label: "Trees planted", value: `${metrics.treesPlanted * 42}`, unit: "trees", icon: TreePine },
+          { label: "Community members", value: "2,847", unit: "people", icon: Users },
+        ];
+
+  return (
+    <section id="impact" className="mx-auto max-w-7xl px-6 py-20">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+            Impact tracker
+          </p>
+          <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+            Your choices add up
+          </h2>
+        </div>
+        <div className="flex gap-2" role="group" aria-label="Impact view">
+          {(["personal", "collective"] as const).map((option) => (
+            <button
+              key={option}
+              onClick={() => setView(option)}
+              aria-pressed={view === option}
+              className={`rounded-lg px-4 py-1.5 text-sm font-medium capitalize transition ${
+                view === option
+                  ? "bg-[var(--color-primary)] text-white"
+                  : "border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-900"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, index) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.06 }}
+            className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-950"
+          >
+            <div className="flex items-center justify-between">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                <stat.icon className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                <TrendingUp className="h-3.5 w-3.5" aria-hidden="true" />
+                +{12 + index * 3}%
+              </span>
+            </div>
+            <p className="mt-4 text-2xl font-bold text-gray-900 dark:text-white">
+              {stat.value} <span className="text-sm font-medium text-gray-500 dark:text-gray-400">{stat.unit}</span>
+            </p>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="mt-6 grid gap-5 lg:grid-cols-2">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-950"
+        >
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-gray-900 dark:text-white">Progress toward monthly goal</h3>
+            <span className="text-sm font-semibold text-[var(--color-primary)]">{progress}%</span>
+          </div>
+          <div className="mt-4 h-3 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: `${progress}%` }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+              className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+            />
+          </div>
+          <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+            {metrics.co2SavedKg.toLocaleString()} kg of {GOAL_LABEL} avoided this month. Keep going!
+          </p>
+
+          <h3 className="mt-6 font-semibold text-gray-900 dark:text-white">Weekly activity</h3>
+          <div className="mt-4 flex h-32 items-end gap-3">
+            {metrics.weeklyActivity.map((activity, index) => (
+              <div key={activity.label} className="flex flex-1 flex-col items-center gap-2">
+                <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{activity.value}</span>
+                <motion.div
+                  initial={{ height: 0 }}
+                  whileInView={{ height: `${Math.min(100, activity.value * 4)}%` }}
+                  viewport={{ once: true }}
+                  className="w-full rounded-t-lg bg-[var(--color-accent)]"
+                />
+                <span className="text-xs text-gray-400">{activity.label}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-950"
+        >
+          <div className="flex items-center gap-2">
+            <Award className="h-5 w-5 text-[var(--color-accent)]" aria-hidden="true" />
+            <h3 className="font-semibold text-gray-900 dark:text-white">Badges earned</h3>
+          </div>
+          <ul className="mt-4 grid grid-cols-2 gap-3">
+            {metrics.badges.map((badge) => (
+              <li
+                key={badge.name}
+                className={`flex items-center gap-2 rounded-xl border px-3 py-2.5 text-sm ${
+                  badge.earned
+                    ? "border-[var(--color-primary)]/30 bg-[var(--color-primary)]/5 text-gray-900 dark:text-white"
+                    : "border-dashed border-gray-200 text-gray-400 dark:border-gray-700"
+                }`}
+              >
+                <Sprout
+                  className={`h-4 w-4 ${badge.earned ? "text-[var(--color-primary)]" : ""}`}
+                  aria-hidden="true"
+                />
+                <span className="font-medium">{badge.name}</span>
+                {!badge.earned && <span className="ml-auto text-xs">Locked</span>}
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-5 text-sm text-gray-500 dark:text-gray-400">
+            Complete your next challenge to unlock more rewards and unlock community recognition.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

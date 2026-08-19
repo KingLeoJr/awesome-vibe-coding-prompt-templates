@@ -1,0 +1,122 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { BookOpen, Download, FileText, Video } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface CareResource {
+  id: string;
+  title: string;
+  description: string;
+  topic: string;
+  type: "guide" | "video" | "article";
+  readTime: string;
+  link: string;
+}
+
+interface ResourceLibraryProps {
+  resources: CareResource[];
+  topics?: string[];
+}
+
+const TYPE_ICONS = {
+  guide: FileText,
+  video: Video,
+  article: BookOpen,
+} as const;
+
+export default function ResourceLibrary({
+  resources,
+  topics = ["Medication Safety", "Home Safety", "Nutrition", "Caregiving Basics"],
+}: ResourceLibraryProps) {
+  const [topic, setTopic] = useState("All");
+
+  const filtered = useMemo(() => {
+    return resources.filter((r) => topic === "All" || r.topic === topic);
+  }, [resources, topic]);
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="resources-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+              <BookOpen size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="resources-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Resource library</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Guides and articles to support seniors and family caregivers.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap gap-2" role="group" aria-label="Filter resources by topic">
+          {["All", ...topics].map((t) => (
+            <button
+              key={t}
+              onClick={() => setTopic(t)}
+              aria-pressed={topic === t}
+              className={cn(
+                "rounded-full px-4 py-1.5 text-sm font-medium transition",
+                topic === t
+                  ? "bg-[var(--color-accent)] text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+              )}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {filtered.map((resource, i) => {
+            const Icon = TYPE_ICONS[resource.type];
+            return (
+              <motion.article
+                key={resource.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+                    <Icon size={19} aria-hidden="true" />
+                  </span>
+                  <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[11px] font-medium capitalize text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                    {resource.type}
+                  </span>
+                </div>
+                <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">{resource.title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-500 dark:text-gray-400">{resource.description}</p>
+                <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
+                  <span className="text-xs text-gray-400 dark:text-gray-500">{resource.readTime}</span>
+                  <a
+                    href={resource.link}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-accent)]/10 px-4 py-2 text-sm font-medium text-[var(--color-accent)] transition hover:bg-[var(--color-accent)]/20"
+                  >
+                    <Download size={15} aria-hidden="true" />
+                    Open
+                  </a>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+
+        {filtered.length === 0 && (
+          <p className="rounded-2xl border border-dashed border-gray-300 p-8 text-center text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
+            No resources in this topic yet.
+          </p>
+        )}
+      </motion.div>
+    </section>
+  );
+}

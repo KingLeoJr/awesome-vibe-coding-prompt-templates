@@ -1,0 +1,161 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, ClipboardList, RotateCcw } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface AssessmentQuestion {
+  id: string;
+  text: string;
+  options: string[];
+}
+
+export interface Assessment {
+  title: string;
+  intro: string;
+  questions: AssessmentQuestion[];
+}
+
+interface SelfAssessmentProps {
+  assessment: Assessment;
+}
+
+export default function SelfAssessment({ assessment }: SelfAssessmentProps) {
+  const [current, setCurrent] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [finished, setFinished] = useState(false);
+
+  const question = assessment.questions[current];
+  const progress = Math.round((Object.keys(answers).length / assessment.questions.length) * 100);
+  const isLast = current === assessment.questions.length - 1;
+
+  const select = (optionIndex: number) => {
+    setAnswers((prev) => ({ ...prev, [question.id]: optionIndex }));
+  };
+
+  const next = () => {
+    if (isLast) {
+      setFinished(true);
+    } else {
+      setCurrent((c) => c + 1);
+    }
+  };
+
+  const prev = () => {
+    setCurrent((c) => Math.max(0, c - 1));
+  };
+
+  const reset = () => {
+    setCurrent(0);
+    setAnswers({});
+    setFinished(false);
+  };
+
+  const totalScore = assessment.questions.reduce((sum, q) => sum + (answers[q.id] ?? 0), 0);
+  const maxScore = assessment.questions.length * (assessment.questions[0]?.options.length ?? 4);
+  const level = totalScore / Math.max(1, maxScore);
+
+  return (
+    <section className="mx-auto max-w-4xl px-6 py-16" aria-labelledby="checkin-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+            <ClipboardList size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="checkin-heading" className="text-3xl font-bold text-gray-900 dark:text-white">{assessment.title}</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{assessment.intro}</p>
+          </div>
+        </div>
+
+        {!finished ? (
+          <Card className="p-8">
+            <div className="mb-6">
+              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
+                <span>Question {current + 1} of {assessment.questions.length}</span>
+                <span>{progress}% complete</span>
+              </div>
+              <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} aria-label="Assessment progress">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.3 }}
+                  className="h-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+                />
+              </div>
+            </div>
+
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{question.text}</h3>
+
+            <div className="mt-5 flex flex-col gap-2.5" role="group" aria-label={`Answers for question ${current + 1}`}>
+              {question.options.map((option, index) => (
+                <button
+                  key={option}
+                  onClick={() => select(index)}
+                  aria-pressed={answers[question.id] === index}
+                  className={cn(
+                    "rounded-xl border px-4 py-3 text-left text-sm transition",
+                    answers[question.id] === index
+                      ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 font-medium text-[var(--color-primary)]"
+                      : "border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:border-[var(--color-primary)]"
+                  )}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-6 flex items-center justify-between">
+              <button
+                onClick={prev}
+                disabled={current === 0}
+                className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 transition disabled:opacity-40"
+              >
+                <ArrowLeft size={16} aria-hidden="true" />
+                Back
+              </button>
+              <button
+                onClick={next}
+                disabled={answers[question.id] === undefined}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition disabled:opacity-40"
+              >
+                {isLast ? "See results" : "Next"}
+                <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            </div>
+          </Card>
+        ) : (
+          <Card className="p-8 text-center">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Your check-in is complete</h3>
+            <p className="mx-auto mt-3 max-w-md text-sm text-gray-500 dark:text-gray-400">
+              {level < 0.4
+                ? "You're doing well right now — keep up the routines that support you."
+                : level < 0.7
+                ? "There are some areas worth a little more attention this week. The library below has gentle next steps."
+                : "You've shared a lot today — be kind to yourself. Consider reaching out to a professional through the Therapists section."}
+            </p>
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <button
+                onClick={reset}
+                className="inline-flex items-center gap-1.5 rounded-full border border-gray-300 dark:border-gray-700 px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 transition"
+              >
+                <RotateCcw size={15} aria-hidden="true" />
+                Take again
+              </button>
+            </div>
+            <p className="mt-6 text-xs text-gray-400">
+              This tool is for reflection and is not a diagnosis — please contact a licensed professional for medical advice.
+            </p>
+          </Card>
+        )}
+      </motion.div>
+    </section>
+  );
+}

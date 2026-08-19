@@ -1,0 +1,74 @@
+import Link from "next/link";
+import { BadgeCheck, MapPin, Star } from "lucide-react";
+import Card from "@/components/shared/Card";
+import type { Provider } from "@/lib/types";
+
+interface ListingCardProps {
+  provider: Provider;
+}
+
+export default function ListingCard({ provider }: ListingCardProps) {
+  return (
+    <Card className="group overflow-hidden">
+      <div className="relative h-40 w-full overflow-hidden">
+        <img
+          src={provider.imageUrl}
+          alt={provider.name}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" aria-hidden="true" />
+        <span className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-gray-800 dark:bg-gray-950/90 dark:text-gray-100">
+          <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" aria-hidden="true" />
+          {provider.rating.toFixed(1)}
+          <span className="font-normal text-gray-500 dark:text-gray-400">({provider.reviewCount})</span>
+        </span>
+        {provider.verified && (
+          <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-[var(--color-primary)] px-2.5 py-1 text-xs font-semibold text-white">
+            <BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" />
+            Verified
+          </span>
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col gap-3 p-5">
+        <div>
+          <h3 className="font-semibold text-gray-900 dark:text-white">{provider.name}</h3>
+          <p className="mt-1 flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+            <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+            {provider.area} &middot; {provider.distanceKm.toFixed(1)} km away
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-1.5">
+          {provider.services.slice(0, 3).map((service) => (
+            <span
+              key={service}
+              className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+            >
+              {service}
+            </span>
+          ))}
+          {provider.services.length > 3 && (
+            <span className="rounded-full px-2.5 py-1 text-xs font-medium text-gray-400">
+              +{provider.services.length - 3} more
+            </span>
+          )}
+        </div>
+
+        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            from{" "}
+            <span className="font-semibold text-gray-900 dark:text-white">${provider.priceFrom}</span>/hr
+          </p>
+          <Link
+            href={`/providers/${provider.id}`}
+            className="inline-flex items-center rounded-full border border-gray-300 px-4 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+          >
+            View profile
+          </Link>
+        </div>
+      </div>
+    </Card>
+  );
+}

@@ -1,0 +1,220 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "categories": ["Ceramics", "Textiles", "Jewelry", "Woodwork", "Candles", "Prints"],
+  "locations": ["Portland, OR", "Asheville, NC", "Brooklyn, NY", "Austin, TX", "Santa Fe, NM"],
+  "products": [
+    {
+      "id": "p-001",
+      "name": "Wheel-thrown stoneware mug set",
+      "maker": "Maya Lin Pottery",
+      "location": "Portland, OR",
+      "price": 48,
+      "rating": 4.9,
+      "reviewCount": 132,
+      "tags": ["ceramics", "stoneware", "dishwasher-safe"],
+      "category": "Ceramics",
+      "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d",
+      "badge": "Featured"
+    },
+    {
+      "id": "p-002",
+      "name": "Hand-dyed linen table runner",
+      "maker": "Thistle & Thread",
+      "location": "Asheville, NC",
+      "price": 64,
+      "rating": 4.8,
+      "reviewCount": 87,
+      "tags": ["textiles", "linen", "natural-dye"],
+      "category": "Textiles",
+      "image": "https://images.unsplash.com/photo-1618220179428-22790b461013",
+      "badge": "New"
+    },
+    {
+      "id": "p-003",
+      "name": "Recycled silver geometric earrings",
+      "maker": "Forge & Form",
+      "location": "Santa Fe, NM",
+      "price": 72,
+      "rating": 5,
+      "reviewCount": 214,
+      "tags": ["jewelry", "silver", "handmade"],
+      "category": "Jewelry",
+      "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908",
+      "badge": "Bestseller"
+    },
+    {
+      "id": "p-004",
+      "name": "Walnut serving board with brass inlay",
+      "maker": "Hollow Tree Workshop",
+      "location": "Brooklyn, NY",
+      "price": 96,
+      "rating": 4.9,
+      "reviewCount": 58,
+      "tags": ["woodwork", "walnut", "kitchen"],
+      "category": "Woodwork",
+      "image": "https://images.unsplash.com/photo-1584556812952-905ffd0c611a",
+      "badge": "Featured"
+    },
+    {
+      "id": "p-005",
+      "name": "Poured beeswax candle trio",
+      "maker": "Ridge & Root",
+      "location": "Austin, TX",
+      "price": 34,
+      "rating": 4.7,
+      "reviewCount": 143,
+      "tags": ["candles", "beeswax", "soy"],
+      "category": "Candles",
+      "image": "https://images.unsplash.com/photo-1602874801007-bd458bb1b8b6",
+      "badge": "New"
+    },
+    {
+      "id": "p-006",
+      "name": "Letterpress botanical print set",
+      "maker": "Fern Press",
+      "location": "Brooklyn, NY",
+      "price": 28,
+      "rating": 4.8,
+      "reviewCount": 96,
+      "tags": ["prints", "letterpress", "botanical"],
+      "category": "Prints",
+      "image": "https://images.unsplash.com/photo-1580130371924-3e4f28a2c5a6",
+      "badge": ""
+    },
+    {
+      "id": "p-007",
+      "name": "Hand-glazed speckled dinner plate",
+      "maker": "Maya Lin Pottery",
+      "location": "Portland, OR",
+      "price": 42,
+      "rating": 4.9,
+      "reviewCount": 71,
+      "tags": ["ceramics", "dinnerware"],
+      "category": "Ceramics",
+      "image": "https://images.unsplash.com/photo-1603199506016-b9a594b593c0",
+      "badge": "New"
+    },
+    {
+      "id": "p-008",
+      "name": "Woven cotton throw blanket",
+      "maker": "Thistle & Thread",
+      "location": "Asheville, NC",
+      "price": 120,
+      "rating": 4.9,
+      "reviewCount": 178,
+      "tags": ["textiles", "cotton", "woven"],
+      "category": "Textiles",
+      "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2",
+      "badge": "Bestseller"
+    }
+  ],
+  "featuredMakers": [
+    {
+      "id": "m-001",
+      "name": "Maya Lin Pottery",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+      "location": "Portland, OR",
+      "craft": "Ceramics",
+      "bio": "A small-batch studio making functional stoneware for slow mornings and shared tables.",
+      "rating": 4.9,
+      "listings": 34,
+      "verified": true
+    },
+    {
+      "id": "m-002",
+      "name": "Thistle & Thread",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb",
+      "location": "Asheville, NC",
+      "craft": "Textiles",
+      "bio": "Hand-dyed linens and woven goods, colored with plants gathered from the Blue Ridge.",
+      "rating": 4.8,
+      "listings": 27,
+      "verified": true
+    },
+    {
+      "id": "m-003",
+      "name": "Forge & Form",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+      "location": "Santa Fe, NM",
+      "craft": "Jewelry",
+      "bio": "Recycled-silver jewelry shaped in a one-person forge under the high desert sky.",
+      "rating": 5.0,
+      "listings": 41,
+      "verified": true
+    }
+  ],
+  "cart": {
+    "items": [
+      { "productId": "p-001", "name": "Wheel-thrown stoneware mug set", "price": 48, "quantity": 2, "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d" },
+      { "productId": "p-005", "name": "Poured beeswax candle trio", "price": 34, "quantity": 1, "image": "https://images.unsplash.com/photo-1602874801007-bd458bb1b8b6" }
+    ],
+    "summary": { "shipping": 6.5, "taxRate": 0.08 }
+  },
+  "vendorStats": {
+    "summary": { "totalRevenue": 12840, "orders": 342, "avgRating": 4.8, "customers": 210 },
+    "salesTrend": [
+      { "label": "Mar", "orders": 52, "revenue": 1860 },
+      { "label": "Apr", "orders": 61, "revenue": 2240 },
+      { "label": "May", "orders": 74, "revenue": 2710 },
+      { "label": "Jun", "orders": 83, "revenue": 3120 },
+      { "label": "Jul", "orders": 91, "revenue": 3380 },
+      { "label": "Aug", "orders": 105, "revenue": 3940 }
+    ],
+    "topProducts": [
+      { "name": "Recycled silver geometric earrings", "sold": 46, "stock": 12 },
+      { "name": "Woven cotton throw blanket", "sold": 38, "stock": 9 },
+      { "name": "Wheel-thrown stoneware mug set", "sold": 31, "stock": 18 }
+    ],
+    "lowInventory": [
+      { "name": "Hand-glazed speckled dinner plate", "stock": 3, "reorderAt": 10 },
+      { "name": "Letterpress botanical print set", "stock": 0, "reorderAt": 15 }
+    ]
+  },
+  "reviews": [
+    {
+      "id": "r-001",
+      "author": "Priya S.",
+      "product": "Wheel-thrown stoneware mug set",
+      "rating": 5,
+      "title": "Better than the photos",
+      "body": "The glaze is even more beautiful in person and the mugs feel wonderfully balanced in hand.",
+      "date": "2026-08-14",
+      "verified": true
+    },
+    {
+      "id": "r-002",
+      "author": "Daniel K.",
+      "product": "Hand-dyed linen table runner",
+      "rating": 4,
+      "title": "Gorgeous natural color",
+      "body": "Lovely texture and the plant-dye color shifts in different light. Shipping took a few days longer.",
+      "date": "2026-08-11",
+      "verified": true
+    },
+    {
+      "id": "r-003",
+      "author": "Amara J.",
+      "product": "Recycled silver geometric earrings",
+      "rating": 5,
+      "title": "My everyday pair",
+      "body": "Lightweight, well finished, and the recycled silver story made the gift extra special.",
+      "date": "2026-08-09",
+      "verified": true
+    },
+    {
+      "id": "r-004",
+      "author": "Tom W.",
+      "product": "Poured beeswax candle trio",
+      "rating": 5,
+      "title": "Subtle honey scent",
+      "body": "Clean burn, long-lasting, and the packaging is compostable. Perfect host gift.",
+      "date": "2026-08-05",
+      "verified": true
+    }
+  ]
+}

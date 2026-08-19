@@ -1,0 +1,196 @@
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Globe2,
+  PackageCheck,
+  ShieldCheck,
+  TrendingUp,
+  Truck,
+} from "lucide-react";
+import SEOHead from "@/components/shared/SEOHead";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/shared/Footer";
+import ShipmentCard from "@/components/supply-chain/ShipmentCard";
+import TrackingTimeline from "@/components/supply-chain/TrackingTimeline";
+import ProductAuthentication from "@/components/supply-chain/ProductAuthentication";
+import SupplierReputation from "@/components/supply-chain/SupplierReputation";
+import data from "@/data/{{app.slug}}.json";
+
+const heroStats = [
+  { icon: PackageCheck, label: "Active shipments", value: "12,480", trend: "+8.2%" },
+  { icon: ShieldCheck, label: "Products verified", value: "1.2M", trend: "+14.6%" },
+  { icon: Globe2, label: "Countries covered", value: "43", trend: "stable" },
+  { icon: TrendingUp, label: "On-time delivery", value: "96.4%", trend: "+2.1%" },
+];
+
+const sectionHeading = (id: string, title: string, subtitle: string) => (
+  <div className="mx-auto mb-10 max-w-2xl text-center">
+    <h2 id={id} className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+      {title}
+    </h2>
+    <p className="mt-3 text-base text-gray-500 dark:text-gray-400">{subtitle}</p>
+  </div>
+);
+
+export default function Home() {
+  return (
+    <>
+      <SEOHead />
+      <Header />
+      <main>
+        <section id="dashboard" className="relative overflow-hidden pb-24 pt-36">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_srgb,var(--color-primary)_12%,transparent),transparent_60%)]"
+          />
+          <div className="container mx-auto px-6 text-center">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mx-auto inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/5 px-4 py-1.5 text-xs font-medium text-[var(--color-primary)]"
+            >
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-primary)]" />
+              {data.app.tagline}
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mx-auto mt-6 max-w-3xl text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl"
+            >
+              Trust your supply chain{" "}
+              <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] bg-clip-text text-transparent">
+                from source to shelf.
+              </span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mx-auto mt-6 max-w-2xl text-lg text-gray-500 dark:text-gray-400"
+            >
+              Every shipment, supplier, and product is anchored to an immutable
+              ledger — with real-time tracking, cold-chain telemetry, and
+              on-chain authenticity checks.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-8 flex flex-wrap items-center justify-center gap-4"
+            >
+              <a
+                href="#tracking"
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-7 py-3 text-sm font-medium text-white transition hover:opacity-90"
+              >
+                Track a shipment <ArrowRight size={16} />
+              </a>
+              <a
+                href="#authentication"
+                className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-7 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-900"
+              >
+                <Truck size={16} />
+                Verify a product
+              </a>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="container mx-auto -mt-10 px-6">
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {data.stats.map((stat, index) => {
+              const Icon = heroStats[index]?.icon ?? PackageCheck;
+              return (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: index * 0.07 }}
+                  className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-950"
+                >
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                    <Icon size={18} />
+                  </span>
+                  <p className="mt-3 text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {stat.label} · <span className="text-emerald-600 dark:text-emerald-400">{stat.trend}</span>
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section id="shipments" className="py-24">
+          <div className="container mx-auto px-6">
+            {sectionHeading("shipments", "Live shipment board", "Tokenized inventory with real-time auditing across every leg of the journey.")}
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {data.shipments.map((shipment, index) => (
+                <ShipmentCard key={shipment.id} shipment={shipment} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="tracking" className="bg-gray-50 py-24 dark:bg-gray-900/40">
+          <div className="container mx-auto grid gap-12 px-6 lg:grid-cols-2 lg:items-center">
+            <div>
+              {sectionHeading("tracking", "Chain-of-custody tracking", "Immutable, block-confirmed events — who touched the goods, where, and when.")}
+              <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                <li className="flex items-start gap-2.5">
+                  <ShieldCheck size={18} className="mt-0.5 shrink-0 text-[var(--color-primary)]" />
+                  Every custody hand-off is written to the ledger and confirmable on {{chain.network}}.
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <TrendingUp size={18} className="mt-0.5 shrink-0 text-[var(--color-primary)]" />
+                  IoT telemetry (temperature, humidity) is appended to each shipment event.
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <PackageCheck size={18} className="mt-0.5 shrink-0 text-[var(--color-primary)]" />
+                  Disputes and recalls resolve against a single, tamper-evident history.
+                </li>
+              </ul>
+            </div>
+            <TrackingTimeline events={data.trackingEvents} />
+          </div>
+        </section>
+
+        <section id="authentication" className="py-24">
+          <div className="container mx-auto px-6">
+            {sectionHeading("authentication", "Product authentication", "Anti-counterfeiting powered by QR/RFID scans resolved against the on-chain registry.")}
+            <ProductAuthentication products={data.products} />
+          </div>
+        </section>
+
+        <section id="suppliers" className="bg-gray-50 py-24 dark:bg-gray-900/40">
+          <div className="container mx-auto px-6">
+            {sectionHeading("suppliers", "Supplier reputation", "Reputation scoring derived from verified, on-chain performance data.")}
+            <SupplierReputation suppliers={data.suppliers} />
+          </div>
+        </section>
+
+        <section className="py-24">
+          <div className="container mx-auto px-6">
+            <div className="relative overflow-hidden rounded-3xl border border-[var(--color-primary)]/20 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] px-8 py-14 text-center">
+              <div className="relative z-10">
+                <h2 className="text-3xl font-bold text-white sm:text-4xl">Ready to digitize your chain?</h2>
+                <p className="mx-auto mt-4 max-w-xl text-sm text-white/80">
+                  Deploy escrow, multi-sig approvals, and trade finance for your network — all anchored on {{chain.network}}.
+                </p>
+                <a
+                  href="#dashboard"
+                  className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-medium text-[var(--color-primary)] transition hover:bg-gray-100"
+                >
+                  Get started <ArrowRight size={16} />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
+}

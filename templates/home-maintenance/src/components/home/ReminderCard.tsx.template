@@ -1,0 +1,105 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+import { lucideReact } from "lucide-react";
+import { Calendar, Check, Clock, Trash } from "lucide-react";
+
+interface ReminderItem {
+  id: string;
+  task: string;
+  frequency: "weekly" | "monthly" | "quarterly" | "halfyearly" | "yearly";
+  nextDue: string;
+  status: "active" | "completed" | "snoozed";
+}
+
+interface ReminderCardProps {
+  reminder: ReminderItem;
+  onToggle: (id: string) => void;
+}
+
+export default function ReminderCard({ reminder, onToggle }: ReminderCardProps) {
+  const freqLabels: Record<string, string> = {
+    weekly: "Weekly",
+    monthly: "Monthly",
+    quarterly: "Quarterly",
+    halfyearly: "Half-Yearly",
+    yearly: "Yearly",
+  };
+
+  const statusClasses: Record<string, string> = {
+    active: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+    completed: "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400",
+    snoozed: "bg-yellow-100 text-yellow-800 dark:bg-amber-900 dark:text-amber-300",
+  };
+
+  const statusIcons: Record<string, React.ComponentType> = {
+    active: Clock,
+    completed: Check,
+    snoozed: Trash,
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950",
+        "hover:shadow-lg transition-shadow",
+        "pb-6"
+      )}
+    >
+      <div className="p-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              {reminder.task}
+            </h3>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              {freqLabels[reminder.frequency]} · Due {formatDate(reminder.nextDue)}
+            </p>
+          </div>
+          <statusIcon={statusIcons[reminder.status]} status={reminder.status} />
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
+          <span className={`text-sm font-medium ${statusClasses[reminder.status]}`}>
+            {statusClasses[reminder.status].replace("bg-", "").replace("text-", "").split(" ")[0]}:{/span>
+            <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">{reminder.status}</span>
+          </span>
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
+          <Button
+            onClick={() => onToggle(reminder.id)}
+            variant="outline"
+            size="sm"
+            className="w-full justify-center"
+          >
+            <Trash size={16} className="mr-2 opacity-50" />
+            Snooze
+          </Button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function statusIcon({ appearance }: { appearance?: React.ComponentType }, status: string) {
+  return (
+    <appearance
+      key={status}
+      size={20}
+      className="text-gray-400 dark:text-gray-500"
+    />
+  );
+}
+
+function formatDate(dateStr: string) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}

@@ -1,0 +1,85 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { User, Paw, Heart } from "lucide-react";
+import { cn } from "@/lib-utils";
+
+interface PetInfo {
+  id: string;
+  name: string;
+  type: "dog" | "cat" | "bird" | "small_animal" | "exotic";
+  breed: string;
+  age: number | null;
+  medicalHistory: string | null;
+  specialNeeds: string | null;
+}
+
+interface PetCardProps {
+  pet: PetInfo;
+  onServiceRequest?: () => void;
+}
+
+export default function PetCard({ pet, onServiceRequest }: PetCardProps) {
+  const typeLabels: Record<string, string> = {
+    dog: "Dog",
+    cat: "Cat",
+    bird: "Bird",
+    small_animal: "Small Animal",
+    exotic: "Exotic",
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950",
+        "hover:shadow-lg transition-shadow"
+      )}
+    >
+      <div className="p-5">
+        <div className="flex items-start gap-3">
+          <div className="flex-shrink-0">
+            <motion.span
+              className="h-12 w-12 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center text-2xl font-medium text-[var(--color-primary)]"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <Paw className="h-6 w-6" />
+            </motion.span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-gray-900 dark:text-white truncate">{pet.name}</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {typeLabels[pet.type] || pet.type} · {pet.age !== null ? `${pet.age}+` : "—"} · {pet.breed || "Mix"}
+            </p>
+          </div>
+        </div>
+
+        {pet.medicalHistory && (
+          <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+            {pet.medicalHistory}
+          </p>
+        )}
+
+        {pet.specialNeeds && (
+          <p className="mt-2 text-xs font-medium bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded px-2 py-1">
+            Special needs: {pet.specialNeeds}
+          </p>
+        )}
+
+        {onServiceRequest && (
+          <button
+            onClick={onServiceRequest}
+            className="mt-3 w-full rounded-full bg-[var(--color-primary)] text-white py-2 text-sm font-medium hover:opacity-90 transition"
+            aria-label="Request service for {pet.name}"
+          >
+            Request service
+          </button>
+        )}
+      </div>
+    </motion.div>
+  );
+}

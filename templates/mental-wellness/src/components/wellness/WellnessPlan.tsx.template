@@ -1,0 +1,87 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+import { lucideReact } from "lucide-react";
+import { Check, Calendar, Sun, Moon } from "lucide-react";
+
+interface WellnessPlan {
+  id: string;
+  userId: string;
+  name: string;
+  activities: string[];
+  targetMood: string;
+  createdAt: string;
+}
+
+interface WellnessPlanProps {
+  plan: WellnessPlan;
+  onSelect: () => void;
+}
+
+export default function WellnessPlan({ plan, onSelect }: WellnessPlanProps) {
+  const [isActive, setIsActive] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-xl border bg-gray-50 dark:bg-gray-900 p-6 hover:shadow-lg transition-shadow",
+        "pb-4"
+      )}
+    >
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            {plan.name}
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {plan.activities.length} selected activities · Target: {plan.targetMood}
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          {plan.activities.map((activity, index) => (
+            <motion.div
+              key={activity}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="flex items-start justify-between p-3 bg-white dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-800"
+            >
+              <div>
+                <span className="font-medium text-gray-900 dark:text-white">{activity}</span>
+              </div>
+              <div>
+                {isActive ? (
+                  <Check size={14} className="text-green-500" aria-hidden="true" />
+                ) : (
+                  <Button
+                    onClick={() => onSelect()}
+                    variant="outline"
+                    size="ghost"
+                    className="text-xs text-[var(--color-primary)]"
+                  >
+                    <Sun size={12} className="mr-1 opacity-70" />
+                    Done
+                  </Button>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <Button onClick={onSelect} variant="link" size="sm" className="mt-3 flex items-center justify-center">
+          <Calendar size={16} className="mr-1 opacity-70" />
+          View Full Plan
+        </Button>
+      </div>
+    </motion.div>
+  );
+}

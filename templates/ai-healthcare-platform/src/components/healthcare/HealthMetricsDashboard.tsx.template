@@ -1,0 +1,136 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Activity, Droplets, HeartPulse, Thermometer } from "lucide-react";
+
+export interface HealthMetric {
+  name: string;
+  value: number;
+  unit: string;
+  status: "good" | "watch" | "alert";
+  delta: number;
+}
+
+export interface MetricTrend {
+  metric: string;
+  points: { date: string; value: number }[];
+}
+
+interface HealthMetricsDashboardProps {
+  metrics: HealthMetric[];
+  trends: MetricTrend[];
+}
+
+const metricIcon: Record<string, typeof HeartPulse> = {
+  "Heart rate": HeartPulse,
+  "Blood pressure": Activity,
+  "Blood oxygen": Droplets,
+  "Body temp": Thermometer,
+};
+
+const statusTone: Record<HealthMetric["status"], string> = {
+  good: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  watch: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  alert: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+function TrendSparkline({ points, stroke }: { points: { date: string; value: number }[]; stroke: string }) {
+  const width = 280;
+  const height = 64;
+  const pad = 4;
+  const values = points.map((p) => p.value);
+  const max = Math.max(...values, 1);
+  const min = Math.min(...values);
+  const range = Math.max(max - min, 1);
+  const step = points.length > 1 ? (width - pad * 2) / (points.length - 1) : 0;
+  const path = points
+    .map((p, i) => {
+      const x = pad + i * step;
+      const y = height - pad - ((p.value - min) / range) * (height - pad * 2);
+      return `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .join(" ");
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} className="w-full" role="img" aria-label={`${points[0]?.date ?? ""} to ${points[points.length - 1]?.date ?? ""} trend`}>
+      <path d={path} fill="none" stroke={stroke} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export default function HealthMetricsDashboard({ metrics, trends }: HealthMetricsDashboardProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="health-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <HeartPulse size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="health-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Your health, live</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Continuous monitoring from your wearable devices, synced securely.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {metrics.map((m, i) => {
+            const Icon = metricIcon[m.name] ?? HeartPulse;
+            return (
+              <motion.div
+                key={m.name}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-5"
+              >
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{m.name}</p>
+                  <Icon size={18} className="text-[var(--color-primary)]" aria-hidden="true" />
+                </div>
+                <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+                  {m.value}
+                  <span className="ml-1 text-sm font-normal text-gray-400">{m.unit}</span>
+                </p>
+                <div className="mt-2 flex items-center justify-between">
+                  <span className={`rounded-full px-2 py-0.5 text-[11px] font-medium capitalize ${statusTone[m.status]}`}>{m.status}</span>
+                  <span className={`text-xs font-medium ${m.delta >= 0 ? "text-emerald-500" : "text-rose-500"}`}>
+                    {m.delta >= 0 ? "+" : ""}{m.delta}%
+                  </span>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+          <div className="mb-5 grid gap-6 md:grid-cols-2">
+            {trends.map((trend, i) => (
+              <div key={trend.metric} className="rounded-xl bg-gray-50 dark:bg-gray-900 p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-200">{trend.metric}</p>
+                  <span className="text-xs text-gray-400">Last {trend.points.length} days</span>
+                </div>
+                <TrendSparkline points={trend.points} stroke={`var(--color-${i % 3 === 0 ? "primary" : i % 3 === 1 ? "secondary" : "accent"})`} />
+              </div>
+            ))}
+          </div>
+          <p className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-600">
+            <span
+              className="h-2 w-2 rounded-full"
+              style={{ backgroundImage: `linear-gradient(90deg, var(--color-primary), var(--color-secondary))` }}
+              aria-hidden="true"
+            />
+            Generated from encrypted IoT vitals — anomalies trigger clinician alerts.
+          </p>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

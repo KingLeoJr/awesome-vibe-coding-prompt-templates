@@ -1,0 +1,205 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, Clock, Dumbbell, Flame, Plus } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface Exercise {
+  name: string;
+  sets: number;
+  reps: number;
+  weight: number;
+}
+
+export interface WorkoutSession {
+  id: number;
+  name: string;
+  date: string;
+  durationMinutes: number;
+  intensity: "low" | "moderate" | "high";
+  calories: number;
+  exercises: Exercise[];
+}
+
+interface WorkoutLogProps {
+  workouts: WorkoutSession[];
+}
+
+const intensityStyles: Record<WorkoutSession["intensity"], string> = {
+  low: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+  moderate: "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
+  high: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300",
+};
+
+export default function WorkoutLog({ workouts }: WorkoutLogProps) {
+  const [sessions, setSessions] = useState<WorkoutSession[]>(workouts);
+  const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const [name, setName] = useState("");
+  const [durationMinutes, setDurationMinutes] = useState("30");
+  const [calories, setCalories] = useState("200");
+
+  const toggleExpanded = (id: number) => {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const addSession = () => {
+    if (!name.trim()) return;
+    const session: WorkoutSession = {
+      id: Date.now(),
+      name: name.trim(),
+      date: new Date().toISOString(),
+      durationMinutes: Number(durationMinutes) || 30,
+      intensity: "moderate",
+      calories: Number(calories) || 0,
+      exercises: [],
+    };
+    setSessions((prev) => [session, ...prev]);
+    setName("");
+  };
+
+  return (
+    <div className="space-y-6">
+      <Card className="p-6">
+        <h3 className="mb-4 inline-flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+          <Plus size={20} className="text-[var(--color-primary)]" aria-hidden />
+          Log a session
+        </h3>
+        <div className="grid gap-3 sm:grid-cols-[1fr_auto_auto_auto]">
+          <label className="sr-only" htmlFor="workout-name">Workout name</label>
+          <input
+            id="workout-name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="e.g. Lower body"
+            className="w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent px-4 py-2.5 text-sm outline-none focus:border-[color:var(--color-primary)]"
+          />
+          <label className="sr-only" htmlFor="workout-minutes">Duration in minutes</label>
+          <input
+            id="workout-minutes"
+            type="number"
+            min={1}
+            value={durationMinutes}
+            onChange={(e) => setDurationMinutes(e.target.value)}
+            className="w-full sm:w-28 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent px-4 py-2.5 text-sm outline-none focus:border-[color:var(--color-primary)]"
+            aria-label="Duration in minutes"
+          />
+          <label className="sr-only" htmlFor="workout-calories">Calories</label>
+          <input
+            id="workout-calories"
+            type="number"
+            min={0}
+            value={calories}
+            onChange={(e) => setCalories(e.target.value)}
+            className="w-full sm:w-28 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent px-4 py-2.5 text-sm outline-none focus:border-[color:var(--color-primary)]"
+            aria-label="Calories burned"
+          />
+          <button
+            type="button"
+            onClick={addSession}
+            disabled={!name.trim()}
+            className="inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Add
+          </button>
+        </div>
+      </Card>
+
+      {sessions.map((session, index) => {
+        const isExpanded = expanded.has(session.id);
+        const formattedDate = new Date(session.date).toLocaleDateString(undefined, {
+          weekday: "short",
+          month: "short",
+          day: "numeric",
+        });
+
+        return (
+          <motion.div
+            key={session.id}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: index * 0.05 }}
+          >
+            <Card className="p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <button
+                  onClick={() => toggleExpanded(session.id)}
+                  className="flex items-center gap-2 text-left"
+                  aria-expanded={isExpanded}
+                >
+                  <ChevronDown
+                    size={18}
+                    className={cn(
+                      "shrink-0 text-gray-400 transition-transform",
+                      isExpanded && "rotate-180"
+                    )}
+                    aria-hidden
+                  />
+                  <span className="inline-flex items-center gap-2 font-semibold text-gray-900 dark:text-white">
+                    <Dumbbell size={18} className="text-[var(--color-primary)]" aria-hidden />
+                    {session.name}
+                  </span>
+                </button>
+
+                <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+                  <span className={cn("rounded-full px-3 py-1 text-xs font-semibold capitalize", intensityStyles[session.intensity])}>
+                    {session.intensity}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Clock size={15} aria-hidden /> {session.durationMinutes} min
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Flame size={15} aria-hidden /> {session.calories} kcal
+                  </span>
+                  <span className="hidden sm:inline">{formattedDate}</span>
+                </div>
+              </div>
+
+              <AnimatePresence initial={false}>
+                {isExpanded && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-4 grid gap-2">
+                      {session.exercises.length === 0 ? (
+                        <p className="text-sm text-gray-400 dark:text-gray-500">
+                          No exercises logged for this session.
+                        </p>
+                      ) : (
+                        session.exercises.map((exercise) => (
+                          <div
+                            key={exercise.name}
+                            className="flex items-center justify-between rounded-xl bg-gray-50 px-4 py-2.5 text-sm dark:bg-gray-900"
+                          >
+                            <span className="font-medium text-gray-700 dark:text-gray-200">
+                              {exercise.name}
+                            </span>
+                            <span className="text-gray-500 dark:text-gray-400">
+                              {exercise.sets}×{exercise.reps}
+                              {exercise.weight > 0 && ` @ ${exercise.weight}kg`}
+                            </span>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Card>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}

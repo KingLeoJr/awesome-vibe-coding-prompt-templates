@@ -1,0 +1,111 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Compass, Globe, Landmark, MapPin, Mountain, Sailboat } from "lucide-react";
+
+export interface Landmark {
+  id: string;
+  name: string;
+  description: string;
+}
+
+export interface Destination {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  difficulty: "easy" | "medium" | "hard";
+  landmarks: Landmark[];
+}
+
+interface ARExplorerProps {
+  destinations: Destination[];
+}
+
+const categoryIcon: Record<string, typeof Landmark> = {
+  Geography: Mountain,
+  History: Landmark,
+  Biology: Sailboat,
+  Astronomy: Globe,
+};
+
+const difficultyTone: Record<Destination["difficulty"], string> = {
+  easy: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  medium: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  hard: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function ARExplorer({ destinations }: ARExplorerProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="explore-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <Compass size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="explore-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Explore the world</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Virtual field trips — point your device at a location to reveal AR landmarks.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-5">
+          {destinations.map((dest, i) => {
+            const Icon = categoryIcon[dest.category] ?? MapPin;
+            return (
+              <motion.article
+                key={dest.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-secondary)]/15 text-[var(--color-secondary)]">
+                      <Icon size={20} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white">{dest.name}</h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{dest.category} field trip</p>
+                    </div>
+                  </div>
+                  <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium capitalize ${difficultyTone[dest.difficulty]}`}>
+                    {dest.difficulty}
+                  </span>
+                </div>
+
+                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">{dest.description}</p>
+
+                <ul className="mt-4 flex flex-col gap-2">
+                  {dest.landmarks.map((lm) => (
+                    <li key={lm.id} className="flex items-start gap-2.5 rounded-xl bg-gray-50 dark:bg-gray-900 p-3">
+                      <MapPin size={15} className="mt-0.5 shrink-0 text-[var(--color-primary)]" aria-hidden="true" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">{lm.name}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{lm.description}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                <button className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-secondary)] px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition">
+                  <Globe size={14} aria-hidden="true" />
+                  Launch AR tour
+                </button>
+              </motion.article>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

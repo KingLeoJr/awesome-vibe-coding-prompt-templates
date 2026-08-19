@@ -1,0 +1,43 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  app.name: "{{app.name}}"
+  app.slug: "{{app.slug}}"
+  app.tagline: "{{app.tagline}}"
+  theme.color.primary: "{{theme.color.primary}}"
+  theme.color.secondary: "{{theme.color.secondary}}"
+  theme.color.accent: "{{theme.color.accent}}"
+  theme.font.sans: "{{theme.font.sans}}"
+  theme.radius.card: "{{theme.radius.card}}"
+  header.cta_text: "{{header.cta_text}}"
+  header.cta_href: "{{header.cta_href}}"
+  seo.og_image: "{{seo.og_image}}"
+  seo.schema_type: "{{seo.schema_type}}"
+  deployment.url: "{{deployment.url}}"
+  deployment.analytics_id: "{{deployment.analytics_id}}"
+  contact.email: "{{contact.email}}"
+  contact.phone: "{{contact.phone}}"
+  social.github: "{{social.github}}"
+  social.linkedin: "{{social.linkedin}}"
+  social.twitter: "{{social.twitter}}"
+  frontend.framework: "Next.js 15"
+  frontend.language: "TypeScript"
+  backend.framework: "Node.js + Express"
+  backend.language: "JavaScript"
+  database.technology: "PostgreSQL"
+  ui.library: "Tailwind CSS"
+  state.manager: "Redux Toolkit"
+  auth.protocol: "Auth0"
+  cdn.provider: "Cloudflare CDN"
+  ai.provider: "OpenAI GPT-4o"
+  payments.provider: "Stripe"
+
+---
+
+# {{app.name}}
+{{app.tagline}}
+
+Create a responsive video streaming platform using Next.js 15 and React 19. Implement user authentication and authorization using Auth0 for secure access. Design a sleek UI using Tailwind CSS for responsive and dark mode styling. Use Redux Toolkit for state management across components. Create a customizable user dashboard with personalized content recommendations. Design a responsive video player with custom controls using Video.js. Create a content management system for uploading and organizing videos. Implement a search functionality with autocomplete and filters using Algolia. Implement a subscription management system with Stripe integration. Design a responsive watchlist and continue watching feature. Create a rating and review system for videos with sentiment analysis. Implement parental controls and content restrictions based on user profiles. Design a responsive category and genre navigation system. Implement video transcoding and adaptive bitrate streaming using FFmpeg and HLS. Design real-time analytics using Elasticsearch and Kibana for content performance. Create a recommendation engine using collaborative filtering and machine learning. Design a responsive offline viewing mode for downloaded content. Implement a robust CDN integration for global content delivery. Create a social sharing feature for clips and full videos. Design a responsive live streaming feature with chat integration. Implement an AI-powered content moderation system for user uploads. Design a responsive picture-in-picture mode for multitasking. Create a personalized notification system for new content and recommendations. Implement multi-device synchronization for seamless viewing across platforms. Design a responsive 360-degree and VR video playback feature. Create a custom watch party feature for synchronized group viewing. Implement an interactive timeline for episodic content with season breakdowns. Design a responsive content creator dashboard with analytics and earnings. Implement a custom ad insertion system for monetization (VAST/VPAID compliant). Design a voice-controlled interface for hands-free navigation. Create a responsive closed captioning system with customization options. Implement a custom video chaptering feature for easy navigation. Design a responsive 'Up Next' feature with autoplay functionality. Create a custom video speed control with pitch correction. Implement a robust DRM system for content protection (Widevine, FairPlay, PlayReady). Design a responsive 'Skip Intro' feature for TV shows. Create a custom video quality selector with auto-adjust based on network conditions. Implement a time-shifting feature for live content (DVR functionality). Design a responsive multi-angle viewer for sports and concert content. Create a custom video clip creation and sharing tool. Implement an AI-powered video summarization feature. Design a responsive 'What's Hot' section with trending content. Create a custom content bundling feature for series and collections. Implement a video bookmarking system with custom notes. Design a responsive audio description feature for visually impaired users. Create a custom content expiration system for limited-time viewing. Implement a robust analytics system for content creators (impressions, watch time, engagement). Design an 'Extras' section for behind-the-scenes and bonus content. Create a custom recommendation widget for external website embedding. Implement a video preview hover feature with autoplay snippets. Design a responsive multi-user profile system with individualized recommendations. Implement a custom content scheduling system for timed releases. Implement an AI-powered scene-based search within videos. Create a custom content licensing and distribution management system. Implement a video quality assessment tool for user uploads. Design a virtual cinema for premiere events and watch parties.

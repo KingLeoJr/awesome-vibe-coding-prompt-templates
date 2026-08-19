@@ -1,0 +1,40 @@
+export const SITE_TITLE = "{{app.name}}";
+export const SITE_DESCRIPTION = "{{app.tagline}}";
+export const SITE_URL = "{{deployment.url}}";
+
+export const NAV_ITEMS = [
+  {{#each sections}}
+  { label: "{{name}}", href: "#{{name | lowercase}}" },
+  {{/each}}
+];
+
+export const CURRENCY = "{{currency.symbol}}";
+
+export const DEFAULT_TOPICS = [
+  "Productivity",
+  "Mindfulness",
+  "Leadership",
+  "Emotional Intelligence",
+];
+
+export const DEFAULT_FORMATS = ["video", "article", "podcast", "worksheet"];
+
+export const COACHING_CONFIG = {
+  sessionLengthMin: 50,
+  lessonMinutesGoal: 30,
+  freePreviewMinutes: 10,
+  badgeTiers: ["bronze", "silver", "gold"],
+};
+
+export const CONTACT = {
+  email: "{{contact.email}}",
+  phone: "{{contact.phone}}",
+};
+
+export const SOCIAL = {
+  github: "{{social.github}}",
+  linkedin: "{{social.linkedin}}",
+  twitter: "{{social.twitter}}",
+};
+
+export const ANALYTICS_ID = "{{deployment.analytics_id}}";

@@ -1,0 +1,76 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+import { lucideReact } from "lucide-react";
+import { Play, Eye, Clock } from "lucide-react";
+
+interface LessonItem {
+  id: string;
+  title: string;
+  language: string;
+  level: "beginner" | "intermediate" | "advanced";
+  duration: string;
+  resources: string[];
+  completed: boolean;
+}
+
+interface LessonCardProps {
+  lesson: LessonItem;
+  onStart: () => void;
+  delay?: number;
+}
+
+export default function LessonCard({ lesson, onStart, delay = 0 }: LessonCardProps) {
+  const levelColors: Record<string, string> = {
+    beginner: "bg-green-100 text-green-800",
+    intermediate: "bg-blue-100 text-blue-800",
+    advanced: "bg-purple-100 text-purple-800",
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay }}
+      className={cn(
+        "rounded-xl border bg-gray-50 dark:bg-gray-900 p-6 hover:shadow-lg transition-shadow",
+        "pb-4"
+      )}
+    >
+      <div className="flex items-start justify-between">
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{lesson.title}</h3>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            {lesson.language} · {lesson.level} · {lesson.duration}
+          </p>
+          {lesson.resources?.length > 0 && (
+            <p className="mt-2 text-xs text-gray-400 dark:text-gray-600">
+              {lesson.resources.length} {lesson.resources.length > 1 ? "resources" : "resource"}
+            </p>
+          )}
+        </div>
+        <statusBadge={lesson.completed} />
+      </div>
+      <Button onClick={onStart} variant="secondary" size="sm" className="mt-3">
+        <Play size={16} className="mr-2" />
+        Start Lesson
+      </Button>
+    </motion.div>
+  );
+}
+
+function statusBadge({ completed }: { completed: boolean }) {
+  const badgeClass = completed
+    ? "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
+    : "bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200";
+  const badgeText = completed ? "Completed" : "Start";
+  return (
+    <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${badgeClass}`}>
+      {badgeText}
+    </span>
+  );
+}

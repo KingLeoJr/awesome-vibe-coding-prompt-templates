@@ -1,0 +1,202 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "energy": {
+    "current": { "kwh": 18.4, "cost": 2.58, "percentOfTarget": 62, "status": "Moderate" },
+    "peakPeriods": ["17:00", "18:00", "19:00"],
+    "targetKwh": 30,
+    "hourly": [
+      { "label": "06", "kwh": 0.8 },
+      { "label": "08", "kwh": 1.6 },
+      { "label": "10", "kwh": 1.1 },
+      { "label": "12", "kwh": 2.4 },
+      { "label": "14", "kwh": 1.9 },
+      { "label": "16", "kwh": 2.2 },
+      { "label": "18", "kwh": 3.6 },
+      { "label": "20", "kwh": 3.1 },
+      { "label": "22", "kwh": 1.7 }
+    ]
+  },
+  "recommendations": [
+    {
+      "id": "rec-001",
+      "title": "Schedule the thermostat",
+      "detail": "Dropping your setpoint 2°C at night saves an estimated 10% on heating. We can automate it overnight.",
+      "estimatedSavingsKwh": 34,
+      "estimatedSavingsCost": 4.76,
+      "priority": "high"
+    },
+    {
+      "id": "rec-002",
+      "title": "Shift laundry off-peak",
+      "detail": "Your usage peaks between 17:00–19:00. Running the dryer at 22:00 cuts cost at time-of-use tariffs.",
+      "estimatedSavingsKwh": 18,
+      "estimatedSavingsCost": 3.4,
+      "priority": "high"
+    },
+    {
+      "id": "rec-003",
+      "title": "Replace 8 halogen bulbs",
+      "detail": "Swapping remaining halogens for LEDs pays back in about 9 months at current rates.",
+      "estimatedSavingsKwh": 41,
+      "estimatedSavingsCost": 5.74,
+      "priority": "medium"
+    },
+    {
+      "id": "rec-004",
+      "title": "Insulate the attic hatch",
+      "detail": "Sealing and insulating the hatch stops warm air escaping into the loft — one of the cheapest fixes there is.",
+      "estimatedSavingsKwh": 27,
+      "estimatedSavingsCost": 3.78,
+      "priority": "medium"
+    },
+    {
+      "id": "rec-005",
+      "title": "Enable eco mode on the fridge",
+      "detail": "Your fridge uses more than the median for its class. Eco mode trims 8% without affecting food safety.",
+      "estimatedSavingsKwh": 15,
+      "estimatedSavingsCost": 2.1,
+      "priority": "low"
+    },
+    {
+      "id": "rec-006",
+      "title": "Smart plug for the water heater",
+      "detail": "Heating water only when you need it (morning + evening windows) avoids standby losses.",
+      "estimatedSavingsKwh": 22,
+      "estimatedSavingsCost": 3.08,
+      "priority": "low"
+    }
+  ],
+  "bills": [
+    {
+      "id": "bill-001",
+      "period": "July 2026",
+      "amount": 118.4,
+      "usageKwh": 842,
+      "provider": "City Power & Light",
+      "anomaly": "Usage jumped 14% vs June with no change in occupancy — likely HVAC during the heatwave.",
+      "insight": "At this rate you'll spend ~$1,310 this year; shifting 20% of usage off-peak saves ~$74."
+    },
+    {
+      "id": "bill-002",
+      "period": "June 2026",
+      "amount": 104.1,
+      "usageKwh": 738,
+      "provider": "City Power & Light",
+      "insight": "Your June bill matched the seasonal median — no unusual patterns detected."
+    },
+    {
+      "id": "bill-003",
+      "period": "May 2026",
+      "amount": 96.7,
+      "usageKwh": 691,
+      "provider": "City Power & Light",
+      "insight": "Cooler weather cut usage 6% month-over-month. Consistent with last year's trend."
+    }
+  ],
+  "devices": [
+    { "id": "dev-001", "name": "Living Room Thermostat", "type": "thermostat", "powerW": 5, "status": "on", "online": true, "automation": true },
+    { "id": "dev-002", "name": "Kitchen Smart Plug", "type": "plug", "powerW": 1800, "status": "off", "online": true, "automation": true },
+    { "id": "dev-003", "name": "Washer Smart Plug", "type": "plug", "powerW": 1200, "status": "off", "online": true, "automation": false },
+    { "id": "dev-004", "name": "Water Heater", "type": "appliance", "powerW": 4500, "status": "on", "online": true, "automation": true },
+    { "id": "dev-005", "name": "Basement Dehumidifier", "type": "appliance", "powerW": 500, "status": "on", "online": false, "automation": false },
+    { "id": "dev-006", "name": "Attic HVAC Zone", "type": "hvac", "powerW": 3500, "status": "off", "online": true, "automation": true }
+  ],
+  "auditQuestions": [
+    {
+      "id": "aud-001",
+      "prompt": "How is your home heated?",
+      "category": "Heating",
+      "options": [
+        { "label": "Electric furnace", "value": "electric", "score": 3 },
+        { "label": "Heat pump", "value": "heatpump", "score": 4 },
+        { "label": "Gas boiler", "value": "gas", "score": 3 },
+        { "label": "Not sure", "value": "unknown", "score": 1 }
+      ]
+    },
+    {
+      "id": "aud-002",
+      "prompt": "How old are your most-used light fixtures?",
+      "category": "Lighting",
+      "options": [
+        { "label": "All LED", "value": "led", "score": 4 },
+        { "label": "Mostly LED, some halogens", "value": "mixed", "score": 2 },
+        { "label": "Mostly halogens", "value": "halogen", "score": 1 }
+      ]
+    },
+    {
+      "id": "aud-003",
+      "prompt": "Is your attic insulation above current code?",
+      "category": "Insulation",
+      "options": [
+        { "label": "Yes, recently upgraded", "value": "good", "score": 4 },
+        { "label": "Some, but could be better", "value": "fair", "score": 2 },
+        { "label": "Unknown", "value": "unknown", "score": 1 }
+      ]
+    },
+    {
+      "id": "aud-004",
+      "prompt": "Do you run major appliances during peak hours?",
+      "category": "Behavior",
+      "options": [
+        { "label": "I avoid peak times", "value": "avoid", "score": 4 },
+        { "label": "Sometimes", "value": "sometimes", "score": 2 },
+        { "label": "Yes, after work", "value": "peak", "score": 1 }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "res-001",
+      "title": "Is rooftop solar worth it in 2026?",
+      "type": "article",
+      "topic": "Solar",
+      "duration": "9 min",
+      "url": "https://example.com/learn/solar-2026"
+    },
+    {
+      "id": "res-002",
+      "title": "DIY attic insulation in a weekend",
+      "type": "video",
+      "topic": "Insulation",
+      "duration": "13 min",
+      "url": "https://example.com/learn/attic-insulation"
+    },
+    {
+      "id": "res-003",
+      "title": "Time-of-use tariff calculator",
+      "type": "tool",
+      "topic": "Tariffs",
+      "duration": "interactive",
+      "url": "https://example.com/tools/tou-calculator"
+    },
+    {
+      "id": "res-004",
+      "title": "Heat pumps explained: sizing and payback",
+      "type": "article",
+      "topic": "HVAC",
+      "duration": "11 min",
+      "url": "https://example.com/learn/heat-pumps"
+    },
+    {
+      "id": "res-005",
+      "title": "Appliance energy labels, decoded",
+      "type": "video",
+      "topic": "Appliances",
+      "duration": "7 min",
+      "url": "https://example.com/learn/energy-labels"
+    },
+    {
+      "id": "res-006",
+      "title": "Government rebate finder",
+      "type": "tool",
+      "topic": "Incentives",
+      "duration": "interactive",
+      "url": "https://example.com/tools/rebates"
+    }
+  ]
+}

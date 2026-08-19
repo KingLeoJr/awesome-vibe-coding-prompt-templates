@@ -1,0 +1,166 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, ArrowRight, ClipboardCheck, RotateCcw } from "lucide-react";
+
+export interface AuditOption {
+  label: string;
+  value: string;
+  score: number;
+}
+
+export interface AuditQuestion {
+  id: string;
+  prompt: string;
+  category: string;
+  options: AuditOption[];
+}
+
+interface HomeAuditProps {
+  questions: AuditQuestion[];
+}
+
+export default function HomeAudit({ questions }: HomeAuditProps) {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+
+  const current = questions[step];
+  const selected = answers[current.id];
+  const isLast = step === questions.length - 1;
+  const totalScore = Object.values(answers).reduce((sum, key) => {
+    const question = questions.find((q) => q.options.some((o) => o.value === key));
+    return sum + (question?.options.find((o) => o.value === key)?.score ?? 0);
+  }, 0);
+  const maxScore = questions.reduce((sum, q) => sum + Math.max(...q.options.map((o) => o.score)), 0);
+  const pct = maxScore > 0 ? Math.round((totalScore / maxScore) * 100) : 0;
+  const complete = Object.keys(answers).length === questions.length;
+
+  const choose = (value: string) => setAnswers((prev) => ({ ...prev, [current.id]: value }));
+
+  return (
+    <section className="mx-auto max-w-3xl px-6 py-16" aria-labelledby="audit-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+            <ClipboardCheck size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="audit-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Virtual home energy audit</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Answer a few questions about your home and get tailored recommendations.</p>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+            <span>Question {step + 1} of {questions.length} · {current.category}</span>
+            <button onClick={() => { setStep(0); setAnswers({}); }} className="inline-flex items-center gap-1.5 hover:text-[var(--color-accent)] transition" aria-label="Restart audit">
+              <RotateCcw size={14} aria-hidden="true" />
+              Restart
+            </button>
+          </div>
+
+          <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={Math.round(((step + 1) / questions.length) * 100)} aria-valuemin={0} aria-valuemax={100} aria-label="Audit progress">
+            <motion.div
+              className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+              initial={{ width: 0 }}
+              animate={{ width: `${((step + 1) / questions.length) * 100}%` }}
+              transition={{ duration: 0.4 }}
+            />
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.25 }}
+            >
+              <h3 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">{current.prompt}</h3>
+
+              <div className="mt-5 flex flex-col gap-3" role="radiogroup" aria-label={current.prompt}>
+                {current.options.map((option) => {
+                  const isSelected = selected === option.value;
+                  return (
+                    <button
+                      key={option.value}
+                      onClick={() => choose(option.value)}
+                      aria-checked={isSelected}
+                      role="radio"
+                      className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left text-sm transition ${
+                        isSelected
+                          ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 text-gray-900 dark:text-white"
+                          : "border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:border-[var(--color-primary)]/50"
+                      }`}
+                    >
+                      {option.label}
+                      <span
+                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-xs ${
+                          isSelected ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white" : "border-gray-300 dark:border-gray-700"
+                        }`}
+                        aria-hidden="true"
+                      >
+                        {isSelected ? "✓" : ""}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="mt-6 flex items-center justify-between">
+            <button
+              onClick={() => step > 0 && setStep((s) => s - 1)}
+              disabled={step === 0}
+              className="inline-flex items-center gap-1.5 rounded-full border border-gray-300 dark:border-gray-700 px-4 py-2 text-sm font-medium disabled:opacity-40"
+            >
+              <ArrowLeft size={15} aria-hidden="true" />
+              Back
+            </button>
+            {!isLast ? (
+              <button
+                onClick={() => step < questions.length - 1 && setStep((s) => s + 1)}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-white hover:opacity-90 transition"
+              >
+                Next
+                <ArrowRight size={15} aria-hidden="true" />
+              </button>
+            ) : (
+              <button
+                onClick={() => { setStep(0); setAnswers({}); }}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-white hover:opacity-90 transition"
+              >
+                Retake audit
+                <RotateCcw size={15} aria-hidden="true" />
+              </button>
+            )}
+          </div>
+
+          {complete && (
+            <div className="mt-6 rounded-xl bg-[var(--color-secondary)]/10 p-4 text-sm text-gray-700 dark:text-gray-200">
+              <p className="font-medium text-gray-900 dark:text-white">Efficiency score</p>
+              <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Efficiency score">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${pct}%` }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                  className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+                />
+              </div>
+              <p className="mt-2">
+                Your home scores {pct}/100 on the quick audit. Check the savings panel for the highest-impact upgrades.
+              </p>
+            </div>
+          )}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

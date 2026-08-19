@@ -1,0 +1,193 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "nav": [
+    { "label": "Symptom Check", "href": "#symptom-check" },
+    { "label": "Telemedicine", "href": "#telemedicine" },
+    { "label": "Medications", "href": "#medications" },
+    { "label": "Health", "href": "#health" },
+    { "label": "Messages", "href": "#messages" }
+  ],
+  "symptoms": [
+    { "id": "sym-001", "label": "Fever", "system": "General" },
+    { "id": "sym-002", "label": "Fatigue", "system": "General" },
+    { "id": "sym-003", "label": "Chills", "system": "General" },
+    { "id": "sym-004", "label": "Headache", "system": "Head" },
+    { "id": "sym-005", "label": "Sore throat", "system": "Head" },
+    { "id": "sym-006", "label": "Cough", "system": "Respiratory" },
+    { "id": "sym-007", "label": "Shortness of breath", "system": "Respiratory" },
+    { "id": "sym-008", "label": "Congestion", "system": "Respiratory" },
+    { "id": "sym-009", "label": "Nausea", "system": "Digestive" },
+    { "id": "sym-010", "label": "Abdominal pain", "system": "Digestive" },
+    { "id": "sym-011", "label": "Diarrhea", "system": "Digestive" },
+    { "id": "sym-012", "label": "Muscle aches", "system": "Musculoskeletal" }
+  ],
+  "conditions": [
+    {
+      "id": "cond-001",
+      "name": "Seasonal influenza",
+      "severity": "moderate",
+      "matchScore": 0.88,
+      "description": "A common viral infection with sudden onset of fever, aches and cough.",
+      "advice": "Rest, hydrate, and monitor fever. Consult a provider if symptoms worsen past 5 days.",
+      "associatedSymptoms": ["sym-001", "sym-003", "sym-006", "sym-012"]
+    },
+    {
+      "id": "cond-002",
+      "name": "Common cold",
+      "severity": "low",
+      "matchScore": 0.76,
+      "description": "A mild viral infection of the upper respiratory tract.",
+      "advice": "Plenty of fluids and rest. Symptom relief over-the-counter is usually sufficient.",
+      "associatedSymptoms": ["sym-004", "sym-005", "sym-008"]
+    },
+    {
+      "id": "cond-003",
+      "name": "Acute bronchitis",
+      "severity": "moderate",
+      "matchScore": 0.68,
+      "description": "Inflammation of the bronchial tubes causing a persistent cough.",
+      "advice": "Hydration and rest; avoid smoke. See a provider if breathing becomes difficult.",
+      "associatedSymptoms": ["sym-006", "sym-007", "sym-002"]
+    },
+    {
+      "id": "cond-004",
+      "name": "Gastroenteritis",
+      "severity": "moderate",
+      "matchScore": 0.81,
+      "description": "Inflammation of the stomach and intestines, often viral.",
+      "advice": "Rehydrate with electrolytes. Seek urgent care if vomiting or diarrhea persist.",
+      "associatedSymptoms": ["sym-009", "sym-010", "sym-011", "sym-001"]
+    },
+    {
+      "id": "cond-005",
+      "name": "Migraine",
+      "severity": "low",
+      "matchScore": 0.72,
+      "description": "A neurological condition with recurring moderate-to-severe headaches.",
+      "advice": "Rest in a dark room and stay hydrated. A provider can help build a prevention plan.",
+      "associatedSymptoms": ["sym-004", "sym-009", "sym-002"]
+    },
+    {
+      "id": "cond-006",
+      "name": "Pneumonia (possible)",
+      "severity": "urgent",
+      "matchScore": 0.64,
+      "description": "Lung infection with cough, fever and breathing difficulty — needs evaluation.",
+      "advice": "Contact a clinician today; seek emergency care for severe shortness of breath.",
+      "associatedSymptoms": ["sym-001", "sym-006", "sym-007", "sym-012"]
+    }
+  ],
+  "providers": [
+    { "id": "prov-001", "name": "Dr. Amara Osei", "specialty": "Primary Care", "rating": 4.9, "nextAvailable": "Tomorrow" },
+    { "id": "prov-002", "name": "Dr. Liam Chen", "specialty": "Dermatology", "rating": 4.8, "nextAvailable": "Today" },
+    { "id": "prov-003", "name": "Dr. Sofia Marino", "specialty": "Cardiology", "rating": 4.9, "nextAvailable": "Thursday" },
+    { "id": "prov-004", "name": "Dr. Ethan Brooks", "specialty": "Pediatrics", "rating": 4.7, "nextAvailable": "Today" }
+  ],
+  "slots": [
+    { "id": "slot-001", "providerId": "prov-001", "date": "Thu, Aug 21", "time": "9:00 AM" },
+    { "id": "slot-002", "providerId": "prov-001", "date": "Thu, Aug 21", "time": "11:30 AM" },
+    { "id": "slot-003", "providerId": "prov-001", "date": "Fri, Aug 22", "time": "2:00 PM" },
+    { "id": "slot-004", "providerId": "prov-002", "date": "Today", "time": "3:30 PM" },
+    { "id": "slot-005", "providerId": "prov-002", "date": "Today", "time": "5:00 PM" },
+    { "id": "slot-006", "providerId": "prov-003", "date": "Thu, Aug 21", "time": "10:00 AM" },
+    { "id": "slot-007", "providerId": "prov-003", "date": "Fri, Aug 22", "time": "1:00 PM" },
+    { "id": "slot-008", "providerId": "prov-004", "date": "Today", "time": "4:15 PM" }
+  ],
+  "medications": [
+    {
+      "id": "med-001",
+      "name": "Lisinopril",
+      "dosage": "10 mg",
+      "frequency": "Once daily",
+      "schedule": ["Morning", "Evening"],
+      "interactions": [],
+      "refillDueIn": 12
+    },
+    {
+      "id": "med-002",
+      "name": "Metformin",
+      "dosage": "500 mg",
+      "frequency": "Twice daily",
+      "schedule": ["Breakfast", "Dinner"],
+      "interactions": ["Take with food to reduce GI upset"],
+      "refillDueIn": 6
+    },
+    {
+      "id": "med-003",
+      "name": "Atorvastatin",
+      "dosage": "20 mg",
+      "frequency": "Once daily",
+      "schedule": ["Night"],
+      "interactions": ["Grapefruit may increase blood levels — avoid"],
+      "refillDueIn": 3
+    },
+    {
+      "id": "med-004",
+      "name": "Cetirizine",
+      "dosage": "10 mg",
+      "frequency": "As needed",
+      "schedule": ["Morning", "Night"],
+      "interactions": [],
+      "refillDueIn": 21
+    }
+  ],
+  "metrics": [
+    { "name": "Heart rate", "value": 68, "unit": "bpm", "status": "good", "delta": -2 },
+    { "name": "Blood pressure", "value": 118, "unit": "mmHg", "status": "good", "delta": -3 },
+    { "name": "Blood oxygen", "value": 98, "unit": "%", "status": "good", "delta": 1 },
+    { "name": "Body temp", "value": 36.7, "unit": "°C", "status": "good", "delta": 0 }
+  ],
+  "trends": [
+    {
+      "metric": "Heart rate",
+      "points": [
+        { "date": "Aug 13", "value": 74 },
+        { "date": "Aug 14", "value": 72 },
+        { "date": "Aug 15", "value": 75 },
+        { "date": "Aug 16", "value": 70 },
+        { "date": "Aug 17", "value": 71 },
+        { "date": "Aug 18", "value": 68 }
+      ]
+    },
+    {
+      "metric": "Blood oxygen",
+      "points": [
+        { "date": "Aug 13", "value": 96 },
+        { "date": "Aug 14", "value": 97 },
+        { "date": "Aug 15", "value": 95 },
+        { "date": "Aug 16", "value": 98 },
+        { "date": "Aug 17", "value": 97 },
+        { "date": "Aug 18", "value": 98 }
+      ]
+    }
+  ],
+  "conversations": [
+    {
+      "id": "thr-001",
+      "participantId": "prov-001",
+      "participantName": "Dr. Amara Osei",
+      "role": "Primary Care",
+      "unread": 1,
+      "messages": [
+        { "id": "msg-001", "from": "provider", "text": "Hi Jordan, your recent labs look good — LDL is trending down nicely.", "time": "9:04 AM" },
+        { "id": "msg-002", "from": "patient", "text": "Great news, thank you! Should I continue the current dosage?", "time": "9:12 AM" },
+        { "id": "msg-003", "from": "provider", "text": "Yes, keep it as is. Let's re-check in three months.", "time": "9:15 AM" }
+      ]
+    },
+    {
+      "id": "thr-002",
+      "participantId": "prov-004",
+      "participantName": "Dr. Ethan Brooks",
+      "role": "Pediatrics",
+      "unread": 0,
+      "messages": [
+        { "id": "msg-004", "from": "patient", "text": "Maya's fever came down after the dose last night.", "time": "Yesterday" },
+        { "id": "msg-005", "from": "provider", "text": "Perfect. Keep monitoring and reach out if it spikes again.", "time": "Yesterday" }
+      ]
+    }
+  ]
+}

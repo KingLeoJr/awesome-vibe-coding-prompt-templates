@@ -1,0 +1,143 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/shared/Footer";
+import Button from "@/components/shared/Button";
+import ArticleCard from "@/components/sustainability/ArticleCard";
+import ResourceLibrary from "@/components/sustainability/ResourceLibrary";
+import ImpactDashboard from "@/components/sustainability/ImpactDashboard";
+import CommunityMap from "@/components/sustainability/CommunityMap";
+import { ArrowRight, CalendarDays, MapPin, Search, Sparkles } from "lucide-react";
+import data from "@/data/sustainability-platform";
+
+const { articles, resources, mapPoints, impactMetrics, events } = data;
+
+export const metadata: Metadata = {
+  title: "{{seo.title}}",
+  description: "{{app.tagline}}",
+  openGraph: {
+    title: "{{seo.title}}",
+    description: "{{app.tagline}}",
+    images: ["{{seo.og_image}}"],
+  },
+};
+
+export default function HomePage() {
+  return (
+    <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+      <Header />
+      <main className="flex-1">
+        <section className="relative overflow-hidden bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-primary)] to-[var(--color-secondary)]">
+          <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 text-center">
+            <h1 className="mx-auto max-w-3xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+              {{hero.headline}}
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-white/80">{{hero.subtext}}</p>
+
+            <form
+              action="#resources"
+              className="mx-auto mt-10 flex max-w-2xl items-center gap-2 rounded-2xl border border-white/20 bg-white p-2 shadow-xl"
+            >
+              <Search className="ml-3 h-5 w-5 shrink-0 text-gray-400" aria-hidden="true" />
+              <input
+                name="q"
+                placeholder="{{hero.placeholder}}"
+                aria-label="Search articles and resources"
+                className="w-full bg-transparent px-2 py-2 text-gray-900 placeholder-gray-400 outline-none"
+              />
+              <button
+                type="submit"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[var(--color-primary)] px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
+              >
+                Search
+              </button>
+            </form>
+
+            <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-2.5">
+              {["Climate change", "Renewable energy", "Waste reduction", "Conservation"].map((topic) => (
+                <Link
+                  key={topic}
+                  href="#resources"
+                  className="rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-white/25"
+                >
+                  {topic}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="learn" className="mx-auto max-w-7xl px-6 py-20">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+                Learn
+              </p>
+              <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+                Expert insights and practical guides
+              </h2>
+            </div>
+            <Button href="#resources" variant="outline" size="sm">
+              Explore resources
+              <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+            </Button>
+          </div>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {articles.map((article) => (
+              <ArticleCard key={article.id} article={article} />
+            ))}
+          </div>
+        </section>
+
+        <ResourceLibrary resources={resources} />
+        <ImpactDashboard metrics={impactMetrics} />
+        <CommunityMap points={mapPoints} />
+
+        <section className="mx-auto max-w-7xl px-6 py-20">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+                Get involved
+              </p>
+              <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+                Upcoming events and workshops
+              </h2>
+            </div>
+            <Button href="/events" variant="outline" size="sm">
+              View full calendar
+              <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+            </Button>
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {events.map((event) => (
+              <article
+                key={event.id}
+                className="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-950"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-semibold capitalize text-[var(--color-primary)]">
+                    <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                    {event.type}
+                  </span>
+                  <CalendarDays className="h-5 w-5 text-gray-300 dark:text-gray-700" aria-hidden="true" />
+                </div>
+                <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">{event.title}</h3>
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  {event.date} &middot; {event.seats} seats
+                </p>
+                <p className="mt-1 flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                  <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                  {event.location}
+                </p>
+                <Button href="/events" variant="outline" size="sm" className="mt-4 w-full">
+                  Register
+                </Button>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+}

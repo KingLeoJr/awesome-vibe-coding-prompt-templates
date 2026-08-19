@@ -1,0 +1,119 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Shield, Map, Loader2, Check, X, Link, Clock } from "lucide-react";
+import { useState, useEffect } from "react";
+
+interface BacklinkCheckerProps {
+  domain: string;
+  onCheck: (domain: string) => void;
+}
+
+export default function BacklinkChecker({ domain, onCheck }: BacklinkCheckerProps) {
+  const [checking, setChecking] = useState(false);
+  const [backlinks, setBacklinks] = useState<{ referringDomain: string; domainAuthority: number; status: "healthy" | "toxic" }[]>([]);
+
+  const handleCheck = () => {
+    setChecking(true);
+    setTimeout(() => {
+      const simulated = [
+        { referringDomain: "example.com", domainAuthority: 85, status: "healthy" },
+        { referringDomain: "partner.net", domainAuthority: 67, status: "healthy" },
+        { referringDomain: "forum.org", domainAuthority: 34, status: "toxic" },
+      ];
+      setBacklinks(simulated);
+      setChecking(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    handleCheck();
+  }, [domain]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-6"
+    >
+      <div className="bg-white dark:bg-gray-950 rounded-2xl p-6 shadow-sm">
+        <h2 className="font-bold text-2xl text-gray-900 dark:text-white mb-4">Backlink Checker</h2>
+        <p className="text-gray-500 dark:text-gray-400 mb-6">Analyze the backlink profile for a domain.</p>
+        <form onSubmit={(e) => { e.preventDefault(); handleCheck(); }}>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Domain</label>
+              <input
+                type="text"
+                value={domain}
+                onChange={(e) => setDomain(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 p-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:text-gray-100"
+                placeholder="example.com"
+                aria-label="Domain"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full rounded-md border border-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition"
+              aria-label="Check backlinks"
+            >
+              Check Backlinks
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {checking && (
+        <div className="bg-white dark:bg-gray-950 rounded-xl p-6">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500 dark:text-gray-400">Analyzing...</span>
+            <Loader2 className="h-4 w-4 text-[var(--color-primary)]" />
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">This may take a moment...</p>
+        </div>
+      )}
+
+      {!checking && backlinks.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="grid grid-cols-3 gap-4"
+        >
+          {backlinks.map((bl, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.05 }}
+              className="p-4 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:bg-gray-50 dark:hover:bg-gray-950 transition-colors"
+            >
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: bl.status === "healthy" ? "var(--color-secondary)" : "var(--color-primary)" }}>
+                  {bl.status === "healthy" ? <Check size={16} /> : <X size={16} />}
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900 dark:text-white">{bl.referringDomain}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Domain Authority: {bl.domainAuthority}</p>
+                </div>
+              </div>
+              <div className="mt-2 h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] transition-width"
+                  style={{ width: `${bl.domainAuthority > 60 ? 80 : 50}%` }}
+                />
+              </div>
+            </motion.div>
+          ))
+        </motion.div>
+      )}
+
+      {backlinks.length === 0 && !checking && (
+        <p className="text-sm text-gray-500 dark:text-gray-400">Enter a domain above to check backlinks.</p>
+      )}
+    </motion.div>
+  );
+}

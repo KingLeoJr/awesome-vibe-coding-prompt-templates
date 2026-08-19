@@ -1,0 +1,175 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, ArrowRight, ListChecks, RotateCcw, Sparkles } from "lucide-react";
+
+export interface QuizOption {
+  label: string;
+  value: string;
+  values: string[];
+}
+
+export interface QuizQuestion {
+  id: string;
+  prompt: string;
+  options: QuizOption[];
+}
+
+interface EthicalQuizProps {
+  questions: QuizQuestion[];
+}
+
+export default function EthicalQuiz({ questions }: EthicalQuizProps) {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, string[]>>({});
+
+  const current = questions[step];
+  const selected = answers[current.id] ?? [];
+  const isLast = step === questions.length - 1;
+
+  const toggle = (value: string) => {
+    setAnswers((prev) => {
+      const currentSelected = prev[current.id] ?? [];
+      const next = currentSelected.includes(value)
+        ? currentSelected.filter((v) => v !== value)
+        : [...currentSelected, value];
+      return { ...prev, [current.id]: next };
+    });
+  };
+
+  const next = () => {
+    if (step < questions.length - 1) setStep((s) => s + 1);
+  };
+
+  const prev = () => {
+    if (step > 0) setStep((s) => s - 1);
+  };
+
+  const reset = () => {
+    setStep(0);
+    setAnswers({});
+  };
+
+  const allValues = Object.values(answers).flat();
+  const matched = questions.length > 0 && Object.keys(answers).length === questions.length ? allValues : [];
+
+  return (
+    <section className="mx-auto max-w-3xl px-6 py-16" aria-labelledby="quiz-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <ListChecks size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="quiz-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Discover your values</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Answer a few questions and we will suggest brands aligned with your priorities.</p>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+            <span>Question {step + 1} of {questions.length}</span>
+            <button onClick={reset} className="inline-flex items-center gap-1.5 hover:text-[var(--color-primary)] transition" aria-label="Restart quiz">
+              <RotateCcw size={14} aria-hidden="true" />
+              Restart
+            </button>
+          </div>
+
+          <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" role="progressbar" aria-valuenow={Math.round(((step + 1) / questions.length) * 100)} aria-valuemin={0} aria-valuemax={100} aria-label="Quiz progress">
+            <motion.div
+              className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+              initial={{ width: 0 }}
+              animate={{ width: `${((step + 1) / questions.length) * 100}%` }}
+              transition={{ duration: 0.4 }}
+            />
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.25 }}
+            >
+              <h3 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">{current.prompt}</h3>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Pick all that apply.</p>
+
+              <div className="mt-5 flex flex-col gap-3" role="group" aria-label={current.prompt}>
+                {current.options.map((option) => {
+                  const isSelected = selected.includes(option.value);
+                  return (
+                    <button
+                      key={option.value}
+                      onClick={() => toggle(option.value)}
+                      aria-pressed={isSelected}
+                      className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left text-sm transition ${
+                        isSelected
+                          ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 text-gray-900 dark:text-white"
+                          : "border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:border-[var(--color-primary)]/50"
+                      }`}
+                    >
+                      {option.label}
+                      <span
+                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-xs ${
+                          isSelected ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white" : "border-gray-300 dark:border-gray-700"
+                        }`}
+                        aria-hidden="true"
+                      >
+                        {isSelected ? "✓" : ""}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="mt-6 flex items-center justify-between">
+            <button
+              onClick={prev}
+              disabled={step === 0}
+              className="inline-flex items-center gap-1.5 rounded-full border border-gray-300 dark:border-gray-700 px-4 py-2 text-sm font-medium disabled:opacity-40"
+            >
+              <ArrowLeft size={15} aria-hidden="true" />
+              Back
+            </button>
+            {!isLast ? (
+              <button
+                onClick={next}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-white hover:opacity-90 transition"
+              >
+                Next
+                <ArrowRight size={15} aria-hidden="true" />
+              </button>
+            ) : (
+              <button
+                onClick={reset}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-white hover:opacity-90 transition"
+              >
+                See my profile
+                <Sparkles size={15} aria-hidden="true" />
+              </button>
+            )}
+          </div>
+
+          {matched.length > 0 && (
+            <div className="mt-6 rounded-xl bg-[var(--color-accent)]/10 p-4 text-sm text-gray-700 dark:text-gray-200">
+              <p className="font-medium text-gray-900 dark:text-white">Your ethical profile</p>
+              <p className="mt-1">
+                You care most about: <span className="font-semibold text-[var(--color-accent)]">{Array.from(new Set(matched)).slice(0, 4).join(", ")}</span>.
+                We will surface brands certified for those values.
+              </p>
+            </div>
+          )}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

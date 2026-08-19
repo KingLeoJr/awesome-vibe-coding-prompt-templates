@@ -1,0 +1,69 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { FileText, Loader2, Zap, Palette, Check, Download, Clock, Calendar } from "lucide-react";
+
+interface ReportExporterProps {
+  format: "pdf" | "excel" | "html";
+  onExport: (format: "pdf" | "excel" | "html") => void;
+}
+
+export default function ReportExporter({ format, onExport }: ReportExporterProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-6"
+    >
+      <div className="bg-white dark:bg-gray-950 rounded-2xl p-6 shadow-sm">
+        <h2 className="font-bold text-2xl text-gray-900 dark:text-white mb-4">Report Exporter</h2>
+        <p className="text-gray-500 dark:text-gray-400 mb-6">Export your SEO audit results.</p>
+        <div className="grid grid-cols-2 gap-4">
+          <button
+            onClick={() => onExport("pdf")}
+            className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 transition flex items-center gap-2"
+            aria-label="Export as PDF"
+          >
+            <FileText className="h-4 w-4" />
+            PDF
+          </button>
+
+          <button
+            onClick={() => onExport("excel")}
+            className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 transition flex items-center gap-2"
+            aria-label="Export as Excel"
+          >
+            <Download className="h-4 w-4" />
+            Excel
+          </button>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4 mt-6">
+          <button
+            onClick={() => onExport("html")}
+            className="w-full rounded-md border border-gray-300 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 transition flex items-center gap-2"
+            aria-label="Export as HTML"
+          >
+            <Html className="h-4 w-4" />
+            HTML
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mt-8">
+        <div className="p-4 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+          <Clock className="h-4 w-4 text-gray-400 dark:text-gray-600 mb-2" />
+          <p className="text-sm text-gray-500 dark:text-gray-400">Report generation time depends on data volume.</p>
+        </div>
+
+        <div className="p-4 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950">
+          <Palette className="h-4 w-4 text-gray-400 dark:text-gray-600 mb-2" />
+          <p className="text-sm text-gray-500 dark:text-gray-400">Includes visual charts and keyword analysis.</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

@@ -1,0 +1,108 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { CalendarClock, CreditCard, Flame, TrendingDown } from "lucide-react";
+
+export interface Debt {
+  id: string;
+  name: string;
+  balance: number;
+  apr: number;
+  minPayment: number;
+  payoffStrategy: "snowball" | "avalanche";
+  estimatedPayoff: string;
+}
+
+interface DebtManagerProps {
+  debts: Debt[];
+  currency?: string;
+}
+
+const strategyMeta = {
+  snowball: { label: "Snowball", hint: "Pay smallest balances first for quick wins", tone: "text-[var(--color-accent)] bg-[var(--color-accent)]/10" },
+  avalanche: { label: "Avalanche", hint: "Pay highest APR first to minimize interest", tone: "text-[var(--color-secondary)] bg-[var(--color-secondary)]/10" },
+} as const;
+
+export default function DebtManager({ debts, currency = "{{currency.symbol}}" }: DebtManagerProps) {
+  const totalBalance = debts.reduce((a, b) => a + b.balance, 0);
+  const avgApr = debts.length > 0 ? (debts.reduce((a, b) => a + b.apr, 0) / debts.length).toFixed(1) : "0";
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="debt-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-500">
+            <CreditCard size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="debt-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Debt payoff plan</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {currency}{totalBalance.toLocaleString()} total · avg. {avgApr}% APR · optimized with {debts[0]?.payoffStrategy ?? "snowball"} strategy.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {debts.map((debt, i) => {
+            const meta = strategyMeta[debt.payoffStrategy];
+            return (
+              <motion.article
+                key={debt.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">{debt.name}</h3>
+                    <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">
+                      {currency}{debt.balance.toLocaleString()}
+                    </p>
+                  </div>
+                  <span className="flex items-center gap-1 rounded-full bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-500">
+                    <Flame size={13} aria-hidden="true" />
+                    {debt.apr}% APR
+                  </span>
+                </div>
+
+                <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-xl bg-gray-50 dark:bg-gray-900 p-3">
+                    <dt className="text-xs text-gray-500 dark:text-gray-400">Min payment</dt>
+                    <dd className="mt-1 font-medium text-gray-900 dark:text-white">{currency}{debt.minPayment.toLocaleString()}/mo</dd>
+                  </div>
+                  <div className="rounded-xl bg-gray-50 dark:bg-gray-900 p-3">
+                    <dt className="text-xs text-gray-500 dark:text-gray-400">Payoff date</dt>
+                    <dd className="mt-1 font-medium text-gray-900 dark:text-white">{debt.estimatedPayoff}</dd>
+                  </div>
+                </dl>
+
+                <div className={`mt-4 rounded-xl p-3 ${meta.tone}`}>
+                  <p className="flex items-center gap-1.5 text-sm font-medium">
+                    <TrendingDown size={15} aria-hidden="true" />
+                    {meta.label} strategy
+                  </p>
+                  <p className="mt-0.5 text-xs opacity-80">{meta.hint}</p>
+                </div>
+
+                <div className="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3 text-xs text-gray-500 dark:text-gray-400">
+                  <span className="flex items-center gap-1.5">
+                    <CalendarClock size={14} aria-hidden="true" />
+                    Next payment soon
+                  </span>
+                  <span>Save ~{currency}{(debt.balance * 0.02).toLocaleString(undefined, { maximumFractionDigits: 0 })} with extra {currency}50/mo</span>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

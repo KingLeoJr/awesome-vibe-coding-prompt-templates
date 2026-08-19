@@ -1,0 +1,81 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Grid, Eye, Heart } from "lucide-react";
+
+interface Project {
+  id: string;
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  owner: string;
+  likes: number;
+}
+
+interface ProjectGalleryProps {
+  projects: Project[];
+}
+
+export default function ProjectGallery({ projects }: ProjectGalleryProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-4"
+    >
+      <div>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          <Grid className="mr-2 h-4 w-4" /> Project Gallery
+        </h3>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {projects.map((project) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 * Math.random() }}
+            className="group rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+            aria-label={`Project: ${project.name}`}
+          >
+            <img
+              src={project.thumbnailUrl}
+              alt={project.name}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h4 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-1">
+                {project.name}
+              </h4>
+              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">
+                {project.description}
+              </p>
+            </div>
+            <div className="p-2 bg-white dark:bg-gray-900">
+              <div className="flex items-center gap-2">
+                <Eye className="h-3 w-3 text-gray-400 dark:text-gray-500" />
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {project.likes} likes
+                </span>
+              </div>
+              <Heart
+                className="h-3 w-3 text-red-500 group-hover:text-red-400"
+                fill={project.likes > 0}
+              />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {projects.length === 0 && (
+        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+          No projects yet. Be the first to create and share a design project!
+        </div>
+      )}
+    </motion.div>
+  );
+}

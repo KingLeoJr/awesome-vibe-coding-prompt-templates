@@ -1,0 +1,31 @@
+export const SITE_TITLE = "{{app.name}}";
+export const SITE_DESCRIPTION = "{{app.tagline}}";
+export const SITE_URL = "{{deployment.url}}";
+
+export const NAV_ITEMS = [
+  {{#each sections}}
+  { label: "{{name}}", href: "#{{name | lowercase}}" },
+  {{/each}}
+];
+
+export const CONTACT = {
+  email: "{{contact.email}}",
+  phone: "{{contact.phone}}",
+};
+
+export const SOCIAL = {
+  github: "{{social.github}}",
+  linkedin: "{{social.linkedin}}",
+  twitter: "{{social.twitter}}",
+};
+
+export const ANALYTICS_ID = "{{deployment.analytics_id}}";
+
+export const CURRENCY = "{{currency.symbol}}";
+
+export const DIFFICULTY_LEVELS = ["Beginner", "Intermediate", "Advanced"];
+
+export const COOKING_CONFIG = {
+  maxClassDurationMins: 120,
+  notificationChannels: ["email", "push"],
+};

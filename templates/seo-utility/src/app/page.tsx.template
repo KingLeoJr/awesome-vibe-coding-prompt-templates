@@ -1,0 +1,38 @@
+import Header from "@/components/layout/Header";
+import AuditChecklist from "@/components/seo/AuditChecklist";
+import ScoreGauge from "@/components/seo/ScoreGauge";
+import KeywordPlanner from "@/components/seo/KeywordPlanner";
+import ReportExporter from "@/components/seo/ReportExporter";
+import BacklinkChecker from "@/components/seo/BacklinkChecker";
+import Footer from "@/components/shared/Footer";
+import seo from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="audit" className="scroll-mt-24">
+          <AuditChecklist siteUrl={seo.siteUrl as string} selectedChecklist={seo.checkedAt as any} onSave={seo.onSave as any} />
+        </section>
+
+        <section id="score" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <ScoreGauge score={seo.score as number} category={seo.category as string} />
+        </section>
+
+        <section id="keywords" className="scroll-mt-24">
+          <KeywordPlanner keywords={seo.keywords as any} onAdd={seo.onAdd as any} />
+        </section>
+
+        <section id="reports" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <ReportExporter format={seo.format as any} onExport={seo.onExport as any} />
+        </section>
+
+        <section id="backlinks" className="scroll-mt-24">
+          <BacklinkChecker domain={seo.domain as string} onCheck={seo.onCheck as any} />
+        </section>
+      </main>
+      <Footer name={seo.app.name as string} description={seo.app.tagline as string} />
+    </>
+  );
+}

@@ -1,0 +1,129 @@
+{
+  "blueprint_id": "{{blueprint_id}}",
+  "slug": "coupon-aggregator",
+  "name": "Coupon Aggregator Website Template",
+  "category": "Template",
+  "archetype": "Marketplace",
+  "tagline": "Every deal in one place — find, verify, and save across hundreds of stores.",
+  "builder_prompt_source": "Coupon Aggregator Website Template",
+  "tech_stack": [
+    { "layer": "frontend", "technology": "Next.js 15 (App Router, SSR)", "purpose": "Responsive aggregator shell with server-rendered deals" },
+    { "layer": "frontend", "technology": "React 19 + TypeScript", "purpose": "Typed component model" },
+    { "layer": "ui", "technology": "Tailwind CSS 3.4", "purpose": "Utility-first styling, dark mode, responsive" },
+    { "layer": "animation", "technology": "Framer Motion", "purpose": "Card/timeline transitions and micro-interactions" },
+    { "layer": "state", "technology": "Redux Toolkit + Redux-Saga", "purpose": "Deal feeds, user preferences, and notification flows" },
+    { "layer": "backend", "technology": "Next.js API Routes", "purpose": "Coupon CRUD, verification queue, referral/reward logic" },
+    { "layer": "database", "technology": "PostgreSQL + Prisma", "purpose": "Coupons, stores, categories, users, savings ledger" },
+    { "layer": "auth", "technology": "JWT (Laravel Passport in original prompt)", "purpose": "User accounts, roles, retailer dashboards" },
+    { "layer": "realtime", "technology": "WebSocket + FCM/OneSignal", "purpose": "Expiration alerts and push notifications" }
+  ],
+  "features": [
+    { "description": "Create a responsive online coupon aggregator website", "priority": "core", "order_index": 0 },
+    { "description": "Implement user authentication and authorization for secure access", "priority": "core", "order_index": 1 },
+    { "description": "Design a clean, user-friendly UI to facilitate easy navigation and search for coupons", "priority": "core", "order_index": 2 },
+    { "description": "Use centralized state management to handle complex application states effectively", "priority": "core", "order_index": 3 },
+    { "description": "Create a searchable database of coupons and deals from various retailers, categorized by type (e.g., groceries, electronics, clothing)", "priority": "core", "order_index": 4 },
+    { "description": "Implement a submission system that allows users to submit new coupons or deals they find, including verification processes to ensure accuracy", "priority": "core", "order_index": 5 },
+    { "description": "Design an interactive map feature that shows local stores offering discounts and promotions based on user location", "priority": "core", "order_index": 6 },
+    { "description": "Create a personalized dashboard for users to track their favorite stores, saved coupons, and expiration alerts", "priority": "core", "order_index": 7 },
+    { "description": "Implement a review system that allows users to rate the effectiveness of coupons and share their experiences", "priority": "enhanced", "order_index": 8 },
+    { "description": "Design an analytics dashboard for retailers to track coupon usage, customer engagement, and promotional effectiveness", "priority": "enhanced", "order_index": 9 },
+    { "description": "Create partnerships with retailers to offer exclusive deals or promotions through the platform", "priority": "enhanced", "order_index": 10 },
+    { "description": "Implement multi-language support to cater to diverse customer bases in different regions", "priority": "enhanced", "order_index": 11 },
+    { "description": "Design an onboarding process with tutorials guiding new users through platform features and how to find and use coupons effectively", "priority": "enhanced", "order_index": 12 },
+    { "description": "Create personalized notifications for new coupon postings based on user preferences and saved searches", "priority": "enhanced", "order_index": 13 },
+    { "description": "Implement advanced search functionality allowing users to filter coupons by category, expiration date, or store name", "priority": "enhanced", "order_index": 14 },
+    { "description": "Design user profiles where customers can manage their preferences, saved coupons, and payment methods effectively", "priority": "enhanced", "order_index": 15 },
+    { "description": "Create integration with social media platforms allowing users to share their favorite coupons easily or refer friends", "priority": "enhanced", "order_index": 16 },
+    { "description": "Implement push notifications for new coupon alerts or updates on expiring deals within the app", "priority": "advanced", "order_index": 17 },
+    { "description": "Design an FAQ section addressing common questions about using the coupon aggregator and how to redeem offers", "priority": "advanced", "order_index": 18 },
+    { "description": "Create a blog section featuring tips on saving money, maximizing coupon use, and financial advice relevant to consumers", "priority": "advanced", "order_index": 19 },
+    { "description": "Implement a referral program that rewards users for inviting friends to join the platform or submit deals", "priority": "advanced", "order_index": 20 },
+    { "description": "Design an interactive timeline feature showcasing popular coupons over time or seasonal trends in discounts", "priority": "advanced", "order_index": 21 },
+    { "description": "Create an impact reporting feature that highlights how much users have saved through the platform", "priority": "advanced", "order_index": 22 },
+    { "description": "Implement data analytics to personalize recommendations based on user behavior and preferences", "priority": "advanced", "order_index": 23 },
+    { "description": "Design a custom API for third-party developers to integrate with the platform (e.g., shopping apps)", "priority": "advanced", "order_index": 24 },
+    { "description": "Create an event calendar highlighting special sales events such as Black Friday or Cyber Monday promotions", "priority": "advanced", "order_index": 25 },
+    { "description": "Implement a loyalty program where frequent users earn rewards or exclusive offers based on their activity on the site", "priority": "advanced", "order_index": 26 }
+  ],
+  "sections": [
+    { "name": "Discover", "component_path": "src/app/page.tsx", "layout_type": "hero", "order_index": 0 },
+    { "name": "Coupons", "component_path": "src/components/coupons/CouponBrowser.tsx", "layout_type": "grid", "order_index": 1 },
+    { "name": "Expiring", "component_path": "src/components/coupons/ExpiringTimeline.tsx", "layout_type": "timeline", "order_index": 2 },
+    { "name": "Impact", "component_path": "src/components/coupons/SavingsImpact.tsx", "layout_type": "list", "order_index": 3 },
+    { "name": "Blog", "component_path": "src/app/page.tsx", "layout_type": "grid", "order_index": 4 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "logoText": "{{app.name}}", "navItems": "sections[]", "ctaText": "{{header.cta_text}}", "ctaHref": "{{header.cta_href}}" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "CouponCard", "path": "src/components/coupons/CouponCard.tsx", "props": { "coupon": "Coupon", "index": "number" }, "mixins": ["_shared/utils.ts.template"] },
+    { "name": "CouponBrowser", "path": "src/components/coupons/CouponBrowser.tsx", "props": { "coupons": "Coupon[]", "categories": "string[]" }, "mixins": ["_shared/utils.ts.template"] },
+    { "name": "ExpiringTimeline", "path": "src/components/coupons/ExpiringTimeline.tsx", "props": { "expiring": "ExpiringDeal[]", "trends": "SeasonalTrend[]" }, "mixins": ["_shared/utils.ts.template"] },
+    { "name": "SavingsImpact", "path": "src/components/coupons/SavingsImpact.tsx", "props": { "impact": "ImpactStat[]", "referralCode": "string" }, "mixins": ["_shared/utils.ts.template"] }
+  ],
+  "data_models": [
+    { "name": "Coupon", "fields": [ { "name": "id", "type": "string", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "store", "type": "string", "required": true }, { "name": "category", "type": "string", "required": true }, { "name": "discount", "type": "string", "required": true }, { "name": "code", "type": "string" }, { "name": "expires", "type": "date" }, { "name": "verified", "type": "boolean", "default": false }, { "name": "redemptions", "type": "number", "default": 0 } ] },
+    { "name": "Store", "fields": [ { "name": "id", "type": "string", "required": true }, { "name": "name", "type": "string", "required": true }, { "name": "category", "type": "string" }, { "name": "locations", "type": "geo[]" }, { "name": "exclusive", "type": "boolean", "default": false } ] },
+    { "name": "Category", "fields": [ { "name": "name", "type": "string", "required": true }, { "name": "slug", "type": "string", "required": true }, { "name": "couponCount", "type": "number", "default": 0 } ] },
+    { "name": "User", "fields": [ { "name": "id", "type": "string", "required": true }, { "name": "email", "type": "email", "required": true }, { "name": "preferences", "type": "string[]" }, { "name": "savedCoupons", "type": "string[]" }, { "name": "loyaltyPoints", "type": "number", "default": 0 }, { "name": "locale", "type": "string", "default": "en" } ] },
+    { "name": "Submission", "fields": [ { "name": "id", "type": "string", "required": true }, { "name": "userId", "type": "string", "required": true }, { "name": "coupon", "type": "Coupon" }, { "name": "status", "type": "enum(pending|approved|rejected)" } ] },
+    { "name": "SavingsRecord", "fields": [ { "name": "id", "type": "string", "required": true }, { "name": "userId", "type": "string", "required": true }, { "name": "couponId", "type": "string" }, { "name": "amountSaved", "type": "decimal", "required": true }, { "name": "recordedAt", "type": "datetime", "required": true } ] },
+    { "name": "Referral", "fields": [ { "name": "code", "type": "string", "required": true }, { "name": "ownerId", "type": "string", "required": true }, { "name": "rewardAmount", "type": "decimal", "default": 5 }, { "name": "acceptedCount", "type": "number", "default": 0 } ] }
+  ],
+  "integrations": [
+    { "service": "Laravel Passport / JWT", "purpose": "Authentication and authorization (original backend; adapted to JWT API routes)" },
+    { "service": "Google Maps", "purpose": "Local store discounts and promotions map" },
+    { "service": "Stripe", "purpose": "Payment methods on user profiles and retailer payouts" },
+    { "service": "OneSignal / FCM", "purpose": "Push notifications for new coupons and expiring deals" },
+    { "service": "Social Platforms", "purpose": "Coupon sharing and referral invites" },
+    { "service": "PostgreSQL + Prisma", "purpose": "Coupons, stores, users, and savings ledger" }
+  ],
+  "nfrs": [
+    { "type": "Performance", "requirement": "SSR deal pages; search filters react within 100ms" },
+    { "type": "Security", "requirement": "JWT auth, verified submissions, no coupon codes leaked to bots (rate-limited reveal)" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA — skip links, labelled inputs, keyboard-navigable filters" },
+    { "type": "Responsive", "requirement": "Fluid grids from 320px; coupon grid collapses to single column" },
+    { "type": "SEO", "requirement": "SSR metadata, OG/Twitter cards, JSON-LD ItemList for deals" },
+    { "type": "i18n", "requirement": "Locale-aware strings, dates, and currency; default locale configurable" },
+    { "type": "PWA", "requirement": "Web manifest + push notification readiness" },
+    { "type": "Testing", "requirement": "Unit tests for filter/sort logic; API tests for submission verification" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#e11d48" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#f59e0b" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#10b981" },
+    { "token_type": "font", "token_name": "font.heading", "token_value": "Inter" },
+    { "token_type": "font", "token_name": "font.body", "token_value": "Inter" },
+    { "token_type": "spacing", "token_name": "spacing.section", "token_value": "5rem" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "16px" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class-based (dark: variants)" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "url": "https://couponhub.example.com", "analytics_id": "G-COUP-01", "regions": ["iad1", "fra1", "sin1"], "pwa_manifest": "/manifest.webmanifest" } }
+  ],
+  "template_files": [
+    { "path": "src/app/page.tsx", "source": "templates/coupon-aggregator/src/app/page.tsx.template", "syntax": "mustache", "mixins": ["_shared/SEOHead.tsx.template", "_shared/Footer.tsx.template"] },
+    { "path": "src/data/coupon-aggregator.json", "source": "templates/coupon-aggregator/src/data/coupon-aggregator.json.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/coupon-aggregator/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/coupon-aggregator/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/coupon-aggregator/package.json.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/coupon-aggregator/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/coupons/CouponCard.tsx", "source": "templates/coupon-aggregator/src/components/coupons/CouponCard.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/coupons/CouponBrowser.tsx", "source": "templates/coupon-aggregator/src/components/coupons/CouponBrowser.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/coupons/ExpiringTimeline.tsx", "source": "templates/coupon-aggregator/src/components/coupons/ExpiringTimeline.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/coupons/SavingsImpact.tsx", "source": "templates/coupon-aggregator/src/components/coupons/SavingsImpact.tsx.template", "syntax": "mustache" }
+  ],
+  "extra_config": {
+    "app": { "name": "CouponHub", "slug": "coupon-aggregator", "tagline": "Every deal in one place — find, verify, and save across hundreds of stores." },
+    "theme": {
+      "color": { "primary": "#e11d48", "secondary": "#f59e0b", "accent": "#10b981" },
+      "font": { "heading": "Inter", "body": "Inter" },
+      "radius": "16px",
+      "spacing": { "section": "5rem" }
+    },
+    "header": { "cta_text": "Submit a Deal", "cta_href": "#coupons", "is_fixed": true },
+    "seo": { "og_image": "/og/coupon-aggregator.png", "schema_type": "WebSite" },
+    "contact": { "email": "support@couponhub.example.com", "phone": "+1 (888) 555-0177" },
+    "social": { "github": "https://github.com/couponhub", "linkedin": "https://linkedin.com/company/couponhub", "twitter": "https://twitter.com/couponhub", "email": "support@couponhub.example.com" },
+    "i18n": { "default_locale": "en", "currency": "USD", "supported_locales": ["en", "es", "fr", "de"] }
+  }
+}

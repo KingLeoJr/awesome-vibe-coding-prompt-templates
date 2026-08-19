@@ -1,0 +1,170 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { CheckSquare, ListChecks, Wind, Mountain, Waves, TreePine, Snowflake } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface ChecklistItem {
+  id: string;
+  label: string;
+  checked: boolean;
+}
+
+export interface PreparednessChecklist {
+  id: string;
+  hazard: string;
+  title: string;
+  items: ChecklistItem[];
+}
+
+interface DisasterChecklistsProps {
+  checklists: PreparednessChecklist[];
+}
+
+const HAZARD_ICONS: Record<string, typeof Wind> = {
+  Hurricane: Wind,
+  Earthquake: Mountain,
+  Wildfire: TreePine,
+  Flood: Waves,
+  "Winter Storm": Snowflake,
+};
+
+export default function DisasterChecklists({ checklists }: DisasterChecklistsProps) {
+  const [activeId, setActiveId] = useState(checklists[0]?.id ?? "");
+  const [checked, setChecked] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const list of checklists) {
+      for (const item of list.items) {
+        initial[item.id] = item.checked;
+      }
+    }
+    return initial;
+  });
+
+  const active = checklists.find((list) => list.id === activeId) ?? checklists[0];
+
+  const toggle = (itemId: string) => {
+    setChecked((prev) => ({ ...prev, [itemId]: !prev[itemId] }));
+  };
+
+  const progress = useMemo(() => {
+    if (!active) return 0;
+    const total = active.items.length;
+    const done = active.items.filter((item) => checked[item.id]).length;
+    return total > 0 ? Math.round((done / total) * 100) : 0;
+  }, [active, checked]);
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="checklists-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+              <ListChecks size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="checklists-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Disaster checklists</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Personalized supply and plan checklists for the hazards near you.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap gap-2" role="tablist" aria-label="Hazard checklists">
+          {checklists.map((list) => {
+            const Icon = HAZARD_ICONS[list.hazard] ?? CheckSquare;
+            return (
+              <button
+                key={list.id}
+                role="tab"
+                aria-selected={activeId === list.id}
+                onClick={() => setActiveId(list.id)}
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition",
+                  activeId === list.id
+                    ? "bg-[var(--color-primary)] text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                )}
+              >
+                <Icon size={15} aria-hidden="true" />
+                {list.hazard}
+              </button>
+            );
+          })}
+        </div>
+
+        {active && (
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{active.title}</h3>
+              <span className="rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-primary)]">
+                {progress}% ready
+              </span>
+            </div>
+
+            <div
+              className="mt-4 h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800"
+              role="progressbar"
+              aria-label={`${active.hazard} checklist progress`}
+              aria-valuenow={progress}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            >
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: `${progress}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+              />
+            </div>
+
+            <ul className="mt-5 grid gap-2 sm:grid-cols-2" aria-label={`${active.hazard} checklist items`}>
+              {active.items.map((item, i) => {
+                const isChecked = !!checked[item.id];
+                return (
+                  <motion.li
+                    key={item.id}
+                    initial={{ opacity: 0, x: -8 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: Math.min(i * 0.03, 0.3) }}
+                  >
+                    <button
+                      onClick={() => toggle(item.id)}
+                      aria-pressed={isChecked}
+                      className={cn(
+                        "flex w-full items-start gap-3 rounded-xl border px-4 py-3 text-left text-sm transition",
+                        isChecked
+                          ? "border-[var(--color-secondary)]/40 bg-[var(--color-secondary)]/5 text-gray-500 dark:text-gray-400 line-through"
+                          : "border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-900"
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition",
+                          isChecked
+                            ? "border-[var(--color-secondary)] bg-[var(--color-secondary)] text-white"
+                            : "border-gray-300 dark:border-gray-700"
+                        )}
+                        aria-hidden="true"
+                      >
+                        {isChecked && <CheckSquare size={13} />}
+                      </span>
+                      {item.label}
+                    </button>
+                  </motion.li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+      </motion.div>
+    </section>
+  );
+}

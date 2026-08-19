@@ -1,0 +1,273 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Activity, HeartPulse, Plus, Weight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface VitalsMetric {
+  key: string;
+  label: string;
+  unit: string;
+  latest: number;
+  status: string;
+}
+
+export interface VitalPoint {
+  date: string;
+  value: number;
+  systolic?: number;
+  diastolic?: number;
+}
+
+export interface VitalSigns {
+  metrics: VitalsMetric[];
+  series: Record<string, VitalPoint[]>;
+}
+
+interface HealthTrackerProps {
+  vitals: VitalSigns;
+}
+
+const METRIC_ICONS = {
+  bloodPressure: HeartPulse,
+  glucose: Activity,
+  heartRate: Activity,
+  weight: Weight,
+} as const;
+
+function SeriesLine({
+  values,
+  stroke,
+  max,
+  width,
+  height,
+}: {
+  values: number[];
+  stroke: string;
+  max: number;
+  width: number;
+  height: number;
+}) {
+  const pad = 8;
+  const step = values.length > 1 ? (width - pad * 2) / (values.length - 1) : 0;
+  const points = values
+    .map((v, i) => {
+      const x = pad + i * step;
+      const y = height - pad - (v / max) * (height - pad * 2);
+      return `${x},${y}`;
+    })
+    .join(" ");
+  return <polyline points={points} fill="none" stroke={stroke} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />;
+}
+
+export default function HealthTracker({ vitals }: HealthTrackerProps) {
+  const [activeKey, setActiveKey] = useState(vitals.metrics[0]?.key ?? "");
+  const [series, setSeries] = useState<Record<string, VitalPoint[]>>(vitals.series);
+  const [showForm, setShowForm] = useState(false);
+  const [draft, setDraft] = useState({ value: "", systolic: "", diastolic: "" });
+
+  const activeMetric = vitals.metrics.find((m) => m.key === activeKey) ?? vitals.metrics[0];
+  const activeSeries = series[activeMetric?.key ?? ""] ?? [];
+
+  const max = Math.max(1, ...activeSeries.flatMap((p) => [p.value, p.systolic ?? 0, p.diastolic ?? 0]));
+  const width = 640;
+  const height = 220;
+  const padX = 36;
+  const chartWidth = width - padX;
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!activeMetric) return;
+    const value = Number(draft.value);
+    if (!value || Number.isNaN(value)) return;
+    const point: VitalPoint = { date: new Date().toISOString().slice(0, 10), value };
+    if (activeMetric.key === "bloodPressure") {
+      point.systolic = Number(draft.systolic) || value;
+      point.diastolic = Number(draft.diastolic) || undefined;
+    }
+    setSeries((prev) => ({
+      ...prev,
+      [activeMetric.key]: [...(prev[activeMetric.key] ?? []), point],
+    }));
+    setDraft({ value: "", systolic: "", diastolic: "" });
+    setShowForm(false);
+  };
+
+  const systolic = activeSeries.filter((p) => p.systolic != null).map((p) => p.systolic as number);
+  const diastolic = activeSeries.filter((p) => p.diastolic != null).map((p) => p.diastolic as number);
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="health-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <HeartPulse size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="health-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Health tracker</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Log vital signs and watch changes over time.</p>
+            </div>
+          </div>
+          <button
+            onClick={() => setShowForm((v) => !v)}
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 transition"
+          >
+            <Plus size={16} aria-hidden="true" />
+            Log reading
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {vitals.metrics.map((metric, i) => {
+            const Icon = METRIC_ICONS[metric.key as keyof typeof METRIC_ICONS] ?? Activity;
+            const s = series[metric.key] ?? [];
+            const latestValue = s.length > 0 ? s[s.length - 1].value : metric.latest;
+            return (
+              <motion.button
+                key={metric.key}
+                onClick={() => setActiveKey(metric.key)}
+                aria-pressed={activeKey === metric.key}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className={cn(
+                  "rounded-2xl border p-5 text-left transition",
+                  activeKey === metric.key
+                    ? "border-[var(--color-primary)] bg-[var(--color-primary)]/5 ring-1 ring-[var(--color-primary)]"
+                    : "border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950"
+                )}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                    <Icon size={18} aria-hidden="true" />
+                  </span>
+                  <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    {metric.status}
+                  </span>
+                </div>
+                <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">{metric.label}</p>
+                <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
+                  {latestValue} <span className="text-sm font-normal text-gray-400">{metric.unit}</span>
+                </p>
+              </motion.button>
+            );
+          })}
+        </div>
+
+        {showForm && (
+          <motion.form
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            className="mb-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-5"
+            onSubmit={submit}
+            aria-label={`Log ${activeMetric?.label ?? "vital"} reading`}
+          >
+            <div className="grid gap-3 sm:grid-cols-4">
+              {activeMetric?.key === "bloodPressure" ? (
+                <>
+                  <input
+                    type="number"
+                    placeholder="Systolic"
+                    value={draft.systolic}
+                    onChange={(e) => setDraft({ ...draft, systolic: e.target.value })}
+                    className="rounded-xl border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                    aria-label="Systolic"
+                    required
+                  />
+                  <input
+                    type="number"
+                    placeholder="Diastolic"
+                    value={draft.diastolic}
+                    onChange={(e) => setDraft({ ...draft, diastolic: e.target.value })}
+                    className="rounded-xl border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                    aria-label="Diastolic"
+                    required
+                  />
+                </>
+              ) : (
+                <input
+                  type="number"
+                  placeholder="Value"
+                  value={draft.value}
+                  onChange={(e) => setDraft({ ...draft, value: e.target.value })}
+                  className="rounded-xl border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] sm:col-span-2"
+                  aria-label="Value"
+                  required
+                />
+              )}
+              <button
+                type="submit"
+                className="rounded-xl bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition"
+              >
+                Save reading
+              </button>
+            </div>
+          </motion.form>
+        )}
+
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+          <div className="mb-4 flex flex-wrap items-center gap-4" aria-hidden="true">
+            <span className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "var(--color-primary)" }} />
+              {activeMetric?.label ?? "Reading"}
+            </span>
+            {systolic.length > 0 && (
+              <span className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "var(--color-secondary)" }} />
+                Systolic
+              </span>
+            )}
+            {diastolic.length > 0 && (
+              <span className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "var(--color-accent)" }} />
+                Diastolic
+              </span>
+            )}
+          </div>
+          <div className="overflow-x-auto">
+            <svg viewBox={`0 0 ${width} ${height}`} className="w-full min-w-[480px]" role="img" aria-label={`${activeMetric?.label ?? "Vital"} trend chart`}>
+              {[0.25, 0.5, 0.75, 1].map((f) => (
+                <line
+                  key={f}
+                  x1={padX}
+                  x2={width}
+                  y1={height - f * (height - 16)}
+                  y2={height - f * (height - 16)}
+                  stroke="currentColor"
+                  className="text-gray-200 dark:text-gray-800"
+                  strokeWidth={1}
+                />
+              ))}
+              <SeriesLine values={diastolic} stroke="var(--color-accent)" max={max} width={chartWidth} height={height} />
+              <SeriesLine values={systolic} stroke="var(--color-secondary)" max={max} width={chartWidth} height={height} />
+              <SeriesLine values={activeSeries.map((p) => p.value)} stroke="var(--color-primary)" max={max} width={chartWidth} height={height} />
+              {activeSeries.map((point, i) => {
+                const labelPad = 8;
+                const labelStep = activeSeries.length > 1 ? (chartWidth - labelPad * 2) / (activeSeries.length - 1) : 0;
+                const x = labelPad + i * labelStep;
+                return (
+                  <text key={point.date} x={x} y={height - 4} textAnchor="middle" className="fill-gray-400 text-[10px]">
+                    {point.date.slice(5)}
+                  </text>
+                );
+              })}
+            </svg>
+          </div>
+        </div>
+
+        <div className="mt-6 flex items-center gap-3 rounded-2xl border border-dashed border-gray-300 p-5 text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
+          <Activity size={18} className="shrink-0 text-[var(--color-primary)]" aria-hidden="true" />
+          Readings sync with your care plan and are shared with your family circle and care team.
+        </div>
+      </motion.div>
+    </section>
+  );
+}

@@ -1,0 +1,73 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+import { lucideReact } from "lucide-react";
+import { Book, Film, Leaf, Heart } from "lucide-react";
+
+interface ResourceItem {
+  id: string;
+  title: string;
+  type: "article" | "video" | "meditation" | "exercise";
+  topic: string;
+  duration: string;
+  url: string;
+}
+
+interface ResourceLibraryProps {
+  resources: ResourceItem[];
+  onLoad?: () => void;
+}
+
+export default function ResourceLibrary({ resources, onLoad }: ResourceLibraryProps) {
+  const [expanded, setExpanded] = useState(-1);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-xl border bg-gray-50 dark:bg-gray-900 p-6 hover:shadow-lg transition-shadow",
+        "pb-4"
+      )}
+    >
+      <div className="space-y-4">
+        {resources.map((resource) => (
+          <motion.div
+            key={resource.id}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="p-4 bg-white dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow"
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <h4 className="font-medium text-gray-900 dark:text-white">{resource.title}</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {resource.topic} · {resource.duration}
+                </p>
+              </div>
+              <Button
+                variant="link"
+                size="ghost"
+                className="text-xs text-[var(--color-primary)] hover:opacity-80"
+                onClick={() => window.open(resource.url, "_blank")}
+              >
+                {resource.type === "article" ? <Book size={12} className="mr-1 opacity-70" /> : ""}
+                {resource.type === "video" ? <Film size={12} className="mr-1 opacity-70" /> : ""}
+                {resource.type === "meditation" ? <Leaf size={12} className="mr-1 opacity-70" /> : ""}
+                {resource.type === "exercise" ? <Heart size={12} className="mr-1 opacity-70" /> : ""}
+                View
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}

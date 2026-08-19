@@ -1,0 +1,257 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "plots": [
+    {
+      "id": "plot-001",
+      "name": "Sunny Vegetable Bed",
+      "plants": [
+        { "id": "gp-001", "name": "Tomato", "x": 30, "y": 35 },
+        { "id": "gp-002", "name": "Basil", "x": 62, "y": 28 },
+        { "id": "gp-003", "name": "Kale", "x": 45, "y": 70 }
+      ],
+      "features": ["Full sun", "Raised bed", "Drip irrigation"]
+    },
+    {
+      "id": "plot-002",
+      "name": "Shade Border",
+      "plants": [
+        { "id": "gp-004", "name": "Hostas", "x": 25, "y": 40 },
+        { "id": "gp-005", "name": "Fern", "x": 58, "y": 55 },
+        { "id": "gp-006", "name": "Lavender", "x": 40, "y": 25 }
+      ],
+      "features": ["Partial shade", "Perennial", "Mulched path"]
+    }
+  ],
+  "plants": [
+    {
+      "id": "plant-001",
+      "name": "Tomato",
+      "species": "Solanum lycopersicum",
+      "category": "Vegetables",
+      "sunlight": "Full sun",
+      "water": "Moderate",
+      "hardiness": "Annual",
+      "care": "Stake and prune suckers weekly; feed every 2 weeks once fruiting begins.",
+      "pest": "Watch for hornworms and aphids; companion-plant marigolds."
+    },
+    {
+      "id": "plant-002",
+      "name": "Basil",
+      "species": "Ocimum basilicum",
+      "category": "Herbs",
+      "sunlight": "Full sun",
+      "water": "Regular",
+      "hardiness": "Annual",
+      "care": "Pinch flower heads to keep leaves tender; harvest from the top down.",
+      "pest": "Aphids and slugs; keep air moving to reduce mildew."
+    },
+    {
+      "id": "plant-003",
+      "name": "Kale",
+      "species": "Brassica oleracea",
+      "category": "Vegetables",
+      "sunlight": "Partial sun",
+      "water": "Moderate",
+      "hardiness": "Biennial",
+      "care": "Harvest outer leaves first; sweeter after the first light frost.",
+      "pest": "Cabbage worms and flea beetles; use row covers early."
+    },
+    {
+      "id": "plant-004",
+      "name": "Hostas",
+      "species": "Hosta spp.",
+      "category": "Perennials",
+      "sunlight": "Shade",
+      "water": "Regular",
+      "hardiness": "Zones 3-9",
+      "care": "Divide every 3-4 years in early spring; keep soil consistently moist.",
+      "pest": "Slugs and snails; apply diatomaceous earth around the crown."
+    },
+    {
+      "id": "plant-005",
+      "name": "Lavender",
+      "species": "Lavandula angustifolia",
+      "category": "Perennials",
+      "sunlight": "Full sun",
+      "water": "Low",
+      "hardiness": "Zones 5-9",
+      "care": "Prune back one-third after flowering; gravel mulch prevents root rot.",
+      "pest": "Rare — avoid overwatering to prevent fungal issues."
+    },
+    {
+      "id": "plant-006",
+      "name": "Ferns",
+      "species": "Polypodiopsida",
+      "category": "Perennials",
+      "sunlight": "Shade",
+      "water": "Regular",
+      "hardiness": "Zones 4-8",
+      "care": "Keep humidity high; cut old fronds in early spring before new growth.",
+      "pest": "Scale and mealybugs indoors; rinse fronds and treat with neem."
+    },
+    {
+      "id": "plant-007",
+      "name": "Marigold",
+      "species": "Tagetes spp.",
+      "category": "Annuals",
+      "sunlight": "Full sun",
+      "water": "Moderate",
+      "hardiness": "Annual",
+      "care": "Deadhead regularly for continuous bloom; excellent companion plant.",
+      "pest": "Repels nematodes and aphids in vegetable beds."
+    },
+    {
+      "id": "plant-008",
+      "name": "Rose",
+      "species": "Rosa spp.",
+      "category": "Shrubs",
+      "sunlight": "Full sun",
+      "water": "Regular",
+      "hardiness": "Zones 5-9",
+      "care": "Prune in late winter; feed monthly through the growing season.",
+      "pest": "Black spot and aphids; water at the base to keep foliage dry."
+    }
+  ],
+  "providers": [
+    {
+      "id": "prov-001",
+      "name": "Willow & Stone Landscapes",
+      "category": "Landscapers",
+      "location": "12 Greenway Ave",
+      "rating": 4.9,
+      "reviewCount": 42,
+      "verified": true,
+      "services": ["Full landscape design", "Hardscaping", "Seasonal cleanups"],
+      "reviews": [
+        { "id": "rev-001", "author": "Maya R.", "rating": 5, "comment": "Completely transformed our back yard — on budget and on time.", "date": "2026-07-20" },
+        { "id": "rev-002", "author": "Dan K.", "rating": 5, "comment": "Great planting suggestions that actually survived the heat.", "date": "2026-06-11" }
+      ]
+    },
+    {
+      "id": "prov-002",
+      "name": "Fernway Garden Design",
+      "category": "Garden Designers",
+      "location": "48 Fern Road",
+      "rating": 4.8,
+      "reviewCount": 27,
+      "verified": true,
+      "services": ["Design plans", "Plant selection", "Container styling"],
+      "reviews": [
+        { "id": "rev-003", "author": "Priya S.", "rating": 5, "comment": "The planting plan for our shaded border is gorgeous.", "date": "2026-07-02" },
+        { "id": "rev-004", "author": "Tom W.", "rating": 4, "comment": "Very thorough, slightly slow to respond in peak season.", "date": "2026-05-18" }
+      ]
+    },
+    {
+      "id": "prov-003",
+      "name": "Cedar & Clover Tree Care",
+      "category": "Tree Services",
+      "location": "9 Mill Pond Rd",
+      "rating": 4.7,
+      "reviewCount": 31,
+      "verified": true,
+      "services": ["Pruning", "Removals", "Stump grinding"],
+      "reviews": [
+        { "id": "rev-005", "author": "Elena V.", "rating": 5, "comment": "Clean, careful, and priced fairly. Highly recommend.", "date": "2026-06-29" }
+      ]
+    },
+    {
+      "id": "prov-004",
+      "name": "Meadow View Irrigation",
+      "category": "Irrigation",
+      "location": "73 Orchard St",
+      "rating": 4.6,
+      "reviewCount": 19,
+      "verified": false,
+      "services": ["Drip systems", "Smart controllers", "Leak repair"],
+      "reviews": [
+        { "id": "rev-006", "author": "Luis M.", "rating": 5, "comment": "Installed a smart drip system — my water bill dropped 20%.", "date": "2026-05-30" }
+      ]
+    }
+  ],
+  "careTasks": [
+    { "id": "care-001", "plant": "Tomato (Sunny Bed)", "task": "Water deeply", "frequency": "2 days", "nextDue": "2026-08-21", "status": "pending" },
+    { "id": "care-002", "plant": "Basil (Sunny Bed)", "task": "Pinch flower heads", "frequency": "7 days", "nextDue": "2026-08-24", "status": "pending" },
+    { "id": "care-003", "plant": "Hostas (Shade Border)", "task": "Water & check for slugs", "frequency": "3 days", "nextDue": "2026-08-22", "status": "pending" },
+    { "id": "care-004", "plant": "Roses (Front Bed)", "task": "Deadhead + feed", "frequency": "14 days", "nextDue": "2026-08-28", "status": "pending" },
+    { "id": "care-005", "plant": "Kale (Sunny Bed)", "task": "Harvest outer leaves", "frequency": "5 days", "nextDue": "2026-08-20", "status": "done" },
+    { "id": "care-006", "plant": "Lavender (Shade Border)", "task": "Check drainage", "frequency": "monthly", "nextDue": "2026-09-01", "status": "pending" }
+  ],
+  "health": {
+    "metrics": {
+      "activePlants": 24,
+      "avgGrowthRate": 6.2,
+      "pestSightings": 3,
+      "wateringsLogged": 58,
+      "goalGrowth": 8
+    },
+    "logs": [
+      { "id": "health-001", "date": "2026-08-16", "plant": "Tomato", "growthRate": 9, "pestSightings": 1, "notes": "Trellised and pruned; removed 2 hornworms." },
+      { "id": "health-002", "date": "2026-08-09", "plant": "Basil", "growthRate": 5, "pestSightings": 0, "notes": "Bushy and fragrant — pinched flower heads." },
+      { "id": "health-003", "date": "2026-08-02", "plant": "Kale", "growthRate": 4, "pestSightings": 1, "notes": "Flea beetle holes on lower leaves; applied row cover." },
+      { "id": "health-004", "date": "2026-07-25", "plant": "Roses", "growthRate": 6, "pestSightings": 1, "notes": "Aphids found on new buds; treated with neem oil." }
+    ],
+    "badges": [
+      { "name": "First Harvest", "description": "Harvested your first crop", "earned": true },
+      { "name": "Watering Wizard", "description": "Logged 50 waterings", "earned": true },
+      { "name": "Pest Patrol", "description": "Spotted and treated 5 pest issues", "earned": true },
+      { "name": "Zone Master", "description": "Built a plan for every planting zone", "earned": true },
+      { "name": "Bloom Brigade", "description": "Kept 10 flowers blooming through the season", "earned": false },
+      { "name": "Community Green Thumb", "description": "Shared 20 tips in the forum", "earned": false }
+    ]
+  },
+  "seasonal": [
+    {
+      "id": "season-001",
+      "season": "Spring",
+      "region": "Zone 7b",
+      "title": "Wake the beds up",
+      "actions": [
+        "Turn compost into the beds before new growth",
+        "Start warm-season seeds indoors 6 weeks before last frost",
+        "Prune roses and late-summer-blooming shrubs"
+      ],
+      "plants": ["Lettuce", "Peas", "Radishes", "Pansies"]
+    },
+    {
+      "id": "season-002",
+      "season": "Summer",
+      "region": "Zone 7b",
+      "title": "Keep everything hydrated",
+      "actions": [
+        "Mulch beds to hold moisture through heat waves",
+        "Water in the early morning to limit evaporation",
+        "Deadhead annuals every week for continuous bloom"
+      ],
+      "plants": ["Tomatoes", "Basil", "Marigolds", "Zinnias"]
+    },
+    {
+      "id": "season-003",
+      "season": "Autumn",
+      "region": "Zone 7b",
+      "title": "Plant for next year",
+      "actions": [
+        "Plant garlic and spring bulbs before the ground freezes",
+        "Collect and dry seeds from your best performers",
+        "Add a layer of leaf mulch to overwintering beds"
+      ],
+      "plants": ["Garlic", "Daffodils", "Tulips", "Kale"]
+    },
+    {
+      "id": "season-004",
+      "season": "Winter",
+      "region": "Zone 7b",
+      "title": "Plan and protect",
+      "actions": [
+        "Wrap tender shrubs against frost damage",
+        "Clean and sharpen tools for the spring rush",
+        "Sketch next year's layout with the planner tool"
+      ],
+      "plants": ["Winter kale", "Violets", "Paperwhites"]
+    }
+  ]
+}

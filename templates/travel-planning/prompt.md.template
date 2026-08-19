@@ -1,0 +1,94 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  app.name: "{{app.name}}"
+  app.slug: "{{app.slug}}"
+  app.tagline: "{{app.tagline}}"
+  theme.color.primary: "{{theme.color.primary}}"
+  theme.color.secondary: "{{theme.color.secondary}}"
+  theme.color.accent: "{{theme.color.accent}}"
+  theme.font.sans: "{{theme.font.sans}}"
+  theme.radius.card: "{{theme.radius.card}}"
+  header.cta_text: "{{header.cta_text}}"
+  header.cta_href: "{{header.cta_href}}"
+  seo.og_image: "{{seo.og_image}}"
+  seo.schema_type: "{{seo.schema_type}}"
+  deployment.url: "{{deployment.url}}"
+  deployment.analytics_id: "{{deployment.analytics_id}}"
+  contact.email: "{{contact.email}}"
+  contact.phone: "{{contact.phone}}"
+  social.github: "{{social.github}}"
+  social.linkedin: "{{social.linkedin}}"
+  social.twitter: "{{social.twitter}}"
+  frontend.framework: "Next.js 15"
+  frontend.language: "TypeScript"
+  backend.framework: "Node.js + Express"
+  backend.language: "JavaScript"
+  database.technology: "PostgreSQL"
+  ui.library: "Tailwind CSS"
+  state.manager: "React Query"
+  auth.protocol: "OAuth 2.0 / Passport.js"
+  ai.provider: "OpenAI GPT-4o"
+  integrations.skyscanner: "flight search API"
+  integrations.amadeus: "flight schedule API"
+  integrations.stripe: "payments"
+  integrations.google-maps: "mapping"
+
+---
+
+# {{app.name}}
+{{app.tagline}}
+
+Create a responsive travel planning and booking platform using Next.js 15 and
+React 19. Implement user authentication and authorization using Passport.js for
+secure access. Design an intuitive UI using Tailwind CSS for responsive and
+mobile-friendly design. Use React Query for state management to handle complex
+application states effectively. Create a customizable user profile system that
+includes travel preferences, saved itineraries, and payment methods. Implement
+a flight search engine using APIs like Skyscanner or Amadeus for real-time
+flight data. Design a hotel booking module that allows users to search, filter,
+and book accommodations. Create a car rental feature with integration to
+services like Rentalcars.com or Kayak. Implement a travel itinerary planner
+that allows users to organize their trips day-by-day. Design an interactive
+map feature using Google Maps API for visualizing travel routes and points of
+interest. Create a travel community forum where users can share experiences,
+tips, and recommendations. Implement a review system for flights, hotels, and
+attractions to help users make informed decisions. Design a dynamic pricing
+model that shows users the best times to book flights or accommodations based
+on historical data. Create a personalized recommendation engine that suggests
+destinations based on user preferences and past trips. Implement a currency
+converter tool for easy budgeting while traveling. Design an event calendar
+that highlights local festivals, concerts, and activities in various
+destinations. Create a packing list generator that suggests items based on the
+destination and duration of stay. Implement a travel alert system that notifies
+users of flight delays, cancellations, or changes in travel advisories. Design
+an FAQ section addressing common questions about booking procedures and policies.
+Create an offline mode allowing users to access their itineraries without
+internet connectivity. Implement integration with popular travel insurance
+providers for added security during trips. Design a loyalty program where users
+can earn points for bookings that can be redeemed for discounts. Create a blog
+section featuring travel guides, tips, and personal stories from other travelers.
+Implement social media sharing options so users can share their itineraries or
+favorite destinations. Design an interactive budget planner that helps users
+estimate costs for flights, hotels, meals, and activities. Create a virtual
+assistant feature using AI chatbots to answer user queries in real-time.
+Implement multi-language support to cater to international travelers. Design
+an emergency contact feature that provides local emergency numbers based on the
+destination. Create integration with local transportation services (Uber, Lyft)
+for seamless travel within cities. Implement geolocation services to suggest
+nearby attractions or restaurants based on user location. Design a custom
+itinerary sharing feature allowing users to collaborate with friends or family
+on trip planning. Create an API for third-party developers to integrate with
+the platform (e.g., travel blogs or local guides). Implement advanced search
+functionality with filters by price range, amenities, and user ratings. Design
+an interactive photo gallery showcasing popular destinations or user-submitted
+images. Create a user-generated content section where travelers can upload their
+experiences and tips. Implement push notifications for special deals or
+last-minute offers relevant to user interests. Design a customizable dashboard
+where users can track their travel history and future bookings. Create partnerships
+with local businesses for exclusive deals or experiences available only through
+the platform. Implement an environmental impact calculator to show users the
+carbon footprint of their travels.

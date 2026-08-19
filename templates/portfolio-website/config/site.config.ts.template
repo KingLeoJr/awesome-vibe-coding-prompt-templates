@@ -1,0 +1,33 @@
+import type { Config } from "tailwindcss";
+
+export default {
+  darkMode: ["class"],
+  content: [
+    "./src/**/*.{ts,tsx}",
+    "./src/components/shared/**/*.{ts,tsx}",
+    "./src/components/layout/**/*.{ts,tsx}",
+    "./src/components/portfolio/**/*.{ts,tsx}",
+    "./src/components/blog/**/*.{ts,tsx}",
+    "./src/components/shared/Footer.tsx",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: "var(--color-primary)",
+        secondary: "var(--color-secondary)",
+        accent: "var(--color-accent)",
+        primaryDark: "var(--color-primary-dark)",
+        secondaryDark: "var(--color-secondary-dark)",
+        accentDark: "var(--color-accent-dark)",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", "var(--font-mono)"],
+        mono: ["var(--font-mono)"],
+      },
+      borderRadius: {
+        card: "var(--radius-card)",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config;

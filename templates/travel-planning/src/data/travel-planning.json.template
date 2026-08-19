@@ -1,0 +1,129 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "destinations": [
+    {
+      "id": "dest-001",
+      "name": "Paris, France",
+      "country": "France",
+      "description": "The city of light, romance, and cuisine",
+      "price": 1899,
+      "rating": 4.8,
+      "imageUrl": "https://images.unsplash.com/photo-1502602898657-cd6e2e14ba3f"
+    },
+    {
+      "id": "dest-002",
+      "name": "Tokyo, Japan",
+      "country": "Japan",
+      "description": "Neon-lit metropolis of tradition and innovation",
+      "price": 2150,
+      "rating": 4.7,
+      "imageUrl": "https://images.unsplash.com/photo-1540959733332-eab4de95e12b"
+    },
+    {
+      "id": "dest-003",
+      "name": "New York, USA",
+      "country": "USA",
+      "description": "The city that never sleeps, iconic skyline and culture",
+      "price": 1580,
+      "rating": 4.6,
+      "imageUrl": "https://images.unsplash.com/photo-1511758503343-e111f2f5c85e"
+    }
+  ],
+  "flights": [
+    {
+      "id": "flight-001",
+      "origin": "New York",
+      "destination": "Paris",
+      "departureDate": "2026-09-15",
+      "returnDate": "2026-09-22",
+      "price": 890,
+      "airline": "Air France",
+      "flightNumber": "AF345"
+    },
+    {
+      "id": "flight-002",
+      "origin": "Los Angeles",
+      "destination": "Tokyo",
+      "departureDate": "2026-10-01",
+      "returnDate": "2026-10-10",
+      "price": 1250,
+      "airline": "ANA",
+      "flightNumber": "NH123"
+    }
+  ],
+  "hotels": [
+    {
+      "id": "hotel-001",
+      "name": "Hotel Plaza",
+      "location": "Paris, France",
+      "checkIn": "2026-09-15",
+      "checkOut": "2026-09-22",
+      "guests": 2,
+      "price": 280,
+      "rating": 4.5,
+      "reviewCount": 128
+    },
+    {
+      "id": "hotel-002",
+      "name": "Shinjuku Granbell",
+      "location": "Tokyo, Japan",
+      "checkIn": "2026-10-01",
+      "checkOut": "2026-10-10",
+      "guests": 2,
+      "price": 320,
+      "rating": 4.3,
+      "reviewCount": 97
+    }
+  ],
+  "carRentals": [
+    {
+      "id": "car-001",
+      "pickupLocation": "Paris Charles de Gaulle Airport",
+      "dropOffLocation": "Paris Downtown",
+      "pickupDate": "2026-09-15",
+      "returnDate": "2026-09-22",
+      "carType": " compact"
+    },
+    {
+      "id": "car-002",
+      "pickupLocation": "Tokyo Haneda Airport",
+      "dropOffLocation": "Tokyo City",
+      "pickupDate": "2026-10-01",
+      "returnDate": "2026-10-10",
+      "carType": " suv"
+    }
+  ],
+  "itineraries": [
+    {
+      "id": "itinerary-001",
+      "tripId": "trip-001",
+      "destinationId": "dest-001",
+      "days": 7,
+      "routeCoordinates": [
+        { "lat": 48.8566, "lng": 2.3522 },
+        { "lat": 48.8738, "lng": 2.3454 }
+      ]
+    }
+  ],
+  "communityPosts": [
+    {
+      "id": "post-001",
+      "author": "SarahJ",
+      "content": "Just returned from a week in Paris - the croissants were incredible! Would recommend visiting Versailles on a weekday to avoid crowds.",
+      "createdAt": "2026-08-15",
+      "likes": 15
+    },
+    {
+      "id": "post-002",
+      "author": "MikeT",
+      "content": "Tokyo in autumn is breathtaking. The fall colors in the parks were beautiful and the weather was perfect for walking.",
+      "createdAt": "2026-08-10",
+      "likes": 23
+    }
+  ]
+}

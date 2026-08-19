@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: {{theme.color.primary}};
+  --color-secondary: {{theme.color.secondary}};
+  --color-accent: {{theme.color.accent}};
+  --font-sans: "{{theme.font.sans}}", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --radius-card: {{theme.radius.card}};
+}
+
+.dark {
+  --color-primary: {{theme.color.primary_dark}};
+  --color-secondary: {{theme.color.secondary_dark}};
+  --color-accent: {{theme.color.accent_dark}};
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-color: rgba(120, 120, 130, 0.4);
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

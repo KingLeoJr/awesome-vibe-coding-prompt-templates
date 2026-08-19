@@ -1,0 +1,149 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { CalendarDays, CheckCircle2, MapPin, Video } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface SeniorEvent {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  category: string;
+  type: "in-person" | "virtual";
+}
+
+interface EventsCalendarProps {
+  events: SeniorEvent[];
+  categories?: string[];
+}
+
+export default function EventsCalendar({
+  events,
+  categories = ["Health & Wellness", "Social", "Workshop", "Support Group"],
+}: EventsCalendarProps) {
+  const [category, setCategory] = useState("All");
+  const [rsvp, setRsvp] = useState<Set<string>>(new Set());
+
+  const filtered = useMemo(() => {
+    return events.filter((e) => category === "All" || e.category === category);
+  }, [events, category]);
+
+  const toggleRsvp = (id: string) => {
+    setRsvp((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="events-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+              <CalendarDays size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="events-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Events calendar</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Local senior events and wellness workshops — attend in person or online.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap gap-2" role="group" aria-label="Filter events by category">
+          {["All", ...categories].map((c) => (
+            <button
+              key={c}
+              onClick={() => setCategory(c)}
+              aria-pressed={category === c}
+              className={cn(
+                "rounded-full px-4 py-1.5 text-sm font-medium transition",
+                category === c
+                  ? "bg-[var(--color-secondary)] text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+              )}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+        <ul className="flex flex-col gap-3" aria-label="Senior events">
+          {filtered.map((event, i) => {
+            const isRsvp = rsvp.has(event.id);
+            return (
+              <motion.li
+                key={event.id}
+                initial={{ opacity: 0, x: -8 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.4) }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-6 py-5"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+                      <span className="text-[10px] font-bold uppercase leading-none">{event.date.slice(0, 3)}</span>
+                      <span className="text-sm font-bold leading-tight">{event.date.slice(8, 10)}</span>
+                    </span>
+                    <div>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <h3 className="font-semibold text-gray-900 dark:text-white">{event.title}</h3>
+                        <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[11px] font-medium text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                          {event.category}
+                        </span>
+                      </div>
+                      <p className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+                        <span className="inline-flex items-center gap-1.5">
+                          <CalendarDays size={14} aria-hidden="true" />
+                          {event.time}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                          {event.type === "virtual" ? (
+                            <>
+                              <Video size={14} aria-hidden="true" />
+                              Virtual
+                            </>
+                          ) : (
+                            <>
+                              <MapPin size={14} aria-hidden="true" />
+                              {event.location}
+                            </>
+                          )}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => toggleRsvp(event.id)}
+                    aria-pressed={isRsvp}
+                    className={cn(
+                      "inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition",
+                      isRsvp
+                        ? "bg-[var(--color-secondary)] text-white hover:opacity-90"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                    )}
+                  >
+                    {isRsvp ? <CheckCircle2 size={16} aria-hidden="true" /> : <CalendarDays size={16} aria-hidden="true" />}
+                    {isRsvp ? "Attending" : "RSVP"}
+                  </button>
+                </div>
+              </motion.li>
+            );
+          })}
+        </ul>
+      </motion.div>
+    </section>
+  );
+}

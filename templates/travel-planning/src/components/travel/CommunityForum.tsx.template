@@ -1,0 +1,79 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Users, MessageSquare, Heart } from "lucide-react";
+
+interface CommunityForumProps {
+  posts: {
+    id: string;
+    author: string;
+    content: string;
+    createdAt: string;
+    likes: number;
+  }[];
+}
+
+export default function CommunityForum({ posts }: CommunityForumProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+
+      <div>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          <Users className="mr-2" /> Travel Community
+        </h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Share your experiences and tips with fellow travelers.
+        </p>
+      </div>
+
+      <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
+        {posts.map((post) => (
+          <motion.div
+            key={post.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+            className="p-4 border rounded-lg border-gray-200 dark:border-gray-800 hover:shadow-md transition-shadow"
+            aria-label="Forum post by {post.author}"
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-medium">
+                  {post.author.split(' ')[0][0]}
+                </span>
+              </div>
+              <div className="flex-1">
+                <p className="text-gray-800 dark:text-white">{post.content}</p>
+                <div className="mt-2 flex items-center gap-3">
+                  <Heart
+                    className="h-4 w-4 text-yellow-500"
+                    fill={post.likes > 0}
+                  />
+                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">{post.likes} likes</span>
+                </div>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                  {post.createdAt}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <div className="text-center py-8">
+          <p className="text-gray-500 dark:text-gray-400">
+            No posts yet. Be the first to share your travel experience!
+          </p>
+        </div>
+      )}
+    </motion.div>
+  );
+}

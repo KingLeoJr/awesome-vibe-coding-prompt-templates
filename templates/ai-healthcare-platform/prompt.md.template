@@ -1,0 +1,117 @@
+# Build an Artificial Intelligence-Powered Healthcare Platform
+
+You are building **{{app.name}}** — "{{app.tagline}}".
+
+Deliver a production-grade, HIPAA-aligned healthcare platform for patients and
+clinicians: an AI symptom checker, secure telemedicine, medication management,
+continuous health monitoring, and encrypted patient-provider messaging. Every
+surface must be accessible (WCAG 2.1 AA), responsive, and trustworthy.
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Frontend | {{frontend.framework}} ({{frontend.language}}) |
+| Backend | {{backend.framework}} ({{backend.language}}) |
+| Interoperability | {{interop.fhir}} · {{interop.hl7}} |
+| UI | {{ui.library}} |
+| State / reactivity | {{state.manager}} |
+| Authentication | {{auth.protocol}} |
+| AI engine | {{ai.provider}} — {{ai.capabilities}} |
+| Video / realtime | {{comms.video}} |
+| Messaging | {{comms.messaging}} |
+| Encryption | {{data.encryption}} |
+
+## Brand
+
+- **Name:** {{app.name}}
+- **Tagline:** {{app.tagline}}
+- **Primary color:** `{{theme.color.primary}}`
+- **Secondary color:** `{{theme.color.secondary}}`
+- **Accent color:** `{{theme.color.accent}}`
+- **Font:** {{theme.font.sans}}
+
+## Feature requirements
+
+Group into **core** (ship first), **enhanced**, and **advanced**.
+
+### Core
+1. Responsive healthcare platform with robust frontend and backend.
+2. {{interop.fhir}} standard for interoperable data exchange.
+3. Accessible UI with WCAG 2.1 compliance.
+4. Reactive state management for complex clinical workflows.
+5. Secure authentication with {{auth.protocol}}.
+6. HIPAA-compliant {{data.encryption}} at rest and in transit.
+7. AI-powered symptom checker using NLP with {{ai.provider}}.
+8. Telemedicine module with {{comms.video}} video consultations.
+9. Electronic health record (EHR) with {{interop.hl7}} integration.
+10. Medication management with drug interaction checking.
+11. Secure messaging for patient-provider communication.
+
+### Enhanced
+12. Medical imaging analysis with CNNs.
+13. Predictive analytics dashboard for population health.
+14. AI-driven triage for emergency department optimization.
+15. Personalized treatment recommendations via machine learning.
+16. Wearable device integration for continuous monitoring.
+17. Voice-controlled virtual health assistant (NLU).
+18. Blockchain-based consent management for data sharing.
+19. AI medical coding/billing with ICD-10 and CPT.
+20. Rule-based clinical decision support system.
+21. Genomic data analysis pipeline for personalized medicine.
+22. AI mental-health monitoring with sentiment analysis.
+23. Remote patient monitoring dashboard with IoT devices.
+24. Federated learning for collaborative model training.
+25. AI radiology assistant for annotation and diagnosis.
+26. VR pain management and rehabilitation platform.
+27. NLG for automated medical reporting.
+
+### Advanced
+28. RL-driven drug discovery platform.
+29. Robotic surgery simulation with physics engines.
+30. Voice recognition for hands-free clinical documentation.
+31. AI nutritional advisor with meal planning.
+32. 3D-printed prosthetics customization (parametric design).
+33. AR vein visualization.
+34. AI epidemic forecasting (time series).
+35. Secure health data marketplace (homomorphic encryption).
+36. Quantum computing for protein folding simulations.
+37. AI physical therapy assistant (pose estimation).
+38. Brain-computer interface for assistive communication.
+39. RL for personalized treatment optimization.
+40. AI pathology analysis for cancer detection.
+41. Virtual nursing assistant for post-discharge care.
+42. Federated NLP for multi-lingual support.
+43. AI fall detection for elderly care.
+44. Blockchain organ donation and transplant management.
+45. Computer vision wound assessment.
+46. AI antibiotic resistance prediction.
+47. Voice-based cognitive assessment for neurological disorders.
+48. ML for hospital readmission prediction.
+49. AI dermatology assistant with image recognition.
+50. VR exposure therapy for phobia treatment.
+51. Federated AI for rare disease diagnosis.
+52. AI sleep analysis and optimization.
+53. Blockchain clinical trial management and recruitment.
+54. Computer vision surgical workflow optimization.
+55. AI diabetes management with glucose prediction.
+56. Natural language interface for medical literature.
+57. RL for adaptive radiation therapy.
+
+## Non-functional requirements
+
+- **Security:** {{data.encryption}}, MFA, BAA with hosting providers, immutable audit logs.
+- **Accessibility:** WCAG 2.1 AA, keyboard + screen-reader, contrast-safe palette.
+- **Performance:** symptom triage and dashboards under 2s on mid-range mobile.
+- **Responsive:** 320px → 4K; clinical tables collapse gracefully.
+- **i18n:** multi-lingual clinical content (federated NLP), RTL-safe.
+- **SEO:** server-rendered public shell with Open Graph + JSON-LD.
+
+## Acceptance criteria
+
+- A patient can run a symptom check, see ranked conditions with severity and
+  advice, and book a video consult with an available provider.
+- Medication cards surface interactions and refill warnings.
+- The health dashboard renders live vitals trends on mobile and desktop.
+- Messages thread securely between patient and provider.
+- The app passes `npm run lint` and `npm run typecheck` with no errors.

@@ -1,0 +1,32 @@
+export const SITE_TITLE = "{{app.name}}";
+export const SITE_DESCRIPTION = "{{app.tagline}}";
+export const SITE_URL = "{{deployment.url}}";
+
+export const NAV_ITEMS = [
+  { label: "Symptom Check", href: "#symptom-check" },
+  { label: "Telemedicine", href: "#telemedicine" },
+  { label: "Medications", href: "#medications" },
+  { label: "Health", href: "#health" },
+  { label: "Messages", href: "#messages" },
+];
+
+export const SEVERITY_LEVELS = ["low", "moderate", "urgent"] as const;
+
+export const CONTACT = {
+  email: "{{contact.email}}",
+  phone: "{{contact.phone}}",
+};
+
+export const SOCIAL = {
+  github: "{{social.github}}",
+  linkedin: "{{social.linkedin}}",
+  twitter: "{{social.twitter}}",
+};
+
+export const ANALYTICS_ID = "{{deployment.analytics_id}}";
+
+export const COMPLIANCE = {
+  standards: ["HIPAA", "WCAG 2.1 AA", "FHIR R4"],
+  encryption: "{{data.encryption}}",
+  mfa: true,
+};

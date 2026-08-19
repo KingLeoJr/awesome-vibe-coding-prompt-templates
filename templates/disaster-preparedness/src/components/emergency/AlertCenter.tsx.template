@@ -1,0 +1,150 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { AlertTriangle, Bell, CheckCircle2, CloudLightning, Info, XCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface EmergencyAlert {
+  id: string;
+  severity: "high" | "medium" | "low";
+  type: string;
+  title: string;
+  message: string;
+  location: string;
+  time: string;
+  expires: string;
+}
+
+interface AlertCenterProps {
+  alerts: EmergencyAlert[];
+}
+
+const SEVERITY_STYLES: Record<EmergencyAlert["severity"], { badge: string; dot: string; icon: typeof Info }> = {
+  high: {
+    badge: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300",
+    dot: "bg-red-500",
+    icon: XCircle,
+  },
+  medium: {
+    badge: "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
+    dot: "bg-[var(--color-accent)]",
+    icon: AlertTriangle,
+  },
+  low: {
+    badge: "bg-[var(--color-primary)]/10 text-[var(--color-primary)]",
+    dot: "bg-[var(--color-primary)]",
+    icon: Info,
+  },
+};
+
+export default function AlertCenter({ alerts }: AlertCenterProps) {
+  const [dismissed, setDismissed] = useState<Set<string>>(new Set());
+
+  const visible = alerts.filter((a) => !dismissed.has(a.id));
+
+  const counts = useMemo(() => {
+    const high = alerts.filter((a) => a.severity === "high").length;
+    const medium = alerts.filter((a) => a.severity === "medium").length;
+    return { high, medium };
+  }, [alerts]);
+
+  const dismiss = (id: string) => {
+    setDismissed((prev) => {
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="alerts-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <CloudLightning size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="alerts-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Alert center</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Local emergencies and weather warnings, as they happen.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 grid grid-cols-2 gap-4 sm:max-w-md">
+          <div className="rounded-2xl border border-red-100 bg-red-50 p-4 dark:border-red-900/40 dark:bg-red-900/20">
+            <p className="flex items-center gap-2 text-sm font-semibold text-red-700 dark:text-red-300">
+              <XCircle size={16} aria-hidden="true" />
+              High severity
+            </p>
+            <p className="mt-1 text-2xl font-bold text-red-700 dark:text-red-300 tabular-nums">{counts.high}</p>
+          </div>
+          <div className="rounded-2xl border border-amber-100 bg-amber-50 p-4 dark:border-amber-900/40 dark:bg-amber-900/20">
+            <p className="flex items-center gap-2 text-sm font-semibold text-amber-700 dark:text-amber-300">
+              <AlertTriangle size={16} aria-hidden="true" />
+              Medium severity
+            </p>
+            <p className="mt-1 text-2xl font-bold text-amber-700 dark:text-amber-300 tabular-nums">{counts.medium}</p>
+          </div>
+        </div>
+
+        <ul className="flex flex-col gap-3" aria-label="Emergency alerts">
+          {visible.map((alert, i) => {
+            const severity = SEVERITY_STYLES[alert.severity];
+            const Icon = severity.icon;
+            return (
+              <motion.li
+                key={alert.id}
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: Math.min(i * 0.05, 0.4) }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-6 py-5"
+              >
+                <div className="flex items-start gap-4">
+                  <span className={cn("mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl", severity.badge)}>
+                    <Icon size={20} aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                      <h3 className="font-semibold text-gray-900 dark:text-white">{alert.title}</h3>
+                      <span className={cn("h-1.5 w-1.5 rounded-full", severity.dot)} aria-hidden="true" />
+                      <span className="text-xs capitalize text-gray-400 dark:text-gray-500">{alert.severity}</span>
+                      <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                        {alert.type}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{alert.message}</p>
+                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                      {alert.location} · {alert.time} · expires {alert.expires}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => dismiss(alert.id)}
+                    aria-label={`Dismiss alert: ${alert.title}`}
+                    className="shrink-0 rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-900 dark:hover:text-gray-300 transition"
+                  >
+                    <CheckCircle2 size={18} aria-hidden="true" />
+                  </button>
+                </div>
+              </motion.li>
+            );
+          })}
+        </ul>
+
+        {visible.length === 0 && (
+          <p className="flex items-center gap-3 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-8 text-sm text-gray-500 dark:text-gray-400">
+            <Bell size={18} aria-hidden="true" />
+            All alerts acknowledged. No active warnings right now.
+          </p>
+        )}
+      </motion.div>
+    </section>
+  );
+}

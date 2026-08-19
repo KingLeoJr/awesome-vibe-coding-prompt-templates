@@ -1,0 +1,105 @@
+{
+  "site": {
+    "name": "{{app.name}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "user": {
+    "name": "Alex Rivera",
+    "goal": "Build strength and improve endurance",
+    "age": 29,
+    "weightKg": 76,
+    "heightCm": 181
+  },
+  "activity": {
+    "steps": 8420,
+    "activeMinutes": 52,
+    "hydrationGlasses": 6,
+    "sleepHours": 7.2
+  },
+  "rings": [
+    { "label": "Move", "value": 8420, "max": 10000 },
+    { "label": "Exercise", "value": 52, "max": 60 },
+    { "label": "Hydrate", "value": 6, "max": 8 }
+  ],
+  "goals": {
+    "steps": 10000,
+    "activeMinutes": 60,
+    "hydrationGlasses": 8,
+    "sleepHours": 7.5
+  },
+  "weekly": [
+    { "label": "Mon", "minutes": 45, "calories": 310 },
+    { "label": "Tue", "minutes": 60, "calories": 420 },
+    { "label": "Wed", "minutes": 30, "calories": 205 },
+    { "label": "Thu", "minutes": 75, "calories": 515 },
+    { "label": "Fri", "minutes": 52, "calories": 360 },
+    { "label": "Sat", "minutes": 90, "calories": 640 },
+    { "label": "Sun", "minutes": 40, "calories": 275 }
+  ],
+  "workouts": [
+    {
+      "id": 1,
+      "name": "Upper Body Strength",
+      "date": "2026-08-17T07:30:00-07:00",
+      "durationMinutes": 45,
+      "intensity": "moderate",
+      "calories": 310,
+      "exercises": [
+        { "name": "Bench Press", "sets": 4, "reps": 8, "weight": 60 },
+        { "name": "Bent-over Row", "sets": 4, "reps": 10, "weight": 40 },
+        { "name": "Overhead Press", "sets": 3, "reps": 8, "weight": 30 }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Intervals",
+      "date": "2026-08-18T06:15:00-07:00",
+      "durationMinutes": 30,
+      "intensity": "high",
+      "calories": 355,
+      "exercises": [
+        { "name": "Sprint 400m", "sets": 6, "reps": 1, "weight": 0 },
+        { "name": "Squat Jump", "sets": 3, "reps": 15, "weight": 0 }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Yoga Flow",
+      "date": "2026-08-19T18:00:00-07:00",
+      "durationMinutes": 60,
+      "intensity": "low",
+      "calories": 180,
+      "exercises": [
+        { "name": "Sun Salutation A", "sets": 5, "reps": 1, "weight": 0 },
+        { "name": "Warrior Sequence", "sets": 3, "reps": 1, "weight": 0 }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": { "consumed": 1650, "target": 2100 },
+    "protein": { "consumed": 112, "target": 140 },
+    "carbs": { "consumed": 198, "target": 240 },
+    "fat": { "consumed": 55, "target": 70 }
+  },
+  "meals": [
+    { "id": 1, "name": "Overnight oats with berries", "type": "Breakfast", "calories": 340, "protein": 16 },
+    { "id": 2, "name": "Grilled chicken salad", "type": "Lunch", "calories": 480, "protein": 42 },
+    { "id": 3, "name": "Salmon, rice & greens", "type": "Dinner", "calories": 620, "protein": 44 },
+    { "id": 4, "name": "Greek yogurt & almonds", "type": "Snack", "calories": 210, "protein": 14 }
+  ],
+  "badges": [
+    { "name": "7-Day Streak", "description": "Logged an activity seven days in a row", "icon": "flame", "earned": true },
+    { "name": "First 10K", "description": "Hit 10,000 steps in one day", "icon": "footprints", "earned": true },
+    { "name": "Night Owl", "description": "Logged a workout after 9pm", "icon": "moon", "earned": false },
+    { "name": "Protein Goal", "description": "Met your protein target five times", "icon": "drumstick", "earned": true }
+  ],
+  "challenges": [
+    { "name": "August 200 Minutes", "description": "Log 200 active minutes this month", "progress": 148, "target": 200 },
+    { "name": "Hydration Hero", "description": "Reach your water goal 10 days running", "progress": 4, "target": 10 }
+  ],
+  "quotes": [
+    "The body achieves what the mind believes.",
+    "Small steps every day add up to big results.",
+    "Sweat is just fat crying."
+  ]
+}

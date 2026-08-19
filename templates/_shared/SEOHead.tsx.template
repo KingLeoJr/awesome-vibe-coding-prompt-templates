@@ -1,0 +1,50 @@
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from "@/config/site.config";
+
+interface SEOHeadProps {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+}
+
+export default function SEOHead({
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  image = "{{seo.og_image}}",
+  type = "website",
+}: SEOHeadProps) {
+  return (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href={SITE_URL} />
+
+      {/* Open Graph */}
+      <meta property="og:type" content={type} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
+      <meta property="og:url" content={SITE_URL} />
+
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+
+      {/* JSON-LD schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "{{seo.schema_type}}",
+            name: SITE_TITLE,
+            description: SITE_DESCRIPTION,
+            url: SITE_URL,
+          }),
+        }}
+      />
+    </>
+  );
+}

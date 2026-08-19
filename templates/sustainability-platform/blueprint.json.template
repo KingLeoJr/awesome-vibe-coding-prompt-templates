@@ -1,0 +1,221 @@
+{
+  "blueprint_id": "9f6e1d3a-7b2c-4a8e-9c1d-3e5f7a9b0c2d",
+  "slug": "sustainability-platform",
+  "name": "Environmental Awareness and Sustainability Platform",
+  "category": "Vertical",
+  "archetype": "ContentPlatform",
+  "tagline": "Learn, act, and track your impact for a more sustainable planet.",
+  "builder_prompt_source": "prompt.md.template",
+
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React 19 / Next.js 15", "version_hint": "app router", "purpose": "Server-rendered content, resource library, and dashboards" },
+    { "layer": "backend", "technology": "WordPress REST (source prompt) / Next.js API routes", "version_hint": "6.x", "purpose": "Custom post types for articles, resources, community contributions" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16", "purpose": "Articles, resources, events, users, impact records" },
+    { "layer": "auth", "technology": "WordPress user management (source prompt) / Auth.js", "version_hint": "5.x", "purpose": "Membership, contributions, and engagement metrics" },
+    { "layer": "state", "technology": "React hooks + context", "version_hint": "", "purpose": "Library filters, map layers, impact tracking" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4", "purpose": "Utility-first styling; source prompt specifies Bootstrap 5 + Elementor" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11", "purpose": "Card reveals, dashboard counters, map transitions" },
+    { "layer": "realtime", "technology": "Pusher", "version_hint": "", "purpose": "Push notifications for new content and community updates" }
+  ],
+
+  "features": [
+    { "description": "Create a responsive online environmental awareness and sustainability platform using WordPress for the backend and Elementor for the frontend.", "priority": "core", "order_index": 0 },
+    { "description": "Implement user authentication and authorization using WordPress user management for secure access.", "priority": "core", "order_index": 1 },
+    { "description": "Design an engaging UI using Bootstrap 5 to create a visually appealing and informative experience.", "priority": "core", "order_index": 2 },
+    { "description": "Use custom post types in WordPress to manage articles, resources, and community contributions effectively.", "priority": "core", "order_index": 3 },
+    { "description": "Create a searchable database of articles and resources focused on sustainability topics such as climate change, renewable energy, waste reduction, and conservation practices.", "priority": "core", "order_index": 4 },
+    { "description": "Implement a community forum where users can discuss environmental issues, share tips, and support each other's sustainability efforts.", "priority": "enhanced", "order_index": 5 },
+    { "description": "Design an interactive map feature that highlights local environmental initiatives, recycling centers, and community gardens based on user location.", "priority": "enhanced", "order_index": 6 },
+    { "description": "Create a blog section featuring expert insights, success stories, and practical guides for living sustainably.", "priority": "core", "order_index": 7 },
+    { "description": "Implement a resource library with downloadable materials, toolkits, and guides for individuals and organizations to promote sustainable practices.", "priority": "core", "order_index": 8 },
+    { "description": "Design an analytics dashboard for users to track their environmental impact based on their activities and contributions to the platform.", "priority": "enhanced", "order_index": 9 },
+    { "description": "Create partnerships with environmental organizations to offer exclusive content, workshops, or volunteer opportunities through the platform.", "priority": "advanced", "order_index": 10 },
+    { "description": "Implement multi-language support to cater to diverse audiences globally.", "priority": "enhanced", "order_index": 11 },
+    { "description": "Design an onboarding process with tutorials guiding new users through platform features and how to get involved in sustainability efforts effectively.", "priority": "enhanced", "order_index": 12 },
+    { "description": "Create personalized notifications for new articles, upcoming events, and local initiatives based on user preferences.", "priority": "enhanced", "order_index": 13 },
+    { "description": "Implement advanced search functionality allowing users to filter resources by topic, format (video, text), or relevance to their interests.", "priority": "core", "order_index": 14 },
+    { "description": "Design user profiles where members can manage their contributions, favorite resources, and engagement metrics effectively.", "priority": "enhanced", "order_index": 15 },
+    { "description": "Create integration with social media platforms allowing users to share their sustainability journeys or insights easily.", "priority": "enhanced", "order_index": 16 },
+    { "description": "Implement push notifications for new content releases or updates on community initiatives within the app.", "priority": "enhanced", "order_index": 17 },
+    { "description": "Design an FAQ section addressing common questions about environmental issues and how users can make a difference.", "priority": "enhanced", "order_index": 18 },
+    { "description": "Create an event calendar highlighting local clean-up events, workshops, or webinars focused on sustainability topics.", "priority": "enhanced", "order_index": 19 },
+    { "description": "Implement gamification elements like badges or rewards for participating in community initiatives or completing educational modules.", "priority": "advanced", "order_index": 20 },
+    { "description": "Design a custom API for third-party developers to integrate with the platform (e.g., eco-friendly product retailers).", "priority": "advanced", "order_index": 21 },
+    { "description": "Create an impact reporting feature that showcases the collective efforts of users in promoting sustainability and environmental awareness.", "priority": "advanced", "order_index": 22 },
+    { "description": "Implement data analytics to personalize recommendations based on user behavior and preferences.", "priority": "advanced", "order_index": 23 },
+    { "description": "Create a section for user-generated content where individuals can share their own sustainability projects or initiatives.", "priority": "advanced", "order_index": 24 }
+  ],
+
+  "sections": [
+    { "name": "Learn", "component_path": "src/components/sustainability/ArticleCard.tsx", "layout_type": "grid", "is_visible": true, "order_index": 1 },
+    { "name": "Resources", "component_path": "src/components/sustainability/ResourceLibrary.tsx", "layout_type": "list", "is_visible": true, "order_index": 2 },
+    { "name": "Impact", "component_path": "src/components/sustainability/ImpactDashboard.tsx", "layout_type": "dashboard", "is_visible": true, "order_index": 3 },
+    { "name": "Community", "component_path": "src/components/sustainability/CommunityMap.tsx", "layout_type": "map", "is_visible": true, "order_index": 4 },
+    { "name": "Events", "component_path": "src/app/page.tsx", "layout_type": "list", "is_visible": true, "order_index": 5 }
+  ],
+
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "logoText": "string", "navItems": "Array<{label, href}>", "ctaText": "string", "ctaHref": "string" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "ArticleCard", "path": "src/components/sustainability/ArticleCard.tsx", "props": { "article": "Article" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "ResourceLibrary", "path": "src/components/sustainability/ResourceLibrary.tsx", "props": { "resources": "ResourceItem[]" }, "mixins": [] },
+    { "name": "ImpactDashboard", "path": "src/components/sustainability/ImpactDashboard.tsx", "props": { "metrics": "ImpactMetrics" }, "mixins": [] },
+    { "name": "CommunityMap", "path": "src/components/sustainability/CommunityMap.tsx", "props": { "points": "MapPoint[]" }, "mixins": [] },
+    { "name": "HomePage", "path": "src/app/page.tsx", "props": {}, "mixins": ["_shared/Footer.tsx.template", "_shared/Button.tsx.template"] }
+  ],
+
+  "data_models": [
+    {
+      "name": "Article",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "title", "type": "string", "required": true },
+        { "name": "excerpt", "type": "string", "required": true },
+        { "name": "topic", "type": "string", "required": true },
+        { "name": "readTime", "type": "number", "required": true },
+        { "name": "format", "type": "enum", "required": true, "default": "article" },
+        { "name": "imageUrl", "type": "string", "required": true },
+        { "name": "author", "type": "string", "required": true },
+        { "name": "published", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "ResourceItem",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "title", "type": "string", "required": true },
+        { "name": "description", "type": "string", "required": true },
+        { "name": "type", "type": "enum", "required": true, "default": "guide" },
+        { "name": "topic", "type": "string", "required": true },
+        { "name": "format", "type": "enum", "required": true, "default": "text" },
+        { "name": "downloads", "type": "number", "required": true },
+        { "name": "size", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "MapPoint",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "type", "type": "enum", "required": true, "default": "initiative" },
+        { "name": "location", "type": "string", "required": true },
+        { "name": "distanceKm", "type": "number", "required": true },
+        { "name": "description", "type": "string", "required": true },
+        { "name": "x", "type": "number", "required": true },
+        { "name": "y", "type": "number", "required": true }
+      ]
+    },
+    {
+      "name": "ImpactMetrics",
+      "fields": [
+        { "name": "co2SavedKg", "type": "number", "required": true },
+        { "name": "wasteDivertedKg", "type": "number", "required": true },
+        { "name": "treesPlanted", "type": "number", "required": true },
+        { "name": "volunteerHours", "type": "number", "required": true },
+        { "name": "goalCo2Kg", "type": "number", "required": true },
+        { "name": "weeklyActivity", "type": "Array<{label, value}>", "required": true },
+        { "name": "badges", "type": "Array<{name, earned}>", "required": true }
+      ]
+    },
+    {
+      "name": "EventItem",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "title", "type": "string", "required": true },
+        { "name": "date", "type": "string", "required": true },
+        { "name": "location", "type": "string", "required": true },
+        { "name": "type", "type": "string", "required": true },
+        { "name": "seats", "type": "number", "required": true }
+      ]
+    }
+  ],
+
+  "integrations": [
+    { "service": "Google Maps API", "purpose": "Interactive map of local initiatives, recycling centers, and community gardens", "config_params": { "env": "NEXT_PUBLIC_GOOGLE_MAPS_KEY" } },
+    { "service": "WordPress REST API", "purpose": "Custom post types for articles, resources, and community contributions", "config_params": { "env": "WORDPRESS_API_URL" } },
+    { "service": "Pusher", "purpose": "Push notifications for new content releases and community initiative updates", "config_params": { "env": "PUSHER_APP_KEY" } },
+    { "service": "Facebook / Instagram OAuth", "purpose": "Sharing sustainability journeys and insights", "config_params": { "env": "OAUTH_CREDENTIALS" } }
+  ],
+
+  "nfrs": [
+    { "type": "Performance", "requirement": "LCP under 1.5s; lazy-load article images and downloadable resources" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA - color-contrast safe palette, keyboard-navigable map and filters" },
+    { "type": "Responsive", "requirement": "Mobile-first layout for articles, library, dashboard, and map" },
+    { "type": "i18n", "requirement": "Multi-language support (EN/ES/DE/FR) with locale dictionaries" },
+    { "type": "SEO", "requirement": "Article and resource structured data, sitemap, canonical URLs" },
+    { "type": "Security", "requirement": "Role-based authoring, sanitized user-generated content, rate-limited API" },
+    { "type": "Offline", "requirement": "Offline cache of resource library for low-bandwidth regions" }
+  ],
+
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#059669" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#0d9488" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#84cc16" },
+    { "token_type": "font", "token_name": "font.family", "token_value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+    { "token_type": "spacing", "token_name": "spacing.base", "token_value": "1rem" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+
+  "deployment": [
+    { "platform": "Vercel", "config": { "framework": "nextjs", "buildCommand": "next build", "images": { "remotePatterns": ["images.unsplash.com"] } } }
+  ],
+
+  "template_files": [
+    { "path": "README.md", "source": "templates/sustainability-platform/README.md", "syntax": "mustache", "mixins": [] },
+    { "path": "blueprint.json", "source": "templates/sustainability-platform/blueprint.json.template", "syntax": "mustache", "mixins": [] },
+    { "path": "prompt.md", "source": "templates/sustainability-platform/prompt.md.template", "syntax": "mustache", "mixins": [] },
+    { "path": "package.json", "source": "templates/sustainability-platform/package.json.template", "syntax": "mustache", "mixins": [] },
+    { "path": "config/site.config.ts", "source": "templates/sustainability-platform/config/site.config.ts.template", "syntax": "mustache", "mixins": [] },
+    { "path": "styles/globals.css", "source": "templates/sustainability-platform/styles/globals.css.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/app/page.tsx", "source": "templates/sustainability-platform/src/app/page.tsx.template", "syntax": "mustache", "mixins": ["_shared/Footer.tsx.template", "_shared/Button.tsx.template"] },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/sustainability-platform/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/sustainability/ArticleCard.tsx", "source": "templates/sustainability-platform/src/components/sustainability/ArticleCard.tsx.template", "syntax": "mustache", "mixins": ["_shared/Card.tsx.template"] },
+    { "path": "src/components/sustainability/ResourceLibrary.tsx", "source": "templates/sustainability-platform/src/components/sustainability/ResourceLibrary.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/components/sustainability/ImpactDashboard.tsx", "source": "templates/sustainability-platform/src/components/sustainability/ImpactDashboard.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/components/sustainability/CommunityMap.tsx", "source": "templates/sustainability-platform/src/components/sustainability/CommunityMap.tsx.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/data/sustainability-platform.json", "source": "templates/sustainability-platform/src/data/sustainability-platform.json.template", "syntax": "mustache", "mixins": [] },
+    { "path": "src/lib/types.ts", "source": "templates/sustainability-platform/src/lib/types.ts.template", "syntax": "mustache", "mixins": [] }
+  ],
+
+  "extra_config": {
+    "theme": {
+      "color": { "primary": "#059669", "secondary": "#0d9488", "accent": "#84cc16" },
+      "font": { "family": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" }
+    },
+    "header": { "cta_text": "Get Involved", "cta_href": "/join", "is_fixed": true },
+    "hero": {
+      "headline": "Act for the planet, together",
+      "subtext": "Learn from experts, join local initiatives, and watch your daily choices add up to real impact.",
+      "placeholder": "Search climate change, renewable energy, waste reduction..."
+    },
+    "impact": { "unit": "kg CO2e", "goal_co2": 10000 },
+    "seo": {
+      "title": "Sustainability Platform - Learn, act, and track your environmental impact",
+      "og_image": "https://sustainability-demo.example.com/og.jpg",
+      "schema_type": "Organization"
+    },
+    "deployment": { "url": "https://sustainability-demo.example.com", "domain": "sustainability-demo.example.com", "analytics_id": "G-XXXXXXXXXX" },
+    "contact": { "email": "hello@sustainability.example.com", "phone": "+1 (555) 010-5050" },
+    "social": {
+      "github": "https://github.com/example/sustainability-platform",
+      "linkedin": "https://www.linkedin.com/company/sustainability-platform",
+      "twitter": "https://twitter.com/sustainability"
+    },
+    "nav": [
+      { "label": "Learn", "href": "#learn" },
+      { "label": "Resources", "href": "#resources" },
+      { "label": "Impact", "href": "#impact" },
+      { "label": "Community", "href": "#community" }
+    ],
+    "tech": {
+      "backend": "WordPress",
+      "cms": "Elementor",
+      "auth": "WordPress user management",
+      "ui_framework": "Bootstrap 5",
+      "custom_post_types": "articles, resources, and community contributions",
+      "topics": "climate change, renewable energy, waste reduction, and conservation practices",
+      "map": "Google Maps API",
+      "api_example": "eco-friendly product retailers"
+    }
+  }
+}

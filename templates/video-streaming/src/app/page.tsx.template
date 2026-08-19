@@ -1,0 +1,56 @@
+import Header from "@/components/layout/Header";
+import VideoCard from "@/components/videos/VideoCard";
+import SubscriptionPlan from "@/components/videos/SubscriptionPlan";
+import SearchBar from "@/components/videos/SearchBar";
+import ContinueWatching from "@/components/videos/ContinueWatching";
+import WatchLater from "@/components/videos/WatchLater";
+import PlaybackControls from "@/components/videos/PlaybackControls";
+import Footer from "@/components/shared/Footer";
+import video from "@/data/video-streaming.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="hero" className="scroll-mt-24">
+          <VideoCard
+            video={video.videos[0] as any}
+            onPlay={() => {}}
+            onWatchLater={() => {}}
+          />
+        </section>
+
+        <section id="videolibrary" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <VideoCard
+            video={video.videos[1] as any}
+            onPlay={() => {}}
+            onWatchLater={() => {}}
+          />
+        </section>
+
+        <section id="watchlater" className="scroll-mt-24">
+          <WatchLater
+            videos={video.watchLater as any}
+          />
+        </section>
+
+        <section id="subscriptions" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <SubscriptionPlan
+            plan={video.subscriptions[0] as any}
+            isSelected={true}
+          />
+        </section>
+
+        <section id="dashboard" className="scroll-mt-24">
+          <SearchBar
+            query={video.dashboardQuery as string}
+            onSearch={() => {}}
+            categories={video.categories as string[]}
+          />
+        </section>
+      </main>
+      <Footer name={video.app.name as string} description={video.app.tagline as string} />
+    </>
+  );
+}

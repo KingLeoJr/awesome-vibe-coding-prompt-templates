@@ -1,0 +1,52 @@
+import Header from "@/components/layout/Header";
+import CategoryFilter, { type Product } from "@/components/marketplace/CategoryFilter";
+import FeaturedMaker, { type Maker } from "@/components/marketplace/FeaturedMaker";
+import ShoppingCart, { type CartItem } from "@/components/marketplace/ShoppingCart";
+import VendorDashboard, { type VendorStats } from "@/components/marketplace/VendorDashboard";
+import ReviewsSection, { type Review } from "@/components/marketplace/ReviewsSection";
+import Footer from "@/components/shared/Footer";
+import data from "@/data/{{app.slug}}.json";
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Header />
+
+      <main>
+        <section
+          id="browse"
+          className="bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10 scroll-mt-24"
+        >
+          <CategoryFilter
+            products={data.products as Product[]}
+            categories={data.categories as string[]}
+            locations={data.locations as string[]}
+            currency={data.currency as string}
+          />
+        </section>
+
+        <section id="makers" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <FeaturedMaker makers={data.featuredMakers as Maker[]} />
+        </section>
+
+        <section id="cart" className="scroll-mt-24">
+          <ShoppingCart
+            items={data.cart.items as CartItem[]}
+            summary={data.cart.summary}
+            currency={data.currency as string}
+          />
+        </section>
+
+        <section id="analytics" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <VendorDashboard stats={data.vendorStats as VendorStats} currency={data.currency as string} />
+        </section>
+
+        <section id="reviews" className="scroll-mt-24">
+          <ReviewsSection reviews={data.reviews as Review[]} />
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

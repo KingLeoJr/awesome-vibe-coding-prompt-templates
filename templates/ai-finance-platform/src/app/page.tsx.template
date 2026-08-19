@@ -1,0 +1,50 @@
+import Header from "@/components/layout/Header";
+import AnalyticsDashboard, { type FinancialSeries } from "@/components/finance/AnalyticsDashboard";
+import BudgetInsights, { type BudgetRecommendation } from "@/components/finance/BudgetInsights";
+import DebtManager, { type Debt } from "@/components/finance/DebtManager";
+import EducationLibrary, { type LearningResource } from "@/components/finance/EducationLibrary";
+import ExpenseTracker, { type Transaction } from "@/components/finance/ExpenseTracker";
+import SavingsGoals, { type SavingsGoal } from "@/components/finance/SavingsGoals";
+import Footer from "@/components/shared/Footer";
+import finance from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="dashboard" className="scroll-mt-24">
+          <AnalyticsDashboard
+            data={finance.analytics as FinancialSeries}
+            currency={finance.currency as string}
+          />
+        </section>
+
+        <section id="transactions" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <ExpenseTracker
+            transactions={finance.transactions as Transaction[]}
+            categories={finance.categories as string[]}
+            currency={finance.currency as string}
+          />
+        </section>
+
+        <section id="budgets" className="scroll-mt-24">
+          <BudgetInsights recommendations={finance.budgetRecommendations as BudgetRecommendation[]} />
+        </section>
+
+        <section id="savings" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <SavingsGoals goals={finance.savingsGoals as SavingsGoal[]} currency={finance.currency as string} />
+        </section>
+
+        <section id="debt" className="scroll-mt-24">
+          <DebtManager debts={finance.debts as Debt[]} currency={finance.currency as string} />
+        </section>
+
+        <section id="learn" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <EducationLibrary resources={finance.learningResources as LearningResource[]} />
+        </section>
+      </main>
+      <Footer name={finance.app.name as string} description={finance.app.tagline as string} />
+    </>
+  );
+}

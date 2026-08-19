@@ -1,0 +1,103 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "nav": [
+    { "label": "Dashboard", "href": "#dashboard" },
+    { "label": "Transactions", "href": "#transactions" },
+    { "label": "Budgets", "href": "#budgets" },
+    { "label": "Savings", "href": "#savings" },
+    { "label": "Debt", "href": "#debt" },
+    { "label": "Learn", "href": "#learn" }
+  ],
+  "categories": ["Groceries", "Dining", "Transport", "Housing", "Utilities", "Salary", "Freelance", "Investments"],
+  "accounts": [
+    { "id": "acc-001", "name": "Everyday Chequing", "type": "chequing", "balance": 4820.15, "currency": "$" },
+    { "id": "acc-002", "name": "High-Interest Savings", "type": "savings", "balance": 12750.0, "currency": "$" },
+    { "id": "acc-003", "name": "Rewards Credit Card", "type": "credit", "balance": -1342.6, "currency": "$" },
+    { "id": "acc-004", "name": "Index Portfolio", "type": "investment", "balance": 24800.5, "currency": "$" }
+  ],
+  "transactions": [
+    { "id": "tx-101", "date": "2026-08-18", "merchant": "Acme Corp Payroll", "category": "Salary", "amount": 4850.0, "type": "income" },
+    { "id": "tx-102", "date": "2026-08-17", "merchant": "Whole Foods Market", "category": "Groceries", "amount": 126.43, "type": "expense" },
+    { "id": "tx-103", "date": "2026-08-17", "merchant": "Cafe Verve", "category": "Dining", "amount": 8.5, "type": "expense" },
+    { "id": "tx-104", "date": "2026-08-16", "merchant": "Metro Transit", "category": "Transport", "amount": 45.0, "type": "expense" },
+    { "id": "tx-105", "date": "2026-08-15", "merchant": "Rent — Maple Towers", "category": "Housing", "amount": 1850.0, "type": "expense" },
+    { "id": "tx-106", "date": "2026-08-14", "merchant": "Upwork Client A", "category": "Freelance", "amount": 720.0, "type": "income" },
+    { "id": "tx-107", "date": "2026-08-13", "merchant": "City Power & Light", "category": "Utilities", "amount": 112.37, "type": "expense" },
+    { "id": "tx-108", "date": "2026-08-12", "merchant": "Robo-Invest Auto Buy", "category": "Investments", "amount": 400.0, "type": "expense" },
+    { "id": "tx-109", "date": "2026-08-11", "merchant": "Dough & Co. Pizza", "category": "Dining", "amount": 34.9, "type": "expense" },
+    { "id": "tx-110", "date": "2026-08-10", "merchant": "Fuel Up Gas", "category": "Transport", "amount": 58.2, "type": "expense" }
+  ],
+  "budgetRecommendations": [
+    {
+      "id": "br-001",
+      "category": "Dining",
+      "suggestion": "You spent 38% more on dining this month. Pack lunch two days a week to stay on track.",
+      "currentSpend": 276.4,
+      "suggestedLimit": 200,
+      "potentialSavings": 76.4,
+      "confidence": 0.92,
+      "urgency": "high"
+    },
+    {
+      "id": "br-002",
+      "category": "Utilities",
+      "suggestion": "Your utilities are 12% below your 3-month average — nice work. Keep thermostat scheduling on.",
+      "currentSpend": 112.37,
+      "suggestedLimit": 128.0,
+      "potentialSavings": 15.63,
+      "confidence": 0.84,
+      "urgency": "low"
+    },
+    {
+      "id": "br-003",
+      "category": "Transport",
+      "suggestion": "Rideshare spend is creeping up. Consider a monthly transit pass to cut ~$30.",
+      "currentSpend": 145.0,
+      "suggestedLimit": 120.0,
+      "potentialSavings": 25.0,
+      "confidence": 0.78,
+      "urgency": "medium"
+    },
+    {
+      "id": "br-004",
+      "category": "Groceries",
+      "suggestion": "Your grocery-to-restaurant ratio improved. Continue meal prepping on Sundays.",
+      "currentSpend": 320.1,
+      "suggestedLimit": 350.0,
+      "potentialSavings": 29.9,
+      "confidence": 0.71,
+      "urgency": "low"
+    }
+  ],
+  "savingsGoals": [
+    { "id": "sg-001", "name": "Emergency fund", "target": 15000, "saved": 12750, "deadline": "2027-01-31", "autoAllocate": true },
+    { "id": "sg-002", "name": "Japan trip 2027", "target": 5000, "saved": 2350, "deadline": "2027-05-01", "autoAllocate": true },
+    { "id": "sg-003", "name": "New laptop", "target": 2800, "saved": 1900, "deadline": "2026-12-15", "autoAllocate": false },
+    { "id": "sg-004", "name": "Down payment", "target": 60000, "saved": 18400, "deadline": "2028-09-30", "autoAllocate": true }
+  ],
+  "debts": [
+    { "id": "debt-001", "name": "Rewards Credit Card", "balance": 1342.6, "apr": 19.99, "minPayment": 45.0, "payoffStrategy": "avalanche", "estimatedPayoff": "2027-03-15" },
+    { "id": "debt-002", "name": "Car Loan", "balance": 8600.0, "apr": 5.9, "minPayment": 210.0, "payoffStrategy": "snowball", "estimatedPayoff": "2028-06-01" },
+    { "id": "debt-003", "name": "Student Loan (Fed)", "balance": 12400.0, "apr": 4.5, "minPayment": 140.0, "payoffStrategy": "snowball", "estimatedPayoff": "2030-02-28" }
+  ],
+  "analytics": {
+    "months": ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    "income": [4200, 4350, 4500, 4850, 5120, 5570],
+    "expenses": [3180, 3290, 3050, 3480, 3310, 3570],
+    "savings": [1020, 1060, 1450, 1370, 1810, 2000],
+    "investments": [18200, 18900, 20300, 21450, 23200, 24800]
+  },
+  "learningResources": [
+    { "id": "lr-001", "title": "The 50/30/20 rule, explained in 5 minutes", "type": "article", "duration": "5 min", "level": "beginner", "topic": "Budgeting", "url": "https://example.com/learn/50-30-20" },
+    { "id": "lr-002", "title": "Snowball vs avalanche: which debt plan is right for you?", "type": "video", "duration": "12 min", "level": "intermediate", "topic": "Debt", "url": "https://example.com/learn/debt-strategies" },
+    { "id": "lr-003", "title": "Compound interest calculator", "type": "tool", "duration": "interactive", "level": "beginner", "topic": "Investing", "url": "https://example.com/tools/compound" },
+    { "id": "lr-004", "title": "Reading a stock chart without the jargon", "type": "article", "duration": "8 min", "level": "intermediate", "topic": "Investing", "url": "https://example.com/learn/stock-charts" },
+    { "id": "lr-005", "title": "Emergency funds: size, place, and peace of mind", "type": "video", "duration": "9 min", "level": "beginner", "topic": "Saving", "url": "https://example.com/learn/emergency-fund" },
+    { "id": "lr-006", "title": "Tax-loss harvesting simulator", "type": "tool", "duration": "interactive", "level": "advanced", "topic": "Taxes", "url": "https://example.com/tools/tax-loss" }
+  ]
+}

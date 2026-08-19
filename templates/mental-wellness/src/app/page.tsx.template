@@ -1,0 +1,72 @@
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import MoodTracker from "@/components/wellness/MoodTracker";
+import WellnessPlan from "@/components/wellness/WellnessPlan";
+import ResourceLibrary from "@/components/wellness/ResourceLibrary";
+import SupportForum from "@/components/wellness/SupportForum";
+import data from "@/data/mental-wellness.json";
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Header />
+
+      <main>
+        <section id="mood-tracker" className="container mx-auto px-6 py-20">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Mood Tracker
+            </h2>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              Track your daily mood and identify patterns over time.
+            </p>
+          </div>
+          <MoodTracker moodEntry={data.moodEntries[0]} onUpdate={() => {}} />
+          <MoodTracker moodEntry={data.moodEntries[1]} onUpdate={() => {}} delay={0.1} />
+        </section>
+
+        <section id="wellness-plans" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <div className="container mx-auto px-6 py-20">
+            <div className="mb-10 max-w-2xl">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                Wellness Plans
+              </h2>
+              <p className="mt-2 text-gray-500 dark:text-gray-400">
+                Create and track personalized wellness plans.
+              </p>
+            </div>
+            <WellnessPlan plan={data.plans[0]} onSelect={() => {}} />
+          </div>
+        </section>
+
+        <section id="resources" className="scroll-mt-24 px-6 py-20">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Resource Library
+            </h2>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              Access articles, videos, and guided meditations for mental wellness.
+            </p>
+          </div>
+          <ResourceLibrary resources={data.resources} />
+        </section>
+
+        <section id="community" className="bg-white dark:bg-gray-900 scroll-mt-24">
+          <div className="container mx-auto px-6 py-20">
+            <div className="mb-10 max-w-2xl">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                Community Forum
+              </h2>
+              <p className="mt-2 text-gray-500 dark:text-gray-400">
+                Share experiences and provide support to others on similar journeys.
+              </p>
+            </div>
+            <SupportForum posts={data.forumPosts} />
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

@@ -1,0 +1,148 @@
+{
+  "blueprint_id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
+  "slug": "pet-care-platform",
+  "name": "Personalized Pet Care and Services Platform",
+  "category": "Vertical",
+  "archetype": "PersonalizedVertical",
+  "tagline": "Your trusted partner in pet care — find providers, schedule services, and keep your pets happy and healthy.",
+  "builder_prompt_source": "prompts/pet-care-platform.md",
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React + Next.js 15", "version_hint": "15.x", "purpose": "Responsive marketing + pet care dashboard shell" },
+    { "layer": "backend", "technology": "Node.js (Express)", "version_hint": "20.x", "purpose": "REST API, bookings, service provider management" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16.x", "purpose": "Users, pets, service providers, bookings, reviews" },
+    { "layer": "auth", "technology": "JWT (JSON Web Tokens)", "version_hint": "", "purpose": "Secure user authentication and authorization" },
+    { "layer": "state", "technology": "Redux Toolkit", "version_hint": "2.x", "purpose": "User data, bookings, and pet care state management" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Modern, responsive, accessible UI" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and section reveals" },
+    { "layer": "payments", "technology": "Stripe", "version_hint": "", "purpose": "Service payments and subscription plans" },
+    { "layer": "realtime", "technology": "WebSocket", "version_hint": "", "purpose": "Real-time booking updates, notification delivery" },
+    { "layer": "devops", "technology": "Vercel", "version_hint": "", "purpose": "CI/CD hosting and deployment" }
+  ],
+  "features": [
+    { "description": "Implement user authentication and authorization using JWT (JSON Web Tokens) for secure access", "priority": "core", "order_index": 1 },
+    { "description": "Ensure data protection with SSL encryption and secure password storage", "priority": "core", "order_index": 2 },
+    { "description": "Design an engaging UI using Bootstrap 5 for a modern and user-friendly experience", "priority": "core", "order_index": 3 },
+    { "description": "Use responsive design principles to ensure compatibility across devices (desktop, tablet, mobile)", "priority": "core", "order_index": 4 },
+    { "description": "Create customizable user profiles that include pet details (type of pet, breed, age, medical history) and owner preferences", "priority": "core", "order_index": 5 },
+    { "description": "Allow users to input specific needs or concerns regarding their pets (e.g., dietary restrictions, behavioral issues)", "priority": "core", "order_index": 6 },
+    { "description": "Implement an interactive service request tool that allows users to submit requests for various pet services (e.g., grooming, training, boarding) with photo upload", "priority": "core", "order_index": 7 },
+    { "description": "Design a booking system that allows users to schedule appointments with local pet service providers based on availability, including emergency services with expedited scheduling", "priority": "core", "order_index": 8 },
+    { "description": "Create a searchable directory of vetted pet service providers categorized by type (e.g., groomers, trainers, veterinarians)", "priority": "core", "order_index": 9 },
+    { "description": "Implement a review and rating system that allows users to provide feedback on service providers based on their experiences", "priority": "core", "order_index": 10 },
+    { "description": "Implement a system that sends automated reminders to users for regular pet care tasks (e.g., vaccinations, grooming appointments) with customizable reminder settings", "priority": "enhanced", "order_index": 11 },
+    { "description": "Create a community forum where users can share experiences, ask questions about pet care, and provide tips to one another, with categories for different types of pets (e.g., dogs, cats, exotic pets)", "priority": "enhanced", "order_index": 12 },
+    { "description": "Create a resource library with articles, videos, and guides on common pet care topics such as nutrition, training techniques, and health tips, with search functionality allowing users to filter by topic or type of pet", "priority": "enhanced", "order_index": 13 },
+    { "description": "Create personalized notifications for upcoming service appointments, new articles in the resource library, and reminders for pet care tasks based on user preferences", "priority": "enhanced", "order_index": 14 },
+    { "description": "Design an FAQ section addressing common questions about pet care services, scheduling processes, and using the platform effectively", "priority": "enhanced", "order_index": 15 },
+    { "description": "Create a blog featuring expert advice on pet care trends, training tips, health guidelines, and success stories from users who have utilized the service", "priority": "enhanced", "order_index": 16 },
+    { "description": "Implement a referral program that rewards users for inviting friends to join the platform or use its services", "priority": "enhanced", "order_index": 17 },
+    { "description": "Develop an interactive cost estimator tool that helps users estimate potential costs for various pet services based on common pricing data", "priority": "enhanced", "order_index": 18 },
+    { "description": "Allow users to log their pets' health records (vaccinations, vet visits) and track important health metrics over time", "priority": "enhanced", "order_index": 19 },
+    { "description": "Implement data analytics to personalize recommendations based on user behavior and preferences in pet care services", "priority": "enhanced", "order_index": 20 },
+    { "description": "Design a custom API for third-party developers to integrate with the platform (e.g., local pet supply stores)", "priority": "advanced", "order_index": 21 },
+    { "description": "Create an event calendar highlighting local pet-related events such as adoption days, training classes, or community gatherings", "priority": "advanced", "order_index": 22 },
+    { "description": "Incorporate gamification elements such as badges for completing pet care challenges or participating in community discussions", "priority": "advanced", "order_index": 23 },
+    { "description": "Allow users to log their pets' health records (vaccinations, vet visits) and track important health metrics over time", "priority": "advanced", "order_index": 24 },
+    { "description": "Implement data analytics to personalize recommendations based on user behavior and preferences in pet care services", "priority": "advanced", "order_index": 25 },
+    { "description": "Design a custom API for third-party developers to integrate with the platform (e.g., local pet supply stores)", "priority": "advanced", "order_index": 26 }
+  ],
+  "sections": [
+    { "name": "Overview", "component_path": "src/components/pet/PetCard.tsx", "layout_type": "hero", "is_visible": true, "order_index": 1 },
+    { "name": "Service Providers", "component_path": "src/components/pet/ServiceProvider.tsx", "layout_type": "grid", "is_visible": true, "order_index": 2 },
+    { "name": "Booking", "component_path": "src/components/pet/BookingSystem.tsx", "layout_type": "control", "is_visible": true, "order_index": 3 },
+    { "name": "Health Tracker", "component_path": "src/components/pet/VaccinationTracker.tsx", "layout_type": "dashboard", "is_visible": true, "order_index": 4 },
+    { "name": "Resources", "component_path": "src/components/pet/ResourceLibrary.tsx", "layout_type": "grid", "is_visible": true, "order_index": 5 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "brandName": "string", "navItems": "NavItem[]", "ctaText": "string", "ctaHref": "string", "isFixed": "boolean" }, "mixins": ["ThemeToggle"] },
+    { "name": "Footer", "path": "src/components/shared/Footer.tsx", "props": { "name": "string", "description": "string" }, "mixins": ["_shared/Footer.tsx.template"] },
+    { "name": "PetCard", "path": "src/components/pet/PetCard.tsx", "props": { "pet": "PetInfo", "onServiceRequest": "fn" } },
+    { "name": "ServiceProvider", "path": "src/components/pet/ServiceProvider.tsx", "props": { "providers": "ServiceProvider[]", "category": "string" } },
+    { "name": "BookingSystem", "path": "src/components/pet/BookingSystem.tsx", "props": { "provider": "ServiceProvider", "onBook": "fn" } },
+    { "name": "VaccinationTracker", "path": "src/components/pet/VaccinationTracker.tsx", "props": { "records": "HealthRecord[]" } },
+    { "name": "ResourceLibrary", "path": "src/components/pet/ResourceLibrary.tsx", "props": { "articles": "ResourceArticle[]" } },
+    { "name": "CostEstimator", "path": "src/components/pet/CostEstimator.tsx", "props": { "serviceType": "string", "budget": "decimal" } }
+  ],
+  "data_models": [
+    { "name": "User", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "email", "type": "string", "required": true }, { "name": "petDetails", "type": "object", "required": false }, { "name": "ownerPreferences", "type": "string[]", "required": false } ] },
+    { "name": "PetInfo", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "name", "type": "string", "required": true }, { "name": "type", "type": "enum(dog|cat|bird|small_animal|exotic)", "required": true }, { "name": "breed", "type": "string", "required": false }, { "name": "age", "type": "integer", "required": false }, { "name": "medicalHistory", "type": "string", "required": false }, { "name": "specialNeeds", "type": "string", "required": false } ] },
+    { "name": "ServiceProvider", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "name", "type": "string", "required": true }, { "name": "type", "type": "enum(groomer|trainer|vet|walker|boarding)", "required": true }, { "name": "rating", "type": "decimal", "required": true }, { "name": "priceRange", "type": "string", "required": true }, { "name": "bio", "type": "string", "required": false }, { "name": "availability", "type": "string", "required": true } ] },
+    { "name": "HealthRecord", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "petId", "type": "uuid", "required": true }, { "name": "date", "type": "date", "required": true }, { "name": "vaccinationType", "type": "string", "required": true }, { "name": "vetName", "type": "string", "required": false }, { "name": "nextDueDate", "type": "date", "required": true } ] },
+    { "name": "ResourceArticle", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "category", "type": "string", "required": true }, { "name": "contentSummary", "type": "string", "required": false }, { "name": "url", "type": "string", "required": true } ] },
+    { "name": "ServiceRequest", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "userId", "type": "uuid", "required": true }, { "name": "providerId", "type": "uuid", "required": true }, { "name": "serviceType", "type": "enum(grooming|training|boarding|walking)", "required": true }, { "name": "photos", "type": "string[]", "required": false }, { "name": "status", "type": "enum(pending|confirmed|completed|cancelled)", "required": true, "default": "pending" }, { "name": "createdAt", "type": "datetime", "required": true } ] }
+  ],
+  "integrations": [
+    { "service": "JWT Auth", "purpose": "Secure user authentication and authorization", "config_params": { "token_ttl": "24h", "refresh": true } },
+    { "service": "Stripe", "purpose": "Service payments and subscription plans", "config_params": { "mode": "payment_intents", "success_url": "{{deployment.url}}/payments/success", "cancel_url": "{{deployment.url}}/payments/cancel" } },
+    { "service": "SendGrid", "purpose": "Welcome emails, appointment reminders, and care task notifications", "config_params": { "templates": ["welcome", "reminder", "appointment_confirmation"] } },
+    { "service": "Twilio", "purpose": "SMS notifications for appointment confirmations and reminders", "config_params": {} },
+    { "service": "Google Maps API", "purpose": "Location-based search for pet service providers", "config_params": { "api_key": "{{deployment.url}}" } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "JWT with short-lived access tokens + refresh rotation; passwords hashed (bcrypt); TLS 1.3 in transit; SSL encryption for all data" },
+    { "type": "Performance", "requirement": "Service directory and booking forms render in under 2s on mid-range mobile; appointment scheduling under 3s" },
+    { "type": "Responsive", "requirement": "Full responsive layout from 320px to 4K; grids and forms reflow on mobile" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA; semantic landmarks, aria-labels, focus-visible states, reduced-motion support" },
+    { "type": "i18n", "requirement": "Multi-language-ready content model with locale-aware dates and RTL-capable layout" },
+    { "type": "SEO", "requirement": "Server-rendered marketing shell with Open Graph tags and JSON-LD schema" },
+    { "type": "Testing", "requirement": "Unit tests for state + utils, component tests for booking and health tracker, API contract tests" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#10b981" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#3b82f6" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f59e0b" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#34d399" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#60a5fa" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fbbf24" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+    { "token_type": "font", "token_name": "font.mono", "token_value": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "framework": "nextjs", "url": "{{deployment.url}}", "analytics_id": "{{deployment.analytics_id}}" } }
+  ],
+  "template_files": [
+    { "path": "README.md", "source": "templates/pet-care-platform/README.md", "syntax": "mustache" },
+    { "path": "blueprint.json", "source": "templates/pet-care-platform/blueprint.json.template", "syntax": "mustache" },
+    { "path": "prompt.md", "source": "templates/pet-care-platform/prompt.md.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/pet-care-platform/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/pet-care-platform/package.json.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/pet-care-platform/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "src/app/page.tsx", "source": "templates/pet-care-platform/src/app/page.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/pet-care-platform/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/pet/PetCard.tsx", "source": "templates/pet-care-platform/src/components/pet/PetCard.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/pet/ServiceProvider.tsx", "source": "templates/pet-care-platform/src/components/pet/ServiceProvider.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/pet/BookingSystem.tsx", "source": "templates/pet-care-platform/src/components/pet/BookingSystem.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/pet/VaccinationTracker.tsx", "source": "templates/pet-care-platform/src/components/pet/VaccinationTracker.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/pet/ResourceLibrary.tsx", "source": "templates/pet-care-platform/src/components/pet/ResourceLibrary.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/pet/CostEstimator.tsx", "source": "templates/pet-care-platform/src/components/pet/CostEstimator.tsx.template", "syntax": "mustache" },
+    { "path": "src/data/pet-care-platform.json", "source": "templates/pet-care-platform/src/data/pet-care-platform.json.template", "syntax": "mustache" }
+  ],
+  "extra_config": {
+    "app": {
+      "name": "PetCare",
+      "slug": "pet-care-platform",
+      "tagline": "Your trusted partner in pet care — find providers, schedule services, and keep your pets happy and healthy."
+    },
+    "theme": {
+      "color": { "primary": "#10b981", "secondary": "#3b82f6", "accent": "#f59e0b", "primary_dark": "#34d399", "secondary_dark": "#60a5fa", "accent_dark": "#fbbf24" },
+      "font": { "sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif", "mono": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+      "radius": { "card": "1rem" }
+    },
+    "header": { "cta_text": "Book a Service", "cta_href": "#providers", "is_fixed": true },
+    "seo": { "og_image": "https://images.unsplash.com/photo-1549968473-4349d03e13d5", "schema_type": "PetStore" },
+    "deployment": { "url": "https://petcare.vercel.app", "analytics_id": "G-PETCARE01" },
+    "contact": { "email": "hello@petcare.app", "phone": "+1 (555) 010-2040" },
+    "social": { "github": "https://github.com/petcare", "linkedin": "https://linkedin.com/company/pet-care-platform", "twitter": "https://x.com/petcare" },
+    "currency": { "symbol": "$" },
+    "frontend": { "framework": "React (Next.js 15)", "language": "TypeScript" },
+    "backend": { "framework": "Node.js (Express)", "language": "JavaScript" },
+    "ui": { "library": "Tailwind CSS" },
+    "state": { "manager": "Redux Toolkit" },
+    "auth": { "protocol": "JWT (JSON Web Tokens)" },
+    "payments": { "provider": "Stripe" },
+    "notifications": { "provider": "SendGrid + Twilio" },
+    "maps": { "provider": "Google Maps API" }
+  }
+}

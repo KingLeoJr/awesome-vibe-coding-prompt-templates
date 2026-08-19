@@ -1,0 +1,177 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { MapPin, Search, SlidersHorizontal, Star } from "lucide-react";
+import type { Category, Provider } from "@/lib/types";
+
+interface SearchExplorerProps {
+  categories: Category[];
+  providers: Provider[];
+}
+
+export default function SearchExplorer({ categories, providers }: SearchExplorerProps) {
+  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [showFilters, setShowFilters] = useState(false);
+  const [minRating, setMinRating] = useState(0);
+  const [maxDistance, setMaxDistance] = useState<number | null>(null);
+
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return providers.filter((provider) => {
+      const matchesQuery =
+        !q ||
+        provider.name.toLowerCase().includes(q) ||
+        provider.category.toLowerCase().includes(q) ||
+        provider.services.some((service) => service.toLowerCase().includes(q));
+      const matchesCategory = !activeCategory || provider.category === activeCategory;
+      const matchesRating = provider.rating >= minRating;
+      const matchesDistance = maxDistance == null || provider.distanceKm <= maxDistance;
+      return matchesQuery && matchesCategory && matchesRating && matchesDistance;
+    });
+  }, [query, activeCategory, minRating, maxDistance, providers]);
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-primary)] to-[var(--color-secondary)]">
+      <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto max-w-3xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl"
+        >
+          {{hero.headline}}
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mx-auto mt-4 max-w-2xl text-lg text-white/80"
+        >
+          {{hero.subtext}}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mx-auto mt-10 max-w-2xl"
+        >
+          <div className="flex items-center gap-2 rounded-2xl border border-white/20 bg-white p-2 shadow-xl">
+            <Search className="ml-3 h-5 w-5 shrink-0 text-gray-400" aria-hidden="true" />
+            <input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="{{hero.placeholder}}"
+              aria-label="Search local service providers"
+              className="w-full bg-transparent px-2 py-2 text-gray-900 placeholder-gray-400 outline-none"
+            />
+            <button
+              onClick={() => setShowFilters((v) => !v)}
+              aria-label="Toggle search filters"
+              aria-expanded={showFilters}
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[var(--color-primary)] px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110"
+            >
+              <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+              Filters
+            </button>
+          </div>
+
+          <AnimatePresence>
+            {showFilters && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="mt-3 grid gap-4 rounded-2xl border border-white/20 bg-white/95 p-5 text-left sm:grid-cols-3 dark:bg-gray-950/95">
+                  <label className="block text-sm">
+                    <span className="mb-2 flex items-center gap-1 font-medium text-gray-700 dark:text-gray-200">
+                      <Star className="h-4 w-4 text-amber-400" aria-hidden="true" />
+                      Minimum rating
+                    </span>
+                    <select
+                      value={minRating}
+                      onChange={(event) => setMinRating(Number(event.target.value))}
+                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                    >
+                      <option value={0}>Any rating</option>
+                      <option value={3}>3 stars and up</option>
+                      <option value={4}>4 stars and up</option>
+                      <option value={4.5}>4.5 stars and up</option>
+                    </select>
+                  </label>
+
+                  <label className="block text-sm">
+                    <span className="mb-2 flex items-center gap-1 font-medium text-gray-700 dark:text-gray-200">
+                      <MapPin className="h-4 w-4 text-[var(--color-primary)]" aria-hidden="true" />
+                      Max distance
+                    </span>
+                    <select
+                      value={maxDistance ?? ""}
+                      onChange={(event) => setMaxDistance(event.target.value ? Number(event.target.value) : null)}
+                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-[var(--color-primary)] dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                    >
+                      <option value="">Anywhere</option>
+                      <option value={2}>Within 2 km</option>
+                      <option value={5}>Within 5 km</option>
+                      <option value={10}>Within 10 km</option>
+                    </select>
+                  </label>
+
+                  <div className="flex items-end">
+                    <button
+                      onClick={() => {
+                        setMinRating(0);
+                        setMaxDistance(null);
+                      }}
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-900"
+                    >
+                      Clear filters
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-2.5">
+          <span className="mr-1 text-sm font-medium text-white/70">Popular:</span>
+          {categories.map((category) => {
+            const active = activeCategory === category.name;
+            return (
+              <button
+                key={category.slug}
+                onClick={() => setActiveCategory(active ? null : category.name)}
+                aria-pressed={active}
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
+                  active
+                    ? "bg-white text-[var(--color-primary)]"
+                    : "bg-white/15 text-white hover:bg-white/25"
+                }`}
+              >
+                {category.name} <span className="opacity-70">({category.count})</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <AnimatePresence>
+          {results.length > 0 && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="mt-6 text-sm text-white/80"
+            >
+              {results.length} provider{results.length === 1 ? "" : "s"} match your search
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+}

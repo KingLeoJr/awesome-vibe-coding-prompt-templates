@@ -1,0 +1,43 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  app.name: "{{app.name}}"
+  app.slug: "{{app.slug}}"
+  app.tagline: "{{app.tagline}}"
+  theme.color.primary: "{{theme.color.primary}}"
+  theme.color.secondary: "{{theme.color.secondary}}"
+  theme.color.accent: "{{theme.color.accent}}"
+  theme.font.sans: "{{theme.font.sans}}"
+  theme.radius.card: "{{theme.radius.card}}"
+  header.cta_text: "{{header.cta_text}}"
+  header.cta_href: "{{header.cta_href}}"
+  seo.og_image: "{{seo.og_image}}"
+  seo.schema_type: "{{seo.schema_type}}"
+  deployment.url: "{{deployment.url}}"
+  deployment.analytics_id: "{{deployment.analytics_id}}"
+  contact.email: "{{contact.email}}"
+  contact.phone: "{{contact.phone}}"
+  social.github: "{{social.github}}"
+  social.linkedin: "{{social.linkedin}}"
+  social.twitter: "{{social.twitter}}"
+  frontend.framework: "Next.js 15"
+  frontend.language: "TypeScript"
+  backend.framework: "Node.js + Express"
+  backend.language: "JavaScript"
+  database.technology: "PostgreSQL"
+  ui.library: "Tailwind CSS"
+  state.manager: "React Context + React Query"
+  auth.protocol: "Auth0"
+  ai.provider: "OpenAI GPT-4o"
+  cdn.provider: "Cloudflare CDN"
+  3d.runtime: "Three.js"
+
+---
+
+# {{app.name}}
+{{app.tagline}}
+
+Create a responsive virtual interior design platform using Next.js 15 and React 19. Design an engaging UI using Tailwind CSS for a modern and user-friendly experience with dark mode. Implement user authentication and authorization using Auth0 for secure access. Ensure data protection with SSL encryption and secure password storage. Design customizable user profiles that include personal preferences, design styles, and project history. Allow users to upload photos of their spaces for personalized design consultations. Implement an interactive virtual room design tool that allows users to create floor plans and visualize their spaces in 3D. Provide a library of furniture, decor items, and color palettes that users can drag and drop into their designs. Offer virtual consultations with professional interior designers via video calls to discuss project goals and preferences. Implement a booking system that allows users to schedule consultations based on designer availability. Design a dashboard where users can manage their design projects, track progress, and communicate with designers. Include features for setting budgets, timelines, and to-do lists related to each project. Create a resource library with articles, videos, and guides on interior design principles, trends, and DIY tips. Implement search functionality allowing users to filter resources by topic or style. Establish a community forum where users can share their design projects, ask questions, and provide feedback to one another. Create categories for different styles or types of projects (e.g., small spaces, renovations). Design an inspiration gallery showcasing completed projects by users or professional designers for ideas and motivation. Allow users to submit their projects for inclusion in the gallery. Create personalized notifications for new resources, upcoming consultations, and updates on project milestones based on user preferences. Design an FAQ section addressing common questions about using the platform, design services offered, and project management. Create a blog featuring expert advice on interior design trends, tips for decorating on a budget, and success stories from clients. Implement a referral program that rewards users for inviting friends to join the platform or book consultations. Develop an interactive budgeting tool that helps users estimate costs based on selected furniture and decor items within their designs. Allow users to create digital mood boards by selecting colors, textures, and items to visualize their design concepts before finalizing decisions. Implement data analytics to personalize recommendations based on user behavior and preferences in design styles. Design a custom API for third-party developers to integrate with the platform (e.g., e-commerce sites selling furniture). Create an event calendar highlighting webinars or workshops related to interior design topics (e.g., color theory, space planning). Incorporate gamification elements such as badges for completing design challenges or participating in community discussions. Integrate with e-commerce platforms for direct furniture purchasing. Provide 3D room visualization with AR capabilities. Implement virtual reality walkthrough of designed spaces. Offer AI-powered design suggestions based on room dimensions and user preferences. Create project timeline automation with smart scheduling. Implement automated cost estimation and budget tracking. Provide style recommendation engine based on user preferences and trends. Implement multi-language support for global users. Create accessibility compliance features (WCAG standards). Implement integration with smart home devices. Provide 360-degree room panoramas. Implement virtual staging for empty rooms. Create design challenge competitions with community voting. Implement progress tracking with milestones and deadlines. Provide export options for design plans (PDF, image, 3D file formats). Implement user-to-user project sharing and collaboration. Create premium design template library. Implement AI-powered color palette generation. Provide virtual assistant for design questions. Create integration with local contractors and service providers. Implement drag-and-drop from external image sources. Provide real-time collaboration features for multiple users. Create virtual room measurement tools. Implement style guide generation and enforcement. Provide 3D floor plan export for CNC cutting/manufacturing. Create integration with property listing services. Implement virtual renovation simulation. Provide smart furniture placement optimization. Create cross-device project synchronization. Implement user preference learning and adaptation. Provide design trend forecasting features. Create 3D model library integration (SketchUp, Revit). Implement virtual window and view simulation. Provide energy efficiency estimation for design choices. Create integration with insurance services for renovation coverage. Implement virtual furniture rental marketplace. Provide design certification and credentialing features. Implement virtual property tour integration. Create automated design code generation (for developers). Provide comprehensive analytics dashboard for designers.

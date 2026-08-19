@@ -1,0 +1,44 @@
+---
+# Builder prompt — {{app.name}}
+# Render this template against the blueprint record. Replace every {{placeholder}}
+# with the value configured in blueprint.json.template (extra_config) — then hand
+# the result to Cursor / Bolt / Lovable / Windsurf / Cline as the build prompt.
+params:
+  backend.technology: "{{backend.technology}}"
+  frontend.framework: "{{frontend.framework}}"
+  auth.solution: "{{auth.solution}}"
+  ui.library: "{{ui.library}}"
+  state.management: "{{state.management}}"
+  payments.provider: "{{payments.provider}}"
+  email.provider: "{{email.provider}}"
+  maps.provider: "{{maps.provider}}"
+---
+# {{app.name}}
+
+{{app.tagline}}
+
+Create a responsive {{app.name}} using {{backend.technology}} for backend and {{frontend.framework}} for frontend
+Implement user authentication and authorization using {{auth.solution}} for secure access
+Design a modern, user-friendly UI using {{ui.library}} for responsive design
+Use {{state.management}} for state management to handle complex application states
+Create a user profile system with home details, maintenance history, and preferences
+Implement a service request tool that allows users to submit requests for various home maintenance services (e.g., plumbing, electrical work, HVAC) and upload photos for better assessment
+Design a booking system that allows users to schedule appointments with local service providers based on availability, including emergency services
+Create a searchable service provider directory categorized by type (e.g., electricians, plumbers, landscapers) with a review and rating system
+Implement automated maintenance reminders for regular tasks (e.g., changing air filters, gutter cleaning) with customizable settings
+Establish a community forum where users can share experiences, ask questions about home maintenance, and provide tips to one another
+Create a resource library with articles, videos, and guides on common home maintenance tasks and best practices, with search functionality
+Create personalized notifications for upcoming service appointments, new resource library articles, and maintenance task reminders based on user preferences
+Design an interactive cost estimator tool that helps users estimate potential costs for various home repair services based on common pricing data
+Allow users to create project plans for larger renovations or repairs by breaking down tasks, timelines, and budgets
+Implement data analytics to personalize recommendations based on user behavior and preferences in home maintenance
+Design a custom API for third-party developers to integrate with the platform (e.g., local hardware stores)
+Create an event calendar highlighting local workshops or classes related to home improvement skills (e.g., plumbing basics, electrical safety)
+Incorporate gamification elements such as badges for completing DIY projects or participating in community discussions
+Implement a referral program that rewards users for inviting friends to join the platform or use its services
+Design an FAQ section addressing common questions about home maintenance services, scheduling processes, and using the platform effectively
+Create a blog featuring expert advice on home improvement trends, DIY tips, seasonal maintenance checklists, and success stories from users who have utilized the service
+Implement GDPR compliance features such as cookie consent and data protection policies
+Design an accessibility feature to ensure compliance with WCAG standards
+Create a loyalty program for frequent users with tiered rewards and benefits
+Implement push notifications in the mobile app for real-time updates about service appointments and reminders

@@ -1,0 +1,126 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Hexagon, Menu, X } from "lucide-react";
+import ThemeToggle from "@/components/shared/ThemeToggle";
+import { NAV_ITEMS } from "@/config/site.config";
+
+interface HeaderProps {
+  logoText?: string;
+  navItems?: { label: string; href: string }[];
+  ctaText?: string;
+  ctaHref?: string;
+  network?: string;
+}
+
+export default function Header({
+  logoText = "{{app.name}}",
+  navItems = NAV_ITEMS,
+  ctaText = "{{header.cta_text}}",
+  ctaHref = "{{header.cta_href}}",
+  network = "{{chain.network}}",
+}: HeaderProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/85 shadow-sm backdrop-blur-md dark:bg-gray-950/85"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5 font-bold text-xl" aria-label="Home">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <Hexagon size={20} />
+            </span>
+            <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] bg-clip-text text-transparent">
+              {logoText}
+            </span>
+          </Link>
+
+          <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-gray-600 transition-colors hover:text-[var(--color-primary)] dark:text-gray-300 dark:hover:text-white"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <span className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-400">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-indigo-500" />
+              {network}
+            </span>
+            <ThemeToggle />
+            {ctaText && (
+              <Link
+                href={ctaHref}
+                className="hidden sm:inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
+              >
+                {ctaText}
+              </Link>
+            )}
+            <button
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+              aria-expanded={isOpen}
+            >
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950"
+            aria-label="Mobile"
+          >
+            <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-lg font-medium text-gray-700 dark:text-gray-200"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              {ctaText && (
+                <Link
+                  href={ctaHref}
+                  onClick={() => setIsOpen(false)}
+                  className="mt-2 inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-medium text-white"
+                >
+                  {ctaText}
+                </Link>
+              )}
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}

@@ -1,0 +1,112 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { MapPin, Car, Calendar } from "lucide-react";
+
+interface CarRentalProps {
+  pickupLocation: string;
+  dropOffLocation: string;
+  pickupDate: string;
+  returnDate: string;
+  carType: string;
+}
+
+export default function CarRental({ pickupLocation, dropOffLocation, pickupDate, returnDate, carType }: CarRentalProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <MapPin className="mr-2" /> Pick-up Location
+        </label>
+        <input
+          type="text"
+          value={pickupLocation}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+          placeholder="e.g., Airport or City"
+          aria-label="Pick-up location"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <MapPin className="mr-2" /> Drop-off Location
+        </label>
+        <input
+          type="text"
+          value={dropOffLocation}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+          placeholder="e.g., Downtown or Airport"
+          aria-label="Drop-off location"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <Calendar className="mr-2" /> Pick-up Date
+          </label>
+          <input
+            type="date"
+            value={pickupDate}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+            aria-label="Pick-up date"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <Calendar className="mr-2" /> Return Date
+          </label>
+          <input
+            type="date"
+            value={returnDate}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring"
+            aria-label="Return date"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <Car className="mr-2" /> Car Type
+        </label>
+        <select
+          value={carType}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus-[[theme.color.primary]]:focus-ring appearance-none"
+          aria-label="Car type"
+        >
+          <option value=" economy">Economy</option>
+          <option value=" compact">Compact</option>
+          <option value=" midsize">Midsize</option>
+          <option value=" suv">SUV</option>
+          <option value=" luxury">Luxury</option>
+        </select>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <Building className="mr-2" /> Car Rental Options
+        </label>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          We found 3+ car options in {pickupLocation} for your dates.
+        </p>
+      </div>
+
+      <div className="mt-6">
+        <button
+          className="inline-flex items-center justify-center rounded-full bg-[[theme.color.primary]] text-white px-6 py-3 text-sm font-medium hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-available"
+          aria-label "Search car rentals"
+        >
+          <Car className="mr-2 h-4 w-4" />
+          Search Car Rentals
+        </button>
+      </div>
+    </motion.div>
+  );
+}

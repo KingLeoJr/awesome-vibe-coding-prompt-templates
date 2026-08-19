@@ -1,0 +1,74 @@
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  BedDouble,
+  Car,
+  Lightbulb,
+  Sofa,
+  UtensilsCrossed,
+  type LucideIcon,
+} from "lucide-react";
+import DeviceCard, { type HomeDevice } from "@/components/home/DeviceCard";
+
+export interface Room {
+  id: string;
+  name: string;
+  icon: string;
+  devices: HomeDevice[];
+  scenes: string[];
+}
+
+interface RoomSectionProps {
+  room: Room;
+  delay?: number;
+}
+
+const ROOM_ICONS: Record<string, LucideIcon> = {
+  sofa: Sofa,
+  utensils: UtensilsCrossed,
+  bed: BedDouble,
+  car: Car,
+};
+
+export default function RoomSection({ room, delay = 0 }: RoomSectionProps) {
+  const Icon = ROOM_ICONS[room.icon] ?? Lightbulb;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.45, delay }}
+      className="rounded-3xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+    >
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <h3 className="inline-flex items-center gap-2.5 text-lg font-bold text-gray-900 dark:text-white">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <Icon size={18} aria-hidden />
+          </span>
+          {room.name}
+        </h3>
+
+        {room.scenes.length > 0 && (
+          <div className="flex flex-wrap gap-2" role="group" aria-label={`${room.name} scenes`}>
+            {room.scenes.map((scene) => (
+              <span
+                key={scene}
+                className="rounded-full border border-gray-200 px-3 py-1 text-xs font-medium text-gray-600 dark:border-gray-800 dark:text-gray-300"
+              >
+                {scene}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {room.devices.map((device, index) => (
+          <DeviceCard key={device.id} device={device} delay={index * 0.05} />
+        ))}
+      </div>
+    </motion.div>
+  );
+}

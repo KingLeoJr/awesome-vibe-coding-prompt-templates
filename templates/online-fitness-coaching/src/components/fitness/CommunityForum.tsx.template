@@ -1,0 +1,70 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { MessageCircle, Users, Settings } from "lucide-react";
+import { cn } from "@/lib-utils";
+
+interface ForumPost {
+  id: string;
+  userId: string;
+  content: string;
+  createdAt: string;
+  likes: number;
+  replies: number;
+}
+
+interface CommunityForumProps {
+  posts: ForumPost[];
+}
+
+export default function CommunityForum({ posts }: CommunityForumProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="font-bold text-2xl text-gray-900 dark:text-white">
+              Community Forum
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Share experiences, ask questions, and support others.
+            </p>
+          </div>
+          <Settings className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+        </div>
+
+        {posts.length === 0 && (
+          <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">
+            No posts yet. Share your first fitness tip above.
+          </p>
+        )}
+
+        <div className="space-y-4">
+          {posts.map((post, index) => (
+            <motion.div
+              key={post.id}
+              className="p-4 rounded bg-gray-50 dark:bg-gray-800 hover:bg-[var(--color-primary)]/10 transition-colors"
+              animate={{ opacity: [0.8, 1], transition: { duration: 0.3, delay: index * 0.08 } }}
+            >
+              <div className="flex items-start gap-3">
+                <Users className="h-5 w-5 text-gray-400 dark:text-gray-500 flex-shrink-0 mt-1" />
+                <div className="flex-1">
+                  <p className="font-medium text-gray-900 dark:text-white">{post.content.substring(0, 80) }...</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    {post.createdAt} · {post.likes} likes · {post.replies} replies
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}

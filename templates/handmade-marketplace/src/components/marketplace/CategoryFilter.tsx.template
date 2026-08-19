@@ -1,0 +1,144 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { PackageSearch, Search, SlidersHorizontal } from "lucide-react";
+import ProductCard, { type Product } from "@/components/marketplace/ProductCard";
+
+interface CategoryFilterProps {
+  products: Product[];
+  categories?: string[];
+  locations?: string[];
+  currency?: string;
+}
+
+export default function CategoryFilter({
+  products,
+  categories = [],
+  locations = [],
+  currency = "{{currency.symbol}}",
+}: CategoryFilterProps) {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All");
+  const [location, setLocation] = useState("All");
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [minRating, setMinRating] = useState(0);
+
+  const priceOptions = [0, 25, 50, 100, 200];
+  const ratingOptions = [0, 3, 3.5, 4, 4.5];
+
+  const filtered = useMemo(() => {
+    return products.filter((p) => {
+      const matchesQuery =
+        p.name.toLowerCase().includes(query.toLowerCase()) ||
+        p.maker.toLowerCase().includes(query.toLowerCase()) ||
+        p.tags.some((t) => t.toLowerCase().includes(query.toLowerCase()));
+      const matchesCategory = category === "All" || p.category === category;
+      const matchesLocation = location === "All" || p.location === location;
+      const matchesPrice = maxPrice === 0 || p.price <= maxPrice;
+      const matchesRating = p.rating >= minRating;
+      return matchesQuery && matchesCategory && matchesLocation && matchesPrice && matchesRating;
+    });
+  }, [products, query, category, location, maxPrice, minRating]);
+
+  const [addedIds, setAddedIds] = useState<Set<string>>(() => new Set());
+  const handleAdd = (product: Product) => {
+    setAddedIds((prev) => new Set(prev).add(product.id));
+  };
+
+  const selectClass =
+    "rounded-full border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]";
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="browse-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-2">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <PackageSearch size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="browse-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Shop handmade</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              One-of-a-kind pieces from independent makers, all in one place.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="relative lg:col-span-1">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search pieces…"
+              className="w-full rounded-full border border-gray-300 dark:border-gray-700 bg-transparent pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              aria-label="Search products"
+            />
+          </div>
+          <label className="sr-only" htmlFor="category-filter">Category</label>
+          <select id="category-filter" value={category} onChange={(e) => setCategory(e.target.value)} className={selectClass} aria-label="Filter by category">
+            <option value="All">All categories</option>
+            {categories.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+          <label className="sr-only" htmlFor="location-filter">Location</label>
+          <select id="location-filter" value={location} onChange={(e) => setLocation(e.target.value)} className={selectClass} aria-label="Filter by maker location">
+            <option value="All">All locations</option>
+            {locations.map((l) => (
+              <option key={l} value={l}>{l}</option>
+            ))}
+          </select>
+          <label className="sr-only" htmlFor="price-filter">Max price</label>
+          <select id="price-filter" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} className={selectClass} aria-label="Filter by maximum price">
+            <option value={0}>Any price</option>
+            {priceOptions.filter((p) => p > 0).map((p) => (
+              <option key={p} value={p}>Under {currency}{p}</option>
+            ))}
+          </select>
+          <label className="sr-only" htmlFor="rating-filter">Minimum rating</label>
+          <select id="rating-filter" value={minRating} onChange={(e) => setMinRating(Number(e.target.value))} className={selectClass} aria-label="Filter by minimum seller rating">
+            <option value={0}>Any rating</option>
+            {ratingOptions.filter((r) => r > 0).map((r) => (
+              <option key={r} value={r}>{r}+ stars</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-gray-500 dark:text-gray-400" aria-live="polite">
+            {filtered.length} {filtered.length === 1 ? "piece" : "pieces"} found
+          </p>
+          <span className="inline-flex items-center gap-1.5 text-xs text-gray-400">
+            <SlidersHorizontal size={13} aria-hidden="true" />
+            Advanced search · price, category, location, rating
+          </span>
+        </div>
+
+        {filtered.length > 0 ? (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filtered.map((product, index) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                currency={currency}
+                delay={Math.min(index * 0.05, 0.4)}
+                onAddToCart={handleAdd}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center text-sm text-gray-500 dark:text-gray-400">
+            No pieces match your filters — try widening the search.
+          </div>
+        )}
+      </motion.div>
+    </section>
+  );
+}

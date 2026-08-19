@@ -1,0 +1,92 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+import { lucideReact } from "lucide-react";
+import { MessageCircle, User, Clock, TrendingUp } from "lucide-react";
+
+interface ForumPost {
+  id: string;
+  userId: string;
+  content: string;
+  createdAt: string;
+  likes: number;
+}
+
+interface SupportForumProps {
+  posts: ForumPost[];
+}
+
+export default function SupportForum({ posts }: SupportForumProps) {
+  const [newPost, setNewPost] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const handleSubmit = () => {
+    if (newPost.trim()) {
+      setShowModal(false);
+      setNewPost("");
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-xl border bg-gray-50 dark:bg-gray-900 p-6 hover:shadow-lg transition-shadow",
+        "pb-4"
+      )}
+    >
+      <div className="space-y-4">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          Support Community
+        </h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Share experiences and provide support to others on similar journeys.
+        </p>
+
+        {/* Posts list */}
+        <div className="space-y-3 max-h-96 overflow-y-auto">
+          {posts.map((post) => (
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="p-3 bg-white dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-800"
+            >
+              <div className="flex items-start gap-3">
+                <User size={16} className="text-gray-400 dark:text-gray-500 flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="font-medium text-gray-900 dark:text-white">{post.content}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {new Date(post.createdAt).toLocaleDateString()} · {post.likes} likes
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* New post form */}
+        <div>
+          <textarea
+            placeholder="Share your experience or offer support..."
+            rows={2}
+            className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-transparent text-sm dark:text-gray-100 resize-none"
+            value={newPost}
+            onChange={(e) => setNewPost(e.target.value)}
+          ></textarea>
+          <Button onClick={handleSubmit} variant="primary" size="sm" className="mt-2 w-full">
+            Post
+          </Button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

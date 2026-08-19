@@ -1,0 +1,113 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { CalendarRange, Check, Coffee, Moon, Sun } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface MealPlanEntry {
+  meal: string;
+  title: string;
+  recipeId: string;
+  prepTime: number;
+  dietary: string;
+}
+
+export interface MealPlanDay {
+  day: string;
+  meals: MealPlanEntry[];
+}
+
+export interface MealPlan {
+  weekLabel: string;
+  days: MealPlanDay[];
+}
+
+interface MealPlannerProps {
+  plan: MealPlan;
+}
+
+const MEAL_ICONS = {
+  Breakfast: Coffee,
+  Lunch: Sun,
+  Dinner: Moon,
+} as const;
+
+export default function MealPlanner({ plan }: MealPlannerProps) {
+  const [activeDay, setActiveDay] = useState(plan.days[0]?.day ?? "");
+
+  const currentDay = plan.days.find((d) => d.day === activeDay) ?? plan.days[0];
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="planner-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+              <CalendarRange size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="planner-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Weekly meal planner</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{plan.weekLabel} — built around your preferences and dietary needs.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap gap-2" role="tablist" aria-label="Meal plan days">
+          {plan.days.map((day) => (
+            <button
+              key={day.day}
+              role="tab"
+              aria-selected={activeDay === day.day}
+              onClick={() => setActiveDay(day.day)}
+              className={cn(
+                "rounded-full px-4 py-1.5 text-sm font-medium transition",
+                activeDay === day.day
+                  ? "bg-[var(--color-primary)] text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+              )}
+            >
+              {day.day}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {currentDay?.meals.map((entry, i) => {
+            const Icon = MEAL_ICONS[entry.meal as keyof typeof MEAL_ICONS] ?? Check;
+            return (
+              <motion.article
+                key={`${currentDay?.day}-${entry.meal}`}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+                    <Icon size={18} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">{entry.meal}</p>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">{entry.title}</h3>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3 text-xs text-gray-500 dark:text-gray-400">
+                  <span>{entry.dietary}</span>
+                  <span>{entry.prepTime} min prep</span>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

@@ -1,0 +1,89 @@
+# Build an AI-Powered Personal Finance Management Platform
+
+You are building **{{app.name}}** — "{{app.tagline}}".
+
+Deliver a production-grade, responsive web platform where users manage their
+money with the help of AI: track spending, receive personalized budget advice,
+save toward goals, pay down debt, and learn financial literacy. Every screen
+must be fast, accessible (WCAG 2.1 AA), and polished on mobile and desktop.
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Frontend | {{frontend.framework}} ({{frontend.language}}) |
+| Backend | {{backend.framework}} ({{backend.language}}) |
+| Database | PostgreSQL |
+| UI | {{ui.library}} |
+| Charts / visualization | {{ui.charts}} |
+| State management | {{state.manager}} |
+| Authentication | {{auth.protocol}} |
+| AI engine | {{ai.provider}} — {{ai.capabilities}} |
+| Banking data | {{banking.provider}} |
+| Payments | {{payments.provider}} |
+| Realtime | Django Channels / WebSocket push |
+
+## Brand
+
+- **Name:** {{app.name}}
+- **Tagline:** {{app.tagline}}
+- **Primary color:** `{{theme.color.primary}}`
+- **Secondary color:** `{{theme.color.secondary}}`
+- **Accent color:** `{{theme.color.accent}}`
+- **Font:** {{theme.font.sans}}
+
+## Feature requirements
+
+Group into **core** (ship first), **enhanced**, and **advanced**.
+
+### Core
+1. Secure user authentication and authorization via {{auth.protocol}}.
+2. Modern, intuitive UI built with {{ui.library}} (consistent spacing, motion, dark mode).
+3. Centralized state management with {{state.manager}}.
+4. Customizable user profile: financial goals, income sources, expense categories.
+5. AI-driven budgeting tool that analyzes spending habits and gives personalized recommendations.
+6. Real-time expense tracking with manual entry and bank sync via {{banking.provider}}.
+7. Savings goal tracker with progress monitoring toward financial objectives.
+8. Analytics dashboard visualizing income, expenses, savings, and investment growth over time.
+
+### Enhanced
+9. Debt management module with payoff strategies for loans and credit cards.
+10. Investment tracking with portfolio monitoring and market-trend insights.
+11. Financial education center: articles, videos, and literacy tools.
+12. Secure premium payments and subscriptions via {{payments.provider}}.
+13. Community forum for tips, questions, and peer support.
+14. Gamification — badges and challenges that reward financial milestones.
+15. Interactive calendar for bills, payment schedules, and milestones.
+16. Personalized notifications for budget alerts, limits, and savings opportunities.
+17. Advanced search across resources and community posts.
+18. Profile management for financial data, preferences, and payment methods.
+19. Accounting integrations with QuickBooks and Xero.
+20. Guided onboarding tutorials for new users.
+21. Referral program with rewards for inviting friends.
+22. Public API for third-party budgeting tools.
+
+### Advanced
+23. Multi-language support (i18n, RTL-safe layout).
+24. WCAG-compliant accessibility across all features.
+25. Partnerships with financial institutions for exclusive deals.
+26. Push notifications for features and community events.
+27. Behavior analytics to personalize recommendations.
+28. Impact reporting on improved financial literacy and outcomes.
+
+## Non-functional requirements
+
+- **Security:** AES-256 at rest, TLS 1.3 in transit, PCI-DSS-aligned payments, least-privilege roles.
+- **Performance:** core screens under 2s on mid-range mobile.
+- **Responsive:** 320px → 4K, charts reflow gracefully.
+- **Accessibility:** WCAG 2.1 AA, reduced-motion support.
+- **SEO:** server-rendered marketing shell, Open Graph + JSON-LD.
+
+## Acceptance criteria
+
+- A user can sign in, connect a bank account ({{banking.provider}} sandbox), see
+  transactions, and receive at least one AI budget recommendation.
+- A user can create a savings goal and a debt payoff plan and view both progress
+  dashboards.
+- The analytics dashboard renders all four time-series (income, expenses,
+  savings, investments) on mobile and desktop.
+- The app passes `npm run lint` and `npm run typecheck` with no errors.

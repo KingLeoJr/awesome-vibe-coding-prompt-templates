@@ -1,0 +1,144 @@
+{
+  "blueprint_id": "b8f2c41a-7e9d-4b3c-a2d5-6f8e0a1b2c3d",
+  "slug": "disaster-preparedness",
+  "name": "Personalized Disaster Preparedness and Emergency Response Platform",
+  "category": "Vertical",
+  "archetype": "PersonalizedVertical",
+  "tagline": "Be ready for anything — personalized plans, checklists, and training for you and your household.",
+  "builder_prompt_source": "prompts/disaster-preparedness.md",
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React + Next.js 15", "version_hint": "15.x", "purpose": "Responsive marketing + preparedness dashboard shell" },
+    { "layer": "backend", "technology": "Node.js (Express)", "version_hint": "20.x", "purpose": "REST API, plans, checklists, alert routing" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16.x", "purpose": "Profiles, plans, household data, resources" },
+    { "layer": "auth", "technology": "JWT", "version_hint": "", "purpose": "Secure user authentication and account management" },
+    { "layer": "state", "technology": "Redux Toolkit", "version_hint": "2.x", "purpose": "User data, emergency plans, and resource state" },
+    { "layer": "ui", "technology": "Tailwind CSS (Bootstrap-inspired)", "version_hint": "3.4.x", "purpose": "Intuitive, modern responsive UI" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and section reveals" },
+    { "layer": "ai_ml", "technology": "OpenAI", "version_hint": "", "purpose": "Personalized plans, checklists, and training paths" },
+    { "layer": "realtime", "technology": "WebSocket + FCM push", "version_hint": "", "purpose": "Live emergency and weather alerts" },
+    { "layer": "sms", "technology": "Twilio", "version_hint": "", "purpose": "SMS emergency notifications" },
+    { "layer": "maps", "technology": "Google Maps API", "version_hint": "", "purpose": "Location-based shelters and local services" },
+    { "layer": "devops", "technology": "Vercel + AWS", "version_hint": "", "purpose": "CI/CD hosting and alert infrastructure" }
+  ],
+  "features": [
+    { "description": "Create a responsive online personalized disaster preparedness and emergency response platform using React for the frontend and Node.js for the backend", "priority": "core", "order_index": 1 },
+    { "description": "Implement user authentication with JWT for secure access and account management", "priority": "core", "order_index": 2 },
+    { "description": "Design an intuitive UI using Bootstrap 5 for a modern and user-friendly experience", "priority": "core", "order_index": 3 },
+    { "description": "Use Redux for state management to efficiently handle user data, emergency plans, and resource information", "priority": "core", "order_index": 4 },
+    { "description": "Create customizable user profiles that include location, household details, and specific emergency preparedness needs", "priority": "core", "order_index": 5 },
+    { "description": "Implement an interactive emergency plan builder that allows users to create personalized disaster response strategies based on their circumstances", "priority": "core", "order_index": 6 },
+    { "description": "Develop a resource library with articles, videos, and guides on disaster preparedness, survival skills, and emergency response best practices", "priority": "core", "order_index": 7 },
+    { "description": "Create a community forum where users can share experiences, ask questions about emergency preparedness, and provide support to one another", "priority": "enhanced", "order_index": 8 },
+    { "description": "Implement a notification system that alerts users about local emergencies, weather warnings, and updates on disaster preparedness resources", "priority": "core", "order_index": 9 },
+    { "description": "Design a feature that connects users with local emergency services and resources (e.g., shelters, food banks) based on their location", "priority": "core", "order_index": 10 },
+    { "description": "Create personalized checklists for various types of disasters (e.g., hurricanes, earthquakes) to help users ensure they have necessary supplies and plans in place", "priority": "core", "order_index": 11 },
+    { "description": "Implement a referral program that rewards users for inviting friends or family members to join the platform or participate in preparedness activities together", "priority": "enhanced", "order_index": 12 },
+    { "description": "Develop an interactive training module that offers courses on first aid, CPR, and other essential emergency response skills", "priority": "core", "order_index": 13 },
+    { "description": "Create a feature that allows users to document their emergency plans and share them with family members for coordination during crises", "priority": "enhanced", "order_index": 14 },
+    { "description": "Implement gamification elements such as badges for completing training modules or participating in community discussions about preparedness", "priority": "advanced", "order_index": 15 }
+  ],
+  "sections": [
+    { "name": "Plans", "component_path": "src/components/emergency/PlanBuilder.tsx", "layout_type": "dashboard", "is_visible": true, "order_index": 1 },
+    { "name": "Checklists", "component_path": "src/components/emergency/DisasterChecklists.tsx", "layout_type": "list", "is_visible": true, "order_index": 2 },
+    { "name": "Training", "component_path": "src/components/emergency/TrainingModules.tsx", "layout_type": "grid", "is_visible": true, "order_index": 3 },
+    { "name": "Resources", "component_path": "src/components/emergency/EmergencyResources.tsx", "layout_type": "list", "is_visible": true, "order_index": 4 },
+    { "name": "Alerts", "component_path": "src/components/emergency/AlertCenter.tsx", "layout_type": "dashboard", "is_visible": true, "order_index": 5 },
+    { "name": "Community", "component_path": "src/components/emergency/CommunityForum.tsx", "layout_type": "list", "is_visible": true, "order_index": 6 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx", "props": { "brandName": "string", "navItems": "NavItem[]", "ctaText": "string", "ctaHref": "string", "isFixed": "boolean" }, "mixins": ["ThemeToggle"] },
+    { "name": "PlanBuilder", "path": "src/components/emergency/PlanBuilder.tsx", "props": { "plan": "EmergencyPlan" } },
+    { "name": "DisasterChecklists", "path": "src/components/emergency/DisasterChecklists.tsx", "props": { "checklists": "PreparednessChecklist[]" } },
+    { "name": "TrainingModules", "path": "src/components/emergency/TrainingModules.tsx", "props": { "modules": "TrainingModule[]" } },
+    { "name": "EmergencyResources", "path": "src/components/emergency/EmergencyResources.tsx", "props": { "resources": "EmergencyResource[]", "categories": "string[]" } },
+    { "name": "AlertCenter", "path": "src/components/emergency/AlertCenter.tsx", "props": { "alerts": "EmergencyAlert[]" } },
+    { "name": "CommunityForum", "path": "src/components/emergency/CommunityForum.tsx", "props": { "posts": "ForumPost[]" } },
+    { "name": "Footer", "path": "src/components/shared/Footer.tsx", "props": { "name": "string", "description": "string" }, "mixins": ["_shared/Footer.tsx.template"] }
+  ],
+  "data_models": [
+    { "name": "UserProfile", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "email", "type": "string", "required": true }, { "name": "location", "type": "string", "required": true }, { "name": "householdDetails", "type": "object[]", "required": false }, { "name": "preparednessNeeds", "type": "string[]", "required": false } ] },
+    { "name": "EmergencyPlan", "fields": [ { "name": "emergencyContacts", "type": "object[]", "required": true }, { "name": "meetingPoints", "type": "object[]", "required": true }, { "name": "evacuationRoutes", "type": "object[]", "required": true }, { "name": "importantDocuments", "type": "object[]", "required": true }, { "name": "familyMembers", "type": "object[]", "required": true }, { "name": "sharedWithFamily", "type": "boolean", "required": false, "default": false } ] },
+    { "name": "PreparednessChecklist", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "hazard", "type": "string", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "items", "type": "object[]", "required": true } ] },
+    { "name": "TrainingModule", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "topic", "type": "string", "required": true }, { "name": "level", "type": "enum(beginner|intermediate|advanced)", "required": true }, { "name": "duration", "type": "string", "required": true }, { "name": "progress", "type": "integer", "required": true }, { "name": "completed", "type": "boolean", "required": false, "default": false } ] },
+    { "name": "EmergencyResource", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "name", "type": "string", "required": true }, { "name": "type", "type": "string", "required": true }, { "name": "category", "type": "string", "required": true }, { "name": "address", "type": "string", "required": true }, { "name": "phone", "type": "string", "required": false }, { "name": "distanceMiles", "type": "decimal", "required": false }, { "name": "rating", "type": "decimal", "required": false }, { "name": "hours", "type": "string", "required": false } ] },
+    { "name": "EmergencyAlert", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "severity", "type": "enum(high|medium|low)", "required": true }, { "name": "type", "type": "string", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "message", "type": "string", "required": true }, { "name": "location", "type": "string", "required": true }, { "name": "time", "type": "string", "required": true }, { "name": "expires", "type": "string", "required": false } ] },
+    { "name": "ForumPost", "fields": [ { "name": "id", "type": "uuid", "required": true }, { "name": "title", "type": "string", "required": true }, { "name": "author", "type": "string", "required": true }, { "name": "category", "type": "string", "required": true }, { "name": "replies", "type": "integer", "required": false }, { "name": "likes", "type": "integer", "required": false }, { "name": "time", "type": "string", "required": true }, { "name": "excerpt", "type": "string", "required": true } ] }
+  ],
+  "integrations": [
+    { "service": "JWT auth", "purpose": "Secure sign-in and account management", "config_params": { "token_ttl": "24h", "refresh": true } },
+    { "service": "NOAA / National Weather Service APIs", "purpose": "Live severe-weather warnings and alerts", "config_params": { "endpoints": ["alerts", "forecast"] } },
+    { "service": "FEMA OpenFEMA API", "purpose": "Disaster declarations and open shelter data", "config_params": { "datasets": ["DisasterDeclarationsSummaries"] } },
+    { "service": "Google Maps API", "purpose": "Location-based shelter and local service discovery", "config_params": { "libraries": ["places"] } },
+    { "service": "Twilio", "purpose": "SMS emergency notifications and plan sharing", "config_params": { "channels": ["sms"] } },
+    { "service": "SendGrid", "purpose": "Email alerts and preparedness digests", "config_params": { "templates": ["weather_warning", "plan_shared"] } },
+    { "service": "OpenAI", "purpose": "Personalized plan and checklist suggestions", "config_params": { "model": "gpt-4o" } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "JWT with short-lived access tokens; household data encrypted at rest (AES-256) and TLS 1.3 in transit" },
+    { "type": "Performance", "requirement": "Alerts render within 1s of push delivery; plan and checklist screens under 2s on mid-range mobile" },
+    { "type": "Responsive", "requirement": "Full responsive layout from 320px to 4K; checklist and resource lists reflow on mobile" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA; semantic landmarks, aria-labels, focus-visible states, reduced-motion support" },
+    { "type": "i18n", "requirement": "Multi-language-ready content model with locale-aware alert timestamps" },
+    { "type": "SEO", "requirement": "Server-rendered marketing shell with Open Graph tags and JSON-LD schema" },
+    { "type": "Testing", "requirement": "Unit tests for state + utils, component tests for checklists and alert feed, API contract tests" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#2563eb" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#059669" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#ea580c" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#60a5fa" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#34d399" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fb923c" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+    { "token_type": "font", "token_name": "font.mono", "token_value": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "framework": "nextjs", "url": "{{deployment.url}}", "analytics_id": "{{deployment.analytics_id}}" } },
+    { "platform": "AWS", "config": { "services": ["ECS", "RDS", "SNS"], "region": "us-west-2" } }
+  ],
+  "template_files": [
+    { "path": "README.md", "source": "templates/disaster-preparedness/README.md", "syntax": "mustache" },
+    { "path": "blueprint.json", "source": "templates/disaster-preparedness/blueprint.json.template", "syntax": "mustache" },
+    { "path": "prompt.md", "source": "templates/disaster-preparedness/prompt.md.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/disaster-preparedness/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/disaster-preparedness/package.json.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/disaster-preparedness/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "src/app/page.tsx", "source": "templates/disaster-preparedness/src/app/page.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/disaster-preparedness/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/emergency/PlanBuilder.tsx", "source": "templates/disaster-preparedness/src/components/emergency/PlanBuilder.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/emergency/DisasterChecklists.tsx", "source": "templates/disaster-preparedness/src/components/emergency/DisasterChecklists.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/emergency/TrainingModules.tsx", "source": "templates/disaster-preparedness/src/components/emergency/TrainingModules.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/emergency/EmergencyResources.tsx", "source": "templates/disaster-preparedness/src/components/emergency/EmergencyResources.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/emergency/AlertCenter.tsx", "source": "templates/disaster-preparedness/src/components/emergency/AlertCenter.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/emergency/CommunityForum.tsx", "source": "templates/disaster-preparedness/src/components/emergency/CommunityForum.tsx.template", "syntax": "mustache" },
+    { "path": "src/data/disaster-preparedness.json", "source": "templates/disaster-preparedness/src/data/disaster-preparedness.json.template", "syntax": "mustache" }
+  ],
+  "extra_config": {
+    "app": {
+      "name": "ReadySet",
+      "slug": "disaster-preparedness",
+      "tagline": "Be ready for anything — personalized plans, checklists, and training for you and your household."
+    },
+    "theme": {
+      "color": { "primary": "#2563eb", "secondary": "#059669", "accent": "#ea580c", "primary_dark": "#60a5fa", "secondary_dark": "#34d399", "accent_dark": "#fb923c" },
+      "font": { "sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif", "mono": "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace" },
+      "radius": { "card": "1rem" }
+    },
+    "header": { "cta_text": "Build my plan", "cta_href": "#plans", "is_fixed": true },
+    "seo": { "og_image": "https://images.unsplash.com/photo-1587293852726-70cdb56c2866", "schema_type": "EmergencyService" },
+    "deployment": { "url": "https://readyset.example.com", "analytics_id": "G-READYSET01" },
+    "contact": { "email": "hello@readyset.example.com", "phone": "+1 (555) 010-4040" },
+    "social": { "github": "https://github.com/example/readyset", "linkedin": "https://linkedin.com/company/readyset-preparedness", "twitter": "https://x.com/readysetapp" },
+    "frontend": { "framework": "React (Next.js 15)", "language": "TypeScript" },
+    "backend": { "framework": "Node.js (Express)", "language": "JavaScript" },
+    "ui": { "library": "Tailwind CSS (Bootstrap-inspired)" },
+    "state": { "manager": "Redux Toolkit" },
+    "auth": { "protocol": "JWT (JSON Web Tokens)" },
+    "alerts": { "provider": "NOAA / National Weather Service APIs" },
+    "notifications": { "provider": "Twilio + FCM push" },
+    "maps": { "provider": "Google Maps API" },
+    "ai": { "provider": "OpenAI GPT-4o", "capabilities": "personalized plans, checklists, training paths" }
+  }
+}

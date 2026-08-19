@@ -1,0 +1,143 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Box, GraduationCap, Play, Search, Shapes, Video } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface Lesson {
+  id: string;
+  title: string;
+  subject: string;
+  gradeLevel: string;
+  duration: number;
+  mode: "ar" | "3d" | "interactive";
+  rating: number;
+  plays: number;
+}
+
+interface LessonCatalogProps {
+  lessons: Lesson[];
+  subjects: string[];
+}
+
+const modeMeta = {
+  ar: { label: "AR", icon: Box, tone: "text-[var(--color-primary)] bg-[var(--color-primary)]/10" },
+  "3d": { label: "3D", icon: Shapes, tone: "text-[var(--color-secondary)] bg-[var(--color-secondary)]/10" },
+  interactive: { label: "Interactive", icon: Video, tone: "text-[var(--color-accent)] bg-[var(--color-accent)]/10" },
+} as const;
+
+export default function LessonCatalog({ lessons, subjects }: LessonCatalogProps) {
+  const [query, setQuery] = useState("");
+  const [subject, setSubject] = useState("All");
+
+  const filtered = useMemo(() => {
+    return lessons.filter((l) => {
+      const matchesQuery = l.title.toLowerCase().includes(query.toLowerCase());
+      const matchesSubject = subject === "All" || l.subject === subject;
+      return matchesQuery && matchesSubject;
+    });
+  }, [lessons, query, subject]);
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="library-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <GraduationCap size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="library-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Lesson library</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {filtered.length} lessons · AR, 3D and interactive modes across subjects.
+            </p>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <div className="relative flex-1 min-w-[200px] max-w-xs">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search lessons…"
+              className="w-full rounded-full border border-gray-300 dark:border-gray-700 bg-transparent pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)]"
+              aria-label="Search lessons"
+            />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {["All", ...subjects].map((s) => (
+              <button
+                key={s}
+                onClick={() => setSubject(s)}
+                aria-pressed={subject === s}
+                className={cn(
+                  "rounded-full border px-3.5 py-1.5 text-sm transition",
+                  subject === s
+                    ? "border-[var(--color-secondary)] bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]"
+                    : "border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-[var(--color-secondary)]"
+                )}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {filtered.map((lesson, i) => {
+            const meta = modeMeta[lesson.mode];
+            return (
+              <motion.article
+                key={lesson.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.4) }}
+                className="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 transition hover:shadow-lg hover:-translate-y-0.5"
+              >
+                <div className="flex items-center justify-between">
+                  <span className={`flex h-10 w-10 items-center justify-center rounded-xl ${meta.tone}`}>
+                    <meta.icon size={18} aria-hidden="true" />
+                  </span>
+                  <span className="rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 text-[11px] font-medium text-gray-600 dark:text-gray-300">
+                    {lesson.subject} · Grade {lesson.gradeLevel}
+                  </span>
+                </div>
+
+                <h3 className="mt-4 font-semibold text-gray-900 dark:text-white group-hover:text-[var(--color-secondary)] transition-colors">
+                  {lesson.title}
+                </h3>
+
+                <div className="mt-3 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                  <span className="flex items-center gap-1.5">
+                    <Play size={13} aria-hidden="true" />
+                    {lesson.duration} min · {meta.label}
+                  </span>
+                  <span>★ {lesson.rating.toFixed(1)} · {lesson.plays.toLocaleString()} plays</span>
+                </div>
+
+                <button className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-full bg-gray-900 dark:bg-white px-4 py-2 text-sm font-medium text-white dark:text-gray-900 hover:opacity-90 transition">
+                  <Play size={14} aria-hidden="true" />
+                  Start lesson
+                </button>
+              </motion.article>
+            );
+          })}
+        </div>
+
+        {filtered.length === 0 && (
+          <p className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-10 text-center text-sm text-gray-500 dark:text-gray-400">
+            No lessons match your search. Try a different subject or keyword.
+          </p>
+        )}
+      </motion.div>
+    </section>
+  );
+}

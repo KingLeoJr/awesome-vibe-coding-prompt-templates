@@ -1,0 +1,87 @@
+{
+  "site": {
+    "name": "{{app.name}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "home": {
+    "name": "Maple Street Residence",
+    "status": "Home",
+    "occupancy": "occupied",
+    "deviceCount": 34,
+    "onlineCount": 31,
+    "temperature": 21.5,
+    "humidity": 46
+  },
+  "rooms": [
+    {
+      "id": "living",
+      "name": "Living Room",
+      "icon": "sofa",
+      "devices": [
+        { "id": "d1", "name": "Ceiling Light", "type": "light", "status": "on", "value": 80, "reading": "80% brightness", "online": true },
+        { "id": "d2", "name": "Smart TV", "type": "tv", "status": "off", "value": 0, "reading": "Standby", "online": true },
+        { "id": "d3", "name": "Thermostat", "type": "thermostat", "status": "on", "value": 21.5, "reading": "21.5°C", "online": true },
+        { "id": "d4", "name": "Air Purifier", "type": "air", "status": "on", "value": 42, "reading": "AQI 42 · Good", "online": true }
+      ],
+      "scenes": ["Movie Night", "Relax"]
+    },
+    {
+      "id": "kitchen",
+      "name": "Kitchen",
+      "icon": "utensils",
+      "devices": [
+        { "id": "d5", "name": "Counter Lights", "type": "light", "status": "on", "value": 60, "reading": "60% brightness", "online": true },
+        { "id": "d6", "name": "Coffee Maker", "type": "appliance", "status": "off", "value": 0, "reading": "Off", "online": true },
+        { "id": "d7", "name": "Smart Fridge", "type": "appliance", "status": "on", "value": 4, "reading": "4.0°C · 12 items in stock", "online": true }
+      ],
+      "scenes": ["Morning Brew"]
+    },
+    {
+      "id": "bedroom",
+      "name": "Bedroom",
+      "icon": "bed",
+      "devices": [
+        { "id": "d8", "name": "Bedside Lamp", "type": "light", "status": "off", "value": 0, "reading": "Off", "online": true },
+        { "id": "d9", "name": "Smart Lock", "type": "lock", "status": "locked", "value": 1, "reading": "Locked · 3 guests today", "online": true },
+        { "id": "d10", "name": "Ceiling Fan", "type": "fan", "status": "on", "value": 3, "reading": "Speed 3", "online": true }
+      ],
+      "scenes": ["Good Night"]
+    },
+    {
+      "id": "garage",
+      "name": "Garage",
+      "icon": "car",
+      "devices": [
+        { "id": "d11", "name": "Garage Door", "type": "door", "status": "closed", "value": 0, "reading": "Closed", "online": true },
+        { "id": "d12", "name": "Security Camera", "type": "camera", "status": "on", "value": 1, "reading": "Streaming · no motion", "online": true }
+      ],
+      "scenes": ["Away Mode"]
+    }
+  ],
+  "scenes": [
+    { "name": "Good Morning", "description": "Lights ramp up, blinds open, coffee starts", "icon": "sunrise", "active": true },
+    { "name": "Movie Night", "description": "Lights dim, TV on, audio sync", "icon": "clapperboard", "active": false },
+    { "name": "Away Mode", "description": "Locks engage, cameras arm, HVAC eco", "icon": "shield", "active": false },
+    { "name": "Good Night", "description": "Bedroom dims, doors lock, thermostat set", "icon": "moon", "active": false }
+  ],
+  "energy": {
+    "today": { "kwh": 8.4, "cost": 1.32, "trendPercent": -12 },
+    "targetKwh": 10,
+    "solar": { "produced": 3.1, "exported": 1.2 },
+    "weekly": [
+      { "label": "Mon", "kwh": 9.2 },
+      { "label": "Tue", "kwh": 8.7 },
+      { "label": "Wed", "kwh": 9.5 },
+      { "label": "Thu", "kwh": 8.1 },
+      { "label": "Fri", "kwh": 10.4 },
+      { "label": "Sat", "kwh": 7.9 },
+      { "label": "Sun", "kwh": 8.4 }
+    ]
+  },
+  "alerts": [
+    { "id": "a1", "severity": "high", "device": "Water Leak Sensor", "message": "Moisture detected under the kitchen sink", "time": "2 minutes ago" },
+    { "id": "a2", "severity": "medium", "device": "Front Door Lock", "message": "Entry code expired for guest access", "time": "1 hour ago" },
+    { "id": "a3", "severity": "medium", "device": "Thermostat", "message": "Heating cycle unusually long (45 min)", "time": "3 hours ago" },
+    { "id": "a4", "severity": "low", "device": "Air Purifier", "message": "Filter replacement recommended in 7 days", "time": "Yesterday" }
+  ]
+}

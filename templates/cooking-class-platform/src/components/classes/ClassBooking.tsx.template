@@ -1,0 +1,156 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { CalendarDays, Clock, SlidersHorizontal, Users, UtensilsCrossed } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface CookingClass {
+  id: string;
+  title: string;
+  cuisine: string;
+  difficulty: string;
+  dietary: string;
+  instructor: string;
+  date: string;
+  time: string;
+  duration: string;
+  seats: number;
+  booked: boolean;
+  price: number;
+}
+
+interface ClassBookingProps {
+  classes: CookingClass[];
+  cuisines?: string[];
+  currency?: string;
+}
+
+export default function ClassBooking({
+  classes,
+  cuisines = ["Italian", "Japanese", "Mexican", "French", "Indian"],
+  currency = "{{currency.symbol}}",
+}: ClassBookingProps) {
+  const [cuisine, setCuisine] = useState("All");
+  const [booked, setBooked] = useState<Set<string>>(
+    () => new Set(classes.filter((c) => c.booked).map((c) => c.id))
+  );
+
+  const filtered = useMemo(() => {
+    return classes.filter((c) => cuisine === "All" || c.cuisine === cuisine);
+  }, [classes, cuisine]);
+
+  const toggleBook = (id: string) => {
+    setBooked((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="classes-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <UtensilsCrossed size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="classes-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Live classes</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Book hands-on sessions with professional chefs, on your schedule.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <span className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <SlidersHorizontal size={16} aria-hidden="true" />
+            Filter by cuisine
+          </span>
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter classes by cuisine">
+            {["All", ...cuisines].map((c) => (
+              <button
+                key={c}
+                onClick={() => setCuisine(c)}
+                aria-pressed={cuisine === c}
+                className={cn(
+                  "rounded-full px-4 py-1.5 text-sm font-medium transition",
+                  cuisine === c
+                    ? "bg-[var(--color-primary)] text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                )}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {filtered.map((cls, i) => {
+            const isBooked = booked.has(cls.id);
+            return (
+              <motion.article
+                key={cls.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{cls.title}</h3>
+                  <span className="shrink-0 rounded-full bg-[var(--color-accent)]/10 px-2.5 py-1 text-[11px] font-medium text-[var(--color-accent)]">
+                    {cls.cuisine}
+                  </span>
+                </div>
+
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">with {cls.instructor}</p>
+
+                <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                  <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+                    <CalendarDays size={15} className="text-[var(--color-secondary)]" aria-hidden="true" />
+                    <span>{cls.date}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+                    <Clock size={15} className="text-[var(--color-secondary)]" aria-hidden="true" />
+                    <span>{cls.time} · {cls.duration}</span>
+                  </div>
+                </dl>
+
+                <div className="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4">
+                  <div>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">{currency}{cls.price}</p>
+                    <p className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Users size={13} aria-hidden="true" />
+                      {cls.seats} seats
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => toggleBook(cls.id)}
+                    aria-pressed={isBooked}
+                    className={cn(
+                      "rounded-full px-5 py-2 text-sm font-medium transition",
+                      isBooked
+                        ? "bg-[var(--color-secondary)] text-white hover:opacity-90"
+                        : "bg-[var(--color-primary)] text-white hover:opacity-90"
+                    )}
+                  >
+                    {isBooked ? "Booked" : "Book now"}
+                  </button>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

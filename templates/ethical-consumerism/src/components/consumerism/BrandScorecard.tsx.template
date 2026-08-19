@@ -1,0 +1,100 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Award, BadgeCheck, Leaf, ShieldCheck } from "lucide-react";
+
+export interface EthicalBrand {
+  id: string;
+  name: string;
+  category: string;
+  certifications: string[];
+  ethicsScore: number;
+  practices: string[];
+  offerings: string[];
+  impactNote: string;
+}
+
+interface BrandScorecardProps {
+  brands: EthicalBrand[];
+}
+
+function scoreTone(score: number): string {
+  if (score >= 85) return "bg-[var(--color-primary)]/10 text-[var(--color-primary)]";
+  if (score >= 70) return "bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]";
+  return "bg-[var(--color-accent)]/10 text-[var(--color-accent)]";
+}
+
+export default function BrandScorecard({ brands }: BrandScorecardProps) {
+  return (
+    <section aria-labelledby="brands-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <BadgeCheck size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="brands-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Ethical brand directory</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Certified practices, transparent scores — brands that walk the talk.</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {brands.map((brand, i) => (
+            <motion.article
+              key={brand.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{brand.name}</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{brand.category}</p>
+                </div>
+                <span className={`shrink-0 rounded-full px-3 py-1 text-sm font-bold ${scoreTone(brand.ethicsScore)}`}>
+                  {brand.ethicsScore}
+                </span>
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {brand.certifications.map((cert) => (
+                  <span
+                    key={cert}
+                    className="inline-flex items-center gap-1 rounded-full border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-gray-800 dark:text-gray-300"
+                  >
+                    <ShieldCheck size={12} aria-hidden="true" />
+                    {cert}
+                  </span>
+                ))}
+              </div>
+
+              <ul className="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                {brand.practices.map((practice) => (
+                  <li key={practice} className="flex items-center gap-2">
+                    <Leaf size={14} className="shrink-0 text-[var(--color-primary)]" aria-hidden="true" />
+                    {practice}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-auto border-t border-gray-100 pt-4 dark:border-gray-800">
+                <p className="flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary)]">
+                  <Award size={15} aria-hidden="true" />
+                  {brand.impactNote}
+                </p>
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{brand.offerings.join(" · ")}</p>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

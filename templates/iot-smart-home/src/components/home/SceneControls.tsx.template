@@ -1,0 +1,105 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Clapperboard,
+  Moon,
+  Shield,
+  Sparkles,
+  Sunrise,
+  type LucideIcon,
+} from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface Scene {
+  name: string;
+  description: string;
+  icon: string;
+  active: boolean;
+}
+
+interface SceneControlsProps {
+  scenes: Scene[];
+}
+
+const SCENE_ICONS: Record<string, LucideIcon> = {
+  sunrise: Sunrise,
+  clapperboard: Clapperboard,
+  shield: Shield,
+  moon: Moon,
+};
+
+export default function SceneControls({ scenes }: SceneControlsProps) {
+  const [activeScenes, setActiveScenes] = useState<Set<string>>(
+    () => new Set(scenes.filter((scene) => scene.active).map((scene) => scene.name))
+  );
+
+  const toggleScene = (name: string) => {
+    setActiveScenes((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  };
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {scenes.map((scene, index) => {
+        const Icon = SCENE_ICONS[scene.icon] ?? Sparkles;
+        const isActive = activeScenes.has(scene.name);
+
+        return (
+          <motion.div
+            key={scene.name}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.06 }}
+          >
+            <Card
+              className={cn(
+                "h-full p-6 transition-colors",
+                isActive && "ring-2 ring-[color:var(--color-primary)]"
+              )}
+            >
+              <button
+                onClick={() => toggleScene(scene.name)}
+                aria-pressed={isActive}
+                className="flex h-full w-full flex-col items-start gap-3 text-left"
+              >
+                <span
+                  className={cn(
+                    "flex h-12 w-12 items-center justify-center rounded-2xl transition-colors",
+                    isActive
+                      ? "bg-[var(--color-primary)] text-white"
+                      : "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                  )}
+                >
+                  <Icon size={24} aria-hidden />
+                </span>
+                <div>
+                  <p className="text-base font-bold text-gray-900 dark:text-white">{scene.name}</p>
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{scene.description}</p>
+                </div>
+                <span
+                  className={cn(
+                    "mt-auto inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold",
+                    isActive
+                      ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                      : "bg-gray-100 text-gray-500 dark:bg-gray-900 dark:text-gray-400"
+                  )}
+                >
+                  <span className={cn("h-1.5 w-1.5 rounded-full", isActive ? "bg-[var(--color-primary)]" : "bg-gray-300 dark:bg-gray-700")} aria-hidden />
+                  {isActive ? "Running" : "Tap to run"}
+                </span>
+              </button>
+            </Card>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}

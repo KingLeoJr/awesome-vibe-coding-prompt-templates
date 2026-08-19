@@ -1,0 +1,112 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Box, Zap, Filter, Trash, Plus } from "lucide-react";
+
+interface FurnitureCategory {
+  id: string;
+  name: string;
+  icon: React.ComponentType;
+}
+
+interface FurnitureItem {
+  id: string;
+  name: string;
+  price: number;
+  width: number;
+  depth: number;
+  height: number;
+  imageUrl: string;
+  category: string;
+}
+
+interface FurniturePickerProps {
+  categories: FurnitureCategory[];
+  onSelect: (item: FurnitureItem) => void;
+}
+
+export default function FurniturePicker({ categories, onSelect }: FurniturePickerProps) {
+  const [selectedCategory, setSelectedCategory] = React.useState(categories[0]?.id);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-4"
+    >
+      <div>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          <Box className="mr-2 h-4 w-4" /> Furniture Library
+        </h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Browse and add furniture to your room design
+        </p>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 mb-4">
+        {categories.map((category) => (
+          <button
+            key={category.id}
+            onClick={() => setSelectedCategory(category.id)}
+            className="group rounded-full p-2 border-2 border-transparent hover:border-[[theme.color.primary]] transition-colors bg-white dark:bg-gray-900"
+            aria-label={`Filter by ${category.name}`}
+          >
+            <category.icon
+              className="h-4 w-4 text-[[theme.color.primary]] group-hover:text-gray-900"
+            />
+            <span className="text-xs capitalize">{category.name}</span>
+          </button>
+        ))}
+      </div>
+
+      {categories && categories.length > 0 && (
+        <div className="grid grid-cols-2 gap-4">
+          {categories
+            .filter((cat) => cat.id === selectedCategory || !selectedCategory)
+            .map((category) => (
+              <div key={category.id} className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+                {category.items?.map((item: FurnitureItem) => (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="p-3 border-b border-gray-200 dark:border-gray-800 hover:bg-[[theme.color.primary]] hover:text-white transition"
+                    onClick={() => onSelect(item)}
+                    aria-label={`Add ${item.name} to room`}
+                  >
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      className="w-full h-24 object-cover mb-3"
+                    />
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white">{item.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">${item.price}</p>
+                    </div>
+                  </motion.div>
+                )) || (
+                  <div className="p-3 text-center text-gray-400 dark:text-gray-500">
+                    No items in this category
+                  </div>
+                )}
+              </div>
+            ))}
+        </div>
+
+        <div>
+          <button
+            onClick={() => setSelectedCategory(undefined)}
+            className="mt-2 w-full rounded-full bg-[[theme.color.primary]] text-white py-2 text-sm font-medium hover:opacity-90 transition"
+            aria-label "Show all furniture categories"
+          >
+            <Plus className="mr-2 h-4 w-4" /> Show All
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

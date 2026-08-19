@@ -1,0 +1,82 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "currency": "{{currency.symbol}}",
+  "categories": ["Action", "Comedy", "Drama", "Documentary", "Sci-Fi", "Thriller", "Romance", "Animation"],
+  "videos": [
+    {
+      "id": "vid-001",
+      "title": "The Future of Streaming",
+      "description": "How streaming is changing the entertainment industry",
+      "duration": "12:34",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1502602898657-cd6e2e14ba3f",
+      "viewCount": 245839,
+      "likeCount": 12456,
+      "category": "Technology"
+    },
+    {
+      "id": "vid-002",
+      "title": "Comedy Sketch - Office Life",
+      "description": "When the printer jams on the worst day",
+      "duration": "4:12",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1558265525-69d9b9e5b3c5",
+      "viewCount": 89321,
+      "likeCount": 5678,
+      "category": "Comedy"
+    },
+    {
+      "id": "vid-003",
+      "title": "Space Documentary - The Unknown",
+      "description": "Exploring the depths of our universe",
+      "duration": "18:45",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1469474961230-8f59d252f4a1",
+      "viewCount": 156732,
+      "likeCount": 8912,
+      "category": "Documentary"
+    }
+  ],
+  "watchLater": [
+    {
+      "id": "wl-001",
+      "title": "Must-See Movies 2026",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1526159062842-1e7c1910e7e8",
+      "category": "Movies"
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": "sub-001",
+      "planType": "basic",
+      "price": "$9.99",
+      "features": ["Ad-supported", "Access on 1 device", "Standard definition"],
+      "isPopular": false
+    },
+    {
+      "id": "sub-002",
+      "planType": "pro",
+      "price": "$15.99",
+      "features": ["No ads", "Access on 2 devices", "HD quality"],
+      "isPopular": true
+    },
+    {
+      "id": "sub-003",
+      "planType": "premium",
+      "price": "$19.99",
+      "features": ["No ads", "Access on 4 devices", "4K quality"],
+      "isPopular": false
+    }
+  ],
+  "dashboardQuery": "",
+  "categories": ["Action", "Comedy", "Drama", "Documentary", "Sci-Fi", "Thriller", "Romance", "Animation"],
+  "watchHistory": [
+    {
+      "id": "wh-001",
+      "videoId": "vid-001",
+      "watchedAt": "2026-08-18",
+      "progress": 100
+    }
+  ]
+}

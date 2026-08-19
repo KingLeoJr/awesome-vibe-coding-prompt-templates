@@ -1,0 +1,47 @@
+import Header from "@/components/layout/Header";
+import CareMessageCenter, { type MessageThread } from "@/components/healthcare/CareMessageCenter";
+import HealthMetricsDashboard, { type HealthMetric, type MetricTrend } from "@/components/healthcare/HealthMetricsDashboard";
+import MedicationManager, { type Medication } from "@/components/healthcare/MedicationManager";
+import SymptomChecker, { type Condition, type SymptomOption } from "@/components/healthcare/SymptomChecker";
+import TelemedicineScheduler, { type Provider, type TimeSlot } from "@/components/healthcare/TelemedicineScheduler";
+import Footer from "@/components/shared/Footer";
+import care from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="symptom-check" className="scroll-mt-24">
+          <SymptomChecker
+            symptoms={care.symptoms as SymptomOption[]}
+            conditions={care.conditions as Condition[]}
+          />
+        </section>
+
+        <section id="telemedicine" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <TelemedicineScheduler
+            providers={care.providers as Provider[]}
+            slots={care.slots as TimeSlot[]}
+          />
+        </section>
+
+        <section id="medications" className="scroll-mt-24">
+          <MedicationManager medications={care.medications as Medication[]} />
+        </section>
+
+        <section id="health" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <HealthMetricsDashboard
+            metrics={care.metrics as HealthMetric[]}
+            trends={care.trends as MetricTrend[]}
+          />
+        </section>
+
+        <section id="messages" className="scroll-mt-24">
+          <CareMessageCenter conversations={care.conversations as MessageThread[]} />
+        </section>
+      </main>
+      <Footer name={care.app.name as string} description={care.app.tagline as string} />
+    </>
+  );
+}

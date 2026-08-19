@@ -1,0 +1,88 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Building, UserCheck, Star } from "lucide-react";
+import { cn } from "@/lib-utils";
+
+interface ServiceProvider {
+  id: string;
+  name: string;
+  type: "groomer" | "trainer" | "vet" | "walker" | "boarding";
+  rating: number;
+  priceRange: string;
+  bio: string;
+  availability: string;
+}
+
+interface ServiceProviderProps {
+  providers: ServiceProvider[];
+  category: string;
+}
+
+export default function ServiceProvider({ providers, category }: ServiceProviderProps) {
+  const filtered = category === "all"
+    ? providers
+    : providers.filter((p) => p.type === category);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+        <h3 className="font-bold text-2xl text-gray-900 dark:text-white">
+          {category === "all" ? "All Providers" : category.charAt(0).toUpperCase() + category.slice(1) + " Providers"}
+        </h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{filtered.length} available</p>
+      </div>
+
+      {filtered.length === 0 && (
+        <p className="p-6 text-center text-gray-500 dark:text-gray-400">
+          No providers found for this category.
+        </p>
+      )}
+
+      <div className="grid grid-cols-2 gap-4">
+        {filtered.map((provider, index) => (
+          <motion.div
+            key={provider.id}
+            className="group rounded-xl border p-5 bg-gray-50 dark:bg-gray-800 hover:border-[var(--color-primary)] transition-colors"
+            animate={{ opacity: [0.8, 1], transition: { duration: 0.3, delay: index * 0.08 } }}
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0">
+                <motion.span
+                  className="h-10 w-10 rounded bg-[var(--color-primary)]/10 flex items-center justify-center text-[var(--color-primary)] text-opacity-80"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                >
+                  {provider.type === "groomer" ? <Building /> : provider.type === "trainer" ? <UserCheck /> : <Star />}
+                </motion.span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className="font-medium text-gray-900 dark:text-white group-hover:text-[var(--color-primary)] transition-colors">{provider.name}</h4>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{provider.type}</p>
+              </div>
+            </div>
+
+            <div className="mt-3 flex items-center justify-between">
+              <p className="text-sm text-gray-600 dark:text-gray-300">{provider.rating} ⭐</p>
+              <p className="text-sm font-medium text-[var(--color-primary)]">{provider.priceRange}</p>
+            </div>
+
+            <button
+              onClick={() => {/* booking logic */}
+              className="mt-3 w-full rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] py-2 text-sm font-medium hover:bg-[var(--color-primary)]/20 transition"
+              aria-label="Book appointment with {provider.name}"
+            >
+              Book appointment
+            </button>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}

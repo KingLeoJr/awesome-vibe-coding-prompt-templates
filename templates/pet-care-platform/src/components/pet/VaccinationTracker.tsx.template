@@ -1,0 +1,74 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Calendar, Syringe, Heart } from "lucide-react";
+import { cn } from "@/lib-utils";
+
+interface HealthRecord {
+  id: string;
+  date: string;
+  vaccinationType: string;
+  vetName: string | null;
+  nextDueDate: string;
+}
+
+interface VaccinationTrackerProps {
+  records: HealthRecord[];
+}
+
+export default function VaccinationTracker({ records }: VaccinationTrackerProps) {
+  const overdue = records.filter(
+    (r) => new Date(r.nextDueDate) < new Date() && !r.vaccinationType.toLowerCase().includes("completed")
+  ).length;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Records</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{records.length}</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Overdue</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white text-red-600">{overdue}</p>
+          </div>
+        </div>
+
+        <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-4">Vaccination Schedule</h4>
+        {records.length === 0 && (
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+            No vaccination records added yet. Add your pet's first vaccination record above.
+          </p>
+        )}
+
+        <div className="space-y-3">
+          {records.map((record, index) => (
+            <motion.div
+              key={record.id}
+              className="p-4 rounded bg-gray-50 dark:bg-gray-800 hover:bg-[var(--color-primary)]/10 transition-colors"
+              animate={{ opacity: [0.8, 1], transition: { duration: 0.3, delay: index * 0.08 } }}
+            >
+              <div className="flex items-start gap-3">
+                <Calendar className="h-5 w-5 text-[var(--color-primary)] flex-shrink-0 mt-1" />
+                <div className="flex-1">
+                  <p className="font-medium text-gray-900 dark:text-white">{record.vaccinationType}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Due: {record.nextDueDate}</p>
+                  {record.vetName && (
+                    <p className="text-xs text-gray-500 dark:text-gray-400">Last vet: {record.vetName}</p>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}

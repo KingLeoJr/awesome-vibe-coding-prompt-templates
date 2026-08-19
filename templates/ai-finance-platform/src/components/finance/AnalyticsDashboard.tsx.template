@@ -1,0 +1,156 @@
+"use client";
+
+import { useId } from "react";
+import { motion } from "framer-motion";
+import { LineChart, PiggyBank, TrendingDown, TrendingUp, Wallet } from "lucide-react";
+
+export interface FinancialSeries {
+  months: string[];
+  income: number[];
+  expenses: number[];
+  savings: number[];
+  investments: number[];
+}
+
+interface AnalyticsDashboardProps {
+  data: FinancialSeries;
+  currency?: string;
+}
+
+function SeriesLine({
+  values,
+  stroke,
+  max,
+  width,
+  height,
+}: {
+  values: number[];
+  stroke: string;
+  max: number;
+  width: number;
+  height: number;
+}) {
+  const pad = 8;
+  const step = values.length > 1 ? (width - pad * 2) / (values.length - 1) : 0;
+  const points = values
+    .map((v, i) => {
+      const x = pad + i * step;
+      const y = height - pad - (v / max) * (height - pad * 2);
+      return `${x},${y}`;
+    })
+    .join(" ");
+  return <polyline points={points} fill="none" stroke={stroke} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />;
+}
+
+export default function AnalyticsDashboard({ data, currency = "{{currency.symbol}}" }: AnalyticsDashboardProps) {
+  const gradientId = useId();
+  const totalIncome = data.income.reduce((a, b) => a + b, 0);
+  const totalExpenses = data.expenses.reduce((a, b) => a + b, 0);
+  const netSavings = data.savings.reduce((a, b) => a + b, 0);
+  const savingsRate = totalIncome > 0 ? Math.round((netSavings / totalIncome) * 100) : 0;
+  const max = Math.max(1, ...data.income, ...data.expenses, ...data.savings, ...data.investments);
+  const width = 640;
+  const height = 240;
+  const padX = 36;
+  const chartWidth = width - padX;
+  const xLabels = data.months;
+
+  const stats = [
+    { label: "Total income", value: `${currency}${totalIncome.toLocaleString()}`, icon: TrendingUp, color: "text-emerald-500" },
+    { label: "Total expenses", value: `${currency}${totalExpenses.toLocaleString()}`, icon: TrendingDown, color: "text-rose-500" },
+    { label: "Net savings", value: `${currency}${netSavings.toLocaleString()}`, icon: PiggyBank, color: "text-[var(--color-primary)]" },
+    { label: "Savings rate", value: `${savingsRate}%`, icon: Wallet, color: "text-[var(--color-secondary)]" },
+  ];
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="dashboard-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <LineChart size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="dashboard-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Money dashboard</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Income, expenses, savings and investment growth — at a glance.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-5"
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+                <stat.icon size={18} className={stat.color} aria-hidden="true" />
+              </div>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6">
+          <div className="flex flex-wrap items-center gap-4 mb-4" aria-hidden="true">
+            {[
+              { label: "Income", color: "var(--color-primary)" },
+              { label: "Expenses", color: "var(--color-secondary)" },
+              { label: "Savings", color: "var(--color-accent)" },
+              { label: "Investments", color: "#a78bfa" },
+            ].map((s) => (
+              <span key={s.label} className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: s.color }} />
+                {s.label}
+              </span>
+            ))}
+          </div>
+          <div className="overflow-x-auto">
+            <svg viewBox={`0 0 ${width} ${height}`} className="w-full min-w-[480px]" role="img" aria-label="Trend chart of income, expenses, savings and investments">
+              <defs>
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="var(--color-primary)" stopOpacity={0.25} />
+                  <stop offset="100%" stopColor="var(--color-primary)" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              {[0.25, 0.5, 0.75, 1].map((f) => (
+                <line
+                  key={f}
+                  x1={padX}
+                  x2={width}
+                  y1={height - f * (height - 16)}
+                  y2={height - f * (height - 16)}
+                  stroke="currentColor"
+                  className="text-gray-200 dark:text-gray-800"
+                  strokeWidth={1}
+                />
+              ))}
+              <SeriesLine values={data.investments} stroke="#a78bfa" max={max} width={chartWidth} height={height} />
+              <SeriesLine values={data.savings} stroke="var(--color-accent)" max={max} width={chartWidth} height={height} />
+              <SeriesLine values={data.expenses} stroke="var(--color-secondary)" max={max} width={chartWidth} height={height} />
+              <SeriesLine values={data.income} stroke="var(--color-primary)" max={max} width={chartWidth} height={height} />
+              {xLabels.map((label, i) => {
+                const labelPad = 8;
+                const labelStep = xLabels.length > 1 ? (chartWidth - labelPad * 2) / (xLabels.length - 1) : 0;
+                const x = labelPad + i * labelStep;
+                return (
+                  <text key={label} x={x} y={height - 4} textAnchor="middle" className="fill-gray-400 text-[10px]">
+                    {label}
+                  </text>
+                );
+              })}
+            </svg>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

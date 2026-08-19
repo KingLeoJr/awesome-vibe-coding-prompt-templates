@@ -1,0 +1,110 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { BarChart3, Clock, Droplet, MoonStar, Target } from "lucide-react";
+import Card from "@/components/shared/Card";
+
+export interface WeeklyActivity {
+  label: string;
+  minutes: number;
+  calories: number;
+}
+
+export interface Goals {
+  steps: number;
+  activeMinutes: number;
+  hydrationGlasses: number;
+  sleepHours: number;
+}
+
+interface WeeklyOverviewProps {
+  weekly: WeeklyActivity[];
+  goals: Goals;
+}
+
+export default function WeeklyOverview({ weekly, goals }: WeeklyOverviewProps) {
+  const maxMinutes = Math.max(...weekly.map((day) => day.minutes), 1);
+  const totalMinutes = weekly.reduce((sum, day) => sum + day.minutes, 0);
+  const totalCalories = weekly.reduce((sum, day) => sum + day.calories, 0);
+
+  const goalStats = [
+    { label: "Daily step goal", current: goals.steps, unit: "steps", icon: Target },
+    { label: "Active minutes", current: goals.activeMinutes, unit: "min", icon: Clock },
+    { label: "Hydration", current: goals.hydrationGlasses, unit: "glasses", icon: Droplet },
+    { label: "Sleep target", current: goals.sleepHours, unit: "h", icon: MoonStar },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Card className="flex items-center gap-4 p-5">
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <Clock size={22} aria-hidden />
+          </span>
+          <div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Active this week</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-white tabular-nums">{totalMinutes} min</p>
+          </div>
+        </Card>
+        <Card className="flex items-center gap-4 p-5">
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
+            <BarChart3 size={22} aria-hidden />
+          </span>
+          <div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Calories burned</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-white tabular-nums">{totalCalories} kcal</p>
+          </div>
+        </Card>
+        <Card className="flex items-center gap-4 p-5">
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+            <Target size={22} aria-hidden />
+          </span>
+          <div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Daily goal hit</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-white tabular-nums">
+              {weekly.filter((day) => day.minutes >= goals.activeMinutes).length}/{weekly.length} days
+            </p>
+          </div>
+        </Card>
+      </div>
+
+      <Card className="p-6">
+        <h3 className="mb-6 text-lg font-bold text-gray-900 dark:text-white">Weekly activity</h3>
+        <div className="flex items-end justify-between gap-3" role="img" aria-label="Weekly active minutes bar chart">
+          {weekly.map((day, index) => (
+            <div key={day.label} className="flex flex-1 flex-col items-center gap-2">
+              <motion.div
+                initial={{ height: 0 }}
+                whileInView={{ height: `${Math.max(10, (day.minutes / maxMinutes) * 100)}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="w-full rounded-lg bg-gradient-to-t from-[var(--color-primary)] to-[var(--color-secondary)]"
+                style={{ minHeight: 10 }}
+              />
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{day.label}</span>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {goalStats.map((goal) => {
+          const Icon = goal.icon;
+          return (
+            <Card key={goal.label} className="flex items-center gap-3 p-4">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400">
+                <Icon size={20} aria-hidden />
+              </span>
+              <div>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{goal.label}</p>
+                <p className="text-sm font-bold text-gray-900 dark:text-white tabular-nums">
+                  {goal.current} {goal.unit}
+                </p>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

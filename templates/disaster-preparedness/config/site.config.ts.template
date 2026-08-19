@@ -1,0 +1,29 @@
+export const SITE_TITLE = "{{app.name}}";
+export const SITE_DESCRIPTION = "{{app.tagline}}";
+export const SITE_URL = "{{deployment.url}}";
+
+export const NAV_ITEMS = [
+  {{#each sections}}
+  { label: "{{name}}", href: "#{{name | lowercase}}" },
+  {{/each}}
+];
+
+export const CONTACT = {
+  email: "{{contact.email}}",
+  phone: "{{contact.phone}}",
+};
+
+export const SOCIAL = {
+  github: "{{social.github}}",
+  linkedin: "{{social.linkedin}}",
+  twitter: "{{social.twitter}}",
+};
+
+export const ANALYTICS_ID = "{{deployment.analytics_id}}";
+
+export const PREPAREDNESS_CONFIG = {
+  alertSeverityOrder: ["high", "medium", "low"] as const,
+  defaultHazards: ["Hurricane", "Earthquake", "Wildfire", "Flood", "Winter Storm"],
+  alertRefreshMs: 60000,
+  emergencyNumber: "911",
+};

@@ -1,0 +1,135 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "nav": [
+    { "label": "Plans", "href": "#plans" },
+    { "label": "Checklists", "href": "#checklists" },
+    { "label": "Training", "href": "#training" },
+    { "label": "Resources", "href": "#resources" },
+    { "label": "Alerts", "href": "#alerts" },
+    { "label": "Community", "href": "#community" }
+  ],
+  "resourceCategories": ["Shelter", "Food Bank", "Medical", "Utility", "Water"],
+  "plan": {
+    "emergencyContacts": [
+      { "name": "Grace Kim", "role": "Out-of-state contact", "phone": "(555) 210-8899" },
+      { "name": "Devon Carter", "role": "Neighbor", "phone": "(555) 210-7788" },
+      { "name": "Dr. Rivera", "role": "Family doctor", "phone": "(555) 210-6677" }
+    ],
+    "meetingPoints": [
+      { "name": "North Park Pavilion", "address": "500 Maple Ave" },
+      { "name": "Oakridge Community Center", "address": "12 Cedar Lane" },
+      { "name": "Grandma's house", "address": "88 Sycamore Rd" }
+    ],
+    "evacuationRoutes": [
+      { "name": "Primary route", "route": "Maple Ave → I-5 North → exit 42" },
+      { "name": "Secondary route", "route": "Cedar Lane → Route 9 → Riverside" },
+      { "name": "On foot", "route": "North Park Pavilion, 0.8 mi via walking trail" }
+    ],
+    "importantDocuments": [
+      { "name": "Passports & IDs", "location": "Fireproof box, closet" },
+      { "name": "Insurance policies", "location": "Cloud folder + go-bag" },
+      { "name": "Medical records", "location": "Go-bag, red folder" },
+      { "name": "House deed & titles", "location": "Safety deposit box" }
+    ],
+    "familyMembers": [
+      { "name": "Sam", "needs": "asthma inhaler" },
+      { "name": "Milo (dog)", "needs": "carrier + 7-day food" },
+      { "name": "Grandma Rosa", "needs": "meds, walker" }
+    ],
+    "sharedWithFamily": true
+  },
+  "checklists": [
+    {
+      "id": "ck-hurricane",
+      "hazard": "Hurricane",
+      "title": "Hurricane preparedness kit",
+      "items": [
+        { "id": "ck-h-1", "label": "3-day water supply (1 gal/person/day)", "checked": true },
+        { "id": "ck-h-2", "label": "Non-perishable food for 3+ days", "checked": true },
+        { "id": "ck-h-3", "label": "Flashlights + extra batteries", "checked": true },
+        { "id": "ck-h-4", "label": "Portable phone chargers", "checked": false },
+        { "id": "ck-h-5", "label": "First aid kit + prescriptions", "checked": false },
+        { "id": "ck-h-6", "label": "Sandbags & storm shutters ready", "checked": false },
+        { "id": "ck-h-7", "label": "Full gas tank + cash on hand", "checked": false },
+        { "id": "ck-h-8", "label": "Pet supplies & carrier", "checked": true }
+      ]
+    },
+    {
+      "id": "ck-earthquake",
+      "hazard": "Earthquake",
+      "title": "Earthquake readiness",
+      "items": [
+        { "id": "ck-e-1", "label": "Secure heavy furniture & TVs", "checked": true },
+        { "id": "ck-e-2", "label": "Strap water heater & gas lines", "checked": false },
+        { "id": "ck-e-3", "label": "Identify safe drop zones in every room", "checked": false },
+        { "id": "ck-e-4", "label": "Practice drop, cover, hold on", "checked": false },
+        { "id": "ck-e-5", "label": "Emergency whistle at bedside", "checked": true }
+      ]
+    },
+    {
+      "id": "ck-wildfire",
+      "hazard": "Wildfire",
+      "title": "Wildfire defensible space & go-bag",
+      "items": [
+        { "id": "ck-w-1", "label": "Clear 30 ft of defensible space", "checked": false },
+        { "id": "ck-w-2", "label": "Go-bag with N95 masks", "checked": true },
+        { "id": "ck-w-3", "label": "Important documents in go-bag", "checked": false },
+        { "id": "ck-w-4", "label": "Preset evacuation alerts on phone", "checked": false }
+      ]
+    },
+    {
+      "id": "ck-flood",
+      "hazard": "Flood",
+      "title": "Flood preparedness",
+      "items": [
+        { "id": "ck-f-1", "label": "Move valuables above flood line", "checked": false },
+        { "id": "ck-f-2", "label": "Sump pump battery backup", "checked": true },
+        { "id": "ck-f-3", "label": "Check flood insurance coverage", "checked": false },
+        { "id": "ck-f-4", "label": "Map high-ground evacuation route", "checked": true }
+      ]
+    },
+    {
+      "id": "ck-winter",
+      "hazard": "Winter Storm",
+      "title": "Winter storm supplies",
+      "items": [
+        { "id": "ck-s-1", "label": "Insulate pipes & drip faucets", "checked": false },
+        { "id": "ck-s-2", "label": "Rock salt / traction mats", "checked": true },
+        { "id": "ck-s-3", "label": "Blankets & cold-weather gear", "checked": false },
+        { "id": "ck-s-4", "label": "Carbon monoxide detector test", "checked": true }
+      ]
+    }
+  ],
+  "trainingModules": [
+    { "id": "tm-001", "title": "Hands-Only CPR", "topic": "CPR & AED", "level": "Beginner", "duration": "25 min", "progress": 100, "completed": true },
+    { "id": "tm-002", "title": "Basic First Aid", "topic": "Bleeding, burns, shock", "level": "Beginner", "duration": "40 min", "progress": 60, "completed": false },
+    { "id": "tm-003", "title": "Stop the Bleed", "topic": "Trauma care", "level": "Intermediate", "duration": "35 min", "progress": 0, "completed": false },
+    { "id": "tm-004", "title": "Home Fire Safety & Extinguishers", "topic": "Fire response", "level": "Beginner", "duration": "20 min", "progress": 0, "completed": false },
+    { "id": "tm-005", "title": "Emergency Water Purification", "topic": "Survival skills", "level": "Intermediate", "duration": "30 min", "progress": 0, "completed": false },
+    { "id": "tm-006", "title": "Family Emergency Communications", "topic": "Coordination", "level": "Advanced", "duration": "45 min", "progress": 0, "completed": false }
+  ],
+  "resources": [
+    { "id": "res-001", "name": "City Emergency Shelter", "type": "Community Center", "category": "Shelter", "address": "12 Cedar Lane", "phone": "(555) 555-0101", "distanceMiles": 0.8, "rating": 4.6, "hours": "24 hours" },
+    { "id": "res-002", "name": "Maple Street Food Bank", "type": "Nonprofit", "category": "Food Bank", "address": "300 Maple Ave", "phone": "(555) 555-0102", "distanceMiles": 1.2, "rating": 4.8, "hours": "9 AM – 4 PM" },
+    { "id": "res-003", "name": "Riverside Urgent Care", "type": "Clinic", "category": "Medical", "address": "44 Riverside Dr", "phone": "(555) 555-0103", "distanceMiles": 2.4, "rating": 4.3, "hours": "8 AM – 8 PM" },
+    { "id": "res-004", "name": "City Power & Light", "type": "Utility", "category": "Utility", "address": "1 Energy Plaza", "phone": "(555) 555-0104", "distanceMiles": 3.1, "rating": 3.9, "hours": "24-hour line" },
+    { "id": "res-005", "name": "Regional Water Authority", "type": "Utility", "category": "Water", "address": "77 Reservoir Rd", "phone": "(555) 555-0105", "distanceMiles": 4.0, "rating": 4.1, "hours": "24-hour line" },
+    { "id": "res-006", "name": "Salvation Army Shelter", "type": "Shelter", "category": "Shelter", "address": "210 Hope St", "phone": "(555) 555-0106", "distanceMiles": 2.9, "rating": 4.4, "hours": "24 hours" }
+  ],
+  "alerts": [
+    { "id": "al-001", "severity": "high", "type": "Weather", "title": "Severe Thunderstorm Warning", "message": "Damaging winds up to 70 mph and hail expected until 9 PM.", "location": "North County", "time": "12 minutes ago", "expires": "9:00 PM" },
+    { "id": "al-002", "severity": "medium", "type": "Weather", "title": "Flash Flood Watch", "message": "Heavy rain may cause flooding in low-lying areas near Riverside.", "location": "Riverside", "time": "1 hour ago", "expires": "Tomorrow 6 AM" },
+    { "id": "al-003", "severity": "low", "type": "Advisory", "title": "Boil Water Advisory Lifted", "message": "Water is safe to drink following yesterday's main break repair.", "location": "Downtown", "time": "3 hours ago", "expires": "None" },
+    { "id": "al-004", "severity": "medium", "type": "Community", "title": "Shelter Supply Drive", "message": "Open shelters are collecting blankets and non-perishables this weekend.", "location": "Oakridge", "time": "Yesterday", "expires": "Sun 6 PM" }
+  ],
+  "forumPosts": [
+    { "id": "post-001", "title": "Hurricane kit for a small apartment?", "author": "city_dweller", "category": "Preparedness", "replies": 31, "likes": 95, "time": "3 hours ago", "excerpt": "We live on the 4th floor with no storage. Anyone have a compact kit list that fits in a closet?" },
+    { "id": "post-002", "title": "How we did a family comms drill", "author": "ready_ramirez", "category": "Drills", "replies": 19, "likes": 74, "time": "6 hours ago", "excerpt": "Monthly check-in drill using WhatsApp + walkie-talkies. Here's the script we use so no one panics." },
+    { "id": "post-003", "title": "Storing 3 days of water in a condo", "author": "water_wise", "category": "Preparedness", "replies": 14, "likes": 58, "time": "Yesterday", "excerpt": "Collapsible 5-gallon containers under the bed changed the game. Weight, rotation, and water-safe tips inside." },
+    { "id": "post-004", "title": "First aid certification renewal deals", "author": "safety_sam", "category": "Training", "replies": 9, "likes": 27, "time": "Yesterday", "excerpt": "Local Red Cross is running a 30% renewal weekend. Sharing the signup link." }
+  ]
+}

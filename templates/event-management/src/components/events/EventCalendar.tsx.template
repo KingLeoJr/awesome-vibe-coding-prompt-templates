@@ -1,0 +1,198 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import EventCard, { type EventItem } from "@/components/events/EventCard";
+
+interface EventCalendarProps {
+  events: EventItem[];
+  categories: string[];
+  locations: string[];
+}
+
+const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+export default function EventCalendar({ events, categories, locations }: EventCalendarProps) {
+  const today = useMemo(() => new Date(), []);
+  const [viewDate, setViewDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
+  const [category, setCategory] = useState("All");
+  const [location, setLocation] = useState("All");
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+
+  const year = viewDate.getFullYear();
+  const month = viewDate.getMonth();
+  const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const filtered = useMemo(
+    () =>
+      events.filter((event) => {
+        const okCategory = category === "All" || event.category === category;
+        const okLocation = location === "All" || event.location === location;
+        return okCategory && okLocation;
+      }),
+    [events, category, location]
+  );
+
+  const dayEvents = useMemo(() => {
+    if (selectedDay === null) return [];
+    return filtered.filter((event) => new Date(event.date).getDate() === selectedDay);
+  }, [filtered, selectedDay]);
+
+  const hasEventOn = (day: number) =>
+    filtered.some((event) => new Date(event.date).getDate() === day);
+
+  const goToMonth = (delta: number) => {
+    setViewDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + delta, 1));
+    setSelectedDay(null);
+  };
+
+  const cells: (number | null)[] = [
+    ...Array.from({ length: firstWeekday }, () => null),
+    ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+  ];
+
+  return (
+    <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="inline-flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
+            <CalendarIcon size={20} className="text-[var(--color-primary)]" aria-hidden />
+            {MONTHS[month]} {year}
+          </h3>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => goToMonth(-1)}
+              aria-label="Previous month"
+              className="p-2 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              onClick={() => goToMonth(1)}
+              aria-label="Next month"
+              className="p-2 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-7 gap-1.5">
+          {WEEKDAYS.map((day) => (
+            <div
+              key={day}
+              className="pb-2 text-center text-xs font-semibold text-gray-400 dark:text-gray-500"
+            >
+              {day}
+            </div>
+          ))}
+          {cells.map((day, index) =>
+            day === null ? (
+              <div key={`empty-${index}`} />
+            ) : (
+              <button
+                key={day}
+                onClick={() => setSelectedDay(selectedDay === day ? null : day)}
+                aria-label={`${MONTHS[month]} ${day}, ${year}${hasEventOn(day) ? " (has events)" : ""}`}
+                aria-pressed={selectedDay === day}
+                className={cn(
+                  "relative flex h-12 items-center justify-center rounded-xl text-sm transition",
+                  selectedDay === day
+                    ? "bg-[var(--color-primary)] text-white shadow-lg"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-900",
+                  today.getDate() === day &&
+                    today.getMonth() === month &&
+                    today.getFullYear() === year &&
+                    selectedDay !== day &&
+                    "ring-1 ring-[color:var(--color-primary)] text-[var(--color-primary)]"
+                )}
+              >
+                {day}
+                {hasEventOn(day) && (
+                  <span
+                    className={cn(
+                      "absolute bottom-1.5 h-1.5 w-1.5 rounded-full",
+                      selectedDay === day ? "bg-white" : "bg-[var(--color-secondary)]"
+                    )}
+                    aria-hidden
+                  />
+                )}
+              </button>
+            )
+          )}
+        </div>
+      </div>
+
+      <div>
+        <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Event filters">
+          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-gray-200 dark:border-gray-800 p-2 w-full">
+            <label htmlFor="event-category" className="sr-only">Category</label>
+            <select
+              id="event-category"
+              value={category}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                setSelectedDay(null);
+              }}
+              className="w-full rounded-xl bg-transparent px-3 py-2 text-sm outline-none"
+            >
+              <option value="All">All categories</option>
+              {categories.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-gray-200 dark:border-gray-800 p-2 w-full">
+            <label htmlFor="event-location" className="sr-only">Location</label>
+            <select
+              id="event-location"
+              value={location}
+              onChange={(e) => {
+                setLocation(e.target.value);
+                setSelectedDay(null);
+              }}
+              className="w-full rounded-xl bg-transparent px-3 py-2 text-sm outline-none"
+            >
+              <option value="All">All locations</option>
+              {locations.map((loc) => (
+                <option key={loc} value={loc}>{loc}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedDay ?? "none"}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-4"
+          >
+            {selectedDay === null ? (
+              <p className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                Pick a day to see its events.
+              </p>
+            ) : dayEvents.length === 0 ? (
+              <p className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                No events on {MONTHS[month]} {selectedDay}.
+              </p>
+            ) : (
+              dayEvents.map((event, index) => (
+                <EventCard key={event.id} event={event} delay={index * 0.05} />
+              ))
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}

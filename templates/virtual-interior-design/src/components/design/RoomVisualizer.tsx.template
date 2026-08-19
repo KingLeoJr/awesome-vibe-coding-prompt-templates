@@ -1,0 +1,127 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Crop, Palette, Layout, GalleryVerticalEnd } from "lucide-react";
+
+interface RoomDimensions {
+  width: number;
+  depth: number;
+  unit: "m" | "ft";
+}
+
+interface FurnitureItem {
+  id: string;
+  name: string;
+  width: number;
+  depth: number;
+  height: number;
+  imageUrl: string;
+  category: "sofa" | "chair" | "table" | "bed" | "rug" | "lamp" | "art";
+}
+
+interface RoomVisualizerProps {
+  room: {
+    id: string;
+    name: string;
+    dimensions: RoomDimensions;
+    floorPlanImage: string;
+  };
+  furniture: FurnitureItem[];
+  onFurnitureAdd?: (furniture: FurnitureItem) => void;
+  onFurnitureRemove?: (furnitureId: string) => void;
+}
+
+export default function RoomVisualizer({
+  room,
+  furniture,
+  onFurnitureAdd,
+  onFurnitureRemove,
+}: RoomVisualizerProps) {
+  const { name: roomName, dimensions } = room;
+  const { width, depth, unit } = dimensions;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="rounded-3xl overflow-hidden bg-gray-100 dark:bg-gray-900"
+      aria-label="Room visualizer: {roomName}"
+    >
+      <div className="relative h-[400] w-full">
+        <img
+          src={room.floorPlanImage}
+          alt={roomName}
+          className="w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"
+        />
+      </div>
+
+      <div className="absolute inset-0 p-6">
+        <div className="flex items-start gap-3">
+          <Layout className="h-6 w-6 text-[[theme.color.primary]]" />
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              {roomName}
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {width}{unit} × {depth}{unit}
+            </p>
+          </div>
+        </div>
+
+        <FurnitureList
+          furniture={furniture}
+          onAdd={onFurnitureAdd}
+          onRemove={onFurnitureRemove}
+        />
+      </div>
+    </motion.div>
+  );
+}
+
+function FurnitureList({
+  furniture,
+  onAdd,
+  onRemove,
+}: { furniture: FurnitureItem[]; onAdd: any; onRemove: any }) {
+  return (
+    <div className="mt-6">
+      {furniture.length === 0 && (
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Drag furniture from the picker below to decorate your room
+        </p>
+      )}
+
+      <div className="grid grid-cols-2 gap-3 mt-3">
+        {furniture.map((item) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+            className="group rounded-lg border border-gray-200 dark:border-gray-800 p-3 hover:shadow-lg transition-shadow cursor-drag"
+            style={{ background: `url('${item.imageUrl}') center/cover` }}
+            aria-label="Furniture: {item.name}"
+          >
+            <div className="h-24 w-full rounded-t-lg overflow-hidden">
+              <img
+                src={item.imageUrl}
+                alt={item.name}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-2 text-center">
+              <p className="text-xs font-medium text-gray-900 dark:text-white line-clamp-1">{item.name}</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500 line-clamp-1">${item.price || "Price on request"}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}

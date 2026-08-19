@@ -1,0 +1,117 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { BarChart2, Zap, TrendingUp, Award, Shield, Clock, Palette, Sun, Moon } from "lucide-react";
+
+interface ScoreGaugeProps {
+  score: number;
+  category: "excellent" | "good" | "needs-improvement" | "poor";
+}
+
+export default function ScoreGauge({ score, category }: ScoreGaugeProps) {
+  const colorMap = {
+    excellent: "var(--color-secondary)",
+    good: "var(--color-primary)",
+    "needs-improvement": "var(--color-accent)",
+    poor: "var(--color-primary)",
+  };
+
+  const labelMap = {
+    excellent: "Excellent",
+    good: "Good",
+    "needs-improvement": "Needs Improvement",
+    poor: "Poor",
+  };
+
+  const segments = Math.max(1, Math.floor((score / 100) * 8));
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="space-y-4"
+    >
+      <div className="bg-white dark:bg-gray-950 rounded-2xl p-6 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-bold text-2xl text-gray-900 dark:text-white">{labelMap[category]}</h2>
+            <p className="text-4xl font-bold text-[var(--color-primary)]">{score}</p>
+          </div>
+          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: colorMap[category] }}>
+            {score >= 80 ? <Award size={24} /> : score >= 60 ? <Sparkles size={24} /> : score >= 40 ? <AlertCircle size={24} /> : <XCircle size={24} />}
+          </div>
+        </div>
+
+        <p className="text-sm text-gray-500 dark:text-gray-400">out of 100</p>
+
+        <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden mt-4">
+          <div
+            className="h-full rounded-full transition-all duration-500 ease-out"
+            style={{ width: `${score}%`, backgroundColor: colorMap[category] }}
+          />
+        </div>
+
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          {score >= 80 ? "Strong SEO foundation, minor optimizations recommended" : score >= 60 ? "Good baseline, address technical issues" : score >= 40 ? "Significant improvements needed across multiple areas" : "Critical SEO issues, immediate action required"}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          className="p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950"
+        >
+          <BarChart2 className="h-4 w-4 text-[var(--color-primary)] mx-auto mb-2" />
+          <p className="text-xs text-gray-500 dark:text-gray-400">Performance</p>
+          <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden" style={{ width: `${score}%` }}>
+            <div className="h-full rounded-full bg-[var(--color-primary)] transition-width" style={{ width: `${score}%` }} />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950"
+        >
+          <Zap className="h-4 w-4 text-[var(--color-accent)] mx-auto mb-2" />
+          <p className="text-xs text-gray-500 dark:text-gray-400">Accessibility</p>
+          <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden" style={{ width: `${Math.max(0, score - 20)}%` }}>
+            <div className="h-full rounded-full bg-[var(--color-accent)] transition-width" style={{ width: `${Math.max(0, score - 20)}%` }} />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          className="p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950"
+        >
+          <TrendingUp className="h-4 w-4 text-[var(--color-primary)] mx-auto mb-2" />
+          <p className="text-xs text-gray-500 dark:text-gray-400">Growth Trend</p>
+          <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+            <div className="h-full rounded-full bg-[var(--color-primary)] transition-width" style={{ width: `${Math.min(100, score + 10)}%` }} />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950"
+        >
+          <Shield className="h-4 w-4 text-[var(--color-secondary)] mx-auto mb-2" />
+          <p className="text-xs text-gray-500 dark:text-gray-400">Security</p>
+          <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+            <div className="h-full rounded-full bg-[var(--color-secondary)] transition-width" style={{ width: `${score >= 70 ? 100 : 70}%` }} />
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}

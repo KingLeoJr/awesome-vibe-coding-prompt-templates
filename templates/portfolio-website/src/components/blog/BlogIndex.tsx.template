@@ -1,0 +1,108 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { BookOpen, Calendar, Search, Globe } from "lucide-react";
+
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  publishDate: string;
+  tags: string[];
+}
+
+interface BlogIndexProps {
+  posts: BlogPost[];
+}
+
+export default function BlogIndex({ posts }: BlogIndexProps) {
+  const animateVariants = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 }
+  };
+
+  return (
+    <section
+      className="py-16 bg-white dark:bg-gray-950"
+      id="blog"
+    >
+      <motion.div
+        initial={animateVariants.initial}
+        whileInView={animateVariants.whileInView}
+        viewport={animateVariants.viewport}
+        transition={animateVariants.transition}
+        className="container mx-auto px-6"
+      >
+        <h2 className="text-3xl font-bold text-[var(--color-primary)] dark:text-white mb-8">
+          Blog
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <motion.div
+              key={post.id}
+              initial={animateVariants.initial}
+              whileInView={animateVariants.whileInView}
+              viewport={animateVariants.viewport}
+              transition={{ ...animateVariants.transition, delay: posts.indexOf(post) * 0.04 }}
+              className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+            >
+              <div className="relative">
+                <Image
+                  src={`/placeholder-blog.jpg`}
+                  alt={post.title}
+                  className="h-48 w-full object-cover transition-opacity duration-300"
+                  placeholder="blur"
+                  loading="lazy"
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white/80 to-transparent">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">{post.publishDate}</span>
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-sm font-medium text-[var(--color-primary)] dark:text-white line-clamp-2">
+                  {post.title}
+                </h3>
+                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+                  {post.excerpt}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-1">
+                  {post.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="px-2 py-1 text-xs font-medium rounded bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400 mr-1"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href={`/blog/${post.slug}`}
+                  className="mt-2 text-[var(--color-accent)] dark:text-[var(--color-accent-dark)] underline underline-offset-2 hover:underline"
+                >
+                  Read post
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Pagination */}
+        <div className="mt-8 flex justify-center">
+          <nav aria-label="Blog pagination">
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1 border rounded-md text-sm">1</span>
+              <span className="px-3 py-1 border rounded-md text-sm opacity-40">2</span>
+              <span className="px-3 py-1 border rounded-md text-sm opacity-40">3</span>
+            </div>
+          </nav>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

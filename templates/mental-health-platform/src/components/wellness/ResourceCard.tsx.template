@@ -1,0 +1,154 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { BookOpen, FileText, Headphones, PenLine, PlayCircle, Search } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface WellnessResource {
+  id: string;
+  title: string;
+  type: "article" | "video" | "podcast" | "worksheet";
+  topic: string;
+  duration: string;
+  level: "beginner" | "intermediate" | "advanced";
+  author: string;
+  url: string;
+}
+
+interface ResourceCardProps {
+  resources: WellnessResource[];
+  topics?: string[];
+  formats?: string[];
+}
+
+const TYPE_META = {
+  article: { label: "Article", icon: FileText, tone: "text-[var(--color-primary)] bg-[var(--color-primary)]/10" },
+  video: { label: "Video", icon: PlayCircle, tone: "text-[var(--color-secondary)] bg-[var(--color-secondary)]/10" },
+  podcast: { label: "Podcast", icon: Headphones, tone: "text-[var(--color-accent)] bg-[var(--color-accent)]/10" },
+  worksheet: { label: "Worksheet", icon: PenLine, tone: "text-emerald-500 bg-emerald-500/10" },
+} as const;
+
+const LEVEL_TONE: Record<WellnessResource["level"], string> = {
+  beginner: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  intermediate: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  advanced: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function ResourceCard({
+  resources,
+  topics = [],
+  formats = ["article", "video", "podcast", "worksheet"],
+}: ResourceCardProps) {
+  const [query, setQuery] = useState("");
+  const [topic, setTopic] = useState("All");
+  const [format, setFormat] = useState("All");
+
+  const filtered = useMemo(() => {
+    return resources.filter((resource) => {
+      const matchesQuery =
+        resource.title.toLowerCase().includes(query.toLowerCase()) ||
+        resource.author.toLowerCase().includes(query.toLowerCase());
+      const matchesTopic = topic === "All" || resource.topic === topic;
+      const matchesFormat = format === "All" || resource.type === format;
+      return matchesQuery && matchesTopic && matchesFormat;
+    });
+  }, [resources, query, topic, format]);
+
+  const selectClass =
+    "rounded-full border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]";
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="resources-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <BookOpen size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="resources-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Wellness library</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Articles, videos, podcasts, and worksheets — filtered by what you need.
+            </p>
+          </div>
+        </div>
+
+        <div className="mb-6 grid gap-3 sm:grid-cols-3">
+          <div className="relative">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search resources…"
+              className="w-full rounded-full border border-gray-300 dark:border-gray-700 bg-transparent pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              aria-label="Search resources"
+            />
+          </div>
+          <label className="sr-only" htmlFor="topic-filter">Topic</label>
+          <select id="topic-filter" value={topic} onChange={(e) => setTopic(e.target.value)} className={selectClass} aria-label="Filter by topic">
+            <option value="All">All topics</option>
+            {topics.map((t) => (
+              <option key={t} value={t}>{t}</option>
+            ))}
+          </select>
+          <label className="sr-only" htmlFor="format-filter">Format</label>
+          <select id="format-filter" value={format} onChange={(e) => setFormat(e.target.value)} className={selectClass} aria-label="Filter by format">
+            <option value="All">All formats</option>
+            {formats.map((f) => (
+              <option key={f} value={f} className="capitalize">{f}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {filtered.map((resource, index) => {
+            const meta = TYPE_META[resource.type];
+            return (
+              <motion.a
+                key={resource.id}
+                href={resource.url}
+                target="_blank"
+                rel="noreferrer"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.06 }}
+                className="group"
+              >
+                <Card className="h-full p-6 transition hover:shadow-lg hover:-translate-y-0.5">
+                  <div className="flex items-center justify-between">
+                    <span className={cn("flex h-10 w-10 items-center justify-center rounded-xl", meta.tone)}>
+                      <meta.icon size={18} aria-hidden="true" />
+                    </span>
+                    <span className={cn("rounded-full px-2.5 py-1 text-[11px] font-medium capitalize", LEVEL_TONE[resource.level])}>
+                      {resource.level}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 font-semibold text-gray-900 dark:text-white group-hover:text-[var(--color-primary)] transition-colors">
+                    {resource.title}
+                  </h3>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    {meta.label} · {resource.duration} · {resource.topic} · {resource.author}
+                  </p>
+                </Card>
+              </motion.a>
+            );
+          })}
+        </div>
+
+        {filtered.length === 0 && (
+          <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center text-sm text-gray-500 dark:text-gray-400">
+            No resources match — try another topic or format.
+          </div>
+        )}
+      </motion.div>
+    </section>
+  );
+}

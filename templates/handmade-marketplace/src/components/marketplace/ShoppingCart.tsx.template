@@ -1,0 +1,171 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Minus, Plus, ShieldCheck, ShoppingCart as CartIcon, Trash2 } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface CartItem {
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image?: string;
+}
+
+export interface CartSummary {
+  shipping: number;
+  taxRate: number;
+}
+
+interface ShoppingCartProps {
+  items: CartItem[];
+  summary?: CartSummary;
+  currency?: string;
+}
+
+export default function ShoppingCart({
+  items,
+  summary = { shipping: 0, taxRate: 0 },
+  currency = "{{currency.symbol}}",
+}: ShoppingCartProps) {
+  const [cart, setCart] = useState<CartItem[]>(items);
+
+  const updateQuantity = (productId: string, delta: number) => {
+    setCart((prev) =>
+      prev
+        .map((item) =>
+          item.productId === productId
+            ? { ...item, quantity: Math.max(0, item.quantity + delta) }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
+  const removeItem = (productId: string) => {
+    setCart((prev) => prev.filter((item) => item.productId !== productId));
+  };
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = subtotal > 0 ? summary.shipping : 0;
+  const tax = subtotal * summary.taxRate;
+  const total = subtotal + shipping + tax;
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="cart-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
+            <CartIcon size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="cart-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Your cart</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {cart.length} {cart.length === 1 ? "item" : "items"} · quantities, saved carts, and secure checkout.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          <Card className="lg:col-span-2 p-6">
+            {cart.length > 0 ? (
+              <ul className="flex flex-col gap-4" aria-label="Cart items">
+                {cart.map((item, index) => (
+                  <motion.li
+                    key={item.productId}
+                    initial={{ opacity: 0, x: -8 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="flex items-center gap-4"
+                  >
+                    {item.image && (
+                      <img src={item.image} alt="" className="h-16 w-16 rounded-xl object-cover" />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <p className="font-semibold text-gray-900 dark:text-white">{item.name}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {currency}{item.price.toLocaleString()} each
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-1 rounded-full border border-gray-200 dark:border-gray-800 p-1" role="group" aria-label={`Quantity for ${item.name}`}>
+                      <button
+                        onClick={() => updateQuantity(item.productId, -1)}
+                        aria-label={`Decrease quantity of ${item.name}`}
+                        className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+                      >
+                        <Minus size={14} aria-hidden="true" />
+                      </button>
+                      <span className="w-8 text-center text-sm font-semibold tabular-nums" aria-live="polite">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => updateQuantity(item.productId, 1)}
+                        aria-label={`Increase quantity of ${item.name}`}
+                        className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+                      >
+                        <Plus size={14} aria-hidden="true" />
+                      </button>
+                    </div>
+                    <p className="w-20 text-right font-bold text-gray-900 dark:text-white tabular-nums">
+                      {currency}{(item.price * item.quantity).toLocaleString()}
+                    </p>
+                    <button
+                      onClick={() => removeItem(item.productId)}
+                      aria-label={`Remove ${item.name} from cart`}
+                      className="flex h-9 w-9 items-center justify-center rounded-full text-gray-400 hover:bg-rose-500/10 hover:text-rose-500 transition"
+                    >
+                      <Trash2 size={16} aria-hidden="true" />
+                    </button>
+                  </motion.li>
+                ))}
+              </ul>
+            ) : (
+              <p className="py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+                Your cart is empty — explore the shop to find something handmade.
+              </p>
+            )}
+          </Card>
+
+          <Card className="h-fit p-6">
+            <h3 className="font-semibold text-gray-900 dark:text-white">Order summary</h3>
+            <dl className="mt-4 flex flex-col gap-2 text-sm">
+              <div className="flex items-center justify-between">
+                <dt className="text-gray-500 dark:text-gray-400">Subtotal</dt>
+                <dd className="font-semibold text-gray-900 dark:text-white tabular-nums">{currency}{subtotal.toLocaleString()}</dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="text-gray-500 dark:text-gray-400">Shipping</dt>
+                <dd className="font-semibold text-gray-900 dark:text-white tabular-nums">{shipping > 0 ? currency + shipping.toFixed(2) : "Free"}</dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="text-gray-500 dark:text-gray-400">Tax</dt>
+                <dd className="font-semibold text-gray-900 dark:text-white tabular-nums">{currency}{tax.toFixed(2)}</dd>
+              </div>
+              <div className="flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3 text-base">
+                <dt className="font-semibold text-gray-900 dark:text-white">Total</dt>
+                <dd className="font-bold text-[var(--color-primary)] tabular-nums">{currency}{total.toFixed(2)}</dd>
+              </div>
+            </dl>
+            <button
+              className="mt-5 w-full rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-semibold text-white hover:opacity-90 transition"
+            >
+              Checkout securely
+            </button>
+            <p className={cn("mt-3 flex items-center justify-center gap-1.5 text-xs text-gray-400")}>
+              <ShieldCheck size={14} aria-hidden="true" />
+              Encrypted payments · buyer protection
+            </p>
+          </Card>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

@@ -1,0 +1,136 @@
+{
+  "app": {
+    "name": "{{app.name}}",
+    "slug": "{{app.slug}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "nav": [
+    { "label": "Scan", "href": "#scan" },
+    { "label": "Library", "href": "#library" },
+    { "label": "Labs", "href": "#labs" },
+    { "label": "Quests", "href": "#quests" },
+    { "label": "Explore", "href": "#explore" }
+  ],
+  "books": [
+    { "id": "bk-001", "title": "The Wondrous Solar System", "author": "Dr. Mei Tanaka", "isbn": "978-0-13-4826-1", "arTrigger": "AR · Planets", "previewLabel": "An animated 3D solar system scales onto the page", "chapterCount": 12 },
+    { "id": "bk-002", "title": "Inside Your Amazing Body", "author": "Sam Okafor", "isbn": "978-0-13-4826-2", "arTrigger": "AR · Anatomy", "previewLabel": "Layered body systems you can peel apart in 3D", "chapterCount": 9 },
+    { "id": "bk-003", "title": "Great Wall & the Silk Road", "author": "Priya Raman", "isbn": "978-0-13-4826-3", "arTrigger": "AR · History", "previewLabel": "A walkable reconstruction of the ancient trade route", "chapterCount": 14 },
+    { "id": "bk-004", "title": "Secrets of the Rainforest", "author": "Dr. Leo Alvarez", "isbn": "978-0-13-4826-4", "arTrigger": "AR · Ecology", "previewLabel": "A living diorama with species you can tag and track", "chapterCount": 10 }
+  ],
+  "subjects": ["Science", "Math", "History", "Language", "Art", "Geography"],
+  "lessons": [
+    { "id": "ls-001", "title": "Rocket physics with real engines", "subject": "Science", "gradeLevel": "5-7", "duration": 15, "mode": "interactive", "rating": 4.9, "plays": 12840 },
+    { "id": "ls-002", "title": "Frogs, moths & camouflage", "subject": "Biology", "gradeLevel": "4-6", "duration": 12, "mode": "ar", "rating": 4.8, "plays": 9730 },
+    { "id": "ls-003", "title": "Fractions on the number line", "subject": "Math", "gradeLevel": "3-5", "duration": 10, "mode": "3d", "rating": 4.7, "plays": 8120 },
+    { "id": "ls-004", "title": "Ancient Rome: city that rose from a village", "subject": "History", "gradeLevel": "6-8", "duration": 18, "mode": "ar", "rating": 4.9, "plays": 11020 },
+    { "id": "ls-005", "title": "Hiragana in your kitchen", "subject": "Language", "gradeLevel": "4-8", "duration": 8, "mode": "ar", "rating": 4.6, "plays": 6430 },
+    { "id": "ls-006", "title": "Sculpting with light and shadow", "subject": "Art", "gradeLevel": "5-9", "duration": 14, "mode": "3d", "rating": 4.8, "plays": 5370 }
+  ],
+  "experiments": [
+    {
+      "id": "ex-001",
+      "title": "Balloon hovercraft on a table",
+      "subject": "Physics",
+      "difficulty": "easy",
+      "duration": 10,
+      "steps": 4,
+      "safety": "Adult supervision for the balloon pump; keep water away from electronics.",
+      "materials": ["CD disc", "Balloon", "Bottle cap", "Hot glue"]
+    },
+    {
+      "id": "ex-002",
+      "title": "Make a rainbow with refraction",
+      "subject": "Optics",
+      "difficulty": "medium",
+      "duration": 15,
+      "steps": 5,
+      "safety": "Never look directly at the sun; use a flashlight as the light source.",
+      "materials": ["Glass prism", "Flashlight", "White paper", "Dark room"]
+    },
+    {
+      "id": "ex-003",
+      "title": "Volcano eruption (baking soda)",
+      "subject": "Chemistry",
+      "difficulty": "easy",
+      "duration": 8,
+      "steps": 4,
+      "safety": "Use a tray; the foam can stain. Avoid eye contact with the mixture.",
+      "materials": ["Baking soda", "Vinegar", "Food coloring", "Model volcano"]
+    },
+    {
+      "id": "ex-004",
+      "title": "Build a potato battery",
+      "subject": "Electricity",
+      "difficulty": "medium",
+      "duration": 12,
+      "steps": 6,
+      "safety": "Low voltage — safe to touch, but do not short the wires with metal.",
+      "materials": ["Potatoes", "Copper wire", "Zinc nails", "LED bulb"]
+    }
+  ],
+  "progress": {
+    "xp": 2840,
+    "level": 3,
+    "streak": 6,
+    "badges": [
+      { "id": "bd-001", "name": "First Scan", "icon": "Star", "earned": true },
+      { "id": "bd-002", "name": "Lab Wizard", "icon": "Zap", "earned": true },
+      { "id": "bd-003", "name": "Explorer", "icon": "Compass", "earned": true },
+      { "id": "bd-004", "name": "Math Whiz", "icon": "Target", "earned": false },
+      { "id": "bd-005", "name": "History Buff", "icon": "Trophy", "earned": false },
+      { "id": "bd-006", "name": "Polyglot", "icon": "Award", "earned": false }
+    ],
+    "quests": [
+      { "id": "qs-001", "title": "Scan 5 book covers", "xp": 150, "progress": 3, "total": 5, "active": true },
+      { "id": "qs-002", "title": "Complete 3 lab simulations", "xp": 200, "progress": 2, "total": 3, "active": true },
+      { "id": "qs-003", "title": "Visit 2 field-trip destinations", "xp": 120, "progress": 1, "total": 2, "active": true },
+      { "id": "qs-004", "title": "Finish the fractions module", "xp": 250, "progress": 0, "total": 1, "active": false }
+    ]
+  },
+  "destinations": [
+    {
+      "id": "dn-001",
+      "name": "Grand Canyon",
+      "category": "Geography",
+      "description": "Fly through layered rock strata and watch the canyon form over millions of years.",
+      "difficulty": "easy",
+      "landmarks": [
+        { "id": "lm-001", "name": "Rim Overlook", "description": "See how the Colorado River carved the gorge" },
+        { "id": "lm-002", "name": "Fossil Layer", "description": "Spot marine fossils from the ancient seabed" }
+      ]
+    },
+    {
+      "id": "dn-002",
+      "name": "Machu Picchu",
+      "category": "History",
+      "description": "Wander Inca terraces and temples with guide overlays at every structure.",
+      "difficulty": "medium",
+      "landmarks": [
+        { "id": "lm-003", "name": "Temple of the Sun", "description": "Watch the winter solstice alignment animation" },
+        { "id": "lm-004", "name": "Agricultural Terraces", "description": "Learn how crops were grown at altitude" }
+      ]
+    },
+    {
+      "id": "dn-003",
+      "name": "Coral Reef, Great Barrier",
+      "category": "Biology",
+      "description": "Swim a living reef, tag species, and see the effects of warming waters.",
+      "difficulty": "easy",
+      "landmarks": [
+        { "id": "lm-005", "name": "Clownfish Anemone", "description": "Watch the mutual-symbiosis animation" },
+        { "id": "lm-006", "name": "Bleached Coral Zone", "description": "Compare healthy vs stressed coral color" }
+      ]
+    },
+    {
+      "id": "dn-004",
+      "name": "Mars: Olympus Mons",
+      "category": "Astronomy",
+      "description": "Stand on the tallest volcano in the solar system with scale overlays.",
+      "difficulty": "hard",
+      "landmarks": [
+        { "id": "lm-007", "name": "Caldera Rim", "description": "Measure the caldera against Mount Everest" },
+        { "id": "lm-008", "name": "Ancient Riverbeds", "description": "Trace where water may have once flowed" }
+      ]
+    }
+  ]
+}

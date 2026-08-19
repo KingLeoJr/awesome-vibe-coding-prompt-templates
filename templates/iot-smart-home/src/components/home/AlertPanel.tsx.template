@@ -1,0 +1,91 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { AlertTriangle, Bell, CheckCircle2, Info } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface HomeAlert {
+  id: string;
+  severity: "high" | "medium" | "low";
+  device: string;
+  message: string;
+  time: string;
+}
+
+interface AlertPanelProps {
+  alerts: HomeAlert[];
+}
+
+const SEVERITY_STYLES: Record<HomeAlert["severity"], { badge: string; dot: string; icon: typeof Info }> = {
+  high: {
+    badge: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300",
+    dot: "bg-red-500",
+    icon: AlertTriangle,
+  },
+  medium: {
+    badge: "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
+    dot: "bg-[var(--color-accent)]",
+    icon: Bell,
+  },
+  low: {
+    badge: "bg-[var(--color-primary)]/10 text-[var(--color-primary)]",
+    dot: "bg-[var(--color-primary)]",
+    icon: Info,
+  },
+};
+
+export default function AlertPanel({ alerts }: AlertPanelProps) {
+  const unresolved = alerts.length;
+
+  return (
+    <Card className="overflow-hidden">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 p-6 pb-4 dark:border-gray-800">
+        <h3 className="inline-flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+          <AlertTriangle size={20} className="text-[var(--color-accent)]" aria-hidden />
+          Device alerts
+        </h3>
+        <span className="rounded-full bg-[var(--color-accent)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-accent)]">
+          {unresolved} active
+        </span>
+      </div>
+
+      <ul className="divide-y divide-gray-100 dark:divide-gray-800">
+        {alerts.map((alert, index) => {
+          const severity = SEVERITY_STYLES[alert.severity];
+          const Icon = severity.icon;
+          return (
+            <motion.li
+              key={alert.id}
+              initial={{ opacity: 0, x: -12 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="flex items-start gap-4 p-6"
+            >
+              <span className={cn("mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl", severity.badge)}>
+                <Icon size={18} aria-hidden />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <p className="text-sm font-bold text-gray-900 dark:text-white">{alert.device}</p>
+                  <span className={cn("h-1.5 w-1.5 rounded-full", severity.dot)} aria-hidden />
+                  <span className="text-xs capitalize text-gray-400 dark:text-gray-500">{alert.severity}</span>
+                </div>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{alert.message}</p>
+              </div>
+              <time className="shrink-0 text-xs text-gray-400 dark:text-gray-500">{alert.time}</time>
+            </motion.li>
+          );
+        })}
+
+        {alerts.length === 0 && (
+          <li className="flex items-center gap-3 p-6 text-sm text-gray-500 dark:text-gray-400">
+            <CheckCircle2 size={18} className="text-emerald-500" aria-hidden />
+            All systems nominal. No active alerts.
+          </li>
+        )}
+      </ul>
+    </Card>
+  );
+}

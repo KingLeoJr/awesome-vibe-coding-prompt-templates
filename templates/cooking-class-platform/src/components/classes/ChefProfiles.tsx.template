@@ -1,0 +1,84 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Award, Star, Video } from "lucide-react";
+
+export interface Chef {
+  id: string;
+  name: string;
+  specialty: string;
+  rating: number;
+  reviews: number;
+  sessionPrice: number;
+  bio: string;
+}
+
+interface ChefProfilesProps {
+  chefs: Chef[];
+  currency?: string;
+}
+
+export default function ChefProfiles({ chefs, currency = "{{currency.symbol}}" }: ChefProfilesProps) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="chefs-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <Award size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="chefs-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Work with a chef</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">One-on-one virtual consultations and personalized coaching.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {chefs.map((chef, i) => (
+            <motion.article
+              key={chef.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
+              className="flex flex-col rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{chef.name}</h3>
+                  <p className="mt-0.5 text-sm text-[var(--color-secondary)]">{chef.specialty}</p>
+                </div>
+                <span className="flex items-center gap-1 rounded-full bg-[var(--color-accent)]/10 px-2.5 py-1 text-xs font-semibold text-[var(--color-accent)]">
+                  <Star size={13} aria-hidden="true" />
+                  {chef.rating.toFixed(1)}
+                </span>
+              </div>
+
+              <p className="mt-3 flex-1 text-sm text-gray-600 dark:text-gray-300">{chef.bio}</p>
+
+              <div className="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4">
+                <div>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white">
+                    {currency}{chef.sessionPrice}
+                    <span className="text-xs font-normal text-gray-400"> / session</span>
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{chef.reviews} reviews</p>
+                </div>
+                <button className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-medium text-white hover:opacity-90 transition">
+                  <Video size={15} aria-hidden="true" />
+                  Book consult
+                </button>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

@@ -1,0 +1,177 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { BookOpen, Clock3, PlayCircle, Search, Star, Users } from "lucide-react";
+import Card from "@/components/shared/Card";
+import { cn } from "@/lib/utils";
+
+export interface Course {
+  id: string;
+  title: string;
+  coach: string;
+  topic: string;
+  level: "beginner" | "intermediate" | "advanced";
+  duration: string;
+  lessons: number;
+  rating: number;
+  students: number;
+  price: number;
+  image: string;
+  badge?: string;
+}
+
+interface CourseCardProps {
+  courses: Course[];
+  topics?: string[];
+  currency?: string;
+}
+
+const LEVEL_TONE: Record<Course["level"], string> = {
+  beginner: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  intermediate: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  advanced: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+};
+
+export default function CourseCard({
+  courses,
+  topics = [],
+  currency = "{{currency.symbol}}",
+}: CourseCardProps) {
+  const [query, setQuery] = useState("");
+  const [topic, setTopic] = useState("All");
+  const [level, setLevel] = useState("All");
+
+  const filtered = useMemo(() => {
+    return courses.filter((course) => {
+      const matchesQuery =
+        course.title.toLowerCase().includes(query.toLowerCase()) ||
+        course.coach.toLowerCase().includes(query.toLowerCase());
+      const matchesTopic = topic === "All" || course.topic === topic;
+      const matchesLevel = level === "All" || course.level === level;
+      return matchesQuery && matchesTopic && matchesLevel;
+    });
+  }, [courses, query, topic, level]);
+
+  const selectClass =
+    "rounded-full border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]";
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="courses-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <BookOpen size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="courses-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Courses</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Self-paced programs by certified coaches — productivity, mindfulness, leadership, and more.
+            </p>
+          </div>
+        </div>
+
+        <div className="mb-6 grid gap-3 sm:grid-cols-3">
+          <div className="relative">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search courses…"
+              className="w-full rounded-full border border-gray-300 dark:border-gray-700 bg-transparent pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              aria-label="Search courses"
+            />
+          </div>
+          <label className="sr-only" htmlFor="topic-filter">Topic</label>
+          <select id="topic-filter" value={topic} onChange={(e) => setTopic(e.target.value)} className={selectClass} aria-label="Filter by topic">
+            <option value="All">All topics</option>
+            {topics.map((t) => (
+              <option key={t} value={t}>{t}</option>
+            ))}
+          </select>
+          <label className="sr-only" htmlFor="level-filter">Level</label>
+          <select id="level-filter" value={level} onChange={(e) => setLevel(e.target.value)} className={selectClass} aria-label="Filter by level">
+            <option value="All">All levels</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {filtered.map((course, index) => (
+            <motion.div
+              key={course.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
+            >
+              <Card className="group h-full overflow-hidden">
+                <div className="relative overflow-hidden">
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {course.badge && (
+                    <span className="absolute left-3 top-3 rounded-full bg-[var(--color-primary)] px-3 py-1 text-xs font-semibold text-white">
+                      {course.badge}
+                    </span>
+                  )}
+                  <span className={cn("absolute right-3 top-3 rounded-full px-2.5 py-1 text-[11px] font-medium capitalize", LEVEL_TONE[course.level])}>
+                    {course.level}
+                  </span>
+                </div>
+
+                <div className="p-5">
+                  <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-[var(--color-primary)] transition-colors">
+                    {course.title}
+                  </h3>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">by {course.coach} · {course.topic}</p>
+
+                  <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
+                    <span className="flex items-center gap-1">
+                      <Clock3 size={13} aria-hidden="true" />
+                      {course.duration}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <PlayCircle size={13} aria-hidden="true" />
+                      {course.lessons} lessons
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Users size={13} aria-hidden="true" />
+                      {course.students.toLocaleString()}
+                    </span>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4">
+                    <span className="flex items-center gap-1 text-sm">
+                      <Star size={14} className="fill-[var(--color-accent)] text-[var(--color-accent)]" aria-hidden="true" />
+                      <span className="font-semibold text-gray-900 dark:text-white">{course.rating}</span>
+                    </span>
+                    <span className="text-lg font-bold text-gray-900 dark:text-white">
+                      {currency}{course.price}
+                    </span>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        {filtered.length === 0 && (
+          <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center text-sm text-gray-500 dark:text-gray-400">
+            No courses match — try another topic or level.
+          </div>
+        )}
+      </motion.div>
+    </section>
+  );
+}

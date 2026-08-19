@@ -1,0 +1,62 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Calendar, Folder, Loader2 } from "lucide-react";
+
+interface ItineraryPlannerProps {
+  tripId: string;
+  days: number;
+}
+
+export default function ItineraryPlanner({ tripId, days }: ItineraryPlannerProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <div className="flex items-start gap-3">
+        <Folder className="h-5 w-5 text-[[theme.color.primary]] flex-shrink-0 mt-1" />
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            Itinerary: {tripId}
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {days}-day trip plan
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <Calendar className="mr-2" /> Trip Duration
+        </label>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          This {days}-day itinerary covers the must-see attractions, dining
+          recommendations, and local experiences.
+        </p>
+      </div>
+
+      <div>
+        <Loader2 className="h-5 w-5 animate-spin mr-2 text-[[theme.color.primary]]" />
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          Loading itinerary data...
+        </span>
+      </div>
+
+      <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
+        <h4 className="font-medium text-gray-900 dark:text-white">Day-by-Day Overview</h4>
+        <ul className="list-disc pl-5 text-sm text-gray-600 dark:text-gray-300">
+          <li>Day 1: Arrival and local orientation</li>
+          <li>Day 2: Main attractions and landmarks</li>
+          <li>Day 3: Cultural experiences and dining</li>
+          <li>Day 4: Free day or optional excursions</li>
+          <li>Day 5: Departure</li>
+        </ul>
+      </div>
+    </motion.div>
+  );
+}

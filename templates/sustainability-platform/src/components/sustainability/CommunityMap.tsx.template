@@ -1,0 +1,164 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Leaf, MapPin, Recycle, Sprout } from "lucide-react";
+import type { MapPoint, MapPointType } from "@/lib/types";
+
+interface CommunityMapProps {
+  points: MapPoint[];
+}
+
+const LAYERS: { type: MapPointType; label: string; icon: typeof Leaf }[] = [
+  { type: "initiative", label: "Initiatives", icon: Leaf },
+  { type: "recycling", label: "Recycling centers", icon: Recycle },
+  { type: "garden", label: "Community gardens", icon: Sprout },
+];
+
+export default function CommunityMap({ points }: CommunityMapProps) {
+  const [activeLayer, setActiveLayer] = useState<MapPointType | null>(null);
+  const [selected, setSelected] = useState<MapPoint | null>(null);
+
+  const visible = useMemo(
+    () => points.filter((point) => !activeLayer || point.type === activeLayer),
+    [points, activeLayer]
+  );
+
+  return (
+    <section id="community" className="bg-gray-50 py-20 dark:bg-gray-900/50">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+              Near you
+            </p>
+            <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
+              Local initiatives, recycling and green spaces
+            </h2>
+          </div>
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Map layers">
+            {LAYERS.map((layer) => {
+              const active = activeLayer === layer.type;
+              return (
+                <button
+                  key={layer.type}
+                  onClick={() => setActiveLayer(active ? null : layer.type)}
+                  aria-pressed={active}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition ${
+                    active
+                      ? "bg-[var(--color-primary)] text-white"
+                      : "border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-300 dark:hover:bg-gray-900"
+                  }`}
+                >
+                  <layer.icon className="h-4 w-4" aria-hidden="true" />
+                  {layer.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-6 lg:grid-cols-5">
+          <div className="relative h-96 overflow-hidden rounded-3xl border border-gray-200 bg-gradient-to-br from-emerald-50 to-teal-100 dark:border-gray-800 dark:from-gray-900 dark:to-gray-950 lg:col-span-3">
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.08) 1px, transparent 1px)",
+                backgroundSize: "48px 48px",
+              }}
+              aria-hidden="true"
+            />
+            {visible.map((point) => (
+              <button
+                key={point.id}
+                onClick={() => setSelected(point)}
+                aria-label={`${point.name}, ${point.distanceKm.toFixed(1)} km away`}
+                className="group absolute -translate-x-1/2 -translate-y-1/2"
+                style={{ left: `${point.x}%`, top: `${point.y}%` }}
+              >
+                <span
+                  className={`grid h-9 w-9 place-items-center rounded-full border-2 shadow-lg transition hover:scale-110 ${
+                    point.type === "initiative"
+                      ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                      : point.type === "recycling"
+                        ? "border-[var(--color-secondary)] bg-[var(--color-secondary)] text-white"
+                        : "border-[var(--color-accent)] bg-[var(--color-accent)] text-white"
+                  } ${selected?.id === point.id ? "ring-4 ring-white/70 dark:ring-gray-900/70" : ""}`}
+                >
+                  {point.type === "initiative" ? (
+                    <Leaf className="h-4 w-4" aria-hidden="true" />
+                  ) : point.type === "recycling" ? (
+                    <Recycle className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <Sprout className="h-4 w-4" aria-hidden="true" />
+                  )}
+                </span>
+              </button>
+            ))}
+
+            <AnimatePresence>
+              {selected && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 12 }}
+                  className="absolute right-4 bottom-4 left-4 rounded-2xl border border-gray-200 bg-white/95 p-4 shadow-xl backdrop-blur dark:border-gray-700 dark:bg-gray-950/95"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white">{selected.name}</h3>
+                      <p className="mt-0.5 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                        <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                        {selected.location} &middot; {selected.distanceKm.toFixed(1)} km
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setSelected(null)}
+                      aria-label="Close details"
+                      className="rounded-full p-1 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M18 6 6 18M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{selected.description}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="lg:col-span-2">
+            <h3 className="font-semibold text-gray-900 dark:text-white">
+              {visible.length} place{visible.length === 1 ? "" : "s"} near you
+            </h3>
+            <ul className="mt-4 space-y-3">
+              {visible.map((point) => (
+                <li key={point.id}>
+                  <button
+                    onClick={() => setSelected(point)}
+                    aria-pressed={selected?.id === point.id}
+                    className={`w-full rounded-2xl border p-4 text-left transition ${
+                      selected?.id === point.id
+                        ? "border-[var(--color-primary)] bg-[var(--color-primary)]/5"
+                        : "border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-900"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-medium text-gray-900 dark:text-white">{point.name}</span>
+                      <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                        {point.distanceKm.toFixed(1)} km
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{point.location}</p>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

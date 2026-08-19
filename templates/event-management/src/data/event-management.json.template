@@ -1,0 +1,159 @@
+{
+  "site": {
+    "name": "{{app.name}}",
+    "tagline": "{{app.tagline}}"
+  },
+  "hero": {
+    "title": "FrontendConf 2026",
+    "subtitle": "Two days, thirty speakers, one unforgettable community. Early-bird tickets end when the countdown does.",
+    "nextEvent": {
+      "name": "FrontendConf 2026",
+      "date": "2026-09-18T09:00:00-07:00",
+      "location": "Moscone Center, San Francisco"
+    }
+  },
+  "categories": ["Tech", "Business", "Music", "Sports"],
+  "locations": ["San Francisco", "New York", "London", "Berlin"],
+  "events": [
+    {
+      "id": 1,
+      "name": "FrontendConf 2026",
+      "description": "The community conference for React, Next.js, and the modern web platform.",
+      "date": "2026-09-18T09:00:00-07:00",
+      "category": "Tech",
+      "location": "San Francisco",
+      "venue": "Moscone Center",
+      "capacity": 1200,
+      "registered": 864,
+      "priceFrom": 199,
+      "status": "published",
+      "tags": ["web", "react", "conference"]
+    },
+    {
+      "id": 2,
+      "name": "Design Systems Day",
+      "description": "Practical workshops on tokens, component libraries, and design engineering.",
+      "date": "2026-09-22T10:00:00-04:00",
+      "category": "Tech",
+      "location": "New York",
+      "venue": "Pier 36",
+      "capacity": 400,
+      "registered": 152,
+      "priceFrom": 129,
+      "status": "published",
+      "tags": ["design", "workshop"]
+    },
+    {
+      "id": 3,
+      "name": "Founder Summit: Growth",
+      "description": "A day of investor and operator talks on going from product to company.",
+      "date": "2026-10-03T09:30:00+01:00",
+      "category": "Business",
+      "location": "London",
+      "venue": "ExCeL London",
+      "capacity": 800,
+      "registered": 631,
+      "priceFrom": 249,
+      "status": "published",
+      "tags": ["startups", "growth"]
+    },
+    {
+      "id": 4,
+      "name": "Jazz & Electronics Open Air",
+      "description": "An evening of live jazz re-imagined with modular synths and visuals.",
+      "date": "2026-10-10T18:00:00+02:00",
+      "category": "Music",
+      "location": "Berlin",
+      "venue": "Kulturbrauerei",
+      "capacity": 600,
+      "registered": 590,
+      "priceFrom": 45,
+      "status": "sold_out",
+      "tags": ["music", "live"]
+    },
+    {
+      "id": 5,
+      "name": "Bay Area Marathon Relay",
+      "description": "Team relay along the waterfront with chip timing and after-party.",
+      "date": "2026-10-25T07:00:00-07:00",
+      "category": "Sports",
+      "location": "San Francisco",
+      "venue": "Embarcadero",
+      "capacity": 1500,
+      "registered": 742,
+      "priceFrom": 35,
+      "status": "published",
+      "tags": ["running", "wellness"]
+    },
+    {
+      "id": 6,
+      "name": "AI Product Craft",
+      "description": "Building delightful AI features: evaluation, evals, and edge cases.",
+      "date": "2026-11-05T09:00:00-05:00",
+      "category": "Tech",
+      "location": "New York",
+      "venue": "Javits Center",
+      "capacity": 500,
+      "registered": 0,
+      "priceFrom": 179,
+      "status": "draft",
+      "tags": ["ai", "product"]
+    }
+  ],
+  "tickets": [
+    {
+      "tier": "Early Bird",
+      "price": 199,
+      "originalPrice": 299,
+      "benefits": ["Full two-day access", "Workshop priority seating", "Swag kit", "Networking dinner"],
+      "remaining": 34
+    },
+    {
+      "tier": "Standard",
+      "price": 299,
+      "originalPrice": 299,
+      "benefits": ["Full two-day access", "Swag kit", "Replay library for 90 days"],
+      "remaining": 212
+    },
+    {
+      "tier": "VIP Experience",
+      "price": 649,
+      "originalPrice": 749,
+      "benefits": ["Everything in Standard", "Front-row seating", "Speaker lunch", "Post-event photo gallery"],
+      "remaining": 18
+    }
+  ],
+  "discountCodes": [
+    { "code": "EARLY20", "percent": 20 },
+    { "code": "TEAM10", "percent": 10 }
+  ],
+  "analytics": {
+    "totalRevenue": 184720,
+    "ticketsSold": 864,
+    "attendanceRate": 92,
+    "avgRating": 4.8,
+    "weeklySales": [
+      { "label": "Mon", "value": 12100 },
+      { "label": "Tue", "value": 18700 },
+      { "label": "Wed", "value": 14200 },
+      { "label": "Thu", "value": 24300 },
+      { "label": "Fri", "value": 18900 },
+      { "label": "Sat", "value": 32800 },
+      { "label": "Sun", "value": 19600 }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "What happens if I can't attend?",
+      "answer": "Tickets are transferable up to 7 days before the event, and refunds are available up to 30 days after purchase."
+    },
+    {
+      "question": "Is the event hybrid?",
+      "answer": "Yes — every session is streamed live and recordings remain available for 90 days after the event."
+    },
+    {
+      "question": "Are group discounts available?",
+      "answer": "Teams of 5+ automatically receive 10% off using the code TEAM10 at checkout."
+    }
+  ]
+}

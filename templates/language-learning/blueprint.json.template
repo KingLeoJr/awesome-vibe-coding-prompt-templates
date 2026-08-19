@@ -1,0 +1,208 @@
+{
+  "blueprint_id": "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+  "slug": "language-learning",
+  "name": "Personalized Language Learning Platform",
+  "category": "Vertical",
+  "archetype": "PersonalizedVertical",
+  "tagline": "Master a new language — personalized paths, interactive lessons, and community support.",
+  "builder_prompt_source": "prompts/language-learning.md",
+  "extra_config": {
+    "app": {
+      "slug": "language-learning",
+      "name": "Personalized Language Learning Platform",
+      "tagline": "Master a new language — personalized paths, interactive lessons, and community support.",
+      "category": "Vertical",
+      "archetype": "PersonalizedVertical"
+    },
+    "header": {
+      "cta_text": "Start Learning",
+      "cta_href": "/lessons/new",
+      "is_fixed": true
+    },
+    "seo": {
+      "og_image": "https://language-learning.example.com/og.png",
+      "schema_type": "LanguageCourse"
+    },
+    "contact": {
+      "email": "hello@language-learning.example.com",
+      "phone": "+1 (555) 010-2002"
+    },
+    "social": {
+      "github": "https://github.com/example/language-learning",
+      "linkedin": "https://linkedin.com/company/language-learning",
+      "twitter": "https://x.com/language_learning"
+    },
+    "deployment": {
+      "url": "https://language-learning.example.com",
+      "analytics_id": "G-LANG001"
+    },
+    "theme": {
+      "color": {
+        "primary": "#3b82f6",
+        "secondary": "#14b8a6",
+        "accent": "#f97316",
+        "primary_dark": "#60a5fa",
+        "secondary_dark": "#2dd4bf",
+        "accent_dark": "#fbbf24"
+      },
+      "font": {
+        "sans": "Inter"
+      },
+      "radius": {
+        "card": "1rem"
+      }
+    }
+  },
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React 19", "version_hint": "19.x", "purpose": "Component-driven UI shell" },
+    { "layer": "frontend", "technology": "Next.js 15 (App Router)", "version_hint": "15.x", "purpose": "SSR/SSG hosting for the web app" },
+    { "layer": "frontend", "technology": "TypeScript", "version_hint": "5.x", "purpose": "Type-safe component development" },
+    { "layer": "frontend", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Responsive, modern UI styling" },
+    { "layer": "frontend", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and page transitions" },
+    { "layer": "frontend", "technology": "lucide-react", "version_hint": "0.x", "purpose": "Icon library" },
+    { "layer": "backend", "technology": "Django", "version_hint": "4.x", "purpose": "Domain logic, lessons, user progress" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16.x", "purpose": "Relational storage for lessons, vocab, user progress" },
+    { "layer": "auth", "technology": "Django Allauth", "version_hint": "", "purpose": "User authentication and authorization" },
+    { "layer": "state", "technology": "Redux Toolkit", "version_hint": "2.x", "purpose": "Complex application state management" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Responsive, modern UI" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and page transitions" },
+    { "layer": "ai_ml", "technology": "OpenAI", "version_hint": "", "purpose": "Personalized recommendations and vocabulary practice" },
+    { "layer": "email", "technology": "SendGrid", "version_hint": "", "purpose": "Lesson reminders and motivational messages" }
+  ],
+  "features": [
+    { "description": "User authentication and authorization with Django Allauth for secure access", "priority": "core", "order_index": 1 },
+    { "description": "User profile system with language preferences, current proficiency levels, and learning goals", "priority": "core", "order_index": 2 },
+    { "description": "Personalized learning paths generated based on user profiles, preferences, and proficiency levels", "priority": "core", "order_index": 3 },
+    { "description": "Interactive lessons library with multimedia resources (videos, audio clips, quizzes)", "priority": "core", "order_index": 4 },
+    { "description": "Progress tracking dashboard with visual graphs and statistics for completed lessons and quiz scores", "priority": "core", "order_index": 5 },
+    { "description": "Language exchange forum for users to connect with practice partners and share tips", "priority": "enhanced", "order_index": 6 },
+    { "description": "Success stories gallery showcasing user testimonials and language learning experiences", "priority": "enhanced", "order_index": 7 },
+    { "description": "Personalized notifications for upcoming lessons, practice reminders, and motivational messages", "priority": "enhanced", "order_index": 8 },
+    { "description": "Vocabulary builder with flashcards and spaced repetition techniques", "priority": "enhanced", "order_index": 9 },
+    { "description": "Weekly and monthly language challenges to encourage consistent practice and engagement", "priority": "enhanced", "order_index": 10 },
+    { "description": "FAQ section addressing common questions about language learning methods and platform features", "priority": "enhanced", "order_index": 11 },
+    { "description": "Blog featuring expert advice on language learning strategies, cultural insights, and study tips", "priority": "enhanced", "order_index": 12 },
+    { "description": "Referral program rewarding users for inviting friends to join the platform", "priority": "enhanced", "order_index": 13 },
+    { "description": "Custom API for third-party developers to integrate with the platform (e.g., translation services)", "priority": "advanced", "order_index": 14 },
+    { "description": "Event calendar highlighting local language meetups, workshops, or cultural events", "priority": "advanced", "order_index": 15 },
+    { "description": "Gamification elements such as badges for completing lessons or achieving milestones", "priority": "advanced", "order_index": 16 },
+    { "description": "Data analytics to personalize recommendations based on user behavior and preferences", "priority": "advanced", "order_index": 17 },
+    { "description": "Multi-language support for global accessibility", "priority": "advanced", "order_index": 18 },
+    { "description": "Integration with translation services or educational apps via custom API", "priority": "advanced", "order_index": 19 }
+  ],
+  "sections": [
+    { "name": "Lessons", "component_path": "src/components/language/LessonCard.tsx", "layout_type": "grid", "order_index": 1 },
+    { "name": "Vocabulary", "component_path": "src/components/language/VocabularyDeck.tsx", "layout_type": "grid", "order_index": 2 },
+    { "name": "Progress", "component_path": "src/components/language/ProgressDashboard.tsx", "layout_type": "dashboard", "order_index": 3 },
+    { "name": "Practice", "component_path": "src/components/language/SpeakingPractice.tsx", "layout_type": "control", "order_index": 4 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx.template", "props": { "logoText": "{{app.name}}", "navItems": "sections", "ctaText": "{{header.cta_text}}", "ctaHref": "{{header.cta_href}}", "isFixed": "{{header.is_fixed}}" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "Footer", "path": "src/components/layout/Footer.tsx", "props": { "name": "{{app.name}}", "navItems": "sections" }, "mixins": ["_shared/Footer.tsx.template"] },
+    { "name": "LessonCard", "path": "src/components/language/LessonCard.tsx.template", "props": { "lesson": "LessonItem", "onStart": "fn", "delay": "number" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "VocabularyDeck", "path": "src/components/language/VocabularyDeck.tsx.template", "props": { "words": "VocabularyItem[]", "onReview": "fn", "delay": "number" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "SpeakingPractice", "path": "src/components/language/SpeakingPractice.tsx.template", "props": { "prompt": "SpeakingPrompt", "onRecord": "fn" } },
+    { "name": "ProgressDashboard", "path": "src/components/language/ProgressDashboard.tsx.template", "props": { "progress": "ProgressData", "onRefresh": "fn" } }
+  ],
+  "data_models": [
+    {
+      "name": "User",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "email", "type": "string", "required": true },
+        { "name": "nativeLanguage", "type": "string", "required": true },
+        { "name": "targetLanguage", "type": "string", "required": true },
+        { "name": "proficiencyLevel", "type": "enum(beginner|intermediate|advanced|fluent)", "required": true, "default": "beginner" },
+        { "name": "learningGoals", "type": "string[]", "required": false }
+      ]
+    },
+    {
+      "name": "Lesson",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "title", "type": "string", "required": true },
+        { "name": "language", "type": "string", "required": true },
+        { "name": "level", "type": "enum(beginner|intermediate|advanced)", "required": true },
+        { "name": "duration", "type": "string", "required": true },
+        { "name": "resources", "type": "string[]", "required": false },
+        { "name": "completed", "type": "boolean", "required": true, "default": false }
+      ]
+    },
+    {
+      "name": "VocabularyWord",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "word", "type": "string", "required": true },
+        { "name": "translation", "type": "string", "required": true },
+        { "name": "exampleSentence", "type": "string", "required": false },
+        { "name": "timesSeen", "type": "integer", "required": true, "default": 0 },
+        { "name": "timesCorrect", "type": "integer", "required": true, "default": 0 },
+        { "name": "nextReview", "type": "datetime", "required": true }
+      ]
+    },
+    {
+      "name": "Progress",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "userId", "type": "uuid", "required": true },
+        { "name": "lessonsCompleted", "type": "integer", "required": true, "default": 0 },
+        { "name": "currentStreak", "type": "integer", "required": true, "default": 0 },
+        { "name": "longestStreak", "type": "integer", "required": true, "default": 0 },
+        { "name": "averageSessionLength", "type": "integer", "required": true, "default": 0 }
+      ]
+    },
+    {
+      "name": "SpeakingPrompt",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "scenario", "type": "string", "required": true },
+        { "name": "instructions", "type": "string", "required": true },
+        { "name": "timeoutSeconds", "type": "integer", "required": true, "default": 60 }
+      ]
+    }
+  ],
+  "integrations": [
+    { "service": "OpenAI", "purpose": "Personalized recommendations and vocabulary practice", "config_params": { "model": "gpt-4o" } },
+    { "service": "SendGrid", "purpose": "Lesson reminders and motivational messages", "config_params": { "templates": ["lesson_reminder", "motivational"] } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "GDPR compliance with cookie consent, data minimization, and export/deletion APIs" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA across all public and organizer surfaces" },
+    { "type": "Performance", "requirement": "Lighthouse performance and accessibility scores of 90+ on key pages" },
+    { "type": "Responsive", "requirement": "Fully responsive from 320px to 4K; tested mobile-first" },
+    { "type": "i18n", "requirement": "Multi-language support with at least 5 locales for global learners" },
+    { "type": "SEO", "requirement": "Per-lesson SEO metadata, Open Graph, and structured data (LanguageCourse schema)" },
+    { "type": "Testing", "requirement": "Jest coverage for lesson progress, vocab retention, and speaking practice flows" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#3b82f6" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#60a5fa" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#14b8a6" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#2dd4bf" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#f97316" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#fbbf24" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "Inter" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "url": "https://language-learning.example.com", "framework": "Next.js", "region": "iad1" } },
+    { "platform": "Railway", "config": { "service": "Django API + PostgreSQL", "region": "us-east" } }
+  ],
+  "template_files": [
+    { "path": "README.md", "source": "templates/language-learning/README.md", "syntax": "mustache" },
+    { "path": "blueprint.json", "source": "templates/language-learning/blueprint.json.template", "syntax": "mustache" },
+    { "path": "prompt.md", "source": "templates/language-learning/prompt.md.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/language-learning/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/language-learning/package.json.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/language-learning/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "src/app/page.tsx", "source": "templates/language-learning/src/app/page.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/language-learning/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/language/LessonCard.tsx", "source": "templates/language-learning/src/components/language/LessonCard.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/language/VocabularyDeck.tsx", "source": "templates/language-learning/src/components/language/VocabularyDeck.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/language/SpeakingPractice.tsx", "source": "templates/language-learning/src/components/language/SpeakingPractice.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/language/ProgressDashboard.tsx", "source": "templates/language-learning/src/components/language/ProgressDashboard.tsx.template", "syntax": "mustache" },
+    { "path": "src/data/language-learning.json", "source": "templates/language-learning/src/data/language-learning.json.template", "syntax": "mustache" }
+  ]
+}

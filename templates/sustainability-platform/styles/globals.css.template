@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: {{theme.color.primary}};
+    --color-secondary: {{theme.color.secondary}};
+    --color-accent: {{theme.color.accent}};
+    --font-sans: {{theme.font.family}};
+  }
+
+  html {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: #ffffff;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}

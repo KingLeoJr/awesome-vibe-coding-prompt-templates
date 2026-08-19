@@ -1,0 +1,55 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Filter, ChevronDown, ChevronUp } from "lucide-react";
+
+interface VirtualDestination {
+  id: string;
+  title: string;
+  region: "africa" | "asia" | "europe" | "north-america" | "south-america" | "oceania" | "antarctica";
+  landmarks: string[];
+  description: string;
+  duration: number;
+  price: number;
+  imageUrl?: string;
+  isFeatured?: boolean;
+}
+
+interface DestinationBrowserProps {
+  destinations: VirtualDestination[];
+  onSelect: (destId: string) => void;
+  filter: string;
+}
+
+export default function DestinationBrowser({ destinations, onSelect, filter }: DestinationBrowserProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      {destinations.map((dest) => (
+        <motion.div
+          key={dest.id}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: dest.isFeatured ? 0 : 0.1 }}
+          className="group rounded-2xl border p-6 hover:shadow-lg transition-shadow cursor-pointer"
+        >
+          <img
+            src={dest.imageUrl || "/placeholder-vr-destination.jpg"}
+            alt={dest.title} className="h-48 w-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+          />
+          <div className="p-4">
+            <h3 className="font-medium text-gray-900 dark:text-white truncate">{dest.title}</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{dest.region}</p>
+            <p className="text-xs text-gray-400 mt-1">{dest.duration} min • ${dest.price}</p>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}

@@ -1,0 +1,130 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { BarChart3, BookMarked, Clock3, Medal, TrendingUp, Trophy } from "lucide-react";
+import Card from "@/components/shared/Card";
+
+export interface ProgressStat {
+  label: string;
+  value: string;
+}
+
+export interface WeeklyActivity {
+  label: string;
+  minutes: number;
+}
+
+export interface RecentAchievement {
+  name: string;
+  points: number;
+  date: string;
+}
+
+export interface ProgressData {
+  summary: ProgressStat[];
+  weeklyActivity: WeeklyActivity[];
+  recentAchievements: RecentAchievement[];
+}
+
+interface ProgressDashboardProps {
+  progress: ProgressData;
+}
+
+export default function ProgressDashboard({ progress }: ProgressDashboardProps) {
+  const maxMinutes = Math.max(1, ...progress.weeklyActivity.map((day) => day.minutes));
+
+  const statIcons = [BookMarked, Clock3, Medal, TrendingUp] as const;
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="progress-heading">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+            <BarChart3 size={22} aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="progress-heading" className="text-3xl font-bold text-gray-900 dark:text-white">Your progress</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              How far you've come — courses, hours, goals, and recent wins.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {progress.summary.map((stat, index) => {
+            const Icon = statIcons[index] ?? TrendingUp;
+            return (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+              >
+                <Card className="p-5">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+                    <Icon size={18} className="text-[var(--color-secondary)]" aria-hidden="true" />
+                  </div>
+                  <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white tabular-nums">{stat.value}</p>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card className="p-6">
+            <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+              <Clock3 size={18} className="text-[var(--color-primary)]" aria-hidden="true" />
+              Weekly learning (minutes)
+            </h3>
+            <div className="mt-5 flex items-end justify-between gap-2 h-32" role="img" aria-label="Weekly learning bar chart in minutes">
+              {progress.weeklyActivity.map((day, index) => (
+                <div key={day.label} className="flex flex-1 flex-col items-center gap-2">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    whileInView={{ height: `${Math.max(8, (day.minutes / maxMinutes) * 100)}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.05 }}
+                    className="w-full rounded-lg bg-gradient-to-t from-[var(--color-primary)] to-[var(--color-accent)]"
+                    style={{ minHeight: 8 }}
+                  />
+                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{day.label}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card className="p-6">
+            <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+              <Trophy size={18} className="text-[var(--color-accent)]" aria-hidden="true" />
+              Recent achievements
+            </h3>
+            <ul className="flex flex-col gap-3" aria-label="Recent achievements">
+              {progress.recentAchievements.map((achievement) => (
+                <li
+                  key={achievement.name}
+                  className="flex items-center justify-between rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-900"
+                >
+                  <span className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <Medal size={16} className="text-[var(--color-accent)]" aria-hidden="true" />
+                    {achievement.name}
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    +{achievement.points} pts · {achievement.date}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

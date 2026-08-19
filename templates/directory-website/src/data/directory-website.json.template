@@ -1,0 +1,299 @@
+{
+  "industry": "{{industry.name}}",
+  "meta": {
+    "title": "{{app.name}}",
+    "description": "{{app.tagline}}"
+  },
+  "categories": [
+    { "name": "Home & Garden", "slug": "home-garden", "count": 342 },
+    { "name": "Auto Services", "slug": "auto-services", "count": 187 },
+    { "name": "Health & Beauty", "slug": "health-beauty", "count": 221 },
+    { "name": "Professional Services", "slug": "professional", "count": 156 },
+    { "name": "Food & Drink", "slug": "food-drink", "count": 298 },
+    { "name": "Repairs", "slug": "repairs", "count": 134 }
+  ],
+  "listings": [
+    {
+      "id": "lst-001",
+      "name": "GreenLeaf Landscaping Co.",
+      "category": "Home & Garden",
+      "location": "Maple Grove",
+      "rating": 4.9,
+      "reviewCount": 231,
+      "verified": true,
+      "priceMin": 60,
+      "priceMax": 180,
+      "attributes": [
+        { "label": "Service radius", "value": "25 miles" },
+        { "label": "Response time", "value": "Under 2 hours" },
+        { "label": "Licensed", "value": "Yes, fully insured" },
+        { "label": "Availability", "value": "Mon - Sat" }
+      ],
+      "featured": true,
+      "imageUrl": "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?auto=format&fit=crop&w=800&q=80",
+      "tags": ["Lawn care", "Design", "Irrigation"]
+    },
+    {
+      "id": "lst-002",
+      "name": "Precision Auto Works",
+      "category": "Auto Services",
+      "location": "Downtown",
+      "rating": 4.8,
+      "reviewCount": 178,
+      "verified": true,
+      "priceMin": 75,
+      "priceMax": 400,
+      "attributes": [
+        { "label": "Service radius", "value": "15 miles" },
+        { "label": "Response time", "value": "Under 1 hour" },
+        { "label": "Licensed", "value": "ASE certified" },
+        { "label": "Availability", "value": "Mon - Fri" }
+      ],
+      "featured": true,
+      "imageUrl": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=800&q=80",
+      "tags": ["Oil change", "Brakes", "Diagnostics"]
+    },
+    {
+      "id": "lst-003",
+      "name": "Bloom Beauty Lounge",
+      "category": "Health & Beauty",
+      "location": "Riverside",
+      "rating": 4.7,
+      "reviewCount": 312,
+      "verified": true,
+      "priceMin": 40,
+      "priceMax": 150,
+      "attributes": [
+        { "label": "Service radius", "value": "Walk-ins welcome" },
+        { "label": "Response time", "value": "Same day" },
+        { "label": "Licensed", "value": "Licensed cosmetologists" },
+        { "label": "Availability", "value": "7 days a week" }
+      ],
+      "featured": true,
+      "imageUrl": "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80",
+      "tags": ["Hair", "Nails", "Spa"]
+    },
+    {
+      "id": "lst-004",
+      "name": "Summit Bookkeeping",
+      "category": "Professional Services",
+      "location": "Remote / Online",
+      "rating": 4.9,
+      "reviewCount": 96,
+      "verified": true,
+      "priceMin": 120,
+      "priceMax": 500,
+      "attributes": [
+        { "label": "Service radius", "value": "Nationwide" },
+        { "label": "Response time", "value": "Under 3 hours" },
+        { "label": "Licensed", "value": "CPA certified" },
+        { "label": "Availability", "value": "Mon - Sat" }
+      ],
+      "featured": false,
+      "imageUrl": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
+      "tags": ["Taxes", "Payroll", "Books"]
+    },
+    {
+      "id": "lst-005",
+      "name": "Harbor Grill & Market",
+      "category": "Food & Drink",
+      "location": "Old Town",
+      "rating": 4.6,
+      "reviewCount": 521,
+      "verified": true,
+      "priceMin": 25,
+      "priceMax": 80,
+      "attributes": [
+        { "label": "Service radius", "value": "Delivery + pickup" },
+        { "label": "Response time", "value": "Order in 30 min" },
+        { "label": "Licensed", "value": "Health dept. A rating" },
+        { "label": "Availability", "value": "11am - 10pm" }
+      ],
+      "featured": true,
+      "imageUrl": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+      "tags": ["Dining", "Catering", "Delivery"]
+    },
+    {
+      "id": "lst-006",
+      "name": "Swift Fix Appliances",
+      "category": "Repairs",
+      "location": "West End",
+      "rating": 4.5,
+      "reviewCount": 143,
+      "verified": false,
+      "priceMin": 55,
+      "priceMax": 220,
+      "attributes": [
+        { "label": "Service radius", "value": "20 miles" },
+        { "label": "Response time", "value": "Same day" },
+        { "label": "Licensed", "value": "Insured technicians" },
+        { "label": "Availability", "value": "Mon - Sun" }
+      ],
+      "featured": false,
+      "imageUrl": "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=800&q=80",
+      "tags": ["Repairs", "Installation", "Warranty"]
+    }
+  ],
+  "featured": [
+    {
+      "id": "lst-001",
+      "name": "GreenLeaf Landscaping Co.",
+      "category": "Home & Garden",
+      "location": "Maple Grove",
+      "rating": 4.9,
+      "reviewCount": 231,
+      "verified": true,
+      "priceMin": 60,
+      "priceMax": 180,
+      "attributes": [
+        { "label": "Service radius", "value": "25 miles" },
+        { "label": "Response time", "value": "Under 2 hours" },
+        { "label": "Licensed", "value": "Yes, fully insured" },
+        { "label": "Availability", "value": "Mon - Sat" }
+      ],
+      "featured": true,
+      "imageUrl": "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?auto=format&fit=crop&w=800&q=80",
+      "tags": ["Lawn care", "Design", "Irrigation"]
+    },
+    {
+      "id": "lst-002",
+      "name": "Precision Auto Works",
+      "category": "Auto Services",
+      "location": "Downtown",
+      "rating": 4.8,
+      "reviewCount": 178,
+      "verified": true,
+      "priceMin": 75,
+      "priceMax": 400,
+      "attributes": [
+        { "label": "Service radius", "value": "15 miles" },
+        { "label": "Response time", "value": "Under 1 hour" },
+        { "label": "Licensed", "value": "ASE certified" },
+        { "label": "Availability", "value": "Mon - Fri" }
+      ],
+      "featured": true,
+      "imageUrl": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=800&q=80",
+      "tags": ["Oil change", "Brakes", "Diagnostics"]
+    },
+    {
+      "id": "lst-003",
+      "name": "Bloom Beauty Lounge",
+      "category": "Health & Beauty",
+      "location": "Riverside",
+      "rating": 4.7,
+      "reviewCount": 312,
+      "verified": true,
+      "priceMin": 40,
+      "priceMax": 150,
+      "attributes": [
+        { "label": "Service radius", "value": "Walk-ins welcome" },
+        { "label": "Response time", "value": "Same day" },
+        { "label": "Licensed", "value": "Licensed cosmetologists" },
+        { "label": "Availability", "value": "7 days a week" }
+      ],
+      "featured": true,
+      "imageUrl": "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80",
+      "tags": ["Hair", "Nails", "Spa"]
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-001",
+      "listingId": "lst-001",
+      "author": "Nina P.",
+      "rating": 5,
+      "date": "2026-07-20",
+      "comment": "Booked through the directory in minutes. GreenLeaf redesigned our front yard and it looks incredible.",
+      "verifiedUser": true
+    },
+    {
+      "id": "rev-002",
+      "listingId": "lst-002",
+      "author": "Omar H.",
+      "rating": 5,
+      "date": "2026-07-11",
+      "comment": "Honest diagnostics and no upsell pressure. They even sent photos of the work before finishing.",
+      "verifiedUser": true
+    },
+    {
+      "id": "rev-003",
+      "listingId": "lst-003",
+      "author": "Lena G.",
+      "rating": 4,
+      "date": "2026-06-29",
+      "comment": "Great atmosphere and talented stylists. Booking online was seamless; just wish evening slots opened sooner.",
+      "verifiedUser": true
+    },
+    {
+      "id": "rev-004",
+      "listingId": "lst-005",
+      "author": "Marcus T.",
+      "rating": 5,
+      "date": "2026-06-17",
+      "comment": "Ordered catering for a small event and it was on time and delicious. The reviews on here were spot on.",
+      "verifiedUser": false
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "tst-001",
+      "quote": "Found my accountant and my landscaper through this directory. The verified badges save so much research time.",
+      "author": "Sarah K.",
+      "role": "Small business owner",
+      "rating": 5
+    },
+    {
+      "id": "tst-002",
+      "quote": "The comparison table made choosing between two contractors completely painless. Great feature.",
+      "author": "David L.",
+      "role": "Homeowner",
+      "rating": 5
+    },
+    {
+      "id": "tst-003",
+      "quote": "As a provider, the listing dashboard and review flow helped me double my bookings in three months.",
+      "author": "Amira F.",
+      "role": "Lounge owner",
+      "rating": 4
+    }
+  ],
+  "faqs": [
+    {
+      "id": "faq-001",
+      "question": "How do I list my business on the directory?",
+      "answer": "Create an account and use the 'Add Listing' flow. A multi-step form collects your details, photos, and service area; most listings go live within 24 hours."
+    },
+    {
+      "id": "faq-002",
+      "question": "How does the verified badge work?",
+      "answer": "Businesses that provide proof of license, insurance, and identity receive a verified badge, which appears on their listing and reviews."
+    },
+    {
+      "id": "faq-003",
+      "question": "Can I compare multiple businesses at once?",
+      "answer": "Yes - the comparison tool lets you review key criteria side by side, including price, ratings, availability, and credentials."
+    },
+    {
+      "id": "faq-004",
+      "question": "Are reviews from verified customers only?",
+      "answer": "Anyone can review, but reviews from verified customers are tagged with a badge so you can weigh them appropriately."
+    }
+  ],
+  "gallery": [
+    { "id": "gal-001", "src": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80", "alt": "Modern home exterior with landscaped garden", "caption": "GreenLeaf transformation" },
+    { "id": "gal-002", "src": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&q=80", "alt": "Mechanic working on a car engine", "caption": "Precision Auto shop" },
+    { "id": "gal-003", "src": "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80", "alt": "Bright salon interior", "caption": "Bloom Beauty Lounge" },
+    { "id": "gal-004", "src": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80", "alt": "Plated gourmet dish at a restaurant", "caption": "Harbor Grill signature plate" },
+    { "id": "gal-005", "src": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80", "alt": "Accountant reviewing financial documents", "caption": "Summit Bookkeeping" },
+    { "id": "gal-006", "src": "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1200&q=80", "alt": "Technician repairing an appliance", "caption": "Swift Fix on site" }
+  ],
+  "compareMeta": { "listingA": "GreenLeaf Landscaping", "listingB": "Precision Auto Works" },
+  "compare": [
+    { "feature": "Average rating", "valueA": "4.9", "valueB": "4.8" },
+    { "feature": "Starting price", "valueA": "$60", "valueB": "$75" },
+    { "feature": "Response time", "valueA": "Under 2 hours", "valueB": "Under 1 hour" },
+    { "feature": "Verified badge", "valueA": "yes", "valueB": "yes" },
+    { "feature": "Same-day availability", "valueA": "no", "valueB": "no" },
+    { "feature": "Mobile booking", "valueA": "yes", "valueB": "yes" }
+  ]
+}

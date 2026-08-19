@@ -1,0 +1,219 @@
+{
+  "blueprint_id": "a1b2c3d4e5f678901234567890abcdef1",
+  "slug": "home-maintenance",
+  "name": "Personalized Home Maintenance and Repair Service Platform",
+  "category": "Vertical",
+  "archetype": "PersonalizedVertical",
+  "tagline": "Your home, cared for — seamless maintenance, trusted providers, and proactive reminders.",
+  "builder_prompt_source": "prompts/home-maintenance.md",
+  "extra_config": {
+    "app": {
+      "slug": "home-maintenance",
+      "name": "Personalized Home Maintenance and Repair Service Platform",
+      "tagline": "Your home, cared for — seamless maintenance, trusted providers, and proactive reminders.",
+      "category": "Vertical",
+      "archetype": "PersonalizedVertical"
+    },
+    "header": {
+      "cta_text": "Book a Service",
+      "cta_href": "/services/new",
+      "is_fixed": true
+    },
+    "seo": {
+      "og_image": "https://home-maintenance.example.com/og.png",
+      "schema_type": "HomeServices"
+    },
+    "contact": {
+      "email": "hello@home-maintenance.example.com",
+      "phone": "+1 (555) 010-2001"
+    },
+    "social": {
+      "github": "https://github.com/example/home-maintenance",
+      "linkedin": "https://linkedin.com/company/home-maintenance",
+      "twitter": "https://x.com/home_maint"
+    },
+    "deployment": {
+      "url": "https://home-maintenance.example.com",
+      "analytics_id": "G-HOME001"
+    },
+    "theme": {
+      "color": {
+        "primary": "#10b981",
+        "secondary": "#f59e0b",
+        "accent": "#ef4444",
+        "primary_dark": "#374151",
+        "secondary_dark": "#eab308",
+        "accent_dark": "#f87171"
+      },
+      "font": {
+        "sans": "Inter"
+      },
+      "radius": {
+        "card": "1rem"
+      }
+    }
+  },
+  "tech_stack": [
+    { "layer": "frontend", "technology": "React 19", "version_hint": "19.x", "purpose": "Component-driven UI shell" },
+    { "layer": "frontend", "technology": "Next.js 15 (App Router)", "version_hint": "15.x", "purpose": "SSR/SSG hosting for the web app" },
+    { "layer": "frontend", "technology": "TypeScript", "version_hint": "5.x", "purpose": "Type-safe component development" },
+    { "layer": "frontend", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Responsive, modern UI styling" },
+    { "layer": "frontend", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and page transitions" },
+    { "layer": "frontend", "technology": "lucide-react", "version_hint": "0.x", "purpose": "Icon library" },
+    { "layer": "backend", "technology": "Flask", "version_hint": "3.x", "purpose": "Domain logic, service requests, provider management" },
+    { "layer": "database", "technology": "PostgreSQL", "version_hint": "16.x", "purpose": "Relational storage for service requests, users, providers" },
+    { "layer": "auth", "technology": "Flask-Security", "version_hint": "", "purpose": "User authentication and authorization" },
+    { "layer": "state", "technology": "Redux Toolkit", "version_hint": "2.x", "purpose": "Complex application state management" },
+    { "layer": "ui", "technology": "Tailwind CSS", "version_hint": "3.4.x", "purpose": "Responsive, modern UI" },
+    { "layer": "animation", "technology": "Framer Motion", "version_hint": "11.x", "purpose": "Micro-interactions and page transitions" },
+    { "layer": "payments", "technology": "Stripe", "version_hint": "", "purpose": "Secure payment processing for bookings" },
+    { "layer": "email", "technology": "SendGrid", "version_hint": "", "purpose": "Service notifications and reminders" },
+    { "layer": "maps", "technology": "Google Maps API", "version_hint": "", "purpose": "Provider location and service areas" }
+  ],
+  "features": [
+    { "description": "User authentication and authorization with Flask-Security for secure access", "priority": "core", "order_index": 1 },
+    { "description": "User profile system with home details, maintenance history, and preferences", "priority": "core", "order_index": 2 },
+    { "description": "Service request tool for submitting plumbing, electrical, HVAC, and other maintenance requests with photo uploads", "priority": "core", "order_index": 3 },
+    { "description": "Booking system for scheduling appointments with local service providers based on availability, including emergency services", "priority": "core", "order_index": 4 },
+    { "description": "Service provider directory searchable by type (electricians, plumbers, landscapers) with review and rating system", "priority": "core", "order_index": 5 },
+    { "description": "Automated maintenance reminders for regular tasks (air filters, gutter cleaning, etc.) with customizable settings", "priority": "core", "order_index": 6 },
+    { "description": "Community forum for users to share experiences, ask questions, and provide tips about home maintenance", "priority": "enhanced", "order_index": 7 },
+    { "description": "Resource library with articles, videos, and guides on common home maintenance tasks and best practices, searchable by topic", "priority": "enhanced", "order_index": 8 },
+    { "description": "Personalized notifications for upcoming service appointments, new resource library articles, and maintenance task reminders", "priority": "enhanced", "order_index": 9 },
+    { "description": "Cost estimator tool to help users estimate potential costs for various home repair services based on common pricing data", "priority": "enhanced", "order_index": 10 },
+    { "description": "Project planner for larger renovations or repairs, breaking down tasks, timelines, and budgets", "priority": "enhanced", "order_index": 11 },
+    { "description": "Data analytics to personalize recommendations based on user behavior and preferences in home maintenance", "priority": "advanced", "order_index": 12 },
+    { "description": "Custom API for third-party developers to integrate with the platform (e.g., local hardware stores)", "priority": "advanced", "order_index": 13 },
+    { "description": "Event calendar highlighting local workshops or classes related to home improvement skills (e.g., plumbing basics, electrical safety)", "priority": "advanced", "order_index": 14 },
+    { "description": "Gamification elements such as badges for completing DIY projects or participating in community discussions", "priority": "advanced", "order_index": 15 },
+    { "description": "Referral program rewarding users for inviting friends to join the platform or use its services", "priority": "advanced", "order_index": 16 },
+    { "description": "FAQ section addressing common questions about home maintenance services, scheduling processes, and using the platform effectively", "priority": "enhanced", "order_index": 17 },
+    { "description": "Blog section featuring expert advice on home improvement trends, DIY tips, seasonal maintenance checklists, and user success stories", "priority": "enhanced", "order_index": 18 },
+    { "description": "API integration for third-party developers to integrate with the platform (e.g., local hardware stores)", "priority": "advanced", "order_index": 19 },
+    { "description": "GDPR compliance with cookie consent and data protection policies", "priority": "enhanced", "order_index": 20 },
+    { "description": "WCAG-compliant accessibility across all public surfaces", "priority": "enhanced", "order_index": 21 },
+    { "description": "Push notifications in the mobile app for real-time updates about service appointments and reminders", "priority": "advanced", "order_index": 22 }
+  ],
+  "sections": [
+    { "name": "Overview", "component_path": "src/components/home/ServiceCard.tsx", "layout_type": "hero", "order_index": 1 },
+    { "name": "Service Request", "component_path": "src/components/home/ProviderCard.tsx", "layout_type": "form", "order_index": 2 },
+    { "name": "Bookings", "component_path": "src/components/home/BookingForm.tsx", "layout_type": "list", "order_index": 3 },
+    { "name": "Reminders", "component_path": "src/components/home/ReminderCard.tsx", "layout_type": "dashboard", "order_index": 4 }
+  ],
+  "components": [
+    { "name": "Header", "path": "src/components/layout/Header.tsx.template", "props": { "logoText": "{{app.name}}", "navItems": "sections", "ctaText": "{{header.cta_text}}", "ctaHref": "{{header.cta_href}}", "isFixed": "{{header.is_fixed}}" }, "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "name": "Footer", "path": "src/components/layout/Footer.tsx", "props": { "name": "{{app.name}}", "navItems": "sections" }, "mixins": ["_shared/Footer.tsx.template"] },
+    { "name": "ServiceCard", "path": "src/components/home/ServiceCard.tsx.template", "props": { "service": "ServiceItem", "provider": "ProviderSummary", "onBook": "fn", "delay": "number" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "ProviderCard", "path": "src/components/home/ProviderCard.tsx.template", "props": { "provider": "Provider", "onBook": "fn", "delay": "number" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "BookingForm", "path": "src/components/home/BookingForm.tsx.template", "props": { "service": "ServiceItem", "provider": "Provider", "onSubmit": "fn", "delay": "number" }, "mixins": ["_shared/Card.tsx.template"] },
+    { "name": "ReminderCard", "path": "src/components/home/ReminderCard.tsx.template", "props": { "reminder": "ReminderItem", "onToggle": "fn" } }
+  ],
+  "data_models": [
+    {
+      "name": "User",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "email", "type": "string", "required": true },
+        { "name": "phone", "type": "string", "required": false },
+        { "name": "homeType", "type": "string", "required": false, "default": "house" },
+        { "name": "propertyAge", "type": "integer", "required": false },
+        { "name": "maintenanceHistory", "type": "text", "required": false }
+      ]
+    },
+    {
+      "name": "ServiceRequest",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "userId", "type": "uuid", "required": true },
+        { "name": "serviceType", "type": "enum(plumbing|electrical|hvac|carpentry|cleaning|other)", "required": true },
+        { "name": "description", "type": "text", "required": true },
+        { "name": "issueDetails", "type": "text", "required": false },
+        { "name": "photos", "type": "string[]", "required": false },
+        { "name": "status", "type": "enum(submitted|approved|completed|cancelled)", "required": true, "default": "submitted" },
+        { "name": "createdAt", "type": "datetime", "required": true }
+      ]
+    },
+    {
+      "name": "ServiceProvider",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "trade", "type": "enum(plumber|electrician|hvac|carpenter|landscaper|cleaner)", "required": true },
+        { "name": "bio", "type": "text", "required": false },
+        { "name": "rating", "type": "decimal", "required": true, "default": 0 },
+        { "name": "reviewCount", "type": "integer", "required": true, "default": 0 },
+        { "name": "serviceAreas", "type": "string[]", "required": false },
+        { "name": "availability", "type": "string", "required": false }
+      ]
+    },
+    {
+      "name": "Booking",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "userId", "type": "uuid", "required": true },
+        { "name": "serviceRequestId", "type": "uuid", "required": true },
+        { "name": "providerId", "type": "uuid", "required": true },
+        { "name": "scheduledAt", "type": "datetime", "required": true },
+        { "name": "status", "type": "enum(scheduled|completed|cancelled|rescheduled)", "required": true, "default": "scheduled" },
+        { "name": "totalCost", "type": "decimal", "required": true }
+      ]
+    },
+    {
+      "name": "Reminder",
+      "fields": [
+        { "name": "id", "type": "uuid", "required": true },
+        { "name": "userId", "type": "uuid", "required": true },
+        { "name": "task", "type": "string", "required": true },
+        { "name": "frequency", "type": "enum(weekly|monthly|quarterly|halfyearly|yearly)", "required": true },
+        { "name": "nextDue", "type": "datetime", "required": true },
+        { "name": "status", "type": "enum(active|completed|snoozed)", "required": true, "default": "active" }
+      ]
+    }
+  ],
+  "integrations": [
+    { "service": "Stripe", "purpose": "Secure payment processing for service bookings", "config_params": { "mode": "payment_intents" } },
+    { "service": "SendGrid", "purpose": "Email notifications for service appointments and maintenance reminders", "config_params": { "templates": ["appointment_reminder", "service_update"] } },
+    { "service": "Google Maps", "purpose": "Provider location lookup and service area mapping", "config_params": { "libraries": ["places"] } }
+  ],
+  "nfrs": [
+    { "type": "Security", "requirement": "GDPR compliance with cookie consent, data minimization, and export/deletion APIs" },
+    { "type": "Security", "requirement": "PCI-DSS-aligned payment handling via Stripe tokens (no raw card data)" },
+    { "type": "Accessibility", "requirement": "WCAG 2.1 AA across all public and organizer surfaces" },
+    { "type": "Performance", "requirement": "Lighthouse performance and accessibility scores of 90+ on key pages" },
+    { "type": "Responsive", "requirement": "Fully responsive from 320px to 4K; tested mobile-first" },
+    { "type": "i18n", "requirement": "Multi-language support with at least 5 locales for global homeowner accessibility" },
+    { "type": "SEO", "requirement": "Per-service SEO metadata, Open Graph, and structured data (HomeServices schema)" },
+    { "type": "Testing", "requirement": "Jest coverage for service requests, bookings, and reminder flows" }
+  ],
+  "design_tokens": [
+    { "token_type": "color", "token_name": "color.primary", "token_value": "#10b981" },
+    { "token_type": "color", "token_name": "color.primary_dark", "token_value": "#374151" },
+    { "token_type": "color", "token_name": "color.secondary", "token_value": "#f59e0b" },
+    { "token_type": "color", "token_name": "color.secondary_dark", "token_value": "#eab308" },
+    { "token_type": "color", "token_name": "color.accent", "token_value": "#ef4444" },
+    { "token_type": "color", "token_name": "color.accent_dark", "token_value": "#f87171" },
+    { "token_type": "font", "token_name": "font.sans", "token_value": "Inter" },
+    { "token_type": "radius", "token_name": "radius.card", "token_value": "1rem" },
+    { "token_type": "mode", "token_name": "mode.dark", "token_value": "class" }
+  ],
+  "deployment": [
+    { "platform": "Vercel", "config": { "url": "https://home-maintenance.example.com", "framework": "Next.js", "region": "iad1" } },
+    { "platform": "Railway", "config": { "service": "Flask API + PostgreSQL", "region": "us-east" } }
+  ],
+  "template_files": [
+    { "path": "README.md", "source": "templates/home-maintenance/README.md", "syntax": "mustache" },
+    { "path": "blueprint.json", "source": "templates/home-maintenance/blueprint.json.template", "syntax": "mustache" },
+    { "path": "prompt.md", "source": "templates/home-maintenance/prompt.md.template", "syntax": "mustache" },
+    { "path": "config/site.config.ts", "source": "templates/home-maintenance/config/site.config.ts.template", "syntax": "mustache" },
+    { "path": "package.json", "source": "templates/home-maintenance/package.json.template", "syntax": "mustache" },
+    { "path": "styles/globals.css", "source": "templates/home-maintenance/styles/globals.css.template", "syntax": "mustache" },
+    { "path": "src/app/page.tsx", "source": "templates/home-maintenance/src/app/page.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/layout/Header.tsx", "source": "templates/home-maintenance/src/components/layout/Header.tsx.template", "syntax": "mustache", "mixins": ["_shared/ThemeToggle.tsx.template"] },
+    { "path": "src/components/home/ServiceCard.tsx", "source": "templates/home-maintenance/src/components/home/ServiceCard.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/home/ProviderCard.tsx", "source": "templates/home-maintenance/src/components/home/ProviderCard.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/home/BookingForm.tsx", "source": "templates/home-maintenance/src/components/home/BookingForm.tsx.template", "syntax": "mustache" },
+    { "path": "src/components/home/ReminderCard.tsx", "source": "templates/home-maintenance/src/components/home/ReminderCard.tsx.template", "syntax": "mustache" },
+    { "path": "src/data/home-maintenance.json", "source": "templates/home-maintenance/src/data/home-maintenance.json.template", "syntax": "mustache" }
+  ]
+}

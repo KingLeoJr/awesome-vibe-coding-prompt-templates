@@ -1,0 +1,80 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/shared/Button";
+import { Card } from "@/components/shared/Card";
+import { lucideReact } from "lucide-react";
+import { TrendingUp, ArrowUpDown, Clock } from "lucide-react";
+
+interface ProgressData {
+  lessonsCompleted: number;
+  currentStreak: number;
+  longestStreak: number;
+  averageSessionLength: number;
+}
+
+interface ProgressDashboardProps {
+  progress: ProgressData;
+  onRefresh: () => void;
+}
+
+export default function ProgressDashboard({ progress, onRefresh }: ProgressDashboardProps) {
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "rounded-xl border bg-gray-50 dark:bg-gray-900 p-6 hover:shadow-lg transition-shadow",
+        "pb-4"
+      )}
+    >
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            Learning Progress
+          </h3>
+
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 text-center">
+            <div>
+              <p className="text-2xl font-bold text-[var(--color-primary)] dark:text-white">
+                {progress.lessonsCompleted}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Lessons Completed</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-[var(--color-secondary)] dark:text-white">
+                {progress.currentStreak}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Current Streak</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-[var(--color-accent)] dark:text-white">
+                {progress.longestStreak}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Longest Streak</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">
+                {progress.averageSessionLength}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Avg Session (min)</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="font-medium text-gray-700 dark:text-gray-300">Session Timeline</h4>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Consistent practice is key to language acquisition. Keep going!
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

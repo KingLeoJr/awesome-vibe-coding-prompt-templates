@@ -1,0 +1,43 @@
+import Header from "@/components/layout/Header";
+import DestinationBrowser from "@/components/vr/DestinationBrowser";
+import VirtualTour from "@/components/vr/VirtualTour";
+import ItineraryBuilder from "@/components/vr/ItineraryBuilder";
+import SocialShare from "@/components/vr/SocialShare";
+import MapView from "@/components/vr/MapView";
+import OnboardingTutorial from "@/components/vr/OnboardingTutorial";
+import Footer from "@/components/shared/Footer";
+import travel from "@/data/{{app.slug}}.json";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main className="pt-0">
+        <section id="dashboard" className="scroll-mt-24">
+          <DestinationBrowser destinations={travel.destinations as any} onSelect={travel.onSelect as any} filter={travel.filter as any} />
+        </section>
+
+        <section id="tours" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <VirtualTour destination={travel.destination as any} onBook={travel.onBook as any} />
+        </section>
+
+        <section id="itinerary" className="scroll-mt-24">
+          <ItineraryBuilder bookings={travel.bookings as any} onAddActivity={travel.onAddActivity as any} />
+        </section>
+
+        <section id="social" className="scroll-mt-24">
+          <SocialShare shareText={travel.shareText as any} onShare={travel.onShare as any} />
+        </section>
+
+        <section id="map" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <MapView destination={travel.destination as any} onZoomChange={travel.onZoomChange as any} />
+        </section>
+
+        <section id="onboarding" className="scroll-mt-24 bg-gray-50 dark:bg-gray-950/40">
+          <OnboardingTutorial steps={travel.steps as any} onComplete={travel.onComplete as any} />
+        </section>
+      </main>
+      <Footer name={travel.app.name as string} description={travel.app.tagline as string} />
+    </>
+  );
+}
