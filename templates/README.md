@@ -1,9 +1,7 @@
 # Template Sets
 
 Every prompt entry in this repository has a matching template set under its own
-folder here. A template set is a **parameterized, buildable project skeleton**:
-all `.template` files are populated by the instance generator from the
-metamodel record (`metamodel/blueprints/<slug>.json`).
+folder here.
 
 ## Conventions
 
